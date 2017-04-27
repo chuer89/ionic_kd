@@ -1,0 +1,75 @@
+@charset "UTF-8";
+@function pxRem($px, $base-font-size: 75px) {
+    @if (unitless($px)) {
+        @return pxRem($px + 0px);
+    }
+    @else if (unit($px)==rem) {
+        @return $px;
+    }
+    @return ($px / $base-font-size) * 1rem;
+}
+
+@mixin positionCenter($position, $width, $height: $width) {
+    top: 50%;
+    left: 50%;
+    position: $position;
+    width: pxRem($width);
+    height: pxRem($height);
+    margin: pxRem(-$width/2) pxRem(-$height/2);
+}
+
+@mixin font-dpr($font-size) {
+    font-size: $font-size * 1px;
+    [data-dpr='2'] & {
+        font-size: $font-size * 2px;
+    }
+    [data-dpr='3'] & {
+        font-size: ($font-size + 2) * 3px;
+    }
+}
+
+@mixin width-dpr($size) {
+    width: $size * 1px;
+    [data-dpr='2'] & {
+        width: $size * 2px;
+    }
+    [data-dpr='3'] & {
+        width: ($size + 2) * 3px;
+    }
+}
+
+@mixin height-dpr($size) {
+    height: $size * 1px;
+    [data-dpr='2'] & {
+        height: $size * 2px;
+    }
+    [data-dpr='3'] & {
+        height: ($size + 2) * 3px;
+    }
+}
+
+%maxWidthBody {
+    margin: 0 auto;
+    max-width: pxRem(750);
+}
+
+%webkitBoxCenter {
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+}
+
+%textOverflow {
+    overflow: hidden;
+    word-wrap: normal;
+    white-space: nowrap;
+    word-break: break-all;
+    text-overflow: ellipsis;
+}
+
+$colorGrey: #a4a4a4;
+$colorWhite: #ffffff;
+$colorPurple: #7f6bac;
+$colorSimpleGrey: #e6e6e6;
+$colorBody: #f2f2f7;
+

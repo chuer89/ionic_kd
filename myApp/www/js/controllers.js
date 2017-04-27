@@ -21,6 +21,7 @@ angular.module('starter.controllers', [])
     }
 })
 
+//忘记密码
 .controller('ForgotPsdCtrl', function ($scope, $ionicPopup, $state) {
     $scope.data = {};
 
@@ -34,9 +35,9 @@ angular.module('starter.controllers', [])
     $scope.data = {};
 })
 
-
+//绩效
 .controller('PerfomanceCtrl', function($scope, $state, $ionicPopup) {
-      $scope.showAlert = function() {
+    $scope.showAlert = function() {
     var alertPopup = $ionicPopup.alert({
       title: 'eat that',
       template: 'yes it'

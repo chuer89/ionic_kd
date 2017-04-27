@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 To customize the look and feel of Ionic, you can override the variables
 in ionic's _variables.scss file.
@@ -15,9 +16,69 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
-// The path for our ionicons font files, relative to the built CSS in www/css
+/*// The path for our ionicons font files, relative to the built CSS in www/css*/
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
-// Include all of Ionic
+/*// Include all of Ionic*/
 @import "www/lib/ionic/scss/ionic";
+
+@import "_baseFunction";
+
+.kd_nav_filter{
+	@include height-dpr(50);
+	border-bottom: 1px solid $colorSimpleGrey;
+	@include font-dpr(14);
+
+	.kd_sele_box{
+		position: relative;
+		.kd_sele_val{
+			border: 1px solid $colorGrey;
+			@extend %textOverflow;
+			border-radius: pxRem(30);
+			padding: pxRem(20) pxRem(10);
+		}
+		.kd_sele_content{
+			position: absolute;
+			z-index: 2;
+			top: pxRem(240);
+			.kd_sele_item{
+				border-radius: pxRem(15);
+				background: $colorPurple;
+			}
+			.kd_sele_arrow{
+				position: absolute;
+				right: pxRem(30);
+				top: pxRem(-55);
+				color: $colorPurple;
+				z-index: 3;
+			}
+			a{
+				color: $colorWhite;
+				@extend %webkitBoxCenter;
+				padding: pxRem(40);
+				text-decoration: none;
+				border-bottom: 1px solid $colorGrey;
+				&:last-child{
+					border-bottom: none;
+				}
+			}
+		}
+	}
+
+	.kd_btn{
+		padding: pxRem(20) pxRem(50);
+		border: 1px solid $colorGrey;
+		color: $colorGrey;
+		background: $colorWhite;
+		border-radius: pxRem(70);
+	}
+	.kd_active_btn{
+		background: $colorPurple;
+		border-color: $colorPurple;
+		color: $colorWhite;
+	}
+	.kd_m{
+		margin: 0 pxRem(40);
+	}
+}
 
