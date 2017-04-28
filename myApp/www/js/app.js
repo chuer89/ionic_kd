@@ -57,10 +57,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   // setup an abstract state for the tabs directive
     .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
-  })
+        url: '/tab',
+        abstract: true,
+        templateUrl: 'templates/tabs.html'
+    })
 
   // Each tab has its own nav history stack:
 
@@ -74,8 +74,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             }
         }
     })
+    //绩效查询
+    .state('tab.perfomance_query', {
+        url: '/perfomance/query',
+        views: {
+            'tab-perfomance': {
+                templateUrl: 'templates/perfomance/query.html',
+                controller: 'QueryPerfomaceCtrl'
+            }
+        }
+    })
+    //绩效详情
+    .state('tab.perfomance_details', {
+        url: '/perfomance/details/:id',
+        views: {
+            'tab-perfomance': {
+                templateUrl: 'templates/perfomance/details.html',
+                controller: 'DetailsPerfomance'
+            }
+        }
+    })
 
-  .state('tab.dash', {
+    .state('tab.dash', {
     url: '/dash',
     views: {
       'tab-dash': {
@@ -83,7 +103,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         controller: 'DashCtrl'
       }
     }
-  })
+    })
 
   .state('tab.chats', {
       url: '/chats',

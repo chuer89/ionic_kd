@@ -36,13 +36,39 @@ angular.module('starter.controllers', [])
 })
 
 //绩效
-.controller('PerfomanceCtrl', function($scope, $state, $ionicPopup) {
-    $scope.showAlert = function() {
-    var alertPopup = $ionicPopup.alert({
-      title: 'eat that',
-      template: 'yes it'
-    })
-  }
+.controller('PerfomanceCtrl', function($scope, $state, $ionicPopup, $ionicActionSheet) {
+    $scope.data = {};
+    $scope.showNav = function () {
+        $ionicActionSheet.show({
+            buttons: [{
+                text: '绩效查询'
+            }, {
+                text: '我的绩效'
+            }, {
+                text: '绩效开单'
+            }],
+            cancelText: '取消',
+            buttonClicked: function (index) {
+                $state.go('tab.perfomance_query')
+                return true;
+            }
+        });
+    }
+})
+.controller('QueryPerfomaceCtrl', function($scope, $state, perfomanceQuery) {
+    $scope.data = {};
+
+    $scope.items = perfomanceQuery.all();
+
+    $scope.doRefresh = function() {
+        setTimeout(function() {
+            $scope.$broadcast('scroll.refreshComplete');
+        }, 1000)
+        return true;
+    }
+})
+.controller('DetailsPerfomance', function ($scope, $state, $stateParams, perfomanceQuery) {
+    $scope.item = perfomanceQuery.get($stateParams.id);
 })
 
 .controller('DashCtrl', function($scope, $ionicPopup, $ionicActionSheet) {
