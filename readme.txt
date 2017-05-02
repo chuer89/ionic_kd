@@ -3,4 +3,4 @@ source ~/.bash_profile 启动环境变量
 
 
 ionic emulate ios --list
-onic  emulate ios --target="iPad-2, 9.3"
+ionic  emulate ios --target="iPhone-6s, 9.2"

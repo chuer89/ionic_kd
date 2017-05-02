@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -24,6 +24,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+
+    $ionicConfigProvider.backButton.text('').previousTitleText(false);
 
   // $ionicConfigProvider.views.swipeBackEnabled(false);
 
@@ -59,6 +61,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     .state('tab', {
         url: '/tab',
         abstract: true,
+        // cache: false,
         templateUrl: 'templates/tabs.html'
     })
 
@@ -91,6 +94,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             'tab-perfomance': {
                 templateUrl: 'templates/perfomance/details.html',
                 controller: 'DetailsPerfomance'
+            }
+        }
+    })
+    .state('tab.perfomance_add', {
+        url: '/perfomance/add',
+        views: {
+            'tab-perfomance': {
+                templateUrl: 'templates/perfomance/add.html',
+                controller: 'AddPerfomance'
             }
         }
     })

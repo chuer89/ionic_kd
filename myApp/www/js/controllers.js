@@ -1,7 +1,10 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, $ionicPopup, $state) {
+.controller('LoginCtrl', function($scope, $ionicPopup, $state, $ionicHistory) {
     $scope.data = {};
+
+    $ionicHistory.clearCache();
+    $ionicHistory.clearHistory();
 
     $scope.forgotPassword = function() {
         $state.go('forgotPsd')
@@ -49,7 +52,16 @@ angular.module('starter.controllers', [])
             }],
             cancelText: '取消',
             buttonClicked: function (index) {
-                $state.go('tab.perfomance_query')
+                
+                var _go = 'tab.perfomance_query';
+
+                if (index == 2) {
+                    _go = 'tab.perfomance_add';
+                }
+
+                console.log(index)
+
+                $state.go(_go);
                 return true;
             }
         });
@@ -69,6 +81,30 @@ angular.module('starter.controllers', [])
 })
 .controller('DetailsPerfomance', function ($scope, $state, $stateParams, perfomanceQuery) {
     $scope.item = perfomanceQuery.get($stateParams.id);
+})
+.controller('AddPerfomance', function ($scope, $state, $stateParams, $cordovaCamera, perfomanceQuery) {
+
+    $scope.getPicture = function() {
+        var options = {
+          quality: 50,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.CAMERA,
+          allowEdit: true,
+          encodingType: Camera.EncodingType.JPEG,
+          targetWidth: 100,
+          targetHeight: 100,
+          popoverOptions: CameraPopoverOptions,
+          saveToPhotoAlbum: false,
+          correctOrientation:true
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+          var image = document.getElementById('myImage');
+          image.src = "data:image/jpeg;base64," + imageData;
+        }, function(err) {
+          // error
+        });
+    }
 })
 
 .controller('DashCtrl', function($scope, $ionicPopup, $ionicActionSheet) {
