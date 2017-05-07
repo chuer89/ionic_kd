@@ -1,4 +1,9 @@
 <ion-view view-title="绩效查询">
+
+    <ion-nav-buttons side="left">  
+    <a href="javascript:history.back(-1)" class="button button-icon icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
   	<ion-content>
   		<div class="bar bar-header item-input-inset">
           <label class="item-input-wrapper">
@@ -8,7 +13,7 @@
         </div>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <ion-list>
-            <ion-item ng-repeat="item in items" href="#/tab/perfomance/details/{{item.id}}">
+            <ion-item ng-repeat="item in items" href="#/perfomance/details/{{item.id}}">
                 {{item.name}}
             </ion-item>            
         </ion-list>

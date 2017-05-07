@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'route'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -78,31 +78,30 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         }
     })
     //绩效查询
-    .state('tab.perfomance_query', {
+    .state('perfomance_query', {
         url: '/perfomance/query',
-        views: {
-            'tab-perfomance': {
-                templateUrl: 'templates/perfomance/query.html',
-                controller: 'QueryPerfomaceCtrl'
-            }
-        }
+        templateUrl: 'templates/perfomance/query.html',
+        controller: 'QueryPerfomaceCtrl'
     })
     //绩效详情
-    .state('tab.perfomance_details', {
+    .state('perfomance_details', {
         url: '/perfomance/details/:id',
-        views: {
-            'tab-perfomance': {
-                templateUrl: 'templates/perfomance/details.html',
-                controller: 'DetailsPerfomance'
-            }
-        }
+        templateUrl: 'templates/perfomance/details.html',
+        controller: 'DetailsPerfomance'
     })
-    .state('tab.perfomance_add', {
+    .state('perfomance_add', {
         url: '/perfomance/add',
+        templateUrl: 'templates/perfomance/add.html',
+        controller: 'AddPerfomance'
+    })
+
+    //消息
+    .state('tab.message', {
+        url: '/message',
         views: {
-            'tab-perfomance': {
-                templateUrl: 'templates/perfomance/add.html',
-                controller: 'AddPerfomance'
+            'tab-message': {
+                templateUrl: 'templates/message/index.html',
+                controller: 'MessageCtrl'
             }
         }
     })
