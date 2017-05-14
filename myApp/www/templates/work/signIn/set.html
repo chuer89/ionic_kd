@@ -1,0 +1,27 @@
+<ion-view view-title="签到设置">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+	<ion-content>
+		<ul class="list">
+            <li class="item item-toggle">
+                自动签到
+                <label class="toggle toggle-royal">
+                    <input type="checkbox">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </li>
+
+            <li class="list">
+                <a href="javascript:;" class="item item-icon-right" ng-click="showWarnType()">
+                  签到提醒
+                  <span class="item-note">{{data.seleWarnType}}</span>
+                  <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+            </li>      
+        </ul>
+	</ion-content>
+</ion-view>

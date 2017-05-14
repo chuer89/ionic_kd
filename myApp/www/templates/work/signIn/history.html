@@ -1,0 +1,23 @@
+<ion-view view-title="签到记录-{{item.name}}">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+	<ion-content>
+        <div>
+            <ionic-datepicker ng-click="openDatePicker()">
+          <!--<button class="button button-block button-positive"> {{datepickerObjectEnd.inputDate |-->
+          <!--date:datepickerObjectEnd.dateFormat}}-->
+          <!--</button>-->
+           222
+            </ionic-datepicker>
+            <!-- <button ng-click="openDatePicker()">11</button> -->
+        </div>
+        <div class="list">
+            <div class="item">
+                <h2>{{item.name}}</h2>
+                <p>{{item.tips}}</p>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>

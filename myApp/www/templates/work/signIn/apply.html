@@ -1,0 +1,49 @@
+<ion-view view-title="签到申请">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" class="button button-clear button-positive">提交</a>
+    </ion-nav-buttons>
+
+	<ion-content>
+        <div class="list">
+            <a href="javascript:;" class="item item-icon-right" ng-click="showOfficeType()">
+              上班类型
+              <span class="item-note">{{data.seleOfficeType}}</span>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+
+        <div class="list">
+            <a href="javascript:;" class="item item-icon-right" ng-click="showApplyType()">
+              申请类型
+              <span class="item-note">{{data.seleApplyType}}</span>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+
+        <div class="list">
+            <a href="javascript:;" class="item item-icon-right">
+              时间
+              <input class="item-note" type="date" ng-model="time"/>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+
+         <div class="list">
+            <a href="javascript:;" class="item item-icon-right" ng-click="showType()">
+              审批人
+              <span class="item-note">{{seleType}}</span>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+
+         <div class="list">
+            <div class="item">
+                <label>原因</label><textarea></textarea>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>

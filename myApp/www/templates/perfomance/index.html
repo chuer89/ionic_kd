@@ -7,7 +7,7 @@
   		<div class="kd_nav_filter row">
   			<div class="kd_sele_box col col-20">
   				<div class="kd_sele_val">请选择<i class="ion-arrow-down-b"></i></div>
-  				<div class="kd_sele_content">
+  				<div class="kd_sele_content" style="display: none;">
   					<i class="ion-arrow-up-b kd_sele_arrow"></i>
   					<div class="kd_sele_item">
   						<a href="javascript:;">本月</a>
@@ -21,7 +21,12 @@
   			</div>
   		</div>
     	<div class="padding">
-    		3
+    		<ion-list>
+                <ion-item ng-repeat="item in items">
+                    <h2>{{item.name}}</h2>
+                    <p>{{item.marks}}</p>
+                </ion-item>
+            </ion-list>
     	</div>
   	</ion-content>
 </ion-view>

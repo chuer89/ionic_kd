@@ -1,8 +1,11 @@
 angular.module('perfomance.controller', [])
 
 //绩效
-.controller('PerfomanceCtrl', function($scope, $state, $ionicPopup, $ionicActionSheet) {
+.controller('PerfomanceCtrl', function($scope, $state, $ionicPopup, $ionicActionSheet, perfomanceList) {
     $scope.data = {};
+
+    $scope.items = perfomanceList.all();
+
     $scope.showNav = function () {
         $ionicActionSheet.show({
             buttons: [{
@@ -45,7 +48,6 @@ angular.module('perfomance.controller', [])
     $scope.item = perfomanceQuery.get($stateParams.id);
 })
 .controller('AddPerfomance', function ($scope, $state, $stateParams, $cordovaCamera, perfomanceQuery) {
-
     $scope.getPicture = function() {
         var options = {
           quality: 50,

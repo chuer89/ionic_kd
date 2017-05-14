@@ -1,5 +1,16 @@
 <ion-view view-title="消息">
-	<ion-content class="padding">
-	lieb
+	<ion-content>
+		<ion-list>
+			<ion-item class="item-remove-animate item-icon-left" ng-repeat="item in items" type="item-text-wrap">
+				<i class="ion-volume-high icon"></i>
+			    <h2>{{item.name}}</h2>
+	        	<p>{{item.intro}}</p>
+	        	<span class="icon-accessory">{{item.time}}</span>
+
+	        	<ion-option-button class="button-assertive">
+		          Delete
+		        </ion-option-button>
+			</ion-item>
+		</ion-list>
 	</ion-content>
 </ion-view>

@@ -1,0 +1,14 @@
+<ion-view view-title="工作">
+	<ion-content>
+		<div class="list">
+			<a href="{{item.link || 'javascript:;'}}" class="item item-icon-left item-icon-right" ng-repeat="item in items">
+				<i class="icon ion-email"></i>
+			    <h2>{{item.name}}</h2>
+		    	<p>{{item.info}}</p>
+
+		    	<span class="badge badge-assertive">{{item.count}}</span>
+		    	<i class="icon ion-chevron-right icon-accessory"></i>
+			</a>
+		</div>
+	</ion-content>
+</ion-view>

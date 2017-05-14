@@ -1,0 +1,21 @@
+<ion-view view-title="签到查询">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+	<ion-content>
+		<div class="bar bar-header item-input-inset">
+			<label class="item-input-wrapper">
+				<i class="icon ion-ios-search placeholder-icon"></i>
+				<input type="search" placeholder="Search">
+			</label>
+        </div>
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div class="list">
+        	<a class="item" ng-repeat="item in items" href="#/work/sign_in_history/{{item.id}}">
+        		<h2>{{item.name}}</h2>
+        		<p>{{item.tips}}</p>
+        	</a>
+        </div>
+	</ion-content>
+</ion-view>

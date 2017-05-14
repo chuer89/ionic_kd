@@ -1,0 +1,40 @@
+<ion-view view-title="签到">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+      <button ng-click="showNav()" class="ion-plus icon icon-accessory"></button>
+    </ion-nav-buttons>
+
+	<ion-content>
+		<div class="list">
+			<a href="javascript:;" class="item item-icon-right" ng-click="showType()">
+			  类型
+			  <span class="item-note">{{seleType}}</span>
+			  <i class="icon ion-chevron-right icon-accessory"></i>
+			</a>
+		</div>
+
+		<div class="padding">
+			<div class="list">
+				<div class="item">
+					<h2>2017-05-11 星期四</h2>
+					<p>签到时间：18:02</p>
+				</div>
+
+				<div class="item">
+					<p>打起精神，开始一天的工作！</p>
+				</div>
+
+				<div class="item">
+					<p>签到时间：<span>22:22</span></p>
+					<p>签到地点：<span>四川人民西路</span></p>
+				</div>
+			</div>
+			<div>
+				<button class="button button-royal">签到</button>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

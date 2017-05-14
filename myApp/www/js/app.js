@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'route'])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'route', 'ionic-datepicker'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -23,9 +23,27 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, ionicDatePickerProvider) {
 
     $ionicConfigProvider.backButton.text('').previousTitleText(false);
+
+    var datePickerObj = {
+        inputDate: new Date(),
+        // setLabel: 'Set',
+        // todayLabel: 'Today',
+        // closeLabel: 'Close',
+        mondayFirst: false,
+        weeksList: ["S", "M", "T", "W", "T", "F", "S"],
+        monthsList: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
+        templateType: 'popup',
+        // from: new Date(2012, 8, 1),
+        // to: new Date(2018, 8, 1),
+        // showTodayButton: true,
+        dateFormat: 'yyyy-MM-dd'
+        // closeOnSelect: false,
+        // disableWeekdays: [6]
+    };
+    ionicDatePickerProvider.configDatePicker(datePickerObj);
 
   // $ionicConfigProvider.views.swipeBackEnabled(false);
 
@@ -107,43 +125,79 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     })
 
     .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
+        url: '/dash',
+        views: {
+            'tab-dash': {
+                templateUrl: 'templates/tab-dash.html',
+                controller: 'DashCtrl'
+            }
+        }
     })
 
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+    //工作
+    .state('tab.work', {
+        url: '/work',
+        views: {
+            'tab-work': {
+                templateUrl: 'templates/work/index.html',
+                controller: 'WorkCtrl'
+            }
         }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
     })
 
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  });
+    //签到
+    .state('work_sign_in', {
+        url: '/work/sign_in',
+        templateUrl: 'templates/work/sign_in.html',
+        controller: 'WorkSigInCtrl'
+    })
+    //签到查询
+    .state('work_sign_in_query', {
+        url: '/work/sign_in_query',
+        templateUrl: 'templates/work/signIn/query.html',
+        controller: 'WorkSigInQueryCtrl'
+    })
+    //签到历史
+    .state('work_sign_in_query_history', {
+        url: '/work/sign_in_history/:id',
+        templateUrl: 'templates/work/signIn/history.html',
+        controller: 'WorkSigInHistoryCtrl'
+    })
+    //签到申请
+    .state('work_sign_in_apply', {
+        url: '/work/sign_in_apply',
+        templateUrl: 'templates/work/signIn/apply.html',
+        controller: 'WorkSigInApplyCtrl'
+    })
+    //签到设置
+    .state('work_sign_in_set', {
+        url: '/work/sign_in_set',
+        templateUrl: 'templates/work/signIn/set.html',
+        controller: 'WorkSigInSetCtrl'
+    })
+
+    //任务
+    .state('work_task', {
+        url: '/work/task',
+        templateUrl: 'templates/work/task/index.html',
+        controller: 'WorkTaskCtrl'
+    })
+    //任务查看－列表
+    .state('work_task_list', {
+        url: '/work/task_list/:id',
+        templateUrl: 'templates/work/task/list.html',
+        controller: 'WorkTaskListCtrl'
+    })
+
+    .state('tab.account', {
+        url: '/account',
+        views: {
+            'tab-account': {
+                templateUrl: 'templates/tab-account.html',
+                controller: 'AccountCtrl'
+            }
+        }
+    });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
