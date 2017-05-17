@@ -6,6 +6,7 @@ angular.module('route', [
 
 	'workSign.controller',
 	'workTask.controller',
+	'workSchedule.controller',
 
 	'perfomance.services',
 	'message.services',

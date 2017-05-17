@@ -1,4 +1,4 @@
-<ion-view view-title="任务">
+<ion-view view-title="日程提醒">
 	<ion-nav-buttons side="left">  
     	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
@@ -8,15 +8,17 @@
     </ion-nav-buttons>
 
 	<ion-content>
-        <div class="row">
-            <div class="col" ng-repeat="item in items">{{item.name}}</div>
+        <div class="list">
+            <div class="item item-icon-right">
+              我安排的日程
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
         </div>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <div class="list">
-            <a class="item" ng-repeat="item in taskList" href="#/work/task_list/{{item.id}}/details">
-                <h2>{{item.title}}</h2>
-                <p>责任人：{{item.person}}  截至时间：{{item.time}}</p>
-                <i>{{item.status}}</i>
+            <a href="#/work/schedule/{{item.id}}" class="item" ng-repeat="item in items">
+                <p>{{item.time}}</p>
+                <h2>{{item.tips}}</h2>
             </a>
         </div>
     </ion-content>

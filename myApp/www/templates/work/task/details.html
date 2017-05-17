@@ -1,0 +1,39 @@
+<ion-view view-title="查看任务-{{itemFrom.person}}">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+      <a href="javascript:;" ng-click="showNav()" class="ion-more button button-clear button-positive"></a>
+    </ion-nav-buttons>
+
+	<ion-content>
+		<div class="list">
+            <div class="item">
+                <h2>打理好所有柜台清洁</h2>
+                <p>截至时间：2017-20-25 11:30</p>
+            </div>
+            <div class="item">
+                <div>提醒：提前3小时</div>
+                <div>描述：去拜访客户，再到公司拜访客户。</div>
+            </div>
+            <div class="item">
+                <div>负责人：王丽丽 催丽娜</div>
+                <div>检查人：孙总</div>
+                <div>关注人：朱总</div>
+            </div>
+            <div class="item">图片</div>
+        </div>
+
+        <div class="list">
+            <div class="item">
+                <h2>王丽丽</h2>
+                <p>今天能完成吗，估计什么时候</p>
+            </div>
+            <div class="item">
+                <h2>催里娜</h2>
+                <p>下午还有客户需求过来</p>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>

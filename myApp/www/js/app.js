@@ -182,11 +182,66 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/task/index.html',
         controller: 'WorkTaskCtrl'
     })
+    //任务查询
+    .state('work_task_query', {
+        url: '/work/task_query',
+        templateUrl: 'templates/work/task/query.html',
+        controller: 'WorkTaskQueryCtrl'
+    })
+    //任务创建
+    .state('work_task_add', {
+        url: '/work/task_add',
+        templateUrl: 'templates/work/task/add.html',
+        controller: 'WorkTaskAddCtrl'
+    })
     //任务查看－列表
     .state('work_task_list', {
         url: '/work/task_list/:id',
         templateUrl: 'templates/work/task/list.html',
         controller: 'WorkTaskListCtrl'
+    })
+    //任务查看－列表－详情
+    .state('work_task_list_details', {
+        url: '/work/task_list/:id/details',
+        templateUrl: 'templates/work/task/details.html',
+        controller: 'WorkTaskListDetailsCtrl'
+    })
+    //任务查看－列表－详情-审核
+    .state('work_task_list_details_audit', {
+        url: '/work/task_list/:id/details/audit',
+        templateUrl: 'templates/work/task/audit.html',
+        controller: 'WorkTaskListDetailsAuditCtrl'
+    })
+    //任务查看－列表－详情-申请延期
+    .state('work_task_list_details_postpone', {
+        url: '/work/task_list/:id/details/postpone',
+        templateUrl: 'templates/work/task/postpone.html',
+        controller: 'WorkTaskListDetailsPostponeCtrl'
+    })
+    //任务查看－列表－详情-提交任务
+    .state('work_task_list_details_refer', {
+        url: '/work/task_list/:id/details/refer',
+        templateUrl: 'templates/work/task/refer.html',
+        controller: 'WorkTaskListDetailsReferCtrl'
+    })
+    //任务查看－列表－详情-讨论
+    .state('work_task_list_details_Discuss', {
+        url: '/work/task_list/:id/details/discuss',
+        templateUrl: 'templates/work/task/discuss.html',
+        controller: 'WorkTaskListDetailsDiscussCtrl'
+    })
+
+     //日程
+    .state('work_schedule', {
+        url: '/work/schedule',
+        templateUrl: 'templates/work/schedule/index.html',
+        controller: 'WorkScheduleCtrl'
+    })
+    //日程详情
+    .state('work_schedule_details', {
+        url: '/work/schedule/:id',
+        templateUrl: 'templates/work/schedule/details.html',
+        controller: 'WorkScheduleDetailsCtrl'
     })
 
     .state('tab.account', {

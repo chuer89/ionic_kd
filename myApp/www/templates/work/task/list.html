@@ -4,8 +4,16 @@
     </ion-nav-buttons>
 
 	<ion-content>
-		<div class="button-bar bar-stable" ng-repeat="item in items">
-            <a class="button">{{item.name}}</a>
+		<div class="row">
+            <div class="col" ng-repeat="item in items">{{item.name}}</div>
+        </div>
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div class="list">
+        	<a class="item" ng-repeat="item in taskList" href="#/work/task_list/{{item.id}}/details">
+        		<h2>{{item.title}}</h2>
+        		<p>责任人：{{item.person}}  截至时间：{{item.time}}</p>
+        		<i>{{item.status}}</i>
+        	</a>
         </div>
 	</ion-content>
 </ion-view>

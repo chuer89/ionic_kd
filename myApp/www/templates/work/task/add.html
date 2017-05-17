@@ -1,0 +1,45 @@
+<ion-view view-title="创建任务">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" class="button button-clear button-positive">创建</a>
+    </ion-nav-buttons>
+
+	<ion-content>
+		<div class="list">
+            <div class="item item-icon-right">
+                截至时间
+              <span class="item-note">请选择</span>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+            <div class="item">
+                任务标题<input type="text" name="" placeholder="请输入"/>
+            </div>
+            <div class="item">
+                内容<textarea placeholder="请输入内容"></textarea>
+            </div>  
+            <div class="item item-icon-right" ng-click="showSeleWarn()">
+                提醒
+                <span class="item-note">{{seleWarn}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+            <div class="item item-icon-right">
+              负责人
+              <span class="item-note">请选择</span>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+            <div class="item item-icon-right">
+              检查人
+              <span class="item-note">请选择</span>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+            <div class="item item-icon-right">
+              关注人
+              <span class="item-note">请选择</span>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>
