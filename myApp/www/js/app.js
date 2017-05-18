@@ -243,6 +243,27 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/schedule/details.html',
         controller: 'WorkScheduleDetailsCtrl'
     })
+    //日程新增
+    .state('work_schedule_add', {
+        url: '/work/schedule_add',
+        templateUrl: 'templates/work/schedule/add.html',
+        controller: 'WorkScheduleAddCtrl'
+    })
+    //我的日程
+    .state('work_schedule_my', {
+        url: '/work/schedule_my',
+        templateUrl: 'templates/work/schedule/my.html',
+        controller: 'WorkScheduleMyCtrl'
+    })
+
+
+    //申请
+    .state('work_apply', {
+        url: '/work/apply',
+        templateUrl: 'templates/work/apply/index.html',
+        controller: 'WorkApplyCtrl'
+    })
+    
 
     .state('tab.account', {
         url: '/account',

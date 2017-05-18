@@ -8,6 +8,21 @@
     </ion-nav-buttons>
 
 	<ion-content>
-        22
+        <div class="list">
+            <div class="item">
+                <h2>{{item.time}}</h2>
+                <p>{{item.target}} 安排的日程</p>
+            </div>
+            <div class="item">
+                <h2>{{item.remark}}</h2>
+            </div>
+            <div class="item">
+                <p>日程人员：{{item.personnel}}</p>
+            </div>
+        </div>
     </ion-content>
+
+    <div ng-click="quit()" class="bar bar-stable bar-footer">
+        <div class="title">退出日程</div>
+    </div>
 </ion-view>
