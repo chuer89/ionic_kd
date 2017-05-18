@@ -263,6 +263,36 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/apply/index.html',
         controller: 'WorkApplyCtrl'
     })
+    //申请－新增列表
+    .state('work_apply_addlist', {
+        url: '/work/apply/addlist',
+        templateUrl: 'templates/work/apply/add-list.html',
+        controller: 'WorkApplyAddListCtrl'
+    })
+    //申请-其他申请
+    .state('work_apply_addother', {
+        url: '/work/apply/addother',
+        templateUrl: 'templates/work/apply/add-other.html',
+        controller: 'WorkApplyAddOtherCtrl'
+    })
+    //申请-报残申请
+    .state('work_apply_adddiscard', {
+        url: '/work/apply/adddiscard',
+        templateUrl: 'templates/work/apply/add-discard.html',
+        controller: 'WorkApplyAddDiscardCtrl'
+    })
+    //申请-优惠申请
+    .state('work_apply_addprivilege', {
+        url: '/work/apply/addprivilege',
+        templateUrl: 'templates/work/apply/add-privilege.html',
+        controller: 'WorkApplyAddPrivilegeCtrl'
+    })
+    //申请-请假申请
+    .state('work_apply_addleave', {
+        url: '/work/apply/addleave',
+        templateUrl: 'templates/work/apply/add-leave.html',
+        controller: 'WorkApplyAddLeaveCtrl'
+    })
     
 
     .state('tab.account', {

@@ -1,0 +1,14 @@
+<ion-view view-title="申请">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+	<ion-content>
+		<div class="list">
+            <a href={{item.link}} class="item" ng-repeat="item in items">
+                <h2>{{item.name}}</h2>
+                <p>{{item.tips}}</p>
+            </a>      
+        </div>
+	</ion-content>
+</ion-view>

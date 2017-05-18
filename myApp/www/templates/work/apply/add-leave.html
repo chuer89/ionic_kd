@@ -1,0 +1,47 @@
+<ion-view view-title="请假申请">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" class="button button-clear button-positive">提交</a>
+    </ion-nav-buttons>
+
+	<ion-content>
+        <div class="list">
+            <div class="item item-icon-right" ng-click="showSeleType()">
+                请假类型
+                <span class="item-note">{{seleType}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="item item-icon-right">
+                开始时间
+                <span class="item-note">请选择</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+            <div class="item item-icon-right">
+                结束时间
+                <span class="item-note">请选择</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="item">
+                货品信息
+                <textarea placeholder="请输入(必填)"></textarea>
+            </div>
+        </div>
+
+		<div class="list">
+            <div class="item item-icon-right">
+                审批人
+                <span class="item-note">请选择</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>

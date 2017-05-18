@@ -19,7 +19,8 @@ angular.module('work.services', [])
     }, {
     	id: 3,
     	name: '申请',
-    	info: '请假、优惠、调换、维修等'
+    	info: '请假、优惠、调换、维修等',
+        link: '#/work/apply'
     }, {
     	id: 4,
     	name: '任务',
@@ -183,4 +184,74 @@ angular.module('work.services', [])
     }
 })
 
+//申请列表
+.factory('workApplyList', function() {
+    var list = [{
+        id: 0,
+        date: '2017-03-11 11:12',
+        tips: '[请假][总经办]孙红 2月20休息三天',
+        status: '批准'
+    }];
+
+    return {
+        all: function() {
+            return list;
+        },
+        get: function(id) {
+          for (var i = 0; i < list.length; i++) {
+            if (list[i].id === parseInt(id)) {
+              return list[i];
+            }
+          }
+          return null;
+        }
+    }
+})
+
+//申请新增列表
+.factory('workApplyAddList', function() {
+     var list = [{
+        id: 0,
+        name: '请假申请',
+        tips: '请填写好你的请假原由',
+        link: '#/work/apply/addleave'
+    }, {
+        id: 1,
+        name: '采购申请',
+        tips: '请填写好你要申请采购的详细信息'
+    }, {
+        id: 2,
+        name: '优惠申请',
+        tips: '请填写好你要申请优惠的详细信息',
+        link: '#/work/apply/addprivilege'
+    }, {
+        id: 3,
+        name: '报残申请',
+        tips: '请填写好残次情况的详细信息',
+        link: '#/work/apply/adddiscard'
+    }, {
+        id: 4,
+        name: '工程维修申请',
+        tips: '请填写好你要维修申请的详细信息'
+    }, {
+        id: 5,
+        name: '其他申请',
+        tips: '其他类型申请',
+        link: '#/work/apply/addother'
+    }];
+
+    return {
+        all: function() {
+            return list;
+        },
+        get: function(id) {
+          for (var i = 0; i < list.length; i++) {
+            if (list[i].id === parseInt(id)) {
+              return list[i];
+            }
+          }
+          return null;
+        }
+    }
+})
 

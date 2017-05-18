@@ -3,6 +3,10 @@
     	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
 
+    <ion-nav-buttons side="right">
+      <a href="#/work/apply/addlist" class="ion-plus icon icon-accessory button button-clear"></a>
+    </ion-nav-buttons>
+
 	<ion-content>
 		<div class="bar bar-header item-input-inset">
 			<label class="item-input-wrapper">
@@ -12,7 +16,11 @@
         </div>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <div class="list">
-        	2
+        	<a href="" ng-repeat="item in items" class="item">
+                <h2>{{item.tips}}</h2>
+                <p>{{item.date}}</p>
+                <span class="right">{{item.status}}</span>
+            </a>
         </div>
 	</ion-content>
 </ion-view>
