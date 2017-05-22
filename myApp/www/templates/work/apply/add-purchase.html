@@ -1,0 +1,37 @@
+<ion-view view-title="工程维修申请">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" class="button button-clear button-royal">提交</a>
+    </ion-nav-buttons>
+
+	<ion-content class="stable-bg">
+		<div class="list">
+            <label class="item item-input">
+                <span class="input-label">物品名称</span>
+                <input type="text" placeholder="请输入(必填)" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">数量</span>
+                <input type="text" placeholder="请输入(必填)" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">预算(元)</span>
+                <input type="text" placeholder="请输入(必填)" />
+            </label>
+            <label class="item item-input">
+                <span class="input-label">说明</span>
+                <textarea placeholder="请写清用途可快速通过"></textarea>
+            </label>
+            <p>如有多个采购申请点击“增加明细”按钮</p>
+            <button class="button button-full button-light"><i class="ion-plus"></i>增加明细</button>
+            <div class="item item-icon-right">
+                审批人
+                <span class="item-note">请选择</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>

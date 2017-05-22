@@ -193,6 +193,18 @@ angular.module('work.services', [])
         status: '批准'
     }];
 
+    var audit = [{
+        id: 0,
+        date: '2017-09-11 14:32',
+        tips: '[出差][技术吧]乘车 4月26休息一天',
+        status: '批准'
+    }], apply = [{
+        id: 0,
+        date: '2017-03-11 11:12',
+        tips: '[请假][总经办]孙红 2月20休息三天',
+        status: '批准'
+    }]
+
     return {
         all: function() {
             return list;
@@ -204,6 +216,9 @@ angular.module('work.services', [])
             }
           }
           return null;
+        },
+        getAudit: function() {
+            return audit;
         }
     }
 })
@@ -218,7 +233,8 @@ angular.module('work.services', [])
     }, {
         id: 1,
         name: '采购申请',
-        tips: '请填写好你要申请采购的详细信息'
+        tips: '请填写好你要申请采购的详细信息',
+        link: '#/work/apply/addPurchase'
     }, {
         id: 2,
         name: '优惠申请',
@@ -232,7 +248,8 @@ angular.module('work.services', [])
     }, {
         id: 4,
         name: '工程维修申请',
-        tips: '请填写好你要维修申请的详细信息'
+        tips: '请填写好你要维修申请的详细信息',
+        link: '#/work/apply/addmaintain'
     }, {
         id: 5,
         name: '其他申请',

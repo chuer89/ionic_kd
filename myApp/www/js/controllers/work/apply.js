@@ -9,6 +9,10 @@ angular.module('workApply.controller', [])
         }, 1000)
         return true;
 	}
+
+    $scope.clickTabState = function(state) {
+        console.log(state)
+    }
 })
 
 .controller('WorkApplyAddListCtrl', function($scope, $state, workApplyAddList) {
@@ -51,3 +55,34 @@ angular.module('workApply.controller', [])
         })
 	}
 })
+
+//工程维修申请
+.controller('WorkApplyAddMaintainCtrl', function() {
+
+})
+
+//采购申请
+.controller('WorkApplyAddPurchaseCtrl', function() {
+
+})
+
+//请假审批
+.controller('WorkApplyAuditLeaveCtrl', function($scope, $ionicActionSheet) {
+    $scope.showNav = function() {
+        $ionicActionSheet.show({
+            buttons: [{
+                text: '同意'
+            }, {
+                text: '拒绝'
+            }, {
+                text: '转交'
+            }],
+            cancelText: '取消',
+            buttonClicked: function (index, item) {
+                
+                return true;
+            }
+        });
+    }
+})
+

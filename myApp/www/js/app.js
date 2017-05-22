@@ -293,6 +293,24 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/apply/add-leave.html',
         controller: 'WorkApplyAddLeaveCtrl'
     })
+    //申请-工程维修申请
+    .state('work_apply_addmaintain', {
+        url: '/work/apply/addmaintain',
+        templateUrl: 'templates/work/apply/add-maintain.html',
+        controller: 'WorkApplyAddMaintainCtrl'
+    })
+    //申请-采购申请
+    .state('work_apply_addPurchase', {
+        url: '/work/apply/addPurchase',
+        templateUrl: 'templates/work/apply/add-purchase.html',
+        controller: 'WorkApplyAddPurchaseCtrl'
+    })
+    //申请-请假审批
+    .state('work_apply_auditLeave', {
+        url: '/work/apply/auditLeave',
+        templateUrl: 'templates/work/apply/audit-leave.html',
+        controller: 'WorkApplyAuditLeaveCtrl'
+    })
     
 
     .state('tab.account', {
