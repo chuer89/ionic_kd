@@ -186,28 +186,44 @@ angular.module('work.services', [])
 
 //申请列表
 .factory('workApplyList', function() {
-    var list = [{
-        id: 0,
-        date: '2017-03-11 11:12',
-        tips: '[请假][总经办]孙红 2月20休息三天',
-        status: '批准'
-    }];
+    var auditLink = {
+        'auditLeave': '#/work/apply/auditLeave',
+        'auditPurchase': '#/work/apply/auditPurchase',
+        'auditOther': '#/work/apply/auditOther'
+    }
 
     var audit = [{
         id: 0,
         date: '2017-09-11 14:32',
-        tips: '[出差][技术吧]乘车 4月26休息一天',
-        status: '批准'
+        tips: '[加班][技术吧]调休 4月26休息一天',
+        status: '审核',
+        link: auditLink['auditLeave']
+    }, {
+        id: 2,
+        date: '2017-10-22 14:32',
+        tips: '[采购][技术吧]帮帮球',
+        status: '审核',
+        link: auditLink['auditPurchase']
+    }, {
+        id: 3,
+        date: '2017-11-02 10:12',
+        tips: '[其他][财务部]打篮球 爬山 9月11号团建',
+        status: '审核',
+        link: auditLink['auditOther']
     }], apply = [{
         id: 0,
         date: '2017-03-11 11:12',
         tips: '[请假][总经办]孙红 2月20休息三天',
-        status: '批准'
+        status: '申请'
     }]
 
     return {
-        all: function() {
-            return list;
+        all: function(type) {
+            var _list = audit;
+            if (type == 'apply') {
+                _list = apply;
+            }
+            return _list;
         },
         get: function(id) {
           for (var i = 0; i < list.length; i++) {
@@ -216,9 +232,6 @@ angular.module('work.services', [])
             }
           }
           return null;
-        },
-        getAudit: function() {
-            return audit;
         }
     }
 })

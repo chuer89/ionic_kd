@@ -1,0 +1,51 @@
+<ion-view view-title="采购审批">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+      <a href="javascript:;" ng-click="showNav()" class="ion-more button button-clear button-positive"></a>
+    </ion-nav-buttons>
+
+	<ion-content class="stable-bg">
+		<div class="list">
+            <label class="item item-input">
+                <span class="input-label">物品名称</span>
+                <span class="item-note">章小惠</span>
+            </label>
+            <table>
+                <thead>
+                    <tr>
+                        <td>物品</td><td>数量</td><td>预算</td><td>类型</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>钢笔</td><td>10</td><td>209</td><td>办公用品</td>
+                    </tr>
+                </tbody>
+            </table>
+            <label class="item item-input">
+                <span class="input-label">说明</span>
+                <textarea placeholder="请写清用途可快速通过"></textarea>
+            </label>
+            <div class="item">
+                总预算：&yen;2300.00
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="item item-icon-right">
+                审批人
+                <span class="item-note">黄牛</span>
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="item">
+                审批原因
+                <textarea></textarea>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>

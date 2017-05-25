@@ -11,7 +11,7 @@ angular.module('workApply.controller', [])
 	}
 
     $scope.clickTabState = function(state) {
-        console.log(state)
+        $scope.items = workApplyList.all(state);
     }
 })
 
@@ -68,6 +68,46 @@ angular.module('workApply.controller', [])
 
 //请假审批
 .controller('WorkApplyAuditLeaveCtrl', function($scope, $ionicActionSheet) {
+    $scope.showNav = function() {
+        $ionicActionSheet.show({
+            buttons: [{
+                text: '同意'
+            }, {
+                text: '拒绝'
+            }, {
+                text: '转交'
+            }],
+            cancelText: '取消',
+            buttonClicked: function (index, item) {
+                
+                return true;
+            }
+        });
+    }
+})
+
+//采购审批
+.controller('WorkApplyAuditPurchaseCtrl', function($scope, $ionicActionSheet) {
+    $scope.showNav = function() {
+        $ionicActionSheet.show({
+            buttons: [{
+                text: '同意'
+            }, {
+                text: '拒绝'
+            }, {
+                text: '转交'
+            }],
+            cancelText: '取消',
+            buttonClicked: function (index, item) {
+                
+                return true;
+            }
+        });
+    }
+})
+
+//其他审批
+.controller('WorkApplyAuditOtherCtrl', function($scope, $ionicActionSheet) {
     $scope.showNav = function() {
         $ionicActionSheet.show({
             buttons: [{

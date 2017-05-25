@@ -311,7 +311,18 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/apply/audit-leave.html',
         controller: 'WorkApplyAuditLeaveCtrl'
     })
-    
+    //申请-采购审批
+    .state('work_apply_auditPurchase', {
+        url: '/work/apply/auditPurchase',
+        templateUrl: 'templates/work/apply/audit-purchase.html',
+        controller: 'WorkApplyAuditPurchaseCtrl'
+    })
+    //申请-其他审批
+    .state('work_apply_auditOther', {
+        url: '/work/apply/auditOther',
+        templateUrl: 'templates/work/apply/audit-other.html',
+        controller: 'WorkApplyAuditOtherCtrl'
+    })
 
     .state('tab.account', {
         url: '/account',

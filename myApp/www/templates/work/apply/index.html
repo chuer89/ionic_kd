@@ -20,7 +20,7 @@
         </div>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <div class="list">
-        	<a href="" ng-repeat="item in items" class="item">
+        	<a href={{item.link}} ng-repeat="item in items" class="item">
                 <h2>{{item.tips}}</h2>
                 <p>{{item.date}}</p>
                 <span class="right">{{item.status}}</span>
