@@ -324,6 +324,18 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkApplyAuditOtherCtrl'
     })
 
+    //申请
+    .state('work_notify', {
+        url: '/work/notify',
+        templateUrl: 'templates/work/notify/index.html',
+        controller: 'WorkNotifyCtrl'
+    })
+    .state('work_notify_details', {
+        url: '/work/notify/details/:id',
+        templateUrl: 'templates/work/notify/details.html',
+        controller: 'WorkNotifyDetailsCtrl'
+    })
+
     .state('tab.account', {
         url: '/account',
         views: {

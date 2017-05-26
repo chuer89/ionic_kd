@@ -8,6 +8,7 @@ angular.module('route', [
 	'workTask.controller',
 	'workSchedule.controller',
 	'workApply.controller',
+	'workNotify.controller',
 
 	'perfomance.services',
 	'message.services',

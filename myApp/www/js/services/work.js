@@ -4,7 +4,8 @@ angular.module('work.services', [])
     var list = [{
         id: 0,
         name: '通知',
-        info: '一呼百应'
+        info: '一呼百应',
+        link: '#/work/notify'
     }, {
         id: 1,
         name: '日程',
@@ -285,3 +286,31 @@ angular.module('work.services', [])
     }
 })
 
+//工作－通知－列表
+.factory('workNotifyList', function() {
+    var list = [{
+        id: 0,
+        name: '丽丽',
+        title: '本周例会',
+        tips: '所有店尽量周二上午9:00到办公室19楼开周例会02-11 13看内容曝光书'
+    }, {
+        id: 1,
+        name: '随意',
+        title: '关于首饰回收细则调整',
+        tips: '所有市场销售一线员工，10；299毁灭中中行可决定是否看见啥地方'
+    }];
+
+    return {
+        all: function() {
+            return list;
+        },
+        get: function(id) {
+          for (var i = 0; i < list.length; i++) {
+            if (list[i].id === parseInt(id)) {
+              return list[i];
+            }
+          }
+          return null;
+        }
+    }
+})

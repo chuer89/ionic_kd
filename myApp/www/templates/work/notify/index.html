@@ -1,0 +1,22 @@
+<ion-view view-title="通知">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" ng-click="showNav()" class="ion-more button button-clear button-positive"></a>
+    </ion-nav-buttons>
+
+	<ion-content>
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div class="list">
+        	<a href="#/work/notify/details/{{item.id}}" ng-repeat="item in items" class="item item-icon-right item-icon-left">
+                <i class="icon">{{item.name}}</i>
+                <h2>{{item.title}}</h2>
+                <p>{{item.tips}}</p>
+
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+	</ion-content>
+</ion-view>
