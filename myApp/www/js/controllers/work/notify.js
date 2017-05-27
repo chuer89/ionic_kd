@@ -20,6 +20,9 @@ angular.module('workNotify.controller', [])
             cancelText: '取消',
             buttonClicked: function (index, item) {
                 
+                if (index == 1) {
+                    $state.go('work_notify_add');
+                }
                 return true;
             }
         });
@@ -42,3 +45,28 @@ angular.module('workNotify.controller', [])
         });
     }
 })
+
+.controller('WorkNotifyAddCtrl', function() {
+
+})
+
+.controller('WorkNotifySeleSectionCtrl', function($scope, $state, workSeleNotifySectionList) {
+    $scope.items = workSeleNotifySectionList.all();
+
+    $scope.sub = function() {
+        console.log($scope.items)    
+    }
+
+    $scope.toPerson = function(item) {
+        $state.go('work_notify_sele_person', {
+            id: item.id
+        });
+    }
+})
+
+.controller('WorkNotifySelePersonCtrl', function($scope, $state, $stateParams, workSeleNotifySectionList) {
+    $scope.items = workSeleNotifySectionList.all();
+
+    console.log($stateParams.id)
+})
+

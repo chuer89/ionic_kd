@@ -330,10 +330,29 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/notify/index.html',
         controller: 'WorkNotifyCtrl'
     })
+    //申请－详情
     .state('work_notify_details', {
         url: '/work/notify/details/:id',
         templateUrl: 'templates/work/notify/details.html',
         controller: 'WorkNotifyDetailsCtrl'
+    })
+    //申请－发布通知
+    .state('work_notify_add', {
+        url: '/work/notify/add',
+        templateUrl: 'templates/work/notify/add.html',
+        controller: 'WorkNotifyAddCtrl'
+    })
+    //申请－选择通知部门
+    .state('work_notify_sele_section', {
+        url: '/work/notify/seleSection',
+        templateUrl: 'templates/work/notify/sele-section.html',
+        controller: 'WorkNotifySeleSectionCtrl'
+    })
+    //申请－选择通知人员
+    .state('work_notify_sele_person', {
+        url: '/work/notify/selePerson/:id',
+        templateUrl: 'templates/work/notify/sele-person.html',
+        controller: 'WorkNotifySelePersonCtrl'
     })
 
     .state('tab.account', {

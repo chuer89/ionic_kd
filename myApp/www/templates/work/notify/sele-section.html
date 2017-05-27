@@ -1,0 +1,20 @@
+<ion-view view-title="选择通知的成员">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" ng-click="sub()" class="button button-clear button-positive">确定</a>
+    </ion-nav-buttons>
+
+    <ion-content>
+        <div class="list">
+    		<div ng-repeat="item in items" class="item item-icon-right item-icon-left">
+                <input type="checkbox" name=""/>
+                {{item.name}}
+                <span class="item-note">{{item.num}}</span>
+                <i ng-click="toPerson(item)" class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>
