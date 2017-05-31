@@ -9,6 +9,9 @@ angular.module('route', [
 	'workSchedule.controller',
 	'workApply.controller',
 	'workNotify.controller',
+	'workReport.controller',
+
+	'me.controller',
 
 	'perfomance.services',
 	'message.services',

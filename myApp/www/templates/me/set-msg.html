@@ -1,0 +1,20 @@
+<ion-view view-title="消息设置">
+    <ion-nav-buttons side="left">  
+        <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-content>
+        <ul class="list">
+            <li class="item item-toggle" ng-repeat="item in items">
+                {{item.name}}
+                <label class="toggle toggle-assertive">
+                    <input type="checkbox" checked="" ng-if="item.checked" />
+                    <input type="checkbox" ng-if="!item.checked" />
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </li>
+        </ul>
+    </ion-content>
+</ion-view>

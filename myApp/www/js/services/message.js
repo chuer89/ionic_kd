@@ -27,3 +27,29 @@ angular.module('message.services', [])
         }
     }
 })
+
+.factory('messageSetList', function () {
+    var list = [{
+        name: '任务信息', checked: true
+    }, {
+        name: '简报信息', checked: false
+    }, {
+        name: '通知信息', checked: true
+    }, {
+        name: '申请信息', checked: false
+    }, {
+        name: '值班信息', checked: true
+    }, {
+        name: '绩效信息', checked: true
+    }, {
+        name: '汇报信息', checked: true
+    }, {
+        name: '日程信息', checked: true
+    }]
+
+    return {
+        all: function () {
+            return list;
+        }
+    }
+})

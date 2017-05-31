@@ -355,6 +355,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkNotifySelePersonCtrl'
     })
 
+    //我
     .state('tab.account', {
         url: '/account',
         views: {
@@ -363,7 +364,26 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
                 controller: 'AccountCtrl'
             }
         }
-    });
+    })
+
+    //我－个人信息
+    .state('me_info', {
+        url: '/me/info',
+        templateUrl: 'templates/me/info.html',
+        controller: 'MeInfoCtrl'
+    })
+    //我－消息设置
+    .state('me_set_msg', {
+        url: '/me/setMsg',
+        templateUrl: 'templates/me/set-msg.html',
+        controller: 'MeSetMsgCtrl'
+    })
+    //我－关于
+    .state('me_about', {
+        url: '/me/about',
+        templateUrl: 'templates/me/about.html',
+        controller: 'MeAboutCtrl'
+    })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
