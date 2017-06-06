@@ -355,6 +355,44 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkNotifySelePersonCtrl'
     })
 
+    //汇报
+    .state('work_report', {
+        url: '/work/report',
+        templateUrl: 'templates/work/report/index.html',
+        controller: 'WorkReportCtrl'
+    })
+    //汇报-写日报
+    .state('work_report_addDaily', {
+        url: '/work/report/add-daily',
+        templateUrl: 'templates/work/report/add-daily.html',
+        controller: 'WorkReportAddDailyCtrl'
+    })
+    //汇报-查看工作汇报
+    .state('work_report_history', {
+        url: '/work/report/history',
+        templateUrl: 'templates/work/report/history.html',
+        controller: 'WorkReportHistoryCtrl'
+    })
+    //汇报-工作汇报详情
+    .state('work_report_detail', {
+        url: '/work/report/detail/:id',
+        templateUrl: 'templates/work/report/detail.html',
+        controller: 'WorkReportDetailCtrl'
+    })
+    //汇报-日报统计
+    .state('work_report_record', {
+        url: '/work/report/record',
+        templateUrl: 'templates/work/report/record.html',
+        controller: 'WorkReportRecordCtrl'
+    })
+
+    //值班
+    .state('work_onDuty', {
+        url: '/work/onDuty',
+        templateUrl: 'templates/work/onDuty/index.html',
+        controller: 'WorkOnDutyCtrl'
+    })
+
     //我
     .state('tab.account', {
         url: '/account',

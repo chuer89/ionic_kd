@@ -10,6 +10,7 @@ angular.module('route', [
 	'workApply.controller',
 	'workNotify.controller',
 	'workReport.controller',
+	'workOnDuty.controller',
 
 	'me.controller',
 

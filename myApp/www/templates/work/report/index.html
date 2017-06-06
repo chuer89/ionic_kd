@@ -1,0 +1,30 @@
+<ion-view view-title="通知">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" ng-click="showNav()" class="ion-more button button-clear button-positive"></a>
+    </ion-nav-buttons>
+
+	<ion-content>
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div class="list">
+        	<a href="#/work/report/history" class="item item-icon-right">
+                查看工作汇报
+                <span class="item-note">请选择</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+        <div class="list">
+            <a href="#/work/report/detail/1" class="item">
+                <h2>黎燕松</h2>
+                <p>2017年11月21日 15:39</p>
+                <div>
+                    这里说树木信息，考虑不 i 只是地方是地方开始地方啊十分恐惧啊啥地方了空间
+                </div>
+                <div>评论（6）</div>
+            </a>
+        </div>
+	</ion-content>
+</ion-view>

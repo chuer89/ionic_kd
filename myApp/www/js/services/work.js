@@ -30,11 +30,13 @@ angular.module('work.services', [])
     }, {
     	id: 5,
     	name: '值班',
-    	info: '每日工作，按部就班'
+    	info: '每日工作，按部就班',
+        link: '#/work/onDuty'
     }, {
     	id: 6,
     	name: '工作汇报',
-    	info: '周报月报，全面详实'
+    	info: '周报月报，全面详实',
+        link: '#/work/report'
     }];
 
     return {

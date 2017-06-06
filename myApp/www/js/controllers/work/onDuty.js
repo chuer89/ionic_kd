@@ -1,6 +1,6 @@
-angular.module('workReport.controller', [])
+angular.module('workOnDuty.controller', [])
 
-.controller('WorkReportCtrl', function ($scope, $state, $ionicActionSheet) {
+.controller('WorkOnDutyCtrl', function ($scope, $state, $ionicActionSheet) {
 	$scope.showNav = function() {
         $ionicActionSheet.show({
             buttons: [{
@@ -18,20 +18,4 @@ angular.module('workReport.controller', [])
             }
         });
     }
-})
-
-.controller('WorkReportAddDailyCtrl', function() {
-
-})
-
-.controller('WorkReportHistoryCtrl', function() {
-
-})
-
-.controller('WorkReportDetailCtrl', function() {
-
-})
-
-.controller('WorkReportRecordCtrl', function() {
-	
 })
