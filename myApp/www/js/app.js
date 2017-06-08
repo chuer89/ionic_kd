@@ -25,7 +25,18 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, ionicDatePickerProvider) {
 
-    $ionicConfigProvider.backButton.text('').previousTitleText(false);
+    // $ionicConfigProvider.backButton.text('').previousTitleText(false);
+
+    $ionicConfigProvider.platform.ios.tabs.style('standard');
+    $ionicConfigProvider.platform.ios.tabs.position('bottom');
+    $ionicConfigProvider.platform.android.tabs.style('standard');
+    $ionicConfigProvider.platform.android.tabs.position('bottom');
+    $ionicConfigProvider.platform.ios.navBar.alignTitle('center');
+    $ionicConfigProvider.platform.android.navBar.alignTitle('center');
+    $ionicConfigProvider.platform.ios.backButton.previousTitleText('').icon('ion-ios-arrow-thin-left');
+    $ionicConfigProvider.platform.android.backButton.previousTitleText('').icon('ion-android-arrow-back');
+    $ionicConfigProvider.platform.ios.views.transition('ios');
+    $ionicConfigProvider.platform.android.views.transition('android');
 
     var datePickerObj = {
         inputDate: new Date(),
@@ -391,6 +402,24 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         url: '/work/onDuty',
         templateUrl: 'templates/work/onDuty/index.html',
         controller: 'WorkOnDutyCtrl'
+    })
+    //值班-目标设定
+    .state('work_onDuty_setting', {
+        url: '/work/onDuty/setting',
+        templateUrl: 'templates/work/onDuty/setting.html',
+        controller: 'WorkOnDutySettingCtrl'
+    })
+    //值班-值班查询
+    .state('work_onDuty_query', {
+        url: '/work/onDuty/query',
+        templateUrl: 'templates/work/onDuty/query.html',
+        controller: 'WorkOnDutyQueryCtrl'
+    })
+    //值班-值班详情
+    .state('work_onDuty_details', {
+        url: '/work/onDuty/query/details/:id',
+        templateUrl: 'templates/work/onDuty/details.html',
+        controller: 'WorkOnDutyDetailsCtrl'
     })
 
     //我

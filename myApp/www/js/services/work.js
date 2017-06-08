@@ -39,17 +39,40 @@ angular.module('work.services', [])
         link: '#/work/report'
     }];
 
+    var crm = [{
+        name: '客户',
+        info: '管理客户信息，记录沟通细节'
+    }, {
+        name: '商机',
+        info: '跟踪销售过程，挖掘潜在机会'
+    }, {
+        name: '回访',
+        info: '3周、3月、生日、纪念日顾客回访'
+    }];
+
+    var learn = [{
+        name: '珠宝百科',
+        info: '珠宝知识大全'
+    }, {
+        name: '案例分享',
+        info: '各种经典案例集合'
+    }, {
+        name: '经典FAB',
+        info: '精彩FAB话术'
+    }, {
+        name: '专题课程',
+        info: '针对单一问题详细阐述'
+    }]
+
     return {
         all: function() {
             return list;
         },
-        get: function(id) {
-          for (var i = 0; i < list.length; i++) {
-            if (list[i].id === parseInt(id)) {
-              return list[i];
-            }
-          }
-          return null;
+        crm: function() {
+            return crm;
+        },
+        learn: function() {
+            return learn;
         }
     }
 })

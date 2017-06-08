@@ -1,7 +1,30 @@
 <ion-view view-title="工作">
 	<ion-content>
 		<div class="list">
+			<div>工作</div>
 			<a href="{{item.link || 'javascript:;'}}" class="item item-icon-left item-icon-right" ng-repeat="item in items">
+				<i class="icon ion-email"></i>
+			    <h2>{{item.name}}</h2>
+		    	<p>{{item.info}}</p>
+
+		    	<span class="badge badge-assertive">{{item.count}}</span>
+		    	<i class="icon ion-chevron-right icon-accessory"></i>
+			</a>
+		</div>
+		<div class="list">
+			<div>crm</div>
+			<a href="{{item.link || 'javascript:;'}}" class="item item-icon-left item-icon-right" ng-repeat="item in itemsCrm">
+				<i class="icon ion-email"></i>
+			    <h2>{{item.name}}</h2>
+		    	<p>{{item.info}}</p>
+
+		    	<span class="badge badge-assertive">{{item.count}}</span>
+		    	<i class="icon ion-chevron-right icon-accessory"></i>
+			</a>
+		</div>
+		<div class="list">
+			<div>学习资料</div>
+			<a href="{{item.link || 'javascript:;'}}" class="item item-icon-left item-icon-right" ng-repeat="item in itemsLearn">
 				<i class="icon ion-email"></i>
 			    <h2>{{item.name}}</h2>
 		    	<p>{{item.info}}</p>

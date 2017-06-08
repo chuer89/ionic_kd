@@ -19,3 +19,20 @@ angular.module('workOnDuty.controller', [])
         });
     }
 })
+
+.controller('WorkOnDutySettingCtrl', function() {
+
+})
+
+.controller('WorkOnDutyQueryCtrl', function($scope) {
+    $scope.doRefresh = function() {
+        setTimeout(function() {
+            $scope.$broadcast('scroll.refreshComplete');
+        }, 1000)
+        return true;
+    }
+})
+
+.controller('WorkOnDutyDetailsCtrl', function() {
+    
+})
