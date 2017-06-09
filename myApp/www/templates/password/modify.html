@@ -1,15 +1,24 @@
 <ion-view view-title="修改密码">
-  <ion-nav-buttons side="left">  
+    <ion-nav-buttons side="left">  
     <a href="javascript:history.back(-1)" class="button button-icon icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
-  <ion-content class="padding">
-      <div class="list list-inset">
-          <label class="item item-input">
-              <input type="text" placeholder="请输入6～10位密码数字、字母字符组成" ng-model="data.npassword">
-          </label>
-          <label class="item item-input">
-              <input type="text" placeholder="请再输入密码" ng-model="data.cpassword">
-          </label>
-      </div>
-  </ion-content>
+
+    <ion-nav-buttons side="right">
+    <a href="javascript:;" class="button button-clear button-positive">确定</a>
+    </ion-nav-buttons>
+
+    <ion-content class="padding">
+        <div class="padding_tb">
+            <div class="import_box">
+                <div class="padding_around">
+                    <div class="border_btm row">
+                        <input type="text" class="col" maxlength="16" name="phone" placeholder="请输入6～10位密码数字、字母字符组成" ng-model="data.npassword" />
+                    </div>
+                    <div class="row">
+                        <input type="text" class="col" maxlength="16" name="code" placeholder="请再输入密码" ng-model="data.cpassword" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
 </ion-view>

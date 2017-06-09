@@ -9829,6 +9829,20 @@ a.button {
   word-break: break-all;
   text-overflow: ellipsis; }
 
+/*重置ionic样式*/
+.pane, .view {
+  background: #f2f2f7; }
+
+.button.button-royal {
+  background: #7f6bac; }
+
+.col, .row {
+  padding: 0; }
+
+a {
+  display: inline-block;
+  text-decoration: none; }
+
 .kd_nav_filter {
   height: 50px;
   border-bottom: 1px solid #e6e6e6;
@@ -9879,3 +9893,47 @@ a.button {
     color: #ffffff; }
   .kd_nav_filter .kd_m {
     margin: 0 0.53333rem; }
+
+.border_btm {
+  border-bottom: 1px solid #e6e6e6; }
+
+.text_align_right {
+  text-align: right; }
+
+.import_box {
+  background: white; }
+  .import_box input {
+    display: inline-block;
+    line-height: 2.66667rem;
+    height: 2.66667rem; }
+  .import_box .input_btn {
+    line-height: 2.66667rem; }
+
+/*上下－左右 间距*/
+.padding_around {
+  padding-left: 0.66667rem;
+  padding-right: 0.66667rem; }
+
+.padding_tb {
+  padding-top: 0.66667rem;
+  padding-bottom: 0.66667rem; }
+
+.login_box .logo_box {
+  text-align: center;
+  padding-top: 2.66667rem;
+  padding-bottom: 1.33333rem; }
+  .login_box .logo_box img {
+    width: 4rem; }
+
+.login_box .import_box .icon_box {
+  width: 50px;
+  display: inline-block;
+  text-align: center; }
+  [data-dpr='2'] .login_box .import_box .icon_box {
+    width: 100px; }
+  [data-dpr='3'] .login_box .import_box .icon_box {
+    width: 156px; }
+
+.login_box .import_box img {
+  height: 1.06667rem;
+  vertical-align: middle; }

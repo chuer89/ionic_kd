@@ -24,6 +24,23 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 @import "_baseFunction";
 
+/*重置ionic样式*/
+.pane, .view{
+	background: $colorBody;
+}
+.button.button-royal{
+	background: $colorPurple;
+}
+.col, .row{
+	padding: 0;
+}
+
+a{
+	display: inline-block;
+	text-decoration: none;
+}
+
+
 .kd_nav_filter{
 	@include height-dpr(50);
 	border-bottom: 1px solid $colorSimpleGrey;
@@ -79,6 +96,57 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	}
 	.kd_m{
 		margin: 0 pxRem(40);
+	}
+}
+
+.border_btm{
+	border-bottom: 1px solid $colorSimpleGrey;
+}
+.text_align_right{
+	text-align: right;
+}
+
+.import_box{
+	background: white;
+	input {
+		display: inline-block;
+		line-height: pxRem(200);
+		height: pxRem(200);
+	}
+	.input_btn{
+		line-height: pxRem(200);
+	}
+}
+
+/*上下－左右 间距*/
+.padding_around{
+	padding-left: pxRem(50);
+	padding-right: pxRem(50);
+}
+.padding_tb{
+	padding-top: pxRem(50);
+	padding-bottom: pxRem(50);
+}
+
+.login_box{
+	.logo_box{
+		text-align: center;
+		padding-top: pxRem(200);
+		padding-bottom: pxRem(100);
+		img{
+			width: pxRem(300);
+		}
+	}
+	.import_box{
+		.icon_box{
+			@include width-dpr(50);
+			display: inline-block;
+			text-align: center;
+		}
+		img{
+			height: pxRem(80);
+			vertical-align: middle;
+		}
 	}
 }
 
