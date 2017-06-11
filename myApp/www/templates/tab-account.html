@@ -1,29 +1,57 @@
 <ion-view view-title="我">
-  <ion-content>
-  	<div class="list">
-  		<a href="#/me/info" class="item">
-  			<h2>青苔</h2>
-  			<p>山野代表</p>
-  		</a>
-  	</div>
-  	<div class="list">
-		<a href="#/me/setMsg" class="item item-icon-left">
-	    	<i class="icon ion-home"></i>
-		    消息设置
-	  	</a>
-	  	<a href="#" class="item item-icon-left">
-	    	<i class="icon ion-ios-list-outline"></i>
-		    通讯录
-	  	</a>
-  	</div>
-  	<div class="list">
-  		<a href="#/me/about" class="item item-icon-left">
-  			<i class="icon ion-ios-help"></i>
-  			关于
-  		</a>
-  	</div>
-    <div class="list">
-        <a href="javascript:;" class="item button button-block button-stable">退出登录</a>
-    </div>
+    <ion-content>
+        <div class="list_box padding_tb">
+            <div class="item_list_box">
+                <a href="#/me/info" class="row">
+                    <div class="col col-10 text_align_center">
+                        <span class="name_box">伟</span>
+                    </div>
+                    <div class="col col-70">
+                        <h2 class="title">青苔</h2>
+                        <p class="info">商业代表</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="list_box padding_tb">
+            <div class="item_list_box">
+                <a href="#/me/setMsg" class="row">
+                    <div class="col left_icon_box col-10">
+                        <img class="left_icon" src="img/icon/me/message.png"/>
+                    </div>
+                    <div class="col col-70">
+                        <h2 class="title">消息设置</h2>
+                    </div>
+                </a>
+            </div>
+            <div class="item_list_box">
+                <a href="javascript:;" class="row">
+                    <div class="col left_icon_box col-10">
+                        <img class="left_icon" src="img/icon/me/address.png"/>
+                    </div>
+                    <div class="col col-70">
+                        <h2 class="title">通讯录</h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="list_box padding_tb">
+            <div class="item_list_box">
+                <a href="#/me/about" class="row">
+                    <div class="col left_icon_box col-10">
+                        <img class="left_icon" src="img/icon/me/about.png"/>
+                    </div>
+                    <div class="col col-70">
+                        <h2 class="title">关于</h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="list">
+            <a href="javascript:;" class="item button button-block button-light">退出登录</a>
+        </div>
   </ion-content>
 </ion-view>

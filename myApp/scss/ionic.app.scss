@@ -34,37 +34,98 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .col, .row{
 	padding: 0;
 }
+.toggle.toggle-royal input:checked+.track{
+	background: $colorPurple;
+	border-color: $colorPurple;
+}
+.list_box.list{
+	margin: 0;
+}
+.list_box{
+	.item{
+		color: $colorBlack;
+	}
+	.item-avatar{
+		padding-left: 15px;
+		min-height: auto;
+		.head_right_box{
+			left: auto;
+			right: pxRem(50);
+			top: 5px;
+		}
+	}
+}
+
 
 a{
 	display: inline-block;
 	text-decoration: none;
 }
 
+.colorPurple{
+	color: $colorPurple;
+}
+.colorRed{
+	color: $colorRed;
+}
 
+/*上下－左右 间距*/
+.padding_around{
+	padding-left: pxRem(50);
+	padding-right: pxRem(50);
+}
+.padding_tb{
+	padding-top: pxRem(50);
+	padding-bottom: pxRem(50);
+}
+
+/*搜索*/
+.search_box{
+	height: auto;
+	padding: 0;
+	.item-input-wrapper{
+		background: white;
+	}
+}
+
+/*下拉菜单筛选*/
 .kd_nav_filter{
 	@include height-dpr(50);
 	border-bottom: 1px solid $colorSimpleGrey;
 	@include font-dpr(14);
+	background: white;
+	position: relative;
+	z-index: 10;
+
+	.padding_around{
+		padding-top: pxRem(40);
+	}
 
 	.kd_sele_box{
 		position: relative;
 		.kd_sele_val{
 			border: 1px solid $colorGrey;
 			@extend %textOverflow;
-			border-radius: pxRem(30);
-			padding: pxRem(20) pxRem(10);
+			border-radius: pxRem(80);
+			padding: pxRem(20) pxRem(40);
+			position: absolute;
+			color: $colorBlack;
+			.ion-arrow-down-b{
+				padding-left: pxRem(20);
+				color: $colorBlack;
+			}
 		}
 		.kd_sele_content{
 			position: absolute;
 			z-index: 2;
-			top: pxRem(240);
+			top: pxRem(200);
 			.kd_sele_item{
 				border-radius: pxRem(15);
 				background: $colorPurple;
 			}
 			.kd_sele_arrow{
 				position: absolute;
-				right: pxRem(30);
+				left: 48%;
 				top: pxRem(-55);
 				color: $colorPurple;
 				z-index: 3;
@@ -83,7 +144,7 @@ a{
 	}
 
 	.kd_btn{
-		padding: pxRem(20) pxRem(50);
+		padding: pxRem(20) pxRem(40);
 		border: 1px solid $colorGrey;
 		color: $colorGrey;
 		background: $colorWhite;
@@ -95,7 +156,7 @@ a{
 		color: $colorWhite;
 	}
 	.kd_m{
-		margin: 0 pxRem(40);
+		margin: 0 pxRem(20);
 	}
 }
 
@@ -105,7 +166,11 @@ a{
 .text_align_right{
 	text-align: right;
 }
+.text_align_center{
+	text-align: center;
+}
 
+/*输入框*/
 .import_box{
 	background: white;
 	input {
@@ -118,16 +183,66 @@ a{
 	}
 }
 
-/*上下－左右 间距*/
-.padding_around{
-	padding-left: pxRem(50);
-	padding-right: pxRem(50);
-}
-.padding_tb{
-	padding-top: pxRem(50);
-	padding-bottom: pxRem(50);
+/*列表*/
+.list_box{
+	.list_type_title{
+		color: $colorGrey;
+	}
+	.item_list_box{
+		border-bottom: 1px solid $colorSimpleGrey;
+		display: block;
+		background: white;
+		padding: pxRem(50);
+		h2, p{
+			margin: 0;
+		}
+		.icon-accessory{
+			color: $colorGrey;
+		}
+		.item-content{
+			padding: 0;
+		}
+		.name_box{
+			background: $colorPurple;
+			padding: pxRem(20) pxRem(30);
+			color: white;
+			border-radius: pxRem(60);
+			display: inline-block;
+		}
+		.f14{
+			@include font-dpr(14);
+		}
+		.head_name{
+			@include height-dpr(30);
+			border-radius: pxRem(80);
+		}
+	}
+	.left_icon_box{
+		/*@include width-dpr(50);*/
+		text-align: center;
+		.red-point{
+			position: relative;
+			top: pxRem(-50);
+			right: pxRem(-20);
+		}
+	}
+	.left_icon{
+		@include height-dpr(20);
+		vertical-align: middle;
+		display: inline-block;
+	}
+
+	.title{
+		@include font-dpr(16);
+		color: $colorBlack;
+	}
+	.info{
+		color: $colorGrey;
+		@include font-dpr(12);
+	}
 }
 
+/*登录*/
 .login_box{
 	.logo_box{
 		text-align: center;
@@ -148,5 +263,23 @@ a{
 			vertical-align: middle;
 		}
 	}
+}
+
+/*小红点*/
+.tab-red-point:after,.red-point:after{
+   position: absolute;
+  content: ' ';
+  height: 6px;
+  width: 6px;
+  border-radius: 3px;
+  background-color: red;
+}
+.tab-red-point:after{
+  top: 7px;
+  right: 24%;
+}
+.red-point:after{
+  top: 10px;
+  right: 35%;
 }
 

@@ -4,12 +4,15 @@
     <a href="javascript:history.back(-1)" class="button button-icon icon ion-ios-arrow-back" nav-direction="back"></a>  
   	</ion-nav-buttons>
 
-	<ion-content class="padding">
+	<ion-content>
+		<div class="list_box">
+			<div class="item_list_box"></div>
+		</div>
 		<div class="card list">
 			<div class="item item-avatar">
 				<img src="img/perry.png">
-				<h2>{{item.name}}</h2>
-				<p>2092-29-43</p>
+				<p class="title">考核对象：{{item.name}}</p>
+				<p class="title">考核人：系统</p>
 			</div>
 			<div class="item item-body">
 				<p>原因：认识通告 你在于2018-03-22 00:22:13时间内完成，超期，对其进行扣分</p>

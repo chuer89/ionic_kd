@@ -4,29 +4,47 @@
     </ion-nav-buttons>
 
   	<ion-content>
-  		<div class="kd_nav_filter row">
-  			<div class="kd_sele_box col col-20">
-  				<div class="kd_sele_val">请选择<i class="ion-arrow-down-b"></i></div>
-  				<div class="kd_sele_content" style="display: none;">
-  					<i class="ion-arrow-up-b kd_sele_arrow"></i>
-  					<div class="kd_sele_item">
-  						<a href="javascript:;">本月</a>
-	  					<a href="javascript:;">次月</a>
-	  					<a href="javascript:;">很多月</a>
-  					</div>
-  				</div>
-  			</div>
-  			<div class="col col-offset-20">
-  				<button class="kd_btn">类型</button><button class="kd_active_btn kd_btn kd_m">假发</button>
-  			</div>
+  		<div class="kd_nav_filter">
+            <div class="padding_around row">
+      			<div class="kd_sele_box col col-20">
+      				<div ng-click="toggleSeleBrank()" class="kd_sele_val">品牌<i class="ion-arrow-down-b"></i></div>
+      				<div class="kd_sele_content" ng-show="isShowBrandSele">
+      					<i class="ion-arrow-up-b kd_sele_arrow"></i>
+      					<div class="kd_sele_item">
+      						<a href="javascript:;" ng-repeat="item in seleBrand">{{item.name}}</a>
+      					</div>
+      				</div>
+      			</div>
+                <div class="kd_sele_box col col-20">
+                    <div ng-click="toggleSeleDepartment()" class="kd_sele_val">部门<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowDepartment">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleDepartment">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+      			<div class="col text_align_right">
+      				<button class="kd_btn">全部</button>
+                    <button class="kd_active_btn kd_btn kd_m">加分</button>
+                    <button class="kd_btn">扣分</button>
+      			</div>
+            </div>
   		</div>
-    	<div class="padding">
-    		<ion-list>
-                <ion-item ng-repeat="item in items">
-                    <h2>{{item.name}}</h2>
-                    <p>{{item.marks}}</p>
-                </ion-item>
-            </ion-list>
-    	</div>
+        <div class="list_box">
+            <div class="list_type_title padding_around">考核时间：2017年6月</div>
+            <div class="item_list_box" ng-repeat="item in items">
+                <a href="javascript:;" class="row">
+                    <div class="col col-10 text_align_center">
+                        <span class="name_box">伟</span>
+                    </div>
+                    <div class="col col-70">
+                        <h2 class="title">{{item.name}}</h2>
+                        <p class="info">{{item.marks}}</p>
+                    </div>
+                </a>
+            </div>
+            </div>
+        </div>
   	</ion-content>
 </ion-view>

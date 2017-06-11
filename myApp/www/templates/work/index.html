@@ -1,36 +1,57 @@
 <ion-view view-title="工作">
 	<ion-content>
-		<div class="list">
-			<div>工作</div>
-			<a href="{{item.link || 'javascript:;'}}" class="item item-icon-left item-icon-right" ng-repeat="item in items">
-				<i class="icon ion-email"></i>
-			    <h2>{{item.name}}</h2>
-		    	<p>{{item.info}}</p>
-
-		    	<span class="badge badge-assertive">{{item.count}}</span>
-		    	<i class="icon ion-chevron-right icon-accessory"></i>
+		<div class="list_box">
+			<div class="padding_around list_type_title">工作</div>
+			<a href="{{item.link || 'javascript:;'}}" class="item_list_box" ng-repeat="item in items">
+				<div class="row">
+	        		<div class="col col-10 left_icon_box">
+	        			<img src="{{item.icon || 'img/logo.png'}}" class="left_icon" />
+	        		</div>
+	        		<div class="col col-67">
+	        			<h2 class="title">{{item.name}}</h2>
+		        		<p class="info">{{item.info}}</p>
+	        		</div>
+	        		<div class="col col-20 text_align_right">
+	        			<span class="badge badge-assertive">{{item.count}}</span>
+		    			<i class="icon ion-chevron-right icon-accessory"></i>
+	        		</div>
+        		</div>
 			</a>
 		</div>
-		<div class="list">
-			<div>crm</div>
-			<a href="{{item.link || 'javascript:;'}}" class="item item-icon-left item-icon-right" ng-repeat="item in itemsCrm">
-				<i class="icon ion-email"></i>
-			    <h2>{{item.name}}</h2>
-		    	<p>{{item.info}}</p>
-
-		    	<span class="badge badge-assertive">{{item.count}}</span>
-		    	<i class="icon ion-chevron-right icon-accessory"></i>
+		<div class="list_box">
+			<div class="padding_around list_type_title">crm</div>
+			<a href="{{item.link || 'javascript:;'}}" class="item_list_box" ng-repeat="item in itemsCrm">
+				<div class="row">
+	        		<div class="col col-10 left_icon_box">
+	        			<img src="{{item.icon || 'img/logo.png'}}" class="left_icon" />
+	        		</div>
+	        		<div class="col col-67">
+	        			<h2 class="title">{{item.name}}</h2>
+		        		<p class="info">{{item.info}}</p>
+	        		</div>
+	        		<div class="col col-20 text_align_right">
+	        			<span class="badge badge-assertive">{{item.count}}</span>
+		    			<i class="icon ion-chevron-right icon-accessory"></i>
+	        		</div>
+        		</div>
 			</a>
 		</div>
-		<div class="list">
-			<div>学习资料</div>
-			<a href="{{item.link || 'javascript:;'}}" class="item item-icon-left item-icon-right" ng-repeat="item in itemsLearn">
-				<i class="icon ion-email"></i>
-			    <h2>{{item.name}}</h2>
-		    	<p>{{item.info}}</p>
-
-		    	<span class="badge badge-assertive">{{item.count}}</span>
-		    	<i class="icon ion-chevron-right icon-accessory"></i>
+		<div class="list_box">
+			<div class="padding_around list_type_title">学习资料</div>
+			<a href="{{item.link || 'javascript:;'}}" class="item_list_box" ng-repeat="item in itemsLearn">
+				<div class="row">
+	        		<div class="col col-10 left_icon_box">
+	        			<img src="{{item.icon || 'img/logo.png'}}" class="left_icon" />
+	        		</div>
+	        		<div class="col col-67">
+	        			<h2 class="title">{{item.name}}</h2>
+		        		<p class="info">{{item.info}}</p>
+	        		</div>
+	        		<div class="col col-20 text_align_right">
+	        			<span class="badge badge-assertive">{{item.count}}</span>
+		    			<i class="icon ion-chevron-right icon-accessory"></i>
+	        		</div>
+        		</div>
 			</a>
 		</div>
 	</ion-content>

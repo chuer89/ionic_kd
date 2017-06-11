@@ -5,63 +5,78 @@ angular.module('work.services', [])
         id: 0,
         name: '通知',
         info: '一呼百应',
-        link: '#/work/notify'
+        link: '#/work/notify',
+        icon: 'img/icon/work/notify.png'
     }, {
         id: 1,
         name: '日程',
         info: '时间安排',
         link: '#/work/schedule',
-        count: 1
+        count: 1,
+        icon: 'img/icon/work/schedule.png'
     }, {
     	id: 2,
     	name: '签到',
     	info: '上下班打卡',
-    	link: '#/work/sign_in'
+    	link: '#/work/sign_in',
+        icon: 'img/icon/work/sign_in.png'
     }, {
     	id: 3,
     	name: '申请',
     	info: '请假、优惠、调换、维修等',
-        link: '#/work/apply'
+        link: '#/work/apply',
+        icon: 'img/icon/work/apply.png'
     }, {
     	id: 4,
     	name: '任务',
     	info: '分配任务，逐一跟踪',
-        link: '#/work/task'
+        link: '#/work/task',
+        icon: 'img/icon/work/task.png'
     }, {
     	id: 5,
     	name: '值班',
     	info: '每日工作，按部就班',
-        link: '#/work/onDuty'
+        link: '#/work/onDuty',
+        icon: 'img/icon/work/onDuty.png'
     }, {
     	id: 6,
     	name: '工作汇报',
     	info: '周报月报，全面详实',
-        link: '#/work/report'
+        link: '#/work/report',
+        icon: 'img/icon/work/report.png'
     }];
 
     var crm = [{
         name: '客户',
-        info: '管理客户信息，记录沟通细节'
+        info: '管理客户信息，记录沟通细节',
+        count: 1,
+        icon: 'img/icon/work/customer.png'
     }, {
         name: '商机',
-        info: '跟踪销售过程，挖掘潜在机会'
+        info: '跟踪销售过程，挖掘潜在机会',
+        icon: 'img/icon/work/opportunity.png'
     }, {
         name: '回访',
-        info: '3周、3月、生日、纪念日顾客回访'
+        info: '3周、3月、生日、纪念日顾客回访',
+        icon: 'img/icon/work/visit.png'
     }];
 
     var learn = [{
         name: '珠宝百科',
-        info: '珠宝知识大全'
+        info: '珠宝知识大全',
+        icon: 'img/icon/work/cyclopedia.png'
     }, {
         name: '案例分享',
-        info: '各种经典案例集合'
+        info: '各种经典案例集合',
+        icon: 'img/icon/work/share.png'
     }, {
         name: '经典FAB',
-        info: '精彩FAB话术'
+        info: '精彩FAB话术',
+        icon: 'img/icon/work/trick.png'
     }, {
         name: '专题课程',
-        info: '针对单一问题详细阐述'
+        info: '针对单一问题详细阐述',
+        icon: 'img/icon/work/course.png'
     }]
 
     return {

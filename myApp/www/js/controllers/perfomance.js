@@ -5,6 +5,28 @@ angular.module('perfomance.controller', [])
     $scope.data = {};
 
     $scope.items = perfomanceList.all();
+    $scope.seleBrand = perfomanceList.seleBrand();
+    $scope.seleDepartment = perfomanceList.seleDepartment();
+
+    $scope.isShowBrandSele = false;
+    $scope.isShowDepartment = false;
+
+    var toggleSele = function(type) {
+        if (type == 'brand') {
+            $scope.isShowDepartment = false;
+            $scope.isShowBrandSele = !$scope.isShowBrandSele;
+        } else {
+            $scope.isShowBrandSele = false;
+            $scope.isShowDepartment = !$scope.isShowDepartment;
+        }
+    }
+
+    $scope.toggleSeleBrank = function() {
+        toggleSele('brand');
+    }
+    $scope.toggleSeleDepartment = function() {
+        toggleSele('department');
+    }
 
     $scope.showNav = function () {
         $ionicActionSheet.show({
@@ -32,10 +54,33 @@ angular.module('perfomance.controller', [])
         });
     }
 })
-.controller('QueryPerfomaceCtrl', function($scope, $state, perfomanceQuery) {
+.controller('QueryPerfomaceCtrl', function($scope, $state, perfomanceQuery, perfomanceList) {
     $scope.data = {};
 
     $scope.items = perfomanceQuery.all();
+
+    $scope.seleBrand = perfomanceList.seleBrand();
+    $scope.seleDepartment = perfomanceList.seleDepartment();
+
+    $scope.isShowBrandSele = false;
+    $scope.isShowDepartment = false;
+
+    var toggleSele = function(type) {
+        if (type == 'brand') {
+            $scope.isShowDepartment = false;
+            $scope.isShowBrandSele = !$scope.isShowBrandSele;
+        } else {
+            $scope.isShowBrandSele = false;
+            $scope.isShowDepartment = !$scope.isShowDepartment;
+        }
+    }
+
+    $scope.toggleSeleBrank = function() {
+        toggleSele('brand');
+    }
+    $scope.toggleSeleDepartment = function() {
+        toggleSele('department');
+    }
 
     $scope.doRefresh = function() {
         setTimeout(function() {

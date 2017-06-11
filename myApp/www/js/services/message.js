@@ -5,12 +5,20 @@ angular.module('message.services', [])
         id: 0,
         name: '通知：24号上午开周会',
         intro: '24号上午10:20在19楼所有店经理开周例会',
-        time: '19:00'
+        time: '19:00',
+        icon: 'img/icon/work/notify.png'
     }, {
         id: 1,
-        name: '日常：暴力和李涮吧出国',
+        name: '日程：暴力和李涮吧出国',
         intro: '申请5009元钻石9折卡',
-        time: '20:30'
+        time: '20:30',
+        icon: 'img/icon/work/schedule.png'
+    }, {
+        id: 2,
+        name: '签到：舒服凉快积分啊啥地方',
+        intro: '啥地方啊是否理解啊舒服啊舒服看',
+        time: '21:49',
+        icon: 'img/icon/work/sign_in.png'
     }];
 
     return {
