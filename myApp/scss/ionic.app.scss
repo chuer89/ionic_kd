@@ -223,6 +223,10 @@ a{
 			@include height-dpr(30);
 			border-radius: pxRem(80);
 		}
+		.list_icon_box{
+			padding-top: pxRem(25);
+			display: inline-block;
+		}
 		.big_head{
 			padding-top: pxRem(60);
 			.head_name{

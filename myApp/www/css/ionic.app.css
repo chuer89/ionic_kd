@@ -10007,6 +10007,9 @@ a {
         height: 60px; }
       [data-dpr='3'] .list_box .item_list_box .head_name {
         height: 96px; }
+    .list_box .item_list_box .list_icon_box {
+      padding-top: 0.33333rem;
+      display: inline-block; }
     .list_box .item_list_box .big_head {
       padding-top: 0.8rem; }
       .list_box .item_list_box .big_head .head_name {

@@ -13,7 +13,9 @@
         	<ion-item class="item_list_box" ng-repeat="item in items">
         		<div class="row">
 	        		<div class="col col-10 left_icon_box">
-	        			<img src="{{item.icon || 'img/logo.png'}}" class="left_icon" />
+	        			<span class="list_icon_box">
+	        				<img src="{{item.icon || 'img/logo.png'}}" class="left_icon" />
+	        			</span>
 	        			<span class="red-point"></span>
 	        		</div>
 	        		<div class="col col-67">
