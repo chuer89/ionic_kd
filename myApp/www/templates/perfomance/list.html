@@ -1,0 +1,41 @@
+<ion-view view-title="绩效列表－{{item.name}}">
+
+	<ion-nav-buttons side="left">  
+    <a href="javascript:history.back(-1)" class="button button-icon icon ion-ios-arrow-back" nav-direction="back"></a>  
+  	</ion-nav-buttons>
+
+	<ion-content>
+		<a href="#/perfomance/details/{{item.id}}" class="list_box padding_tb" ng-repeat="item in items">
+			<div class="item_list_box">
+				<div class="row">
+					<div class="col col-20 text_align_center">
+                        <div class="big_head">
+                        	<span class="name_box" ng-if="!item.head">伟</span>
+                        	<img src="img/perry.png" ng-if="item.head" class="head_name" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h2 class="title border_btm padding_tb">考核对象：{{item.name}}</h2>
+                        <h2 class="title padding_tb">考核人：系统</h2>
+                    </div>
+				</div>
+			</div>
+			<div class="item_list_box">
+				<div class="row">
+					<div class="col col-20 text_align_center">
+						<span class="info f14">原由：</span>
+					</div>
+					<div class="col">
+						<span class="title">中国古代的类书是一种百科全书式的资料汇编，也有学者认为明朝的《永乐大典》是最早的接近现代意义上的百科全书。</span>
+					</div>
+				</div>
+			</div>
+			<div class="item_list_box">
+				<div class="details_img_thumbnail clearfix">
+					<img src="img/ben.png"/>
+					<img src="img/mike.png"/>
+				</div>
+			</div>
+		</a>
+	</ion-content>
+</ion-view>

@@ -41,6 +41,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .list_box.list{
 	margin: 0;
 }
+.list_box.card{
+	margin: 10px 0;
+	box-shadow: none;
+}
 .list_box{
 	.item{
 		color: $colorBlack;
@@ -61,6 +65,8 @@ a{
 	display: inline-block;
 	text-decoration: none;
 }
+
+.clearfix{overflow:hidden;_zoom:1;}
 
 .colorPurple{
 	color: $colorPurple;
@@ -185,6 +191,7 @@ a{
 
 /*列表*/
 .list_box{
+	display: block;
 	.list_type_title{
 		color: $colorGrey;
 	}
@@ -215,6 +222,26 @@ a{
 		.head_name{
 			@include height-dpr(30);
 			border-radius: pxRem(80);
+		}
+		.big_head{
+			padding-top: pxRem(60);
+			.head_name{
+				@include height-dpr(50);
+				border-radius: pxRem(120);
+			}
+			.name_box{
+				padding: pxRem(75);
+				border-radius: pxRem(120);
+				@include font-dpr(20);
+				font-weight: bold;
+			}
+		}
+		.details_img_thumbnail{
+			img{
+				@include height-dpr(60);
+				float: left;
+				padding: pxRem(20);
+			}
 		}
 	}
 	.left_icon_box{

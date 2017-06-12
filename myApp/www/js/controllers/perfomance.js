@@ -54,6 +54,8 @@ angular.module('perfomance.controller', [])
         });
     }
 })
+
+// 绩效查询
 .controller('QueryPerfomaceCtrl', function($scope, $state, perfomanceQuery, perfomanceList) {
     $scope.data = {};
 
@@ -89,9 +91,20 @@ angular.module('perfomance.controller', [])
         return true;
     }
 })
+
+// 绩效列表
+.controller('ListPerfomance', function($scope, $stateParams, perfomanceQuery) {
+    $scope.item = perfomanceQuery.get($stateParams.id);
+
+    $scope.items = perfomanceQuery.all();
+})
+
+// 绩效详情
 .controller('DetailsPerfomance', function ($scope, $state, $stateParams, perfomanceQuery) {
     $scope.item = perfomanceQuery.get($stateParams.id);
 })
+
+// 绩效开单
 .controller('AddPerfomance', function ($scope, $state, $stateParams, $cordovaCamera, perfomanceQuery) {
     $scope.getPicture = function() {
         var options = {

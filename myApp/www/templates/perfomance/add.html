@@ -1,25 +1,39 @@
 <ion-view view-title="绩效开单">
     <ion-nav-buttons side="left">  
-    <a href="javascript:history.back(-1)" class="button button-icon icon ion-ios-arrow-back" nav-direction="back"></a>  
+        <a href="javascript:history.back(-1)" class="button button-icon icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
+    
     <ion-nav-buttons side="right">
-      <a href="javascript:;">done</a>
+        <a href="javascript:;" class="button button-clear button-positive">保存</a>
     </ion-nav-buttons>
+
   	<ion-content>
-  		<div class="list card">
-            <div class="item item-input item-select">
-                <div class="input-label">
-                考核对象
+        <div class="list_box">
+            <div class="item_list_box">
+                <div class="row">
+                    <div class="col col-20">
+                        <h2 class="title f14">考核对象</h2>
+                    </div>
+                    <div class="col text_align_right">
+                        <span class="info f14">请选择</span>
+                        <i class="icon ion-chevron-right icon-accessory"></i>
+                    </div>
                 </div>
-                <select>
-                    <option>Blue</option>
-                    <option selected="">Green</option>
-                    <option>Red</option>
-                </select>
+            </div>
+            <div class="item_list_box">
+                <div class="row">
+                    <div class="col col-20">
+                        <h2 class="title f14">绩效类型</h2>
+                    </div>
+                    <div class="col text_align_right">
+                        <span class="info f14">请选择</span>
+                        <i class="icon ion-chevron-right icon-accessory"></i>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="list card">
+        <div class="list card list_box">
             <label class="item item-input">
                 <span class="input-label">分值</span>
                 <input type="text" placeholder="请输入">
@@ -34,7 +48,7 @@
               </label>
         </div>
 
-        <div class="list card">
+        <div class="list card list_box">
             <div class="item item-input item-select">
                 <div class="input-label">
                 项目

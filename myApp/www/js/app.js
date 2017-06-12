@@ -112,12 +112,19 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/perfomance/query.html',
         controller: 'QueryPerfomaceCtrl'
     })
+    //绩效列表
+    .state('perfomance_list', {
+        url: '/perfomance/list/:id',
+        templateUrl: 'templates/perfomance/list.html',
+        controller: 'ListPerfomance'
+    })
     //绩效详情
     .state('perfomance_details', {
         url: '/perfomance/details/:id',
         templateUrl: 'templates/perfomance/details.html',
         controller: 'DetailsPerfomance'
     })
+    //绩效开单
     .state('perfomance_add', {
         url: '/perfomance/add',
         templateUrl: 'templates/perfomance/add.html',
