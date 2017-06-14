@@ -247,6 +247,9 @@ a{
 				padding: pxRem(20);
 			}
 		}
+		.colorRed{
+			color: $colorRed;
+		}
 	}
 	.left_icon_box{
 		/*@include width-dpr(50);*/

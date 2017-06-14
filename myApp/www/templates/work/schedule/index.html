@@ -8,17 +8,18 @@
     </ion-nav-buttons>
 
 	<ion-content>
-        <div class="list">
+        <div class="list padding_tb" style="margin: 0;padding-bottom: 0;">
             <a href="#/work/schedule_my" class="item item-icon-right">
               我安排的日程
               <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
         </div>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
-        <div class="list">
-            <a href="#/work/schedule/{{item.id}}" class="item" ng-repeat="item in items">
-                <p>{{item.time}}</p>
-                <h2>{{item.tips}}</h2>
+        <div class="list_box">
+            <div class="list_type_title padding_around">收到的日程</div>
+            <a href="#/work/schedule/{{item.id}}" class="item_list_box" ng-repeat="item in items">
+                <p class="colorRed info">{{item.time}}</p>
+                <h2 class="title">{{item.tips}}</h2>
             </a>
         </div>
     </ion-content>

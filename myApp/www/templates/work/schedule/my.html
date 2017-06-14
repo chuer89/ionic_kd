@@ -9,10 +9,10 @@
 
 	<ion-content>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
-        <div class="list">
-            <a href="#/work/schedule/{{item.id}}" class="item" ng-repeat="item in items">
-                <p>{{item.time}}</p>
-                <h2>{{item.tips}}</h2>
+        <div class="list_box">
+            <a href="#/work/schedule/{{item.id}}" class="item_list_box" ng-repeat="item in items">
+                <p class="colorRed info">{{item.time}}</p>
+                <h2 class="title">{{item.tips}}</h2>
             </a>
         </div>
     </ion-content>

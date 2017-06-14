@@ -10036,6 +10036,8 @@ a {
         height: 120px; }
       [data-dpr='3'] .list_box .item_list_box .details_img_thumbnail img {
         height: 186px; }
+    .list_box .item_list_box .colorRed {
+      color: #ff0014; }
   .list_box .left_icon_box {
     /*@include width-dpr(50);*/
     text-align: center; }
