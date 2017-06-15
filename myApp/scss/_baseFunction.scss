@@ -47,6 +47,15 @@
         height: ($size + 2) * 3px;
     }
 }
+@mixin min-height-dpr($size) {
+    min-height: $size * 1px;
+    [data-dpr='2'] & {
+        min-height: $size * 2px;
+    }
+    [data-dpr='3'] & {
+        min-height: ($size + 2) * 3px;
+    }
+}
 
 %maxWidthBody {
     margin: 0 auto;

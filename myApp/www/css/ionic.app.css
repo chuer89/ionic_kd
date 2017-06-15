@@ -9850,6 +9850,9 @@ a.button {
   margin: 10px 0;
   box-shadow: none; }
 
+.bar.bar-stable .title.colorRed {
+  color: #ff0014; }
+
 .list_box .item {
   color: #444444; }
 
@@ -9977,6 +9980,29 @@ a {
   display: block; }
   .list_box .list_type_title {
     color: #a4a4a4; }
+  .list_box .purple_bg_title {
+    background: #7f6bac;
+    color: white;
+    padding: 0.4rem 0.66667rem;
+    font-size: 16px; }
+    [data-dpr='2'] .list_box .purple_bg_title {
+      font-size: 32px; }
+    [data-dpr='3'] .list_box .purple_bg_title {
+      font-size: 54px; }
+    .list_box .purple_bg_title p {
+      margin: 0.26667rem 0; }
+    .list_box .purple_bg_title .f14 {
+      font-size: 14px; }
+      [data-dpr='2'] .list_box .purple_bg_title .f14 {
+        font-size: 28px; }
+      [data-dpr='3'] .list_box .purple_bg_title .f14 {
+        font-size: 48px; }
+  .list_box .schedele_details .schedule_content {
+    min-height: 50px; }
+    [data-dpr='2'] .list_box .schedele_details .schedule_content {
+      min-height: 100px; }
+    [data-dpr='3'] .list_box .schedele_details .schedule_content {
+      min-height: 156px; }
   .list_box .item_list_box {
     border-bottom: 1px solid #e6e6e6;
     display: block;

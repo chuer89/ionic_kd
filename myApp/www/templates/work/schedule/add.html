@@ -8,29 +8,34 @@
     </ion-nav-buttons>
 
 	<ion-content>
-		<div class="list">
+        <div class="list">
             <div class="item">
                 <textarea placeholder="请输入日程内容"></textarea>
             </div>
-            <div class="item item-icon-right">
-                时间
-              <input type="datetime" class="item-note" name="" placeholder="请选择"/>
-              <i class="icon ion-chevron-right icon-accessory"></i>
-            </div>
+        </div>
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">时间</span>
+                <input type="datetime" class="text_align_right" placeholder="请选择时间"/>
+            </label>
             <div class="item item-icon-right" ng-click="showSeleRepeat()">
                 重复
                 <span class="item-note">{{seleRepeat}}</span>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </div>
+        </div>
+        <div class="list">
             <div class="item item-icon-right">
-              成员
-              <span class="item-note">请选择</span>
-              <i class="icon ion-chevron-right icon-accessory"></i>
+                成员
+                <span class="item-note">请选择</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
             </div>
+        </div>
+		<div class="list">
             <div class="item item-icon-right" ng-click="showSeleWarn()">
-              提醒
-              <span class="item-note">{{seleWarn}}</span>
-              <i class="icon ion-chevron-right icon-accessory"></i>
+                提醒
+                <span class="item-note">{{seleWarn}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
             </div>
         </div>
 	</ion-content>

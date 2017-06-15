@@ -45,6 +45,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	margin: 10px 0;
 	box-shadow: none;
 }
+.bar.bar-stable .title.colorRed{
+	color: $colorRed;
+}
 .list_box{
 	.item{
 		color: $colorBlack;
@@ -194,6 +197,23 @@ a{
 	display: block;
 	.list_type_title{
 		color: $colorGrey;
+	}
+	.purple_bg_title{
+		background: $colorPurple;
+		color: white;
+		padding: pxRem(30) pxRem(50);
+		@include font-dpr(16);
+		p{
+			margin: pxRem(20) 0;
+		}
+		.f14{
+			@include font-dpr(14);
+		}
+	}
+	.schedele_details{
+		.schedule_content{
+			@include min-height-dpr(50);
+		}
 	}
 	.item_list_box{
 		border-bottom: 1px solid $colorSimpleGrey;

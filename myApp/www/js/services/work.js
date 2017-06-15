@@ -50,7 +50,8 @@ angular.module('work.services', [])
         name: '客户',
         info: '管理客户信息，记录沟通细节',
         count: 1,
-        icon: 'img/icon/work/customer.png'
+        icon: 'img/icon/work/customer.png',
+        link: '#/work/client'
     }, {
         name: '商机',
         info: '跟踪销售过程，挖掘潜在机会',

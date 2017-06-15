@@ -61,3 +61,28 @@ angular.module('message.services', [])
         }
     }
 })
+
+.factory('seleMenuList', function() {
+    //星级
+    var star = [{name: '★'}, {name: '★★'}, {name: '★★★'}, {name: '★★★★'}, {name: '★★★★★'}, {name: '全部'}];
+
+    //周期
+    var period = [{name: '半年'}, {name: '一年'}, {name: '一年半'}, {name: '两年'}, {name: '三年'}, {name: '三年以上'}];
+
+    //频次
+    var frequency = [{name: '一次'}, {name: '两次'}, {name: '三次'}, {name: '四次'}, {name: '五次以上'}];
+
+    //全额
+    var amount = [{name: '1000'}, {name: '2000'}, {name: '4000'}, {name: '6000'}, {name: '8000+'}];
+
+    return {
+        menu: function() {
+            return {
+                star: star,
+                period: period,
+                frequency: frequency,
+                amount: amount
+            };
+        }
+    }
+})
