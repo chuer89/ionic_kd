@@ -1,6 +1,6 @@
 // Ionic Starter App
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
+// angularhttp://192.168.4.143/wpad.dat.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
@@ -434,6 +434,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         url: '/work/client',
         templateUrl: 'templates/work/client/index.html',
         controller: 'WorkClientCtrl'
+    })
+    //客户-详情
+    .state('work_client_details', {
+        url: '/work/client/details/:id',
+        templateUrl: 'templates/work/client/details.html',
+        controller: 'WorkClientDetailsCtrl'
     })
 
     //我

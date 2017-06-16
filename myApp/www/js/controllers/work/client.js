@@ -48,3 +48,8 @@ angular.module('workClient.controller', [])
         return true;
 	}
 })
+
+.controller('WorkClientDetailsCtrl', function($scope, $state) {
+    
+})
+

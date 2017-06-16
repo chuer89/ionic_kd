@@ -201,13 +201,16 @@ a{
 	.purple_bg_title{
 		background: $colorPurple;
 		color: white;
-		padding: pxRem(30) pxRem(50);
+		padding: pxRem(50) pxRem(50);
 		@include font-dpr(16);
 		p{
 			margin: pxRem(20) 0;
 		}
 		.f14{
 			@include font-dpr(14);
+		}
+		.pt_10{
+			padding-top: pxRem(50);
 		}
 	}
 	.schedele_details{

@@ -9983,7 +9983,7 @@ a {
   .list_box .purple_bg_title {
     background: #7f6bac;
     color: white;
-    padding: 0.4rem 0.66667rem;
+    padding: 0.66667rem 0.66667rem;
     font-size: 16px; }
     [data-dpr='2'] .list_box .purple_bg_title {
       font-size: 32px; }
@@ -9997,6 +9997,8 @@ a {
         font-size: 28px; }
       [data-dpr='3'] .list_box .purple_bg_title .f14 {
         font-size: 48px; }
+    .list_box .purple_bg_title .pt_10 {
+      padding-top: 0.66667rem; }
   .list_box .schedele_details .schedule_content {
     min-height: 50px; }
     [data-dpr='2'] .list_box .schedele_details .schedule_content {
