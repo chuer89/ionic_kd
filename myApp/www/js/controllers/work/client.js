@@ -50,6 +50,22 @@ angular.module('workClient.controller', [])
 })
 
 .controller('WorkClientDetailsCtrl', function($scope, $state) {
-    
+    $scope.activeTab = '0';
+
+    $scope.isShowTab0 = true;
+    $scope.isShowTab1 = false;
+
+    $scope.items = [{}, {}];
+
+    $scope.checkTab = function(index) {
+        $scope.activeTab = index;
+        if (index == '0') {
+            $scope.isShowTab1 = false;
+            $scope.isShowTab0 = true;
+        } else {
+            $scope.isShowTab0 = false;
+            $scope.isShowTab1 = true;
+        }
+    }
 })
 

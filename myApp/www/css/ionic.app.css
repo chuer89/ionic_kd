@@ -9975,9 +9975,22 @@ a {
   .import_box .input_btn {
     line-height: 2.66667rem; }
 
+/*tab切换*/
+.tab_box {
+  background: white; }
+  .tab_box .tab_btn {
+    color: #a4a4a4;
+    border-bottom: 1px solid #e6e6e6;
+    text-align: center; }
+  .tab_box .tab_btn_active {
+    color: #444444;
+    border-bottom-color: #7f6bac; }
+
 /*列表*/
 .list_box {
   display: block; }
+  .list_box .colorPurple {
+    color: #7f6bac; }
   .list_box .list_type_title {
     color: #a4a4a4; }
   .list_box .purple_bg_title {
@@ -10009,7 +10022,8 @@ a {
     border-bottom: 1px solid #e6e6e6;
     display: block;
     background: white;
-    padding: 0.66667rem; }
+    padding: 0.66667rem;
+    color: #444444; }
     .list_box .item_list_box h2, .list_box .item_list_box p {
       margin: 0; }
     .list_box .item_list_box .icon-accessory {

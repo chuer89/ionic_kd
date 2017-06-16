@@ -192,9 +192,26 @@ a{
 	}
 }
 
+/*tab切换*/
+.tab_box{
+	background: white;
+	.tab_btn{
+		color: $colorGrey;
+		border-bottom: 1px solid $colorSimpleGrey;
+		text-align: center;
+	}
+	.tab_btn_active{
+		color: $colorBlack;
+		border-bottom-color: $colorPurple;
+	}
+}
+
 /*列表*/
 .list_box{
 	display: block;
+	.colorPurple{
+		color: $colorPurple;
+	}
 	.list_type_title{
 		color: $colorGrey;
 	}
@@ -223,6 +240,7 @@ a{
 		display: block;
 		background: white;
 		padding: pxRem(50);
+		color: $colorBlack;
 		h2, p{
 			margin: 0;
 		}
