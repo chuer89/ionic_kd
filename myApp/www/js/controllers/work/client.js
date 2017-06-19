@@ -69,3 +69,24 @@ angular.module('workClient.controller', [])
     }
 })
 
+.controller('WorkClientCreateCtrl', function($scope, $ionicActionSheet) {
+    $scope.seleType = '请选择';
+    $scope.showSeleType = function () {
+        $ionicActionSheet.show({
+            buttons: [
+                {text: '智能分析'},
+                {text: '优柔寡断'},
+                { text: '自我吹嘘' },
+                {text: '豪爽冲动'},
+                {text: '吹毛求癖'},
+                {text: '正常类型'}
+            ],
+            cancelText: '取消',
+            buttonClicked: function(index, item) {
+                $scope.seleType = item.text;
+                return true;
+            }
+        })
+    }
+})
+

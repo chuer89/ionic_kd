@@ -24,8 +24,8 @@
             </div>
             <div class="tab_box">
                 <div class="row">
-                    <a href="javascript:;" ng-click="checkTab(0)" class="col padding_tb tab_btn tab_btn_active">跟进记录(1)</a>
-                    <a href="javascript:;" ng-click="checkTab(1)" class="col padding_tb tab_btn">消费记录(2)</a>
+                    <a href="javascript:;" ng-click="checkTab(0)" ng-class="{'tab_btn_active': isShowTab0}" class="col padding_tb tab_btn">跟进记录(1)</a>
+                    <a href="javascript:;" ng-click="checkTab(1)" ng-class="{'tab_btn_active': isShowTab1}" class="col padding_tb tab_btn">消费记录(2)</a>
                 </div>
             </div>
             <div ng-show="isShowTab0">

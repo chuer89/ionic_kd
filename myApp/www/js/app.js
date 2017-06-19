@@ -441,6 +441,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/client/details.html',
         controller: 'WorkClientDetailsCtrl'
     })
+    //客户-创建
+    .state('work_client_create', {
+        url: '/work/client/create',
+        templateUrl: 'templates/work/client/create.html',
+        controller: 'WorkClientCreateCtrl'
+    })
 
     //我
     .state('tab.account', {
