@@ -463,6 +463,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/opportunity/details.html',
         controller: 'WorkOpportunityDetailsCtrl'
     })
+    //商机-创建
+    .state('work_opportunity_create', {
+        url: '/work/opportunity/create',
+        templateUrl: 'templates/work/opportunity/create.html',
+        controller: 'WorkOpportunityCreateCtrl'
+    })
 
     //我
     .state('tab.account', {
