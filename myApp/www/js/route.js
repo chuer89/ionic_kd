@@ -12,6 +12,7 @@ angular.module('route', [
 	'workReport.controller',
 	'workOnDuty.controller',
 	'workClient.controller',
+	'workOpportunity.controller',
 
 	'me.controller',
 

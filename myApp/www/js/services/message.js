@@ -75,13 +75,17 @@ angular.module('message.services', [])
     //全额
     var amount = [{name: '1000'}, {name: '2000'}, {name: '4000'}, {name: '6000'}, {name: '8000+'}];
 
+    //销售阶段
+    var market = [{name: '初步意向'}, {name: '洽谈阶段'}, {name: '基本达成'}, {name: '成交'}, {name: '失败'}, {name: '无效'}];
+
     return {
         menu: function() {
             return {
                 star: star,
                 period: period,
                 frequency: frequency,
-                amount: amount
+                amount: amount,
+                market: market
             };
         }
     }

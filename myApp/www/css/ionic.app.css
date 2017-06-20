@@ -9894,6 +9894,14 @@ a {
   .search_box .item-input-wrapper {
     background: white; }
 
+.search_purple .search_box .item-input-wrapper {
+  background: #7f6bac;
+  border-radius: 20px; }
+  .search_purple .search_box .item-input-wrapper .placeholder-icon {
+    color: white; }
+  .search_purple .search_box .item-input-wrapper input {
+    color: white; }
+
 /*下拉菜单筛选*/
 .kd_nav_filter {
   height: 50px;

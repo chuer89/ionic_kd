@@ -1,0 +1,73 @@
+<ion-view view-title="商机">
+
+    <ion-nav-buttons side="left">  
+        <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>
+
+        </ion-nav-buttons>
+
+	<ion-nav-buttons side="right">
+      <a href="#/work/client/create" class="ion-plus icon icon-accessory button button-clear"></a>
+    </ion-nav-buttons>
+
+  	<ion-content>
+        <div class="tab_box">
+            <div class="row">
+                <a href="javascript:;" ng-click="checkTab(0)" ng-class="{'tab_btn_active': isShowTab0}" class="col padding_tb tab_btn">潜跟客户</a>
+                <a href="javascript:;" ng-click="checkTab(1)" ng-class="{'tab_btn_active': isShowTab1}" class="col padding_tb tab_btn">沉睡客户</a>
+                <a href="javascript:;" ng-click="checkTab(2)" ng-class="{'tab_btn_active': isShowTab2}" class="col padding_tb tab_btn">可能的机会</a>
+            </div>
+        </div>
+
+  		<div class="kd_nav_filter">
+            <div class="padding_around row">
+                <div class="kd_sele_box col">
+                    <div ng-click="toggleSele('market')" class="kd_sele_val">销售阶段<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowMarketSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleMarket">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+
+      			<div class="kd_sele_box col">
+      				<div ng-click="toggleSele('star')" class="kd_sele_val">星级<i class="ion-arrow-down-b"></i></div>
+      				<div class="kd_sele_content" ng-show="isShowStarSele">
+      					<i class="ion-arrow-up-b kd_sele_arrow"></i>
+      					<div class="kd_sele_item">
+      						<a href="javascript:;" ng-repeat="item in seleStar">{{item.name}}</a>
+      					</div>
+      				</div>
+      			</div>
+
+                <div class="col search_purple">
+                    <div class="bar search_box bar-header item-input-inset">
+                        <label class="item-input-wrapper">
+                            <i class="icon ion-ios-search placeholder-icon"></i>
+                            <input type="search" placeholder="搜索" />
+                        </label>
+                    </div>
+                </div>
+            </div>
+  		</div>
+        <div class="list_box">
+            <a href="#/work/opportunity/details/1" class="item_list_box" ng-repeat="item in items">
+                <h2 class="title">1克拉玛依钻石</h2>
+                <div class="row">
+                    <div class="col">
+                        <p>张洪达</p>
+                        <p>级别大餐</p>
+                    </div>
+                    <div class="col">
+                        <P>13409204938</P>
+                        <p>2017-09-20</p>
+                    </div>
+                    <div class="col">
+                        <p>&nbsp;</p>
+                        <p>★★</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+  	</ion-content>
+</ion-view>

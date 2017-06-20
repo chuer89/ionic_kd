@@ -55,7 +55,8 @@ angular.module('work.services', [])
     }, {
         name: '商机',
         info: '跟踪销售过程，挖掘潜在机会',
-        icon: 'img/icon/work/opportunity.png'
+        icon: 'img/icon/work/opportunity.png',
+        link: '#/work/opportunity'
     }, {
         name: '回访',
         info: '3周、3月、生日、纪念日顾客回访',

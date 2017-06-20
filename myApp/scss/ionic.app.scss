@@ -96,6 +96,20 @@ a{
 		background: white;
 	}
 }
+.search_purple{
+	.search_box {
+		.item-input-wrapper{
+			background: $colorPurple;
+			border-radius: 20px;
+			.placeholder-icon{
+				color: white;
+			}
+			input{
+				color: white;
+			}
+		}
+	}
+}
 
 /*下拉菜单筛选*/
 .kd_nav_filter{

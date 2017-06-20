@@ -429,6 +429,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkOnDutyDetailsCtrl'
     })
 
+
+    //crm
+
     //客户
     .state('work_client', {
         url: '/work/client',
@@ -446,6 +449,19 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         url: '/work/client/create',
         templateUrl: 'templates/work/client/create.html',
         controller: 'WorkClientCreateCtrl'
+    })
+
+    //商机
+    .state('work_opportunity', {
+        url: '/work/opportunity',
+        templateUrl: 'templates/work/opportunity/index.html',
+        controller: 'WorkOpportunityCtrl'
+    })
+    //商机-详情
+    .state('work_opportunity_details', {
+        url: '/work/opportunity/details/:id',
+        templateUrl: 'templates/work/opportunity/details.html',
+        controller: 'WorkOpportunityDetailsCtrl'
     })
 
     //我
