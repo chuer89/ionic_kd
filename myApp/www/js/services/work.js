@@ -60,7 +60,8 @@ angular.module('work.services', [])
     }, {
         name: '回访',
         info: '3周、3月、生日、纪念日顾客回访',
-        icon: 'img/icon/work/visit.png'
+        icon: 'img/icon/work/visit.png',
+        link: '#/work/visit'
     }];
 
     var learn = [{

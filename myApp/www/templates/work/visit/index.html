@@ -1,0 +1,81 @@
+<ion-view view-title="回访">
+
+    <ion-nav-buttons side="left">  
+        <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>
+
+        </ion-nav-buttons>
+
+  	<ion-content>
+  		<div class="kd_nav_filter">
+            <div class="padding_around row">
+      			<div class="kd_sele_box col">
+      				<div ng-click="toggleSele('star')" class="kd_sele_val">星级<i class="ion-arrow-down-b"></i></div>
+      				<div class="kd_sele_content" ng-show="isShowStarSele">
+      					<i class="ion-arrow-up-b kd_sele_arrow"></i>
+      					<div class="kd_sele_item">
+      						<a href="javascript:;" ng-repeat="item in seleStar">{{item.name}}</a>
+      					</div>
+      				</div>
+      			</div>
+                <div class="kd_sele_box col">
+                    <div ng-click="toggleSele('period')" class="kd_sele_val">时间段<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowPeriodSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in selePeriod">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col">
+                    <div ng-click="toggleSele('special')" class="kd_sele_val">特殊日<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowSpecialSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleSpecial">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  		</div>
+        <div class="list_box">
+            <a href="javascript:;" class="item_list_box">
+                <div class="border_btm">
+                    <div class="row">
+                        <div class="col">
+                            <p class="title">丽丽了女士</p>
+                        </div>
+                        <div class="col info col-67">
+                            <p>微信：huanghuangwekk9983</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col info">
+                            <P>13409204938</P>
+                        </div>
+                        <div class="col info">
+                            <p class="colorPurple">智能分析师</p>
+                        </div>
+                        <div class="col info">
+                            <p class="colorPurple">★★</p>
+                        </div>
+                    </div>
+                    <div class="row info">
+                        <div class="col">
+                            <p>k斤吊坠炫酷环钻</p>
+                        </div>
+                        <div class="col">
+                            <p>&yen;190</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p>回访记录：这里是极了</p>
+                    <div class="row">
+                        <div class="col">访问时间：2017-03-22</div>
+                        <div class="col">跟进人：丽莎</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+  	</ion-content>
+</ion-view>

@@ -470,6 +470,13 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkOpportunityCreateCtrl'
     })
 
+    //客户
+    .state('work_visit', {
+        url: '/work/visit',
+        templateUrl: 'templates/work/visit/index.html',
+        controller: 'WorkVisitCtrl'
+    })
+
     //我
     .state('tab.account', {
         url: '/account',
