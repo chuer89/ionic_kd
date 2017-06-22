@@ -8,6 +8,10 @@
 				</label>
 	        </div>
 		</div>
+		<button class="button" ng-click="startVib()">整栋</button>
+		<button class="button" ng-click="date()">日期</button>
+		<button class="button" ng-click="camera()">相机</button>
+		<button class="button" ng-click="phone()">相册</button>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <ion-list class="list_box">
         	<ion-item class="item_list_box" ng-repeat="item in items">
@@ -29,5 +33,9 @@
 		        </ion-option-button>
         	</ion-item>
         </ion-list>
+        <div>{{phoneData}}</div>
+        <div>
+        	<img src="" id="myImage">
+        </div>
 	</ion-content>
 </ion-view>
