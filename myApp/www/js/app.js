@@ -430,7 +430,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     })
 
 
-    //crm
+    //crm-start
 
     //客户
     .state('work_client', {
@@ -470,12 +470,26 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkOpportunityCreateCtrl'
     })
 
-    //客户
+    //回访
     .state('work_visit', {
         url: '/work/visit',
         templateUrl: 'templates/work/visit/index.html',
         controller: 'WorkVisitCtrl'
     })
+
+    //crm-end
+
+
+    //学习园区-start
+
+    //百科
+    .state('work_cyclopedia', {
+        url: '/work/cyclopedia',
+        templateUrl: 'templates/work/cyclopedia/index.html',
+        controller: 'WorkCyclopediaCtrl'
+    })
+
+    //学习园区-end
 
     //我
     .state('tab.account', {

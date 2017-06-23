@@ -372,3 +372,13 @@ a{
   right: 35%;
 }
 
+.block_baike_moke{
+	.item_baike{
+		border-radius: 5px;
+		color: white;
+		@include font-dpr(20);
+		margin: pxRem(20);
+		text-align: center;
+	}
+}
+

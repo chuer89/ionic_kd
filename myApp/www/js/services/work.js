@@ -67,7 +67,8 @@ angular.module('work.services', [])
     var learn = [{
         name: '珠宝百科',
         info: '珠宝知识大全',
-        icon: 'img/icon/work/cyclopedia.png'
+        icon: 'img/icon/work/cyclopedia.png',
+        link: '#/work/cyclopedia'
     }, {
         name: '案例分享',
         info: '各种经典案例集合',
