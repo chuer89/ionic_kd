@@ -10160,9 +10160,25 @@ a {
   border-radius: 5px;
   color: white;
   font-size: 20px;
-  margin: 0.26667rem;
-  text-align: center; }
+  margin: 0.4rem 0.26667rem;
+  text-align: center;
+  padding: 20px 0; }
   [data-dpr='2'] .block_baike_moke .item_baike {
     font-size: 40px; }
   [data-dpr='3'] .block_baike_moke .item_baike {
     font-size: 66px; }
+
+.block_baike_moke .p_t_b {
+  padding: 37.2px 0; }
+
+.block_baike_moke .item_baike_m {
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  padding: 10px 0;
+  text-align: center;
+  margin: 0.4rem 0.26667rem; }
+  [data-dpr='2'] .block_baike_moke .item_baike_m {
+    font-size: 28px; }
+  [data-dpr='3'] .block_baike_moke .item_baike_m {
+    font-size: 48px; }

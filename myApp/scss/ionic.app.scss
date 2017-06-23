@@ -377,8 +377,20 @@ a{
 		border-radius: 5px;
 		color: white;
 		@include font-dpr(20);
-		margin: pxRem(20);
+		margin: pxRem(30) pxRem(20);
 		text-align: center;
+		padding: 20px 0;
+	}
+	.p_t_b{
+		padding: 37.2px 0;
+	}
+	.item_baike_m{
+		border-radius: 5px;
+		color: white;
+		@include font-dpr(14);
+		padding: 10px 0;
+		text-align: center;
+		margin: pxRem(30) pxRem(20);
 	}
 }
 
