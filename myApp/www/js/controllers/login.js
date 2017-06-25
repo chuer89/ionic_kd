@@ -1,6 +1,6 @@
 angular.module('login.controller', [])
 
-.controller('LoginCtrl', function($scope, $ionicPopup, $state, $ionicHistory) {
+.controller('LoginCtrl', function($scope, $ionicPopup, $state, $ionicHistory, $cordovaToast, common) {
     $scope.data = {};
 
     $ionicHistory.clearCache();
@@ -11,25 +11,59 @@ angular.module('login.controller', [])
     }
 
     $scope.login = function() {
-        $state.go('tab.dash');
+        if ($scope.data.mobile || $scope.data.password) {
 
-        // LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
-        //     $state.go('tab.dash');
-        // }).error(function(data) {
-        //     var alertPopup = $ionicPopup.alert({
-        //         title: 'Login failed!',
-        //         template: 'Please check your credentials!'
-        //     });
-        // });
+        } else {
+            $cordovaToast
+            .show('请输入手机号和密码', 'long', 'bottom');
+            return;
+        }
+
+        common.post({
+            type: 'client_login',
+            data: {
+                // mobile: $scope.data.mobile,
+                // password: $scope.data.password
+
+                mobile: 13889521999,
+                password: 123456
+            },
+            success: function(data) {
+                angular.extend(common.userInfo, data.body);
+
+                $state.go('tab.dash');
+            }
+        });
     }
 })
 
 //忘记密码
-.controller('ForgotPsdCtrl', function ($scope, $ionicPopup, $state) {
+.controller('ForgotPsdCtrl', function ($scope, $ionicPopup, $state, $cordovaToast, common) {
     $scope.data = {};
 
     $scope.handleCode = function() {
-        $state.go('modifyPsd')
+        // $state.go('modifyPsd');
+    }
+
+    $scope.sendCode = function() {
+        if ($scope.data.mobile) {
+
+        } else {
+            $cordovaToast
+            .show('请输入手机号', 'long', 'bottom');
+            return;
+        }
+
+        common.post({
+            type: 'send_code',
+            data: {
+                // mobile: $scope.data.mobile
+                mobile: 15608203716
+            },
+            success: function(data) {
+                console.log(data)
+            }
+        });
     }
 })
 

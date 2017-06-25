@@ -488,6 +488,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/cyclopedia/index.html',
         controller: 'WorkCyclopediaCtrl'
     })
+    //百科
+    .state('work_cyclopedia_list', {
+        url: '/work/cyclopedia/list/:id',
+        templateUrl: 'templates/work/cyclopedia/list.html',
+        controller: 'WorkCyclopediaListCtrl'
+    })
 
     //学习园区-end
 

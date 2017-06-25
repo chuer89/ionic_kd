@@ -13,9 +13,9 @@
                 <div class="padding_around">
                     <div class="border_btm row">
                         <div class="col">
-                            <input type="text" maxlength="11" name="phone" placeholder="请输入手机号" ng-model="data.phone" />
+                            <input type="text" maxlength="11" name="mobile" placeholder="请输入手机号" ng-model="data.mobile" />
                         </div>
-                        <div class="col text_align_right"><a class="input_btn" href="javascript:;">获取验证码</a></div>
+                        <div class="col text_align_right"><a class="input_btn" ng-click="sendCode()" href="javascript:;">获取验证码</a></div>
                     </div>
                     <div>
                         <input type="text" maxlength="6" name="code" placeholder="请输入短信中的验证码" ng-model="data.code" />

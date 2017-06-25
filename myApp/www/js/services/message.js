@@ -90,3 +90,75 @@ angular.module('message.services', [])
         }
     }
 })
+
+.factory('common', function($http, $cordovaToast) {
+    var obj = {
+        post: function(opt) {
+            var data = opt.data || {};
+            var type = opt.type || '';
+            var success = opt.success;
+            var error = opt.error;
+
+            var fail = function(msg) {
+                $cordovaToast
+                .show(msg, 'long', 'bottom');
+            }
+
+            if (typeof success != 'function') {
+                success = function(){
+                    $cordovaToast
+                    .show('成功', 'long', 'bottom');
+                };
+            }
+
+            if (typeof error != 'function') {
+                error = function() {
+                    $cordovaToast
+                    .show('请稍后再试', 'long', 'bottom');
+                }
+            }
+
+            var param = {
+                appType: 'IOS',
+                appVersion: '1.0.0',
+                body: data,
+                businessType: type
+            }
+
+            $http({
+                method: 'POST',
+                url: 'http://123.206.95.25:18080/kuaidao/client/resources.html',
+                params: {
+                    json: JSON.stringify(param)
+                }
+            }).success(function(data) {
+                if (data.status != '1000' && !opt.noFail) {
+                    fail(data.message || '数据有误');
+                } else {
+                    success(data)
+                }
+            }).error(function(data) {
+                error(data);
+            });
+
+            // $http({
+        //     method: 'POST',
+        //     url: 'http://123.206.95.25:18080/kuaidao/client/resources.html',
+        //     params: {
+        //         // json: '{"appType":"IOS","appVersion":"1.0.0","body":{},"businessType":"departmrnt_info"}'
+        //         json: '{"appType":"IOS","appVersion":"1.0.0","body":{"mobile":13889521999,"password":123456},"businessType":"client_login"}'
+        //     }
+        // }).success(function(data) {
+        //     console.log(data)
+        // }).error(function(data) {
+
+        // })
+        },
+
+        userInfo: {}
+    };
+
+    window.COMMON = obj;
+
+    return obj;
+})

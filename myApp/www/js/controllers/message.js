@@ -14,7 +14,7 @@ angular.module('message.controller', [])
 	  // 震动 1000ms 
 	  	$cordovaVibration.vibrate(1000); 
 
-	  	$cordovaToast.show('这里是气泡测试', 'long', 'top')
+	  	$cordovaToast.show('这里是气泡测试', 'long', 'bottom')
 	  				.then(function(success) {
 
 	  				}, function(error) {

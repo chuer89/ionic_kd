@@ -389,3 +389,68 @@ angular.module('work.services', [])
         }
     }
 })
+
+//百科-类型
+.factory('workCyclopediaType', function() {
+    var blockData = [{
+        name: '黄金'
+    }, {
+        name: 'K金'
+    }, {
+        name: '铂金'
+    }, {
+        name: '钻石'
+    }, {
+        name: '玉石'
+    }, {
+        name: '银饰'
+    }, {
+        name: '金壤玉'
+    }, {
+        name: '璧玺'
+    }, {
+        name: '水晶石'
+    }, {
+        name: '人造石'
+    }, {
+        name: '葡萄石'
+    }, {
+        name: '蓝宝石'
+    }, {
+        name: '红宝石'
+    }, {
+        name: '石榴石'
+    }, {
+        name: '芙蓉石'
+    }, {
+        name: '珍珠'
+    }, {
+        name: '玛瑙石'
+    }, {
+        name: '蜜蜡'
+    }, {
+        name: '珊瑚'
+    }, {
+        name: '琥珀'
+    }, {
+        name: '猫眼石'
+    }];
+
+    for (var i = 0, ii = blockData.length; i < ii; i++) {
+        blockData[i].id = i;
+    }
+
+    return {
+        all: function() {
+            return blockData;
+        },
+        get: function(id) {
+          for (var i = 0; i < blockData.length; i++) {
+            if (blockData[i].id === parseInt(id)) {
+              return blockData[i];
+            }
+          }
+          return null;
+        }
+    }
+})
