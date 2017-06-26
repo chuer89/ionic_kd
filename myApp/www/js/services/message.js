@@ -91,7 +91,7 @@ angular.module('message.services', [])
     }
 })
 
-.factory('common', function($http, $cordovaToast) {
+.factory('common', function($http, $cordovaToast, $ionicActionSheet, $state, $cordovaCamera, $cordovaImagePicker) {
     var obj = {
         post: function(opt) {
             var data = opt.data || {};
@@ -155,7 +155,68 @@ angular.module('message.services', [])
         // })
         },
 
-        userInfo: {}
+        userInfo: {
+            clientId: 3
+        },
+
+        showSelePhoto: function(id) {
+            id = id || 'myImage';
+
+            $ionicActionSheet.show({
+                buttons: [
+                    {text: '拍照'},
+                    {text: '从手机相册选择'}
+                ],
+                cancelText: '取消',
+                buttonClicked: function(index, item) {
+                    if (index) {
+                        phone();
+                    } else {
+                        camera();
+                    }
+                    return true;
+                }
+            });
+
+            var camera = function() {
+                var options = {  
+                    quality: 50,  
+                    destinationType: Camera.DestinationType.DATA_URL,  
+                    sourceType: Camera.PictureSourceType.CAMERA,  
+                    allowEdit: true,  
+                    encodingType: Camera.EncodingType.JPEG,  
+                    targetWidth: 100,  
+                    targetHeight: 100,  
+                    popoverOptions: CameraPopoverOptions,  
+                    saveToPhotoAlbum: false  
+                };  
+
+                $cordovaCamera.getPicture(options).then(function(imageData) {  
+                    var image = document.getElementById(id);  
+                    image.src = "data:image/jpeg;base64," + imageData;  
+                }, function(err) {  
+                    // error  
+                });  
+            }
+
+            var phone = function() {
+                var options = {
+                    maximumImagesCount: 10,
+                    width: 800,
+                    height: 800,
+                    quality: 80
+                };
+
+                $cordovaImagePicker.getPictures(options)
+                .then(function (results) {
+                    for (var i = 0; i < results.length; i++) {
+                        // console.log('Image URI: ' + results[i]);
+                    }
+                }, function(error) {
+                    // error getting photos
+                });
+            }
+        }
     };
 
     window.COMMON = obj;

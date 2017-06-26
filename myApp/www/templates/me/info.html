@@ -5,23 +5,23 @@
 
 	<ion-content>
         <div class="list list_box padding_tb">
-        	<div class="item item-avatar">
+        	<div class="item item-avatar" ng-click="showSelePhoto()">
                 头像
-                <img src="img/adam.jpg" class="head_right_box" />
+                <img src="img/adam.jpg" id="myImage" class="head_right_box" />
+            </div>
+            <div class="item" ng-click="showPopup('name')">
+                姓名<span class="item-note">{{item.name}}</span>
             </div>
             <div class="item">
-                姓名<span class="item-note">啥地方</span>
-            </div>
-            <div class="item">
-                手机号<span class="item-note">14958370494</span>
+                手机号<span class="item-note">{{item.mobile}}</span>
             </div>
         </div>
         <div class="list list_box padding_tb">
             <div class="item">
-                邮箱<span class="item-note">14958370494@qq.com</span>
+                邮箱<span class="item-note">{{item.email}}</span>
             </div>
-            <div class="item">
-                地址<span class="item-note">大中国啥地方风；看见啥地方</span>
+            <div class="item" ng-click="showPopup('address')">
+                地址<span class="item-note">{{item.address}}</span>
             </div>
         </div>
 	</ion-content>
