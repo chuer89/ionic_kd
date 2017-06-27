@@ -9868,6 +9868,9 @@ a {
   display: inline-block;
   text-decoration: none; }
 
+a.disable {
+  color: #e6e6e6; }
+
 .clearfix {
   overflow: hidden;
   _zoom: 1; }

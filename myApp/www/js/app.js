@@ -80,7 +80,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
 
     //修改密码
     .state('modifyPsd', {
-        url: '/modifyPsd',
+        url: '/modifyPsd/:data',
         templateUrl: 'templates/password/modify.html',
         controller: 'ModifyPsdCtrl'
     })

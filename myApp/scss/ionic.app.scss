@@ -68,6 +68,9 @@ a{
 	display: inline-block;
 	text-decoration: none;
 }
+a.disable{
+	color: $colorSimpleGrey;
+}
 
 .clearfix{overflow:hidden;_zoom:1;}
 

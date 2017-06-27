@@ -38,14 +38,26 @@ angular.module('login.controller', [])
 })
 
 //忘记密码
-.controller('ForgotPsdCtrl', function ($scope, $ionicPopup, $state, $cordovaToast, common) {
+.controller('ForgotPsdCtrl', function ($scope, $ionicPopup, $state, $cordovaToast, $interval, common) {
     $scope.data = {};
 
+    $scope.sendCodeText = '获取验证码';
+    $scope.isSendCode = false;
+    var timeStep = 0;
+
     $scope.handleCode = function() {
-        // $state.go('modifyPsd');
+        if ($scope.data.mobile && $scope.data.code) {
+            console.log($scope.data)
+            $state.go('modifyPsd', {code: $scope.data.code, mobile: $scope.data.mobile});
+        }
     }
 
     $scope.sendCode = function() {
+
+        if ($scope.isSendCode) {
+            return;
+        }
+
         if ($scope.data.mobile) {
 
         } else {
@@ -53,6 +65,23 @@ angular.module('login.controller', [])
             .show('请输入手机号', 'short', 'bottom');
             return;
         }
+
+        $scope.isSendCode = true;
+        timeStep = 20;
+
+        var time = $interval(function() {
+            timeStep --;
+            $scope.sendCodeText = '重新获取('+timeStep+'s)';
+
+            if (timeStep == 0) {
+                $scope.sendCodeText = '获取验证码';
+                $scope.isSendCode = false;
+
+                $interval.cancel(time);
+
+                return;
+            }
+        }, 1000);
 
         common.post({
             type: 'send_code',
@@ -68,6 +97,8 @@ angular.module('login.controller', [])
 })
 
 //修改密码
-.controller('ModifyPsdCtrl', function($scope, $state) {
-    $scope.data = {};
+.controller('ModifyPsdCtrl', function($scope, $state, $stateParams) {
+    // $scope.data = {};
+    console.log($stateParams, $state.params)
 })
+
