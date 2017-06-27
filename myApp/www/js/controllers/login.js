@@ -15,7 +15,7 @@ angular.module('login.controller', [])
 
         } else {
             $cordovaToast
-            .show('请输入手机号和密码', 'long', 'bottom');
+            .show('请输入手机号和密码', 'short', 'bottom');
             return;
         }
 
@@ -25,7 +25,7 @@ angular.module('login.controller', [])
                 // mobile: $scope.data.mobile,
                 // password: $scope.data.password
 
-                mobile: 13889521999,
+                mobile: 15608203716,
                 password: 123456
             },
             success: function(data) {
@@ -50,7 +50,7 @@ angular.module('login.controller', [])
 
         } else {
             $cordovaToast
-            .show('请输入手机号', 'long', 'bottom');
+            .show('请输入手机号', 'short', 'bottom');
             return;
         }
 

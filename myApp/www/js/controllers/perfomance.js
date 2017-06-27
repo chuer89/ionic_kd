@@ -1,7 +1,7 @@
 angular.module('perfomance.controller', [])
 
 //绩效
-.controller('PerfomanceCtrl', function($scope, $state, $ionicPopup, $ionicActionSheet, perfomanceList) {
+.controller('PerfomanceCtrl', function($scope, $state, $ionicPopup, $ionicActionSheet, perfomanceList, common) {
     $scope.data = {};
 
     $scope.items = perfomanceList.all();
@@ -53,6 +53,18 @@ angular.module('perfomance.controller', [])
             }
         });
     }
+
+    common.post({
+        type: 'jixiao_index_page',
+        data: {
+            "current":1,
+            "month":6,
+            "year":2017
+        },
+        success: function(data) {
+            
+        }
+    });
 })
 
 // 绩效查询

@@ -101,20 +101,20 @@ angular.module('message.services', [])
 
             var fail = function(msg) {
                 $cordovaToast
-                .show(msg, 'long', 'bottom');
+                .show(msg, 'short', 'bottom');
             }
 
             if (typeof success != 'function') {
                 success = function(){
                     $cordovaToast
-                    .show('成功', 'long', 'bottom');
+                    .show('成功', 'short', 'bottom');
                 };
             }
 
             if (typeof error != 'function') {
                 error = function() {
                     $cordovaToast
-                    .show('请稍后再试', 'long', 'bottom');
+                    .show('请稍后再试', 'short', 'bottom');
                 }
             }
 
@@ -156,7 +156,7 @@ angular.module('message.services', [])
         },
 
         userInfo: {
-            clientId: 3
+            clientId: 153
         },
 
         showSelePhoto: function(id) {
