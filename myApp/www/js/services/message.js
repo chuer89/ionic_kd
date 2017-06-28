@@ -216,6 +216,11 @@ angular.module('message.services', [])
                     // error getting photos
                 });
             }
+        },
+
+        nickname: function(name) {
+            name = name || '';
+            return name.substr(-2);
         }
     };
 

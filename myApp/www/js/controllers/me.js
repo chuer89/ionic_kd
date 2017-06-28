@@ -107,11 +107,25 @@ angular.module('me.controller', [])
 })
 
 .controller('MeAddressCtrl', function($scope, common) {
-	COMMON.post({
-        type: 'departmrnt_info',
-        data: {},
+ 	$scope.items = [];
+
+ 	$scope.nickname = function(name) {
+ 		return common.nickname(name);
+ 	}
+
+    COMMON.post({
+        type: 'phone_book',
+        data: {
+        	id: common.userInfo.clientId,
+        	currentPage: 1,
+        	departmentId: 1,
+        	name: ''
+        },
         success: function(data) {
-        	console.log(data.body)
+        	var _body = data.body,
+        		phoneBook = _body.phoneBook;
+
+        	$scope.items = phoneBook;
         }
     });
 })
