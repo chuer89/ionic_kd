@@ -80,7 +80,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
 
     //修改密码
     .state('modifyPsd', {
-        url: '/modifyPsd/:data',
+        url: '/modifyPsd',
         templateUrl: 'templates/password/modify.html',
         controller: 'ModifyPsdCtrl'
     })
@@ -519,6 +519,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         url: '/me/setMsg',
         templateUrl: 'templates/me/set-msg.html',
         controller: 'MeSetMsgCtrl'
+    })
+    //我－通讯录
+    .state('me_set_address', {
+        url: '/me/address',
+        templateUrl: 'templates/me/address.html',
+        controller: 'MeAddressCtrl'
     })
     //我－关于
     .state('me_about', {

@@ -117,26 +117,16 @@ angular.module('perfomance.controller', [])
 })
 
 // 绩效开单
-.controller('AddPerfomance', function ($scope, $state, $stateParams, $cordovaCamera, perfomanceQuery) {
-    $scope.getPicture = function() {
-        var options = {
-          quality: 50,
-          destinationType: Camera.DestinationType.DATA_URL,
-          sourceType: Camera.PictureSourceType.CAMERA,
-          allowEdit: true,
-          encodingType: Camera.EncodingType.JPEG,
-          targetWidth: 100,
-          targetHeight: 100,
-          popoverOptions: CameraPopoverOptions,
-          saveToPhotoAlbum: false,
-          correctOrientation:true
-        };
+.controller('AddPerfomance', function ($scope, $state, $stateParams, $cordovaCamera, perfomanceQuery, common) {
+    var project = [];
 
-        $cordovaCamera.getPicture(options).then(function(imageData) {
-          var image = document.getElementById('myImage');
-          image.src = "data:image/jpeg;base64," + imageData;
-        }, function(err) {
-          // error
-        });
-    }
+    common.post({
+        type: 'jixiao_items',
+        data: {
+            
+        },
+        success: function(data) {
+            
+        }
+    });
 })

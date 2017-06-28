@@ -47,7 +47,6 @@ angular.module('login.controller', [])
 
     $scope.handleCode = function() {
         if ($scope.data.mobile && $scope.data.code) {
-            console.log($scope.data)
             $state.go('modifyPsd', {code: $scope.data.code, mobile: $scope.data.mobile});
         }
     }

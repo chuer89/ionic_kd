@@ -105,3 +105,16 @@ angular.module('me.controller', [])
 .controller('MeAboutCtrl', function($scope) {
 	
 })
+
+.controller('MeAddressCtrl', function($scope, common) {
+	COMMON.post({
+        type: 'departmrnt_info',
+        data: {},
+        success: function(data) {
+        	console.log(data.body)
+        }
+    });
+})
+
+
+
