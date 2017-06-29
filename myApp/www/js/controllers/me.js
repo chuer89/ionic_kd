@@ -106,28 +106,70 @@ angular.module('me.controller', [])
 	
 })
 
-.controller('MeAddressCtrl', function($scope, common) {
- 	$scope.items = [];
+.controller('MeAddressCtrl', function($scope, $timeout, common) {
+	var dataList = {
+		currentPage: 0,
+		phoneBook: []
+	};
+
+	$scope.items = [];
+
+	var handleAjax = function () {
+		COMMON.post({
+	        type: 'phone_book',
+	        data: {
+	        	id: common.userInfo.clientId,
+	        	currentPage: dataList.currentPage + 1,
+	        	departmentId: 1,
+	        	name: ''
+	        },
+	        success: function(data) {
+	        	var _body = data.body,
+	        		phoneBook = _body.phoneBook;
+
+	        	dataList = _body;
+
+	        	for (var i = 0, ii = phoneBook.length; i < ii; i++) {
+	        		$scope.items.push(phoneBook[i]);
+	        	}
+
+	        	$timeout(function() {
+	        		$scope.vm.moredata = true;
+	        	}, 1000);
+
+	        }
+	    });
+	}	
+
+	$scope.doRefresh = function() {
+        setTimeout(function() {
+            $scope.$broadcast('scroll.refreshComplete');
+        }, 1000)
+        return true;
+    }
+
+    $scope.vm = {
+    	moredata: false,
+    	loadMore: function() {
+    		if (dataList.phoneBook.length < 10 || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
+    			$scope.vm.moredata = false;
+    			return;
+    		}
+	 		console.log(dataList.totalPage, 'x');
+
+    		$timeout(function () {
+    			$scope.vm.moredata = false;
+	 			handleAjax();
+	        }, 1500);
+	        return true;
+	 	}
+    }
 
  	$scope.nickname = function(name) {
  		return common.nickname(name);
  	}
 
-    COMMON.post({
-        type: 'phone_book',
-        data: {
-        	id: common.userInfo.clientId,
-        	currentPage: 1,
-        	departmentId: 1,
-        	name: ''
-        },
-        success: function(data) {
-        	var _body = data.body,
-        		phoneBook = _body.phoneBook;
-
-        	$scope.items = phoneBook;
-        }
-    });
+ 	handleAjax();
 })
 
 

@@ -4,6 +4,8 @@
     </ion-nav-buttons>
 
     <ion-content>
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+
     	<div class="padding">
 			<div class="bar search_box bar-header item-input-inset">
 				<label class="item-input-wrapper">
@@ -12,19 +14,21 @@
 				</label>
 	        </div>
 		</div>
-
-        <div class="list_box">
-            <a href="javascript:;" class="item_list_box" ng-repeat="item in items">
-                <div class="row">
-                    <div class="col col-20 text_align_center">
-                        <span class="name_box">{{nickname(item.name)}}</span>
-                    </div>
-                    <div class="col col-70">
-                        <h2 class="title">{{item.name}}</h2>
-                        <p class="info">{{item.position}}</p>
-                    </div>
-                </div>
-            </a>
+		<div>
+	        <div class="list_box">
+	            <a href="javascript:;" class="item_list_box" ng-repeat="item in items">
+	                <div class="row">
+	                    <div class="col col-20 text_align_center">
+	                        <span class="name_box">{{nickname(item.name)}}</span>
+	                    </div>
+	                    <div class="col col-70">
+	                        <h2 class="title">{{item.name}}</h2>
+	                        <p class="info">{{item.position}}</p>
+	                    </div>
+	                </div>
+	            </a>
+	        </div>
+	        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
         </div>
     </ion-content>
 </ion-view>
