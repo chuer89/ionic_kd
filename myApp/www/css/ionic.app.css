@@ -10034,7 +10034,8 @@ a.disable {
     display: block;
     background: white;
     padding: 0.66667rem;
-    color: #444444; }
+    color: #444444;
+    position: relative; }
     .list_box .item_list_box h2, .list_box .item_list_box p {
       margin: 0; }
     .list_box .item_list_box .icon-accessory {
@@ -10092,6 +10093,15 @@ a.disable {
         height: 186px; }
     .list_box .item_list_box .colorRed {
       color: #ff0014; }
+    .list_box .item_list_box .label_right_top {
+      position: absolute;
+      right: -18px;
+      top: 6px;
+      transform: rotate(45deg);
+      font-size: 12px;
+      border-top: 1px red solid;
+      border-bottom: 1px red solid;
+      padding: 0 20px; }
   .list_box .left_icon_box {
     /*@include width-dpr(50);*/
     text-align: center; }

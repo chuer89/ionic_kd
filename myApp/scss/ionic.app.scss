@@ -258,6 +258,7 @@ a.disable{
 		background: white;
 		padding: pxRem(50);
 		color: $colorBlack;
+		position: relative;
 		h2, p{
 			margin: 0;
 		}
@@ -308,6 +309,16 @@ a.disable{
 		}
 		.colorRed{
 			color: $colorRed;
+		}
+		.label_right_top{
+		    position: absolute;
+		    right: -18px;
+		    top: 6px;
+		    transform: rotate(45deg);
+		    font-size: 12px;
+		    border-top: 1px red solid;
+		    border-bottom: 1px red solid;
+		    padding: 0 20px;
 		}
 	}
 	.left_icon_box{

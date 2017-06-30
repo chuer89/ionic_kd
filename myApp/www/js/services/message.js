@@ -78,6 +78,19 @@ angular.module('message.services', [])
     //销售阶段
     var market = [{name: '初步意向'}, {name: '洽谈阶段'}, {name: '基本达成'}, {name: '成交'}, {name: '失败'}, {name: '无效'}];
 
+    //品牌
+    var brank = [{name: '翠湖店'}, {name: 'LOVE&sc'}, {name: '其他'}];
+
+    //部门
+    var department = [{name: '办公室'}, {name:'华南店'}, {name: '开发区店'}];
+
+    //申请的状态
+    var applicationStatus = [{name:'等批准',key:'PENDING'},{name:'批准',key:'APPROVE'},{name:'拒绝',key:'REJECT'}];
+
+    //申请的类型
+    var applicationType = [{name:'请假',key:'LEAVE'},{name:'采购',key:'PURCHASE'},
+                            {name:'其他',key:'OTHER'},{name:'任务延迟',key:'TASK_DELAY'}];
+
     return {
         menu: function() {
             return {
@@ -85,7 +98,11 @@ angular.module('message.services', [])
                 period: period,
                 frequency: frequency,
                 amount: amount,
-                market: market
+                market: market,
+                brank: brank,
+                department: department,
+                applicationStatus: applicationStatus,
+                applicationType: applicationType
             };
         }
     }
@@ -221,6 +238,48 @@ angular.module('message.services', [])
         nickname: function(name) {
             name = name || '';
             return name.substr(-2);
+        },
+
+        getId: function(list, id, key) {
+            key = key || 'id';
+            list = list || [];
+
+            for (var i = 0; i < list.length; i++) {
+                if (list[i][key] == id) {
+                    return list[i];
+                }
+            }
+            return null;
+        },
+
+        format: function (date, fmt) {
+            // 对Date的扩展，将 Date 转化为指定格式的String
+            // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
+            // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字) 
+            // 例子： 
+            // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
+            // (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
+            if (!date) {
+                return '';
+            }
+
+            date = date || new Date;
+            fmt = fmt || 'yyyy-MM-dd hh:mm';
+
+            var _date = new Date(date);
+            var o = {
+                "M+": _date.getMonth() + 1, //月份 
+                "d+": _date.getDate(), //日 
+                "h+": _date.getHours(), //小时 
+                "m+": _date.getMinutes(), //分 
+                "s+": _date.getSeconds(), //秒 
+                "q+": Math.floor((_date.getMonth() + 3) / 3), //季度 
+                "S": _date.getMilliseconds() //毫秒 
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (_date.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
         }
     };
 

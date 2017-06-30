@@ -8,9 +8,32 @@
     </ion-nav-buttons>
 
 	<ion-content>
-        <div class="button-bar">
-            <a class="button" ng-click="clickTabState('apply')">申请</a>
-            <a class="button" ng-click="clickTabState('audit')">审批</a>
+        <div class="kd_nav_filter">
+            <div class="padding_around row">
+                <div class="kd_sele_box col col-20">
+                    <div ng-click="toggleSele('brank')" class="kd_sele_val">品牌<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowBrankSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleBrank">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col col-20">
+                    <div ng-click="toggleSele('department')" class="kd_sele_val">部门<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowDepartmentSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleDepartment">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col text_align_right">
+                    <button class="kd_active_btn kd_btn">06-07</button>
+                    <button class="kd_btn kd_m" ng-click="checkTab(0)" ng-class="{'kd_active_btn': isShowTab0}">申请</button>
+                    <button class="kd_btn" ng-click="checkTab(1)" ng-class="{'kd_active_btn': isShowTab1}">审批</button>
+                </div>
+            </div>
         </div>
 		<div class="bar bar-header item-input-inset">
 			<label class="item-input-wrapper">
@@ -19,11 +42,11 @@
 			</label>
         </div>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
-        <div class="list">
-        	<a href={{item.link}} ng-repeat="item in items" class="item">
-                <h2>{{item.tips}}</h2>
-                <p>{{item.date}}</p>
-                <span class="right">{{item.status}}</span>
+        <div class="list_box">
+        	<a href={{item._link}} ng-repeat="item in items" class="item_list_box" style="overflow: hidden;">
+                <h2 class="title">{{item._applicationName}}</h2>
+                <p class="info">{{item._createTime}}</p>
+                <span class="label_right_top">{{item._status}}</span>
             </a>
         </div>
 	</ion-content>
