@@ -85,6 +85,13 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'ModifyPsdCtrl'
     })
 
+    //公共
+    .state('common_seleGuys', {
+        url: '/common/seleGuys/:id',
+        templateUrl: 'templates/common/seleGuys.html',
+        controller: 'CommonSeleGuysCtrl'
+    })
+
 
   // setup an abstract state for the tabs directive
     .state('tab', {
@@ -309,7 +316,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_apply_addleave', {
         url: '/work/apply/addleave',
         templateUrl: 'templates/work/apply/add-leave.html',
-        controller: 'WorkApplyAddLeaveCtrl'
+        controller: 'WorkApplyAddLeaveCtrl',
+        cache: true
     })
     //申请-工程维修申请
     .state('work_apply_addmaintain', {

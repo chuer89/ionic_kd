@@ -55,13 +55,14 @@ angular.module('workApply.controller', [])
         }
     }
 
-    $scope.seleBrank = menus.brank;
-    $scope.seleDepartment = menus.department;
+    $scope.seleBrank = [];
+    $scope.seleDepartment = [];
 
-    $scope.isShowBrankSele = false;
-    $scope.isShowDepartmentSele = false;
+    $scope.seleBrankInfo = '品牌';
+    $scope.seleDepartmentInfo = '部门';
 
-    $scope.toggleSele = function(type) {
+    //选择菜单处理
+    var toggleSeleHandle = function(type) {
         if (type == 'brank') {
             $scope.isShowDepartmentSele = false;
 
@@ -69,12 +70,42 @@ angular.module('workApply.controller', [])
         } else if (type == 'department') {
             $scope.isShowBrankSele = false;
 
+            if (!$scope.seleDepartment.length) {
+                common.toast('请选择正确品牌');
+                return;
+            }
+
             $scope.isShowDepartmentSele = !$scope.isShowDepartmentSele;
         }
     }
-    
-	// $scope.items = workApplyList.all();
 
+    //加载部门&公司
+    common.getCompany(function(data) {
+        $scope.seleBrank = data;
+    })
+
+    //选择部门
+    $scope.seleBrankHandle = function(item) {
+        $scope.seleDepartment = item.childDepartment;
+        toggleSeleHandle('brank');
+
+        $scope.seleBrankInfo = item.name;
+        $scope.seleDepartmentInfo = '部门';
+    }
+    $scope.seleDepartmentHandle = function(item) {
+        toggleSeleHandle('department');
+
+        $scope.seleDepartmentInfo = item.name;
+    }
+
+    $scope.isShowBrankSele = false;
+    $scope.isShowDepartmentSele = false;
+
+    //筛选切换
+    $scope.toggleSele = function(type) {
+        toggleSeleHandle(type);
+    }
+    
 	$scope.doRefresh = function() {
 		setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
@@ -86,6 +117,7 @@ angular.module('workApply.controller', [])
         $scope.items = workApplyList.all(state);
     }
 
+    //切换按钮-start
     $scope.activeTab = '0';
     ajaxApplications();
 
@@ -109,6 +141,7 @@ angular.module('workApply.controller', [])
             ajaxApprovals();
         }
     }
+    //切换按钮-end
 })
 
 .controller('WorkApplyAddListCtrl', function($scope, $state, workApplyAddList) {
@@ -131,17 +164,7 @@ angular.module('workApply.controller', [])
 })
 
 //申请请假
-.controller('WorkApplyAddLeaveCtrl', function($scope, $state, $ionicActionSheet, common) {
-    COMMON.post({
-        type: 'auditor_user',
-        data: {
-            id: common.userInfo.clientId
-        },
-        success: function(data) {
-            console.log(data.userArray)
-        }
-    });
-
+.controller('WorkApplyAddLeaveCtrl', function($scope, $state, $ionicActionSheet, $stateParams, common) {
     // COMMON.post({
     //     type: 'create_leave_application',
     //     data: {
@@ -181,6 +204,21 @@ angular.module('workApply.controller', [])
             }
         })
 	}
+
+    //
+    $scope.setBegintime = '';
+    $scope.clickBegintime = function() {
+        common.datePicker(function(date) {
+            $scope.setBegintime = date;
+        })
+    }
+
+    //审批人
+    $scope.seleAuditorUser = '请选择';
+
+    if (common.setAuditorUserList.id) {
+        $scope.seleAuditorUser = common.setAuditorUserList.name;
+    }
 })
 
 //工程维修申请

@@ -136,9 +136,11 @@ a.disable{
 			padding: pxRem(20) pxRem(40);
 			position: absolute;
 			color: $colorBlack;
+			width: 100%;
 			.ion-arrow-down-b{
-				padding-left: pxRem(20);
+				right: pxRem(20);
 				color: $colorBlack;
+				position: absolute;
 			}
 		}
 		.kd_sele_content{

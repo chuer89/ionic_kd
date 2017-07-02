@@ -19,7 +19,7 @@
         <div class="list">
             <div class="item item-icon-right">
                 开始时间
-                <span class="item-note">请选择</span>
+                <span class="item-note">{{setBegintime || '请选择'}}</span>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </div>
             <div class="item item-icon-right">
@@ -37,11 +37,11 @@
         </div>
 
 		<div class="list">
-            <div class="item item-icon-right">
+            <a href="#/common/seleGuys/1" class="item item-icon-right">
                 审批人
-                <span class="item-note">请选择</span>
+                <span class="item-note">{{seleAuditorUser}}</span>
                 <i class="icon ion-chevron-right icon-accessory"></i>
-            </div>
+            </a>
         </div>
 	</ion-content>
 </ion-view>

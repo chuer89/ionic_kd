@@ -91,6 +91,7 @@ angular.module('message.services', [])
     var applicationType = [{name:'请假',key:'LEAVE'},{name:'采购',key:'PURCHASE'},
                             {name:'其他',key:'OTHER'},{name:'任务延迟',key:'TASK_DELAY'}];
 
+
     return {
         menu: function() {
             return {
@@ -108,7 +109,8 @@ angular.module('message.services', [])
     }
 })
 
-.factory('common', function($http, $cordovaToast, $ionicActionSheet, $state, $cordovaCamera, $cordovaImagePicker) {
+.factory('common', function($http, $cordovaToast, $ionicActionSheet, 
+    $state, $cordovaCamera, $cordovaImagePicker, $cordovaDatePicker) {
     var obj = {
         post: function(opt) {
             var data = opt.data || {};
@@ -159,17 +161,17 @@ angular.module('message.services', [])
             });
 
             // $http({
-        //     method: 'POST',
-        //     url: 'http://123.206.95.25:18080/kuaidao/client/resources.html',
-        //     params: {
-        //         // json: '{"appType":"IOS","appVersion":"1.0.0","body":{},"businessType":"departmrnt_info"}'
-        //         json: '{"appType":"IOS","appVersion":"1.0.0","body":{"mobile":13889521999,"password":123456},"businessType":"client_login"}'
-        //     }
-        // }).success(function(data) {
-        //     console.log(data)
-        // }).error(function(data) {
+            //     method: 'POST',
+            //     url: 'http://123.206.95.25:18080/kuaidao/client/resources.html',
+            //     params: {
+            //         // json: '{"appType":"IOS","appVersion":"1.0.0","body":{},"businessType":"departmrnt_info"}'
+            //         json: '{"appType":"IOS","appVersion":"1.0.0","body":{"mobile":13889521999,"password":123456},"businessType":"client_login"}'
+            //     }
+            // }).success(function(data) {
+            //     console.log(data)
+            // }).error(function(data) {
 
-        // })
+            // })
         },
 
         userInfo: {
@@ -280,6 +282,71 @@ angular.module('message.services', [])
             for (var k in o)
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             return fmt;
+        },
+
+        //公司&部门
+        getCompany: function(cb) {
+            COMMON.post({
+                type: 'departmrnt_info',
+                data: {},
+                success: function(data) {
+                    var _department = data.body.department;
+                    if (typeof cb == 'function') {
+                        cb(_department);
+                    }
+                }
+            });
+        },
+
+        //审核人
+        getAuditorUser: function (cb) {
+            COMMON.post({
+                type: 'auditor_user',
+                data: {
+                    "id": COMMON.userInfo.clientId,
+                },
+                success: function(data) {
+                    var _userArray = data.body.userArray;
+                    if (typeof cb == 'function') {
+                        cb(_userArray);
+                    }
+                }
+            });
+        },
+
+        //选中审核人
+        setAuditorUserList: {},
+
+        toast: function(txt) {
+            if (!txt) {
+                return;
+            }
+
+            $cordovaToast
+            .show(txt, 'short', 'bottom');
+        },
+
+        //日期选择
+        datePicker: function(cb) {
+            var options = {
+                date: new Date(),
+                mode: 'date', // or 'time'
+                minDate: new Date() - 10000,
+                allowOldDates: true,
+                allowFutureDates: false,
+                doneButtonLabel: 'DONE',
+                doneButtonColor: '#F2F3F4',
+                cancelButtonLabel: 'CANCEL',
+                cancelButtonColor: '#000000'
+            };
+
+            document.addEventListener("deviceready", function () {
+                $cordovaDatePicker.show(options).then(function(date){
+                    if (typeof cb == 'function') {
+                        cb(date);
+                    }
+                });
+            }, false);
         }
     };
 

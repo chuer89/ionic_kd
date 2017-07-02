@@ -33,15 +33,13 @@ angular.module('message.controller', [])
 		    doneButtonColor: '#F2F3F4',
 		    cancelButtonLabel: 'CANCEL',
 		    cancelButtonColor: '#000000'
-		  };
+	  	};
 
-		  document.addEventListener("deviceready", function () {
-
+	  	document.addEventListener("deviceready", function () {
 		    $cordovaDatePicker.show(options).then(function(date){
 		        alert(date);
 		    });
-
-		  }, false);
+	  	}, false);
 	}
 
 	$scope.camera = function() {
