@@ -1,6 +1,6 @@
 <ion-view view-title="请假申请">
 	<ion-nav-buttons side="left">  
-    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    	<a href="#/work/apply/addlist" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
@@ -17,7 +17,7 @@
         </div>
 
         <div class="list">
-            <div class="item item-icon-right">
+            <div ng-click="clickBegintime()" class="item item-icon-right">
                 开始时间
                 <span class="item-note">{{setBegintime || '请选择'}}</span>
                 <i class="icon ion-chevron-right icon-accessory"></i>

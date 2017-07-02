@@ -205,7 +205,7 @@ angular.module('workApply.controller', [])
         })
 	}
 
-    //
+    //时间
     $scope.setBegintime = '';
     $scope.clickBegintime = function() {
         common.datePicker(function(date) {

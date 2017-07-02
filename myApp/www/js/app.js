@@ -89,7 +89,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('common_seleGuys', {
         url: '/common/seleGuys/:id',
         templateUrl: 'templates/common/seleGuys.html',
-        controller: 'CommonSeleGuysCtrl'
+        controller: 'CommonSeleGuysCtrl',
+        cache: false
     })
 
 
@@ -317,7 +318,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         url: '/work/apply/addleave',
         templateUrl: 'templates/work/apply/add-leave.html',
         controller: 'WorkApplyAddLeaveCtrl',
-        cache: true
+        cache: false
     })
     //申请-工程维修申请
     .state('work_apply_addmaintain', {
