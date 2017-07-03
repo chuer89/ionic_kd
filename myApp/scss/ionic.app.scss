@@ -48,6 +48,17 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .bar.bar-stable .title.colorRed{
 	color: $colorRed;
 }
+.item-checkbox .checkbox{
+	margin-top: -17px;
+}
+.checkbox input, .checkbox-icon{
+	width: 20px;
+    height: 20px;
+}
+.checkbox input:after, .checkbox-icon:after{
+	width: 10px;
+	height: 4px;
+}
 .list_box{
 	.item{
 		color: $colorBlack;
@@ -328,8 +339,8 @@ a.disable{
 		text-align: center;
 		.red-point{
 			position: relative;
-			top: pxRem(-50);
-			right: pxRem(-20);
+			top: pxRem(-60);
+			right: pxRem(-18);
 		}
 	}
 	.left_icon{
@@ -341,6 +352,12 @@ a.disable{
 	.title{
 		@include font-dpr(16);
 		color: $colorBlack;
+	}
+	.ellipsis_info{
+		@extend %textOverflow;
+
+		color: $colorGrey;
+		@include font-dpr(12);
 	}
 	.info{
 		color: $colorGrey;

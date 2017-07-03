@@ -115,30 +115,24 @@ angular.module('me.controller', [])
 	$scope.items = [];
 
 	var handleAjax = function () {
-		COMMON.post({
-	        type: 'phone_book',
-	        data: {
-	        	id: common.userInfo.clientId,
-	        	currentPage: dataList.currentPage + 1,
-	        	departmentId: 1,
-	        	name: ''
-	        },
-	        success: function(data) {
-	        	var _body = data.body,
-	        		phoneBook = _body.phoneBook;
+		COMMON.getPhoneBook({
+			currentPage: dataList.currentPage + 1,
+        	departmentId: 1,
+        	name: ''
+		}, function(body) {
+			var _body = body,
+        		phoneBook = _body.phoneBook;
 
-	        	dataList = _body;
+        	dataList = _body;
 
-	        	for (var i = 0, ii = phoneBook.length; i < ii; i++) {
-	        		$scope.items.push(phoneBook[i]);
-	        	}
+        	for (var i = 0, ii = phoneBook.length; i < ii; i++) {
+        		$scope.items.push(phoneBook[i]);
+        	}
 
-	        	$timeout(function() {
-	        		$scope.vm.moredata = true;
-	        	}, 1000);
-
-	        }
-	    });
+        	$timeout(function() {
+        		$scope.vm.moredata = true;
+        	}, 1000);
+		});
 	}	
 
 	$scope.doRefresh = function() {

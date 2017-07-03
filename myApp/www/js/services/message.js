@@ -298,6 +298,25 @@ angular.module('message.services', [])
             });
         },
 
+        //部门-》人员
+        getPhoneBook: function(param, cb) {
+            var _param = angular.extend({
+                id: COMMON.userInfo.clientId
+            }, param);
+
+            COMMON.post({
+                type: 'phone_book',
+                data: _param,
+                success: function(data) {
+                    var _body = data.body;
+
+                    if (typeof cb == 'function') {
+                        cb(_body);
+                    }
+                }
+            });
+        },
+
         //审核人
         getAuditorUser: function (cb) {
             COMMON.post({

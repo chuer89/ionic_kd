@@ -62,7 +62,7 @@ angular.module('perfomance.controller', [])
             "year":2017
         },
         success: function(data) {
-            
+            console.log(data)
         }
     });
 })

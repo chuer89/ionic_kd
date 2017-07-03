@@ -8,12 +8,41 @@
     </ion-nav-buttons>
 
     <ion-content>
-        <div class="list">
-    		<div ng-repeat="item in items" class="item item-icon-right item-icon-left">
-                <input type="checkbox" name=""/>
-                {{item.name}}
-                <span class="item-note">{{item.num}}</span>
-                <i ng-click="toPerson(item)" class="icon ion-chevron-right icon-accessory"></i>
+        <div class="padding">
+            <div class="bar search_box bar-header item-input-inset">
+                <label class="item-input-wrapper">
+                    <i class="icon ion-ios-search placeholder-icon"></i>
+                    <input type="search" placeholder="搜索" />
+                </label>
+            </div>
+        </div>
+
+        <div class="kd_nav_filter">
+            <div class="padding_around row">
+                <div class="kd_sele_box col col-40">
+                    <div ng-click="toggleSele('brank')" class="kd_sele_val">{{seleBrankInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowBrankSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleBrank" ng-click="seleBrankHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list_box">
+    		<div ng-repeat="item in items" class="item_list_box">
+                <div class="row">
+                    <div class="col col-75">
+                        <input type="checkbox" name=""/>
+                        {{item.name}}
+                    </div>
+                    <div class="col col-20 text_align_right" ng-click="toPerson(item)">
+                        <span class="info">{{item.userNum}}</span>
+                        <i class="icon ion-chevron-right icon-accessory"></i>
+                    </div>
+                </div>
+                
             </div>
         </div>
 	</ion-content>

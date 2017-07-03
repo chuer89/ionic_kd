@@ -287,32 +287,38 @@ angular.module('work.services', [])
         id: 0,
         name: '请假申请',
         tips: '请填写好你的请假原由',
-        link: '#/work/apply/addleave'
+        link: '#/work/apply/addleave',
+        icon: 'img/icon/apply/addleave.png'
     }, {
         id: 1,
         name: '采购申请',
         tips: '请填写好你要申请采购的详细信息',
-        link: '#/work/apply/addPurchase'
+        link: '#/work/apply/addPurchase',
+        icon: 'img/icon/apply/addPurchase.png'
     }, {
         id: 2,
         name: '优惠申请',
         tips: '请填写好你要申请优惠的详细信息',
-        link: '#/work/apply/addprivilege'
+        link: '#/work/apply/addprivilege',
+        icon: 'img/icon/apply/addprivilege.png'
     }, {
         id: 3,
         name: '报残申请',
         tips: '请填写好残次情况的详细信息',
-        link: '#/work/apply/adddiscard'
+        link: '#/work/apply/adddiscard',
+        icon: 'img/icon/apply/adddiscard.png'
     }, {
         id: 4,
         name: '工程维修申请',
         tips: '请填写好你要维修申请的详细信息',
-        link: '#/work/apply/addmaintain'
+        link: '#/work/apply/addmaintain',
+        icon: 'img/icon/apply/addmaintain.png'
     }, {
         id: 5,
         name: '其他申请',
         tips: '其他类型申请',
-        link: '#/work/apply/addother'
+        link: '#/work/apply/addother',
+        icon: 'img/icon/apply/addother.png'
     }];
 
     return {
@@ -330,36 +336,7 @@ angular.module('work.services', [])
     }
 })
 
-//工作－通知－列表
-.factory('workNotifyList', function() {
-    var list = [{
-        id: 0,
-        name: '丽丽',
-        title: '本周例会',
-        tips: '所有店尽量周二上午9:00到办公室19楼开周例会02-11 13看内容曝光书'
-    }, {
-        id: 1,
-        name: '随意',
-        title: '关于首饰回收细则调整',
-        tips: '所有市场销售一线员工，10；299毁灭中中行可决定是否看见啥地方'
-    }];
-
-    return {
-        all: function() {
-            return list;
-        },
-        get: function(id) {
-          for (var i = 0; i < list.length; i++) {
-            if (list[i].id === parseInt(id)) {
-              return list[i];
-            }
-          }
-          return null;
-        }
-    }
-})
-
-//工作－通知－选择－部门
+//工作－通知－选择－部门----可删除
 .factory('workSeleNotifySectionList', function() {
     var list = [{
         id: 0,

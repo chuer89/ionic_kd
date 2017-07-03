@@ -45,7 +45,8 @@ angular.module('work.controller', [])
     $scope.seleGuyHanle = function(item) {
         common.setAuditorUserList = item;
 
-        $state.go(typeId[guysTypeId]);
+        // $state.go(typeId[guysTypeId]);
+        history.back(-1);
     }
 })
 

@@ -4,10 +4,19 @@
     </ion-nav-buttons>
 
 	<ion-content>
-		<div class="list">
-            <a href={{item.link}} class="item" ng-repeat="item in items">
-                <h2>{{item.name}}</h2>
-                <p>{{item.tips}}</p>
+		<div class="list_box">
+            <a href={{item.link}} class="item_list_box" ng-repeat="item in items">
+                <div class="row">
+                    <div class="col col-10 left_icon_box">
+                        <div class="list_icon_box">
+                            <img src="{{item.icon || 'img/logo.png'}}" class="left_icon" />
+                        </div>
+                    </div>
+                    <div class="col col-67">
+                        <h2 class="title">{{item.name}}</h2>
+                        <p class="info">{{item.tips}}</p>
+                    </div>
+                </div>
             </a>      
         </div>
 	</ion-content>
