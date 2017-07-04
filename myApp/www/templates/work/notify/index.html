@@ -9,25 +9,30 @@
 
 	<ion-content>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
-        <div class="list_box">
-            <a href="#/work/notify/details/{{item.id}}" class="item_list_box" ng-repeat="item in items">
-                <div class="row">
-                    <div class="col col-20 left_icon_box">
-                        <span class="list_icon_box">
-                            <span class="name_box">{{nickname(item.userName)}}</span>
-                        </span>
-                        <span class="red-point" ng-if="!item.isView"></span>
+        <ion-list class="list_box">
+            <ion-item class="item_list_box" ng-repeat="item in items">
+                <a href="#/work/notify/details/{{item.id}}" style="display: block;">
+                    <div class="row">
+                        <div class="col col-20 left_icon_box">
+                            <span class="list_icon_box">
+                                <span class="name_box">{{nickname(item.userName)}}</span>
+                            </span>
+                            <span class="red-point" ng-if="!item.isView"></span>
+                        </div>
+                        <div class="col col-67">
+                            <h2 class="title">通知：{{item.title}}</h2>
+                            <p class="ellipsis_info">{{item.description}}</p>
+                            <p class="info">{{formatDate(item.createTime)}} | {{item.viewCount}}看</p>
+                        </div>
+                        <div class="col text_align_right">
+                            <i class="icon ion-chevron-right icon-accessory"></i>
+                        </div>
                     </div>
-                    <div class="col col-67">
-                        <h2 class="title">通知：{{item.title}}</h2>
-                        <p class="ellipsis_info">{{item.description}}</p>
-                        <p class="info">{{formatDate(item.createTime)}} | {{item.viewCount}}看</p>
-                    </div>
-                    <div class="col text_align_right">
-                        <i class="icon ion-chevron-right icon-accessory"></i>
-                    </div>
-                </div>
-            </a>
-        </div>
+                    <ion-option-button ng-click="del(item)" class="button-assertive">
+                      删除
+                    </ion-option-button>
+                </a>
+            </ion-item>
+        </ion-list>
 	</ion-content>
 </ion-view>

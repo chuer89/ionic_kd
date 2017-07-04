@@ -58,8 +58,8 @@ angular.module('perfomance.controller', [])
         type: 'jixiao_index_page',
         data: {
             "current":1,
-            "month":6,
-            "year":2017
+            "month":4,
+            "year":2016
         },
         success: function(data) {
             console.log(data)

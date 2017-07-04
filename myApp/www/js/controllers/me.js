@@ -78,9 +78,14 @@ angular.module('me.controller', [])
 		});
 
 		myPopup.then(function(res) {
+			if (!res) {
+				return;
+			}
+			
 			var _param = {
 				id: common.userInfo.clientId
 			};
+
 			_param[key] = res;
 
 			COMMON.post({

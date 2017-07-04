@@ -110,7 +110,7 @@ angular.module('message.services', [])
 })
 
 .factory('common', function($http, $cordovaToast, $ionicActionSheet, 
-    $state, $cordovaCamera, $cordovaImagePicker, $cordovaDatePicker) {
+    $state, $cordovaCamera, $cordovaImagePicker, $cordovaDatePicker, $cordovaFileTransfer) {
     var obj = {
         post: function(opt) {
             var data = opt.data || {};
@@ -197,6 +197,8 @@ angular.module('message.services', [])
                 }
             });
 
+            var formData = new FormData();
+
             var camera = function() {
                 var options = {  
                     quality: 50,  
@@ -205,17 +207,50 @@ angular.module('message.services', [])
                     allowEdit: true,  
                     encodingType: Camera.EncodingType.JPEG,  
                     targetWidth: 100,  
-                    targetHeight: 100,  
+                    targetHeight: 100,
                     popoverOptions: CameraPopoverOptions,  
-                    saveToPhotoAlbum: false  
+                    saveToPhotoAlbum: true  
                 };  
 
                 $cordovaCamera.getPicture(options).then(function(imageData) {  
-                    var image = document.getElementById(id);  
-                    image.src = "data:image/jpeg;base64," + imageData;  
+                    // var image = document.getElementById(id);  
+                    // image.src = "data:image/jpeg;base64," + imageData;
+
+                    // rLFSURL(imageData);
+
+                    // upImg();
+
+                    alert(0);
+
+                    jj(imageData);
                 }, function(err) {  
                     // error  
                 });  
+            }
+
+            var jj = function(imgData) {
+                var url = 'http://123.206.95.25:18080/kuaidao/client/resources.html';
+                var options = new FileUploadOptions();
+                options.fileKey = 'fuJians';
+                var json = '{"appType":"IOS","appVersion":"1.0.0","body":{"departmentList":[{"departmentId":3}],"userList":[{"userId":153}],"description":"内容1和O","title":"测试文件上传h5-3号","id":153},"businessType":"create_inform"}';
+
+                options.json = json;
+
+                $cordovaFileTransfer.upload(encodeURI(url), imgData, options)
+                  .then(function (result) {
+                    alert(1)
+                  }, function (err) {
+                    alert(2)
+                  }, function (progress) {
+                    alert(3)
+                    // constant progress updates
+                  });
+            }
+
+            var CacheData = {
+                setImgFileList: function(the_file) {
+                    formData.append("fuJians", the_file, "images.jpg");
+                }
             }
 
             var phone = function() {
@@ -223,16 +258,57 @@ angular.module('message.services', [])
                     maximumImagesCount: 10,
                     width: 800,
                     height: 800,
-                    quality: 80
+                    quality: 80,
+                    saveToPhotoAlbum: true
                 };
 
                 $cordovaImagePicker.getPictures(options)
                 .then(function (results) {
+                    
                     for (var i = 0; i < results.length; i++) {
+                        rLFSURL(results[i]);
                         // console.log('Image URI: ' + results[i]);
                     }
+
+                    upImg();
                 }, function(error) {
                     // error getting photos
+                });
+            }
+
+            var rLFSURL = function (imageURI){
+                window.resolveLocalFileSystemURL(imageURI, function(fileEntry) {
+                    fileEntry.file(function(file) {
+                        var reader = new FileReader();
+                        reader.onloadend = function(e) {
+                            //需要将图片路径转换为二进制流，并且指定类型为图像格式（还有其他格式，如文本格式等等）
+                            var the_file = new Blob([e.target.result ], { type: "image/jpeg" } );
+                            //存储图片二进制流
+                            CacheData.setImgFileList(the_file);
+
+                            //存储图片地址用于预览
+                            // CacheData.setImageURIList(imageURI);
+                        };
+                        reader.readAsArrayBuffer(file);
+                    }, function(e){$scope.errorHandler(e)});
+                }, function(e){$scope.errorHandler(e)});
+            }
+
+            var upImg = function() {
+                var json = '{"appType":"IOS","appVersion":"1.0.0","body":{"departmentList":[{"departmentId":3}],"userList":[{"userId":153}],"description":"内容1和O","title":"测试文件上传h5-3号","id":153},"businessType":"create_inform"}';
+
+                formData.append('json', json);
+
+                // alert(JSON.stringify(formData));
+
+                $http({
+                    method: 'POST',
+                    url: 'http://123.206.95.25:18080/kuaidao/client/resources.html',
+                    params: formData
+                }).success(function(data) {
+                    alert(JSON.stringify(data))
+                }).error(function(data) {
+
                 });
             }
         },
@@ -335,6 +411,42 @@ angular.module('message.services', [])
 
         //选中审核人
         setAuditorUserList: {},
+        setCheckedPerson: [],//记录-选择通讯录-部门/人
+
+        //筛选选中
+        filterChecked: function(list) {
+            list = list || [];
+            var _list = [];
+            for (var i = 0, ii = list.length; i < ii; i++) {
+                if (list[i].checked) {
+                    _list.push(list[i]);
+                }
+            };
+
+            return _list;
+        },
+        //数组对象去重
+        repeatArrObj: function(arr, id, cloneId) {
+            var _arr = [],
+                _obj = {};
+
+            arr = arr || [];
+
+            for (var i = 0, ii = arr.length; i < ii; i++) {
+                if (arr[i][id]) {
+                    _obj[arr[i][id]] = arr[i];    
+                } else {
+                    _obj[arr[i][cloneId]] = arr[i];
+                }
+                
+            }
+
+            for (var k in _obj) {
+                _arr.push(_obj[k]);
+            }
+
+            return _arr;
+        },
 
         toast: function(txt) {
             if (!txt) {

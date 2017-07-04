@@ -336,37 +336,6 @@ angular.module('work.services', [])
     }
 })
 
-//工作－通知－选择－部门----可删除
-.factory('workSeleNotifySectionList', function() {
-    var list = [{
-        id: 0,
-        name: '总经理',
-        num: 3
-    }, {
-        id: 1,
-        name:'人力资源',
-        num: 2
-    }, {
-        id: 2,
-        name: '财务部',
-        num: 3
-    }];
-
-    return {
-        all: function() {
-            return list;
-        },
-        get: function(id) {
-          for (var i = 0; i < list.length; i++) {
-            if (list[i].id === parseInt(id)) {
-              return list[i];
-            }
-          }
-          return null;
-        }
-    }
-})
-
 //百科-类型
 .factory('workCyclopediaType', function() {
     var blockData = [{

@@ -31,19 +31,21 @@
             </div>
         </div>
         <div class="list_box">
-    		<div ng-repeat="item in items" class="item_list_box">
-                <div class="row">
-                    <div class="col col-75">
-                        <input type="checkbox" name=""/>
-                        {{item.name}}
-                    </div>
-                    <div class="col col-20 text_align_right" ng-click="toPerson(item)">
-                        <span class="info">{{item.userNum}}</span>
-                        <i class="icon ion-chevron-right icon-accessory"></i>
+            <ion-list>
+        		<div ng-repeat="item in items" class="item_list_box">
+                    <div class="row">
+                        <div class="col col-75">
+                            <ion-checkbox ng-model="item.checked">
+                                {{item.name}}
+                            </ion-checkbox>
+                        </div>
+                        <div class="col col-20 text_align_right" ng-click="toPerson(item)">
+                            <span class="info">{{item.userNum}}</span>
+                            <i class="icon ion-chevron-right icon-accessory"></i>
+                        </div>
                     </div>
                 </div>
-                
-            </div>
+            </ion-list>
         </div>
 	</ion-content>
 </ion-view>

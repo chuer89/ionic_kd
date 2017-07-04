@@ -9875,6 +9875,15 @@ a.button {
     right: 0.66667rem;
     top: 5px; }
 
+textarea {
+  resize: none;
+  width: 100%;
+  min-height: 100px; }
+  [data-dpr='2'] textarea {
+    min-height: 200px; }
+  [data-dpr='3'] textarea {
+    min-height: 306px; }
+
 a {
   display: inline-block;
   text-decoration: none; }
@@ -9900,6 +9909,13 @@ a.disable {
 .padding_tb {
   padding-top: 0.66667rem;
   padding-bottom: 0.66667rem; }
+
+.icon_plus {
+  width: 40px; }
+  [data-dpr='2'] .icon_plus {
+    width: 80px; }
+  [data-dpr='3'] .icon_plus {
+    width: 126px; }
 
 /*搜索*/
 .search_box {
@@ -10115,6 +10131,11 @@ a.disable {
       border-top: 1px red solid;
       border-bottom: 1px red solid;
       padding: 0 20px; }
+    .list_box .item_list_box label.item {
+      border: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-right: 0; }
   .list_box .left_icon_box {
     /*@include width-dpr(50);*/
     text-align: center; }

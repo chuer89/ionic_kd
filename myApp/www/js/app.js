@@ -351,13 +351,21 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkApplyAuditOtherCtrl'
     })
 
-    //申请
+    //申请-通知
     .state('work_notify', {
         url: '/work/notify',
         templateUrl: 'templates/work/notify/index.html',
-        controller: 'WorkNotifyCtrl'
+        controller: 'WorkNotifyCtrl',
+        cache: false
     })
-    //申请－详情
+    //申请-我的通知
+    .state('work_notify_my', {
+        url: '/work/notify/my',
+        templateUrl: 'templates/work/notify/my.html',
+        controller: 'WorkNotifyMyCtrl',
+        cache: false
+    })
+    //申请－通知详情
     .state('work_notify_details', {
         url: '/work/notify/details/:id',
         templateUrl: 'templates/work/notify/details.html',
@@ -367,7 +375,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_notify_add', {
         url: '/work/notify/add',
         templateUrl: 'templates/work/notify/add.html',
-        controller: 'WorkNotifyAddCtrl'
+        controller: 'WorkNotifyAddCtrl',
+        cache: false
     })
     //申请－选择通知部门
     .state('work_notify_sele_section', {

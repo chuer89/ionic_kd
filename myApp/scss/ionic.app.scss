@@ -74,7 +74,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	}
 }
 
-
+textarea{
+	resize: none;
+	width: 100%;
+	@include min-height-dpr(100);
+}
 a{
 	display: inline-block;
 	text-decoration: none;
@@ -100,6 +104,10 @@ a.disable{
 .padding_tb{
 	padding-top: pxRem(50);
 	padding-bottom: pxRem(50);
+}
+
+.icon_plus{
+	@include width-dpr(40);
 }
 
 /*搜索*/
@@ -332,6 +340,12 @@ a.disable{
 		    border-top: 1px red solid;
 		    border-bottom: 1px red solid;
 		    padding: 0 20px;
+		}
+		label.item{
+			border: 0;
+			padding-top: 0;
+			padding-bottom: 0;
+			padding-right: 0;
 		}
 	}
 	.left_icon_box{

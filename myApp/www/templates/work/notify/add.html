@@ -4,22 +4,27 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a href="javascript:;" class="button button-clear button-positive">保存</a>
+        <a href="javascript:;" ng-click="submit()" class="button button-clear button-positive">保存</a>
     </ion-nav-buttons>
 
 	<ion-content>
 		<div class="list">
             <a href="#/work/notify/seleSection" class="item item-icon-right">
               发送
-              <span class="item-note">请选择</span>
+              <span class="item-note">{{seleSendName}}</span>
               <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
             <label class="item item-input">
                 <span class="input-label">标题</span>
-                <input type="password" placeholder="请输入标题">
+                <input type="text" placeholder="请输入标题" ng-model="data.title">
             </label>
             <div class="item">
-                <textarea placeholder="请输入日程内容"></textarea>
+                <textarea placeholder="请输入内容..." ng-model="data.description"></textarea>
+            </div>
+            <div class="item">
+                <a href="javascript:;" ng-click="showSelePhoto()">
+                    <img src="img/icon/plus.png" class="icon_plus" />
+                </a>
             </div>
         </div>
 	</ion-content>

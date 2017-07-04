@@ -3,9 +3,27 @@ angular.module('workNotify.controller', [])
 .controller('WorkNotifyCtrl', function ($scope, $state, $ionicActionSheet, common) {
     $scope.items = [];
 
+    var getList = function() {
+        COMMON.post({
+            type: 'inform_list_info',
+            data: {
+                "id": common.userInfo.clientId
+            },
+            success: function(data) {
+                var _body = data.body;
+                if (_body && _body.inform) {
+                    $scope.items = _body.inform;
+                }
+            }
+        });
+    }
+
+    getList();
+
 	$scope.doRefresh = function() {
 		setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
+            getList();
         }, 1000)
         return true;
 	}
@@ -29,27 +47,67 @@ angular.module('workNotify.controller', [])
                 
                 if (index == 1) {
                     $state.go('work_notify_add');
+                } else {
+                    $state.go('work_notify_my');
                 }
                 return true;
             }
         });
     }
 
-    COMMON.post({
-        type: 'inform_list_info',
-        data: {
-            "id": common.userInfo.clientId
-        },
-        success: function(data) {
-            var _body = data.body;
-            if (_body && _body.inform) {
-                $scope.items = _body.inform;
+    $scope.del = function(item) {
+        COMMON.post({
+            type: 'delete_inform',
+            data: {
+                "informId": item.id
+            },
+            success: function(data) {
+                var _body = data.body;
+                getList();
             }
-        }
-    });    
+        });
+    }
+})
+
+.controller('WorkNotifyMyCtrl', function($scope, $state, $ionicActionSheet, common) {
+    $scope.items = [];
+
+    var getList = function() {
+        COMMON.post({
+            type: 'my_send_inform',
+            data: {
+                "id": common.userInfo.clientId
+            },
+            success: function(data) {
+                var _body = data.body;
+                if (_body && _body.inform) {
+                    $scope.items = _body.inform;
+                }
+            }
+        });
+    }
+
+    getList();
+
+    $scope.doRefresh = function() {
+        setTimeout(function() {
+            $scope.$broadcast('scroll.refreshComplete');
+            getList();
+        }, 1000)
+        return true;
+    }
+
+    $scope.nickname = function(name) {
+        return common.nickname(name);
+    }
+    $scope.formatDate = function(date) {
+        return common.format(date, 'MM-dd');
+    }
 })
 
 .controller('WorkNotifyDetailsCtrl', function($scope, $stateParams, $ionicActionSheet, common) {
+    $scope.item = {};
+
     $scope.showNav = function() {
         $ionicActionSheet.show({
             buttons: [{
@@ -59,13 +117,27 @@ angular.module('workNotify.controller', [])
             }],
             cancelText: '取消',
             buttonClicked: function (index, item) {
-                
+                if (index == 1) {
+                    del();
+                    history.back(-1);
+                }
+
                 return true;
             }
         });
     }
 
-    $scope.item = {};
+    var del = function () {
+        COMMON.post({
+            type: 'delete_inform',
+            data: {
+                "informId": $scope.item.id
+            },
+            success: function(data) {
+                var _body = data.body;
+            }
+        });
+    }
 
     COMMON.post({
         type: 'inform_details',
@@ -81,12 +153,67 @@ angular.module('workNotify.controller', [])
     });
 })
 
-.controller('WorkNotifyAddCtrl', function($scope, common) {
+.controller('WorkNotifyAddCtrl', function($scope, $cordovaFileTransfer, common) {
+    $scope.seleSendName = '';
 
+    $scope.data = {};
+
+    var setSendName = function () {
+        var sendName = '';
+
+        if (!common.setCheckedPerson.length) {
+            sendName = '请选择';
+        }
+
+        for (var i = 0, ii = common.setCheckedPerson.length; i < ii; i++) {
+            sendName += common.setCheckedPerson[i].name + ' ';
+        }
+
+        $scope.seleSendName = sendName;
+    }
+    setSendName();
+
+    $scope.showSelePhoto = function() {
+        common.showSelePhoto();
+    }
+
+    $scope.submit = function() {
+        var _param = {
+            departmentList: [],
+            userList: [],
+            description: $scope.data.description,
+            title: $scope.data.title,
+            "id": common.userInfo.clientId
+        }
+
+        for (var i = 0, ii = common.setCheckedPerson.length; i < ii; i++) {
+            if (common.setCheckedPerson[i].id) {
+                _param.userList.push({
+                    userId: common.setCheckedPerson[i].id
+                })
+            } else {
+                _param.departmentList.push({
+                    departmentId: common.setCheckedPerson[i].departmentId
+                })
+            }
+        }
+
+        COMMON.post({
+            type: 'create_inform',
+            data: _param,
+            success: function(data) {
+                var _body = data.body;
+
+               console.log(data)
+            }
+        });
+    }
 })
 
 .controller('WorkNotifySeleSectionCtrl', function($scope, $state, common) {
     $scope.items = [];
+
+    common.setCheckedPerson = [];
 
     //公司&部门列表
     var companyList = [];
@@ -120,6 +247,9 @@ angular.module('workNotify.controller', [])
      //选择部门
     $scope.seleBrankHandle = function(item) {
         $scope.seleBrankInfo = item.name;
+
+        $scope.items = handleBrankList(item.departmentId);
+
         toggleSeleHandle('brank');
     }
     //筛选切换
@@ -128,19 +258,82 @@ angular.module('workNotify.controller', [])
     }
 
     $scope.sub = function() {
-        console.log($scope.items)    
+        var list = common.filterChecked($scope.items);
+        for (var i = 0, ii = list.length; i < ii; i++) {
+            common.setCheckedPerson.push( list[i] )
+        }
+
+        var _config = common.repeatArrObj(common.setCheckedPerson, 'id', 'departmentId');
+
+        common.setCheckedPerson = common.filterChecked(_config);
+
+        history.back(-1);
     }
 
     $scope.toPerson = function(item) {
-        $state.go('work_notify_sele_person', {
-            id: item.departmentId
-        });
+        if (item.userNum) {
+            $state.go('work_notify_sele_person', {
+                id: item.departmentId
+            });    
+        }
     }
 })
 
-.controller('WorkNotifySelePersonCtrl', function($scope, $state, $stateParams, workSeleNotifySectionList) {
-    $scope.items = workSeleNotifySectionList.all();
+.controller('WorkNotifySelePersonCtrl', function($scope, $state, $stateParams, $timeout, common) {
+    $scope.items = [];
 
-    console.log($stateParams.id)
+    var dataList = {
+        currentPage: 0,
+        phoneBook: []
+    };
+
+    var handleAjax = function () {
+        COMMON.getPhoneBook({
+            currentPage: dataList.currentPage + 1,
+            departmentId: $stateParams.id,
+            name: ''
+        }, function(body) {
+            var _body = body,
+                phoneBook = _body.phoneBook;
+
+            dataList = _body;
+
+            for (var i = 0, ii = phoneBook.length; i < ii; i++) {
+                $scope.items.push(phoneBook[i]);
+            }
+
+            $timeout(function() {
+                $scope.vm.moredata = true;
+            }, 1000);
+        });
+    }
+
+    $scope.vm = {
+        moredata: false,
+        loadMore: function() {
+            if (dataList.phoneBook.length < 10 || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
+                $scope.vm.moredata = false;
+                return;
+            }
+            console.log(dataList.totalPage, 'x');
+
+            $timeout(function () {
+                $scope.vm.moredata = false;
+                handleAjax();
+            }, 1500);
+            return true;
+        }
+    }
+
+    $scope.back = function() {
+        var list = common.filterChecked($scope.items);
+        for (var i = 0, ii = list.length; i < ii; i++) {
+            common.setCheckedPerson.push( list[i] )
+        }
+        
+        history.back(-1);
+    }
+
+    handleAjax();
 })
 
