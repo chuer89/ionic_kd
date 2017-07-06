@@ -19,7 +19,6 @@ angular.module('workSchedule.controller', [])
 
                 $scope.items = _body.riChengList;
             }
-
         });
     }
     handleAjax();
@@ -35,7 +34,9 @@ angular.module('workSchedule.controller', [])
 
 //日程详情
 .controller('WorkScheduleDetailsCtrl', function($scope, $stateParams, $ionicPopup, $ionicActionSheet, workScheduleWarn, common) {
-	$scope.item = workScheduleWarn.get($stateParams.id);
+	$scope.item = {};
+
+    $scope.relationGuys = '';
 
     COMMON.post({
         type: 'richeng_detail_info',
@@ -47,16 +48,41 @@ angular.module('workSchedule.controller', [])
         success: function(data) {
             var _body = data.body;
 
-            console.log(_body)
+            var _relationGuys = '';
 
-            // for (var i = 0, ii = _body.riChengList.length; i < ii; i++) {
-            //     _body.riChengList[i]._beginTime = common.format(_body.riChengList[i].beginTime)
-            // }
+            for (var i = 0, ii = _body.jieshourenList.length; i < ii; i++) {
+                _relationGuys += _body.jieshourenList[i].userName + ' ';
+            }
 
-            // $scope.items = _body.riChengList;
+            common.getUserinfo_simple(_body.riChengbasicInffo.riChengCreatorId, function(_data) {
+                _body.riChengbasicInffo.userName = _data.name;
+
+                _body.riChengbasicInffo._time = common.format(_body.riChengbasicInffo.riChengBegingtime);
+
+                $scope.item = _body.riChengbasicInffo;
+            });
+
+            $scope.relationGuys = _relationGuys;
         }
 
     });
+
+    var ajaxDel = function() {
+        COMMON.post({
+            type: 'delete_richeng',
+            data: {
+                clientId: common.userInfo.clientId,
+                riChengId: $stateParams.id
+            },
+            success: function(data) {
+                var _body = data.body;
+
+                common.toast(_body.message, function() {
+                    history.back(-1);
+                });
+            }
+        });
+    }
 
 	var showConfirm = function() {
 		var confirmPopup = $ionicPopup.confirm({
@@ -65,7 +91,7 @@ angular.module('workSchedule.controller', [])
 		});
 		confirmPopup.then(function(res) {
 			if(res) {
-				console.log('You are sure');
+				ajaxDel();
 			} else {
 				console.log('You are not sure');
 			}
@@ -106,14 +132,18 @@ angular.module('workSchedule.controller', [])
 })
 
 //日程新增
-.controller('WorkScheduleAddCtrl', function($scope, $ionicActionSheet, common) {
+.controller('WorkScheduleAddCtrl', function($scope, $ionicActionSheet, common, seleMenuList) {
     $scope.data = {
         typePageName: 'WorkScheduleAddCtrl',
         beginTime: '',
         title: '',
         content: '',
-        userlist: []
+        userlist: [],
+        cycletime: {text: '请选择'},
+        remindtime: {text: '请选择'}
     }
+
+    var menus = seleMenuList.menu();
 
     if (common.setCheckedPerson._targetName != 'work_schedule_add') {
         common.setCheckedPerson = {};
@@ -130,11 +160,12 @@ angular.module('workSchedule.controller', [])
             content: $scope.data.content,
             title: $scope.data.title,
             clientId: common.userInfo.clientId,
-            beginTime: "2017-07-07 13:40"
+            beginTime: "2017-07-07 13:40",
+            cycletime: $scope.data.cycletime.key,
+            remindtime: $scope.data.remindtime.key
         };
 
         if (!_param.title) {
-
             return;
         }
 
@@ -148,41 +179,32 @@ angular.module('workSchedule.controller', [])
             success: function(data) {
                 var _body = data.body;
 
-               history.back(-1);
+               common.toast(_body.message, function() {
+                    history.back(-1);
+                });
             }
         });
     }
 
-	$scope.seleRepeat = '请选择';
+    //重复
 	$scope.showSeleRepeat = function () {
 		$ionicActionSheet.show({
-            buttons: [
-            	{text: '不重复'},
-            	{text: '每天'},
-                { text: '每周' },
-                {text: '每月'}
-            ],
+            buttons: common.setSeleRepeat(menus.cycletime),
             cancelText: '取消',
             buttonClicked: function(index, item) {
-                $scope.seleRepeat = item.text;
+                $scope.data.cycletime = item;
                 return true;
             }
         })
 	}
 
-    $scope.seleWarn = '请选择';
+    //时间
     $scope.showSeleWarn = function() {
         $ionicActionSheet.show({
-            buttons: [
-            	{text: '事情发生时'},
-            	{text: '提前30分钟'},
-                { text: '提前1小时' },
-                { text: '提前2小时' },
-                { text: '提前5小时' }
-            ],
+            buttons: common.setSeleRepeat(menus.remindtime),
             cancelText: '取消',
             buttonClicked: function(index, item) {
-                $scope.seleWarn = item.text;
+                $scope.data.remindtime = item;
                 return true;
             }
         })

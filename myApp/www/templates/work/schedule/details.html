@@ -10,17 +10,17 @@
 	<ion-content>
         <div class="list_box">
             <div class="purple_bg_title">
-                <p>{{item.time}}</p>
-                <p class="f14">{{item.target}} 安排的日程</p>
+                <p>{{item._time}}</p>
+                <p class="f14">{{item.userName}} 安排的日程</p>
             </div>
             <div class="schedele_details item_list_box">
                 <div class="schedule_content">
-                    {{item.remark}}
+                    {{item.riChengContent}}
                 </div>
             </div>
             
             <div class="padding_tb padding_around">
-                <p class="info">日程人员：{{item.personnel}}</p>
+                <p class="info">日程人员：{{relationGuys}}</p>
             </div>
         </div>
     </ion-content>

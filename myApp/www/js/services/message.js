@@ -96,6 +96,14 @@ angular.module('message.services', [])
     var taskStatus = [{name:'工作中',key:'WORKING'},{name:'未确认',key:'UNCONFIRMED'},
     {name:'合格',key:'QUALIFIED'},{name:'不合格',key:'UNQUALIFIED'}];
 
+    //重复
+    var cycletime = [{name:'不重复',key: 'NO_CYCLE'},{name:'每天',key: 'DAY'},
+    {name:'每周',key: 'WEEK'},{name:'每月',key: 'MONTH'}];
+
+    //提醒
+    var remindtime = [{name: '事情发生时',key:'0'},{name: '提前30分钟',key:'30'},
+    { name: '提前1小时',key:'60'},{ name: '提前2小时',key:'120'},{ name: '提前5小时',key:'300'}];
+
 
     return {
         menu: function() {
@@ -109,7 +117,9 @@ angular.module('message.services', [])
                 department: department,
                 applicationStatus: applicationStatus,
                 applicationType: applicationType,
-                taskStatus: taskStatus
+                taskStatus: taskStatus,
+                cycletime: cycletime,
+                remindtime: remindtime
             };
         }
     }
@@ -341,6 +351,17 @@ angular.module('message.services', [])
             return null;
         },
 
+        //选择转化默认上拉数据
+        setSeleRepeat: function(list) {
+            list = list || [];
+
+            for (var i = 0, ii = list.length; i < ii; i++) {
+                list[i].text = list[i].name;
+            }
+
+            return list;
+        },
+
         format: function (date, fmt) {
             // 对Date的扩展，将 Date 转化为指定格式的String
             // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
@@ -531,10 +552,30 @@ angular.module('message.services', [])
             .show(txt, 'short', 'bottom')
             .then(function(success) {
                 if (typeof cb == 'function') {
+                    //history.back(-1);
                     cb();
                 }
             }, function (error) {
               // error
+            });
+        },
+
+        //根据id 反查姓名
+        getUserinfo_simple: function(id, cb) {
+            id = id || COMMON.userInfo.clientId;
+
+            COMMON.post({
+                type: 'userinfo_simple',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    var _data = data.body;
+
+                    if (typeof cb == 'function') {
+                        cb(_data);
+                    }
+                }
             });
         },
 

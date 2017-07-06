@@ -8,12 +8,98 @@
     </ion-nav-buttons>
 
 	<ion-content>
-        <div class="list">
-            <div class="item">
-                <h2>张勤力</h2>
-                <p>2017年12月09日 21:46</p>
-                <div>
-                    阿姐阿萨德就离开的风景啊啥地方的罚款啊啥地方看见啊啥地方啊是打开链接
+        <div class="kd_nav_filter">
+            <div class="padding_around row">
+                <div class="kd_sele_box col">
+                    <div ng-click="toggleSele('brank')" class="kd_sele_val">{{seleBrankInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowBrankSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleBrank" ng-click="seleBrankHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col kd_m">
+                    <div ng-click="toggleSele('department')" class="kd_sele_val">{{seleDepartmentInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowDepartmentSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+
+                        <div class="kd_sele_item">
+                            <ion-scroll zooming="true" direction="y" style="max-height: 200px">
+                                <a href="javascript:;" ng-click="seleDepartmentHandle(item)" ng-repeat="item in seleDepartment">{{item.name}}</a>
+                            </ion-scroll>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col">
+                    <div ng-click="toggleSele('date')" class="kd_sele_val">{{seleDateInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowDateSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleDate" ng-click="seleDateHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col col-20">
+                    <div ng-click="toggleSele('type')" class="kd_sele_val">{{seleTypeInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowTypeSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleType" ng-click="seleTypeHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="list_box padding_tb">
+            <div class="item_list_box">
+                <div class="row">
+                    <div class="col col-20 text_align_center">
+                        <span class="list_icon_box">
+                            <span class="name_box">神秘</span>
+                        </span>
+                    </div>
+                    <div class="col">
+                        <div class="item_list_box" style="padding-top: 0;">
+                            <h2 class="title">张勤力</h2>
+                            <p class="info">2017年12月09日 21:46</p>
+                        </div>
+                        
+                        <div class="item_list_box">
+                            阿姐阿萨德就离开的风景啊啥地方的罚款啊啥地方看见啊啥地方啊是打开链接
+                        </div>
+
+                        <div class="item_list_box" style="border-bottom: 0;">
+                            评论（6）
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="list_box padding_tb">
+            <div class="item_list_box">
+                <div class="row">
+                    <div class="col col-20 text_align_center">
+                        <span class="list_icon_box">
+                            <span class="name_box">神秘</span>
+                        </span>
+                    </div>
+                    <div class="col">
+                        <div class="item_list_box" style="padding-top: 0;">
+                            <h2 class="title">张勤力</h2>
+                            <p class="info">2017年12月09日 21:46</p>
+                        </div>
+                        
+                        <div class="item_list_box">
+                            阿姐阿萨德就离开的风景啊啥地方的罚款啊啥地方看见啊啥地方啊是打开链接
+                        </div>
+
+                        <div class="item_list_box" style="border-bottom: 0;">
+                            评论（6）
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

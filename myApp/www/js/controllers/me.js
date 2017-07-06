@@ -6,20 +6,12 @@ angular.module('me.controller', [])
 	$scope.name = '';
 	$scope.position = '';
 
-	common.post({
-        type: 'userinfo_simple',
-        data: {
-            id: common.userInfo.clientId
-        },
-        success: function(data) {
-        	var _data = data.body;
+	common.getUserinfo_simple(common.userInfo.clientId, function(_data) {
+		angular.extend(common.userInfo, _data);
 
-            angular.extend(common.userInfo, _data);
-
-            $scope.name = _data.name;
-            $scope.position = _data.position;
-        }
-    });
+        $scope.name = _data.name;
+        $scope.position = _data.position;
+	})
 })
 
 //个人信息
