@@ -92,6 +92,18 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'CommonSeleGuysCtrl',
         cache: false
     })
+    //申请－选择通知部门
+    .state('common_sele_section', {
+        url: '/common/seleSection/:id',
+        templateUrl: 'templates/common/seleSection.html',
+        controller: 'CommonSeleSectionCtrl'
+    })
+    //申请－选择通知人员
+    .state('common_sele_person', {
+        url: '/common/selePerson/:id',
+        templateUrl: 'templates/common/selePerson.html',
+        controller: 'CommonSelePersonCtrl'
+    })
 
 
   // setup an abstract state for the tabs directive
@@ -218,7 +230,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_task_add', {
         url: '/work/task_add',
         templateUrl: 'templates/work/task/add.html',
-        controller: 'WorkTaskAddCtrl'
+        controller: 'WorkTaskAddCtrl',
+        cache: false
     })
     //任务查看－列表
     .state('work_task_list', {
@@ -273,7 +286,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_schedule_add', {
         url: '/work/schedule_add',
         templateUrl: 'templates/work/schedule/add.html',
-        controller: 'WorkScheduleAddCtrl'
+        controller: 'WorkScheduleAddCtrl',
+        cache: false
     })
     //我的日程
     .state('work_schedule_my', {
@@ -378,18 +392,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkNotifyAddCtrl',
         cache: false
     })
-    //申请－选择通知部门
-    .state('work_notify_sele_section', {
-        url: '/work/notify/seleSection',
-        templateUrl: 'templates/work/notify/sele-section.html',
-        controller: 'WorkNotifySeleSectionCtrl'
-    })
-    //申请－选择通知人员
-    .state('work_notify_sele_person', {
-        url: '/work/notify/selePerson/:id',
-        templateUrl: 'templates/work/notify/sele-person.html',
-        controller: 'WorkNotifySelePersonCtrl'
-    })
+    
 
     //汇报
     .state('work_report', {

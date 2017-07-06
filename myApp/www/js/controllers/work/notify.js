@@ -158,20 +158,13 @@ angular.module('workNotify.controller', [])
 
     $scope.data = {};
 
-    var setSendName = function () {
-        var sendName = '';
-
-        if (!common.setCheckedPerson.length) {
-            sendName = '请选择';
-        }
-
-        for (var i = 0, ii = common.setCheckedPerson.length; i < ii; i++) {
-            sendName += common.setCheckedPerson[i].name + ' ';
-        }
-
-        $scope.seleSendName = sendName;
+    if (common.setCheckedPerson._targetName != 'work_notify') {
+        common.setCheckedPerson = {};
     }
-    setSendName();
+
+    common.getCommonSendName(function(sendName) {
+        $scope.seleSendName = sendName;
+    });
 
     $scope.showSelePhoto = function() {
         common.showSelePhoto();
@@ -186,17 +179,9 @@ angular.module('workNotify.controller', [])
             "id": common.userInfo.clientId
         }
 
-        for (var i = 0, ii = common.setCheckedPerson.length; i < ii; i++) {
-            if (common.setCheckedPerson[i].id) {
-                _param.userList.push({
-                    userId: common.setCheckedPerson[i].id
-                })
-            } else {
-                _param.departmentList.push({
-                    departmentId: common.setCheckedPerson[i].departmentId
-                })
-            }
-        }
+        common.getCommonCheckedPerson(function(opt) {
+            angular.extend(_param, opt);
+        })
 
         COMMON.post({
             type: 'create_inform',
@@ -210,130 +195,4 @@ angular.module('workNotify.controller', [])
     }
 })
 
-.controller('WorkNotifySeleSectionCtrl', function($scope, $state, common) {
-    $scope.items = [];
-
-    common.setCheckedPerson = [];
-
-    //公司&部门列表
-    var companyList = [];
-
-    //选择菜单处理
-    var toggleSeleHandle = function(type) {
-        if (type == 'brank') {
-            $scope.isShowBrankSele = !$scope.isShowBrankSele;
-        }
-    }, handleBrankList = function(id) {
-        for (var i = 0; i < companyList.length; i++) {
-            if (companyList[i].departmentId == id) {
-                return companyList[i].childDepartment;
-            }
-        }
-        return [];
-    }
-
-    $scope.seleBrank = [];
-    $scope.isShowBrankSele = false;
-    $scope.seleBrankInfo = '品牌';
-
-    //加载部门&公司
-    common.getCompany(function(data) {
-        $scope.seleBrank = data;
-        companyList = data;
-
-        $scope.items = handleBrankList(1);
-    });
-
-     //选择部门
-    $scope.seleBrankHandle = function(item) {
-        $scope.seleBrankInfo = item.name;
-
-        $scope.items = handleBrankList(item.departmentId);
-
-        toggleSeleHandle('brank');
-    }
-    //筛选切换
-    $scope.toggleSele = function(type) {
-        toggleSeleHandle(type);
-    }
-
-    $scope.sub = function() {
-        var list = common.filterChecked($scope.items);
-        for (var i = 0, ii = list.length; i < ii; i++) {
-            common.setCheckedPerson.push( list[i] )
-        }
-
-        var _config = common.repeatArrObj(common.setCheckedPerson, 'id', 'departmentId');
-
-        common.setCheckedPerson = common.filterChecked(_config);
-
-        history.back(-1);
-    }
-
-    $scope.toPerson = function(item) {
-        if (item.userNum) {
-            $state.go('work_notify_sele_person', {
-                id: item.departmentId
-            });    
-        }
-    }
-})
-
-.controller('WorkNotifySelePersonCtrl', function($scope, $state, $stateParams, $timeout, common) {
-    $scope.items = [];
-
-    var dataList = {
-        currentPage: 0,
-        phoneBook: []
-    };
-
-    var handleAjax = function () {
-        COMMON.getPhoneBook({
-            currentPage: dataList.currentPage + 1,
-            departmentId: $stateParams.id,
-            name: ''
-        }, function(body) {
-            var _body = body,
-                phoneBook = _body.phoneBook;
-
-            dataList = _body;
-
-            for (var i = 0, ii = phoneBook.length; i < ii; i++) {
-                $scope.items.push(phoneBook[i]);
-            }
-
-            $timeout(function() {
-                $scope.vm.moredata = true;
-            }, 1000);
-        });
-    }
-
-    $scope.vm = {
-        moredata: false,
-        loadMore: function() {
-            if (dataList.phoneBook.length < 10 || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
-                $scope.vm.moredata = false;
-                return;
-            }
-            console.log(dataList.totalPage, 'x');
-
-            $timeout(function () {
-                $scope.vm.moredata = false;
-                handleAjax();
-            }, 1500);
-            return true;
-        }
-    }
-
-    $scope.back = function() {
-        var list = common.filterChecked($scope.items);
-        for (var i = 0, ii = list.length; i < ii; i++) {
-            common.setCheckedPerson.push( list[i] )
-        }
-        
-        history.back(-1);
-    }
-
-    handleAjax();
-})
 

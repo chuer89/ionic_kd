@@ -89,7 +89,12 @@ angular.module('message.services', [])
 
     //申请的类型
     var applicationType = [{name:'请假',key:'LEAVE'},{name:'采购',key:'PURCHASE'},
-                            {name:'其他',key:'OTHER'},{name:'任务延迟',key:'TASK_DELAY'}];
+    {name:'其他',key:'OTHER'},{name:'任务延迟',key:'TASK_DELAY'}];
+
+
+    //任务状态
+    var taskStatus = [{name:'工作中',key:'WORKING'},{name:'未确认',key:'UNCONFIRMED'},
+    {name:'合格',key:'QUALIFIED'},{name:'不合格',key:'UNQUALIFIED'}];
 
 
     return {
@@ -103,7 +108,8 @@ angular.module('message.services', [])
                 brank: brank,
                 department: department,
                 applicationStatus: applicationStatus,
-                applicationType: applicationType
+                applicationType: applicationType,
+                taskStatus: taskStatus
             };
         }
     }
@@ -174,9 +180,14 @@ angular.module('message.services', [])
             // })
         },
 
+        //当前登录用户信息
         userInfo: {
             clientId: 153
+            // clientId: 28
         },
+
+        //内容缓存（预计父 子页面通信，保存数据）
+        _localstorage: {},
 
         showSelePhoto: function(id) {
             id = id || 'myImage';
@@ -393,10 +404,16 @@ angular.module('message.services', [])
             });
         },
 
-        //审核人
-        getAuditorUser: function (cb) {
+        //审核人&查询人
+        getAuditorUser: function (cb, isQuery) {
+            var _type = 'auditor_user';
+
+            if (isQuery) {
+                _type = 'query_user_list';
+            }
+
             COMMON.post({
-                type: 'auditor_user',
+                type: _type,
                 data: {
                     "id": COMMON.userInfo.clientId,
                 },
@@ -409,9 +426,64 @@ angular.module('message.services', [])
             });
         },
 
+        //获取选择 人 | 部门
+        getCommonSendName: function(cb) {
+            var sendName = '';
+
+            if (!COMMON.setCheckedPerson.list) {
+                if (typeof cb == 'function') {
+                    cb('请选择');
+                }
+                return;
+            }
+
+            if (!COMMON.setCheckedPerson.list.length) {
+                sendName = '请选择';
+            }
+
+            for (var i = 0, ii = COMMON.setCheckedPerson.list.length; i < ii; i++) {
+                sendName += COMMON.setCheckedPerson.list[i].name + ' ';
+            }
+
+            if (typeof cb == 'function') {
+                cb(sendName);
+            }
+        },
+
+        getCommonCheckedPerson: function(cb) {
+            var common = COMMON;
+            var _param = {
+                userList: [],
+                departmentList: []
+            };
+
+            if (!COMMON.setCheckedPerson.list) {
+                if (typeof cb == 'function') {
+                    cb(_param);
+                }
+                return;
+            }
+
+            for (var i = 0, ii = common.setCheckedPerson.list.length; i < ii; i++) {
+                if (common.setCheckedPerson.list[i].id) {
+                    _param.userList.push({
+                        userId: common.setCheckedPerson.list[i].id
+                    })
+                } else {
+                    _param.departmentList.push({
+                        departmentId: common.setCheckedPerson.list[i].departmentId
+                    })
+                }
+            }
+
+            if (typeof cb == 'function') {
+                cb(_param);
+            }
+        },
+
         //选中审核人
         setAuditorUserList: {},
-        setCheckedPerson: [],//记录-选择通讯录-部门/人
+        setCheckedPerson: {list: [], _targetName: ''},//记录-选择通讯录-部门/人
 
         //筛选选中
         filterChecked: function(list) {
@@ -425,6 +497,7 @@ angular.module('message.services', [])
 
             return _list;
         },
+
         //数组对象去重
         repeatArrObj: function(arr, id, cloneId) {
             var _arr = [],
@@ -448,13 +521,21 @@ angular.module('message.services', [])
             return _arr;
         },
 
-        toast: function(txt) {
+        //气泡提醒
+        toast: function(txt, cb) {
             if (!txt) {
                 return;
             }
 
             $cordovaToast
-            .show(txt, 'short', 'bottom');
+            .show(txt, 'short', 'bottom')
+            .then(function(success) {
+                if (typeof cb == 'function') {
+                    cb();
+                }
+            }, function (error) {
+              // error
+            });
         },
 
         //日期选择

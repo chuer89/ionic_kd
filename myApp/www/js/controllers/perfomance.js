@@ -57,7 +57,7 @@ angular.module('perfomance.controller', [])
     common.post({
         type: 'jixiao_index_page',
         data: {
-            "current":1,
+            "currentPage":1,
             "month":4,
             "year":2016
         },
@@ -122,11 +122,9 @@ angular.module('perfomance.controller', [])
 
     common.post({
         type: 'jixiao_items',
-        data: {
-            
-        },
+        data: {},
         success: function(data) {
-            
+            console.log(data)
         }
     });
 })

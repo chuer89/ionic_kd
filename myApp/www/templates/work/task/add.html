@@ -4,42 +4,67 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a href="javascript:;" class="button button-clear button-positive">创建</a>
+        <a href="javascript:;" ng-click="create()" class="button button-clear button-positive">创建</a>
     </ion-nav-buttons>
 
 	<ion-content>
-		<div class="list">
+        <div class="list">
             <div class="item item-icon-right">
                 截至时间
               <span class="item-note">请选择</span>
               <i class="icon ion-chevron-right icon-accessory"></i>
             </div>
+        </div>
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">任务标题</span>
+                <input type="text" placeholder="请输入标题" ng-model="data.title">
+            </label>
+        </div>
+        <div class="list">
             <div class="item">
-                任务标题<input type="text" name="" placeholder="请输入"/>
+                <div class="row">
+                    <div class="col">内容</div>
+                    <div class="col col-67">
+                        <textarea placeholder="请输入内容" ng-model="data.description"></textarea>
+                    </div>
+                </div>
             </div>
-            <div class="item">
-                内容<textarea placeholder="请输入内容"></textarea>
-            </div>  
+        </div>
+        <div class="list">
             <div class="item item-icon-right" ng-click="showSeleWarn()">
                 提醒
                 <span class="item-note">{{seleWarn}}</span>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </div>
-            <div class="item item-icon-right">
-              负责人
-              <span class="item-note">请选择</span>
-              <i class="icon ion-chevron-right icon-accessory"></i>
+        </div>
+        <div class="list">
+            <div class="item">
+                <a href="javascript:;" ng-click="showSelePhoto()">
+                    <img src="img/icon/plus.png" class="icon_plus" />
+                </a>
             </div>
-            <div class="item item-icon-right">
+        </div>
+        <div class="list">
+            <a href="#/common/seleGuys/3" class="item item-icon-right">
+              负责人
+              <span class="item-note">{{data.RESPONSIBLE_PEOPLE.name}}</span>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+        <div class="list">
+            <a href="#/common/seleGuys/1" class="item item-icon-right">
               检查人
               <span class="item-note">请选择</span>
               <i class="icon ion-chevron-right icon-accessory"></i>
-            </div>
-            <div class="item item-icon-right">
+            </a>
+        </div>
+		<div class="list">
+            <a href="#/common/seleGuys/2" class="item item-icon-right">
               关注人
-              <span class="item-note">请选择</span>
+              <span class="item-note">{{data.ATTENTION_PEOPLE.name}}</span>
               <i class="icon ion-chevron-right icon-accessory"></i>
-            </div>
+            </a>
         </div>
 	</ion-content>
 </ion-view>

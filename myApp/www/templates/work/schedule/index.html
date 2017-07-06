@@ -17,9 +17,9 @@
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <div class="list_box">
             <div class="list_type_title padding_around">收到的日程</div>
-            <a href="#/work/schedule/{{item.id}}" class="item_list_box" ng-repeat="item in items">
-                <p class="colorRed info">{{item.time}}</p>
-                <h2 class="title">{{item.tips}}</h2>
+            <a href="#/work/schedule/{{item.riChengId}}" class="item_list_box" ng-repeat="item in items">
+                <p class="colorRed info">{{item._beginTime}}</p>
+                <h2 class="title">{{item.title}}</h2>
             </a>
         </div>
     </ion-content>

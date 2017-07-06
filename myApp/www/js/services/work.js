@@ -148,9 +148,11 @@ angular.module('work.services', [])
     }
 })
 
+//任务tab 列 ；可删
 .factory('workTaskList', function() {
     var list = [{
         name: '待办',
+        isShowTab: true,
         list: [{
             title: '打理好所有柜台的清洁',
             status: '工作中',
@@ -199,7 +201,7 @@ angular.module('work.services', [])
     }
 })
 
-//日程提醒
+//日程提醒 - 可删
 .factory('workScheduleWarn', function() {
     var list = [{
         id: 0,
