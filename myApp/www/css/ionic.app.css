@@ -9910,6 +9910,9 @@ a.disable {
   padding-top: 0.66667rem;
   padding-bottom: 0.66667rem; }
 
+.padding_btm {
+  padding-bottom: 1.33333rem; }
+
 .icon_plus {
   width: 40px; }
   [data-dpr='2'] .icon_plus {

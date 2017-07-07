@@ -105,6 +105,9 @@ a.disable{
 	padding-top: pxRem(50);
 	padding-bottom: pxRem(50);
 }
+.padding_btm{
+	padding-bottom: pxRem(100);
+}
 
 .icon_plus{
 	@include width-dpr(40);

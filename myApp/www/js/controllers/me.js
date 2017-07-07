@@ -11,7 +11,9 @@ angular.module('me.controller', [])
 
         $scope.name = _data.name;
         $scope.position = _data.position;
-	})
+
+        $scope.nickname = common.nickname(_data.name);
+	});
 })
 
 //个人信息
