@@ -563,6 +563,10 @@ angular.module('message.services', [])
             });
         },
 
+        back: function() {
+            history.back(-1);
+        },
+
         //根据id 反查姓名
         getUserinfo_simple: function(id, cb) {
             id = id || COMMON.userInfo.clientId;

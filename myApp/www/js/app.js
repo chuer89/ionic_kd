@@ -401,7 +401,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_report', {
         url: '/work/report',
         templateUrl: 'templates/work/report/index.html',
-        controller: 'WorkReportCtrl'
+        controller: 'WorkReportCtrl',
+        cache: false
     })
     //汇报-写日报
     .state('work_report_addDaily', {
@@ -432,6 +433,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         url: '/work/report/record',
         templateUrl: 'templates/work/report/record.html',
         controller: 'WorkReportRecordCtrl'
+    })
+    //汇报-日报统计-个人
+    .state('work_report_record_person', {
+        url: '/work/report/record/:id',
+        templateUrl: 'templates/work/report/record-person.html',
+        controller: 'WorkReportRecordPersonCtrl'
     })
 
     //值班

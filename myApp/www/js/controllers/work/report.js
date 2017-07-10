@@ -17,7 +17,9 @@ angular.module('workReport.controller', [])
                 typeId: 1
             },
             success: function(data) {
-                console.log(data);
+                common.toast(data.message, function() {
+                    common.back();
+                });
             }
         });
     }
@@ -44,7 +46,9 @@ angular.module('workReport.controller', [])
                 typeId: 3
             },
             success: function(data) {
-                console.log(data);
+                common.toast(data.message, function() {
+                    common.back();
+                });
             }
         });
     }
@@ -71,7 +75,9 @@ angular.module('workReport.controller', [])
                 typeId: 2
             },
             success: function(data) {
-                console.log(data);
+                common.toast(data.message, function() {
+                    common.back();
+                });
             }
         });
     }
@@ -81,10 +87,11 @@ angular.module('workReport.controller', [])
     }
 })
 
+//查询列表
 .controller('WorkReportCtrl', function($scope, $state, $ionicActionSheet, $timeout, common, seleMenuList) {
     var menus = seleMenuList.menu();
 
-    var dataList = { };
+    var dataList = {};
     $scope.data = {
         departmentId: 1
     };
@@ -260,13 +267,23 @@ angular.module('workReport.controller', [])
     }
 })
 
-.controller('WorkReportDetailCtrl', function($scope, $stateParams, common) {
+.controller('WorkReportDetailCtrl', function($scope, $stateParams, $timeout, common) {
     $scope.item = {};
 
+    $scope.data = {};
+
+    $scope.reportList = [];
+
+    var dataList = {
+        currentPage: 0,
+        reportComment: []
+    };
+
+    //详情
     COMMON.post({
         type: 'report_details',
         data: {
-            "reportId": $stateParams.id
+            reportId: $stateParams.id
         },
         success: function(data) {
             var _body = data.body;
@@ -276,8 +293,116 @@ angular.module('workReport.controller', [])
             $scope.item = _body;
         }
     });
+
+    //评论列表
+    var handleAjax = function() {
+        COMMON.post({
+            type: 'obtain_report_comment',
+            data: {
+                reportId: $stateParams.id,
+                currentPage: dataList.currentPage + 1
+            },
+            success: function(data) {
+                var _body = data.body,
+                    reportComment = _body.reportComment;
+
+                dataList = _body;
+
+                for (var i = 0, ii = reportComment.length; i < ii; i++) {
+                    reportComment[i].nickname = common.nickname(reportComment[i].commentUserName);
+                    reportComment[i]._commentTime = common.format(reportComment[i].commentTime);
+
+                    $scope.reportList.push(reportComment[i]);
+                }
+
+                $timeout(function() {
+                    $scope.vm.moredata = true;
+                }, 1000);
+            }
+        });
+    }, initRepotList = function() {
+        dataList = {
+            currentPage: 0,
+            reportComment: []
+        };
+         $scope.reportList = [];
+
+        handleAjax();
+    }
+
+    $scope.vm = {
+        moredata: false,
+        loadMore: function() {
+            if (dataList.reportComment.length < common._pageSize || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
+                $scope.vm.moredata = false;
+                return;
+            }
+
+            $timeout(function () {
+                $scope.vm.moredata = false;
+                handleAjax();
+            }, 1500);
+            return true;
+        }
+    }
+    initRepotList();
+
+    //添加评论
+    $scope.sendReport = function() {
+        COMMON.post({
+            type: 'report_comment',
+            data: {
+                reportId: $stateParams.id,
+                userId: common.userInfo.clientId,
+                comment: $scope.data.commentReport
+            },
+            success: function(data) {
+                var _body = data.body;
+
+                $scope.data.commentReport = '';
+
+                // initRepotList();
+                common.toast(data.message, function() {
+                    initRepotList();
+                });
+            }
+        });
+    }
 })
 
-.controller('WorkReportRecordCtrl', function() {
-	
+//统计
+.controller('WorkReportRecordCtrl', function($scope, common) {
+    $scope.data = {};
+
+	COMMON.post({
+        type: 'report_statistic',
+        data: {
+            userId: common.userInfo.clientId,
+            date: '2017-07-10'
+        },
+        success: function(data) {
+            var _body = data.body;
+
+            $scope.data = _body;
+
+            console.log(_body);
+        }
+    });
 })
+
+//统计-个人
+.controller('WorkReportRecordPersonCtrl', function($scope, $stateParams, common) {
+    COMMON.post({
+        type: 'signal_person_report_statistic',
+        data: {
+            userId: common.userInfo.clientId,
+            date: '2017-07-10',
+            searchUserId: $stateParams.id
+        },
+        success: function(data) {
+            var _body = data.body;
+            console.log(_body);
+        }
+    });
+})
+

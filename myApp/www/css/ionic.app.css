@@ -9886,7 +9886,8 @@ textarea {
 
 a {
   display: inline-block;
-  text-decoration: none; }
+  text-decoration: none;
+  color: #444444; }
 
 a.disable {
   color: #e6e6e6; }

@@ -28,13 +28,39 @@
                     </div>
                 </div>
             </div>
+
+            <div class="item_list_box">
+                <div ng-repeat="item in reportList">
+                    <div class="row">
+                        <div class="col col-20 text_align_center">
+                            <span class="list_icon_box">
+                                <span class="name_box" style="background: #a4a4a4;">{{item.nickname}}</span>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="item_list_box" style="padding-top: 0;">
+                                <div class="row">
+                                    <div class="col col-67">
+                                        <p class="info f14">{{item.commentUserName}}</p>
+                                        <p class="title">{{item.comment}}</p>        
+                                    </div>
+                                    <div class="col">
+                                        <p class="info">{{item._commentTime}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
         </div>
 	</ion-content>
 
     <div class="bar bar-footer bar-stable">
         <div class="row">
-            <input type="text" name="" class="col col-75" />
-            <a href="javascript:;" class="col col-10 col-offset-10 box_align">发送</a>
+            <input type="text" ng-model="data.commentReport" name="" class="col col-75" />
+            <a href="javascript:;" class="col col-10 col-offset-10 box_align" ng-click="sendReport()">发送</a>
         </div>
     </div>
 </ion-view>
