@@ -199,6 +199,9 @@ angular.module('message.services', [])
         //内容缓存（预计父 子页面通信，保存数据）
         _localstorage: {},
 
+        //分页条数
+        _pageSize: 40,
+
         showSelePhoto: function(id) {
             id = id || 'myImage';
 

@@ -144,7 +144,7 @@ angular.module('me.controller', [])
     $scope.vm = {
     	moredata: false,
     	loadMore: function() {
-    		if (dataList.phoneBook.length < 10 || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
+    		if (dataList.phoneBook.length < common._pageSize || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
     			$scope.vm.moredata = false;
     			return;
     		}

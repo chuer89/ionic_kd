@@ -38,6 +38,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     $ionicConfigProvider.platform.ios.views.transition('ios');
     $ionicConfigProvider.platform.android.views.transition('android');
 
+    //ios 右滑 上一级
+    $ionicConfigProvider.views.swipeBackEnabled(false);
+
     var datePickerObj = {
         inputDate: new Date(),
         // setLabel: 'Set',
@@ -406,11 +409,17 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/report/add-daily.html',
         controller: 'WorkReportAddDailyCtrl'
     })
-    //汇报-查看工作汇报
-    .state('work_report_history', {
-        url: '/work/report/history',
-        templateUrl: 'templates/work/report/history.html',
-        controller: 'WorkReportHistoryCtrl'
+    //汇报-写周报
+    .state('work_report_addWeek', {
+        url: '/work/report/add-week',
+        templateUrl: 'templates/work/report/add-week.html',
+        controller: 'WorkReportAddWeekCtrl'
+    })
+    //汇报-写月报
+    .state('work_report_addMonth', {
+        url: '/work/report/add-month',
+        templateUrl: 'templates/work/report/add-month.html',
+        controller: 'WorkReportAddMonthCtrl'
     })
     //汇报-工作汇报详情
     .state('work_report_detail', {

@@ -9901,6 +9901,10 @@ a.disable {
 .colorRed {
   color: #ff0014; }
 
+.box_align {
+  display: -webkit-box;
+  -webkit-box-align: center; }
+
 /*上下－左右 间距*/
 .padding_around {
   padding-left: 0.66667rem;

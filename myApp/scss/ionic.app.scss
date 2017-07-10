@@ -96,6 +96,11 @@ a.disable{
 	color: $colorRed;
 }
 
+.box_align{
+	display: -webkit-box;
+    -webkit-box-align: center;
+}
+
 /*上下－左右 间距*/
 .padding_around{
 	padding-left: pxRem(50);
