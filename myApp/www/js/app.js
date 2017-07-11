@@ -449,9 +449,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     })
     //值班-目标设定
     .state('work_onDuty_setting', {
-        url: '/work/onDuty/setting',
+        url: '/work/onDuty/setting/:id',
         templateUrl: 'templates/work/onDuty/setting.html',
         controller: 'WorkOnDutySettingCtrl'
+    })
+    //值班-值班检查
+    .state('work_onDuty_check', {
+        url: '/work/onDuty/check/:id',
+        templateUrl: 'templates/work/onDuty/check.html',
+        controller: 'WorkOnDutyCheckCtrl'
     })
     //值班-值班查询
     .state('work_onDuty_query', {

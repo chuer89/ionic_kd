@@ -4,15 +4,39 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a href="javascript:;" class="button button-clear button-positive">保存</a>
+        <a href="javascript:;" ng-click="sub()" class="button button-clear button-positive">保存</a>
     </ion-nav-buttons>
 
 	<ion-content>
-		<div class="list">
+		<div class="list_box">
+            <div class="padding_around padding_tb list_type_title">销售目标</div>
             <div class="item">
-                <h2>销售目标</h2>
                 <div>
-                    <textarea></textarea>
+                    <textarea ng-model="data.sellTaget" placeholder="请输入销售目标"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">服务目标</div>
+            <div class="item">
+                <div>
+                    <textarea ng-model="data.serviceTaget" placeholder="请输入服务目标"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">运营目标</div>
+            <div class="item">
+                <div>
+                    <textarea ng-model="data.manageTaget" placeholder="请输入运营目标"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">其他事项</div>
+            <div class="item">
+                <div>
+                    <textarea ng-model="data.otherTaget" placeholder="请输入其他事项"></textarea>
                 </div>
             </div>
         </div>
