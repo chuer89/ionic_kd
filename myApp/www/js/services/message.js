@@ -192,8 +192,8 @@ angular.module('message.services', [])
 
         //当前登录用户信息
         userInfo: {
-            // clientId: 153
-            clientId: 28
+            clientId: 153
+            // clientId: 28
         },
 
         //内容缓存（预计父 子页面通信，保存数据）
@@ -556,6 +556,7 @@ angular.module('message.services', [])
             .then(function(success) {
                 if (typeof cb == 'function') {
                     //history.back(-1);
+                    //message
                     cb();
                 }
             }, function (error) {
@@ -563,6 +564,7 @@ angular.module('message.services', [])
             });
         },
 
+        //返回上级（历史记录）
         back: function() {
             history.back(-1);
         },

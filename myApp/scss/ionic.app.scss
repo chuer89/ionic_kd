@@ -59,9 +59,15 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	width: 10px;
 	height: 4px;
 }
-.list_box{
+.list_box, .list{
 	.item{
 		color: $colorBlack;
+		.colorRed{
+			color: $colorRed;
+		}
+		.colorPurple{
+			color: $colorPurple;
+		}
 	}
 	.item-avatar{
 		padding-left: 15px;
@@ -71,6 +77,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 			right: pxRem(50);
 			top: 5px;
 		}
+	}
+	textarea[readonly]{
+		background: transparent;
+	    color: $colorGrey;
 	}
 }
 
@@ -117,6 +127,16 @@ a.disable{
 
 .icon_plus{
 	@include width-dpr(40);
+}
+
+.border_btm{
+	border-bottom: 1px solid $colorSimpleGrey;
+}
+.text_align_right{
+	text-align: right;
+}
+.text_align_center{
+	text-align: center;
 }
 
 /*搜索*/
@@ -214,16 +234,6 @@ a.disable{
 	.kd_m{
 		margin: 0 pxRem(20);
 	}
-}
-
-.border_btm{
-	border-bottom: 1px solid $colorSimpleGrey;
-}
-.text_align_right{
-	text-align: right;
-}
-.text_align_center{
-	text-align: center;
 }
 
 /*输入框*/

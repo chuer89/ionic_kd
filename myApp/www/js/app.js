@@ -189,7 +189,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     //签到
     .state('work_sign_in', {
         url: '/work/sign_in',
-        templateUrl: 'templates/work/sign_in.html',
+        templateUrl: 'templates/work/signIn/sign_in.html',
         controller: 'WorkSigInCtrl'
     })
     //签到查询
@@ -452,6 +452,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         url: '/work/onDuty/setting/:id',
         templateUrl: 'templates/work/onDuty/setting.html',
         controller: 'WorkOnDutySettingCtrl'
+    })
+    //值班-目标跟进
+    .state('work_onDuty_follow', {
+        url: '/work/onDuty/follow/:id',
+        templateUrl: 'templates/work/onDuty/follow.html',
+        controller: 'WorkOnDutyFollowCtrl'
     })
     //值班-值班检查
     .state('work_onDuty_check', {

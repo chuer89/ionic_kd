@@ -9864,16 +9864,24 @@ a.button {
   width: 10px;
   height: 4px; }
 
-.list_box .item {
+.list_box .item, .list .item {
   color: #444444; }
+  .list_box .item .colorRed, .list .item .colorRed {
+    color: #ff0014; }
+  .list_box .item .colorPurple, .list .item .colorPurple {
+    color: #7f6bac; }
 
-.list_box .item-avatar {
+.list_box .item-avatar, .list .item-avatar {
   padding-left: 15px;
   min-height: auto; }
-  .list_box .item-avatar .head_right_box {
+  .list_box .item-avatar .head_right_box, .list .item-avatar .head_right_box {
     left: auto;
     right: 0.66667rem;
     top: 5px; }
+
+.list_box textarea[readonly], .list textarea[readonly] {
+  background: transparent;
+  color: #a4a4a4; }
 
 textarea {
   resize: none;
@@ -9924,6 +9932,15 @@ a.disable {
     width: 80px; }
   [data-dpr='3'] .icon_plus {
     width: 126px; }
+
+.border_btm {
+  border-bottom: 1px solid #e6e6e6; }
+
+.text_align_right {
+  text-align: right; }
+
+.text_align_center {
+  text-align: center; }
 
 /*搜索*/
 .search_box {
@@ -10003,15 +10020,6 @@ a.disable {
     color: #ffffff; }
   .kd_nav_filter .kd_m {
     margin: 0 0.26667rem; }
-
-.border_btm {
-  border-bottom: 1px solid #e6e6e6; }
-
-.text_align_right {
-  text-align: right; }
-
-.text_align_center {
-  text-align: center; }
 
 /*输入框*/
 .import_box {

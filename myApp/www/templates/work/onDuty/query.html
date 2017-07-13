@@ -4,19 +4,56 @@
     </ion-nav-buttons>
 
 	<ion-content>
-        <div class="bar bar-header item-input-inset">
-            <label class="item-input-wrapper">
-                <i class="icon ion-ios-search placeholder-icon"></i>
-                <input type="search" placeholder="Search">
-            </label>
+        <div class="kd_nav_filter">
+            <div class="padding_around row">
+                <div class="kd_sele_box col col-20">
+                    <div ng-click="toggleSele('brank')" class="kd_sele_val">{{seleBrankInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowBrankSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleBrank" ng-click="seleBrankHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col col-20 kd_m">
+                    <div ng-click="toggleSele('department')" class="kd_sele_val">{{seleDepartmentInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowDepartmentSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+
+                        <div class="kd_sele_item">
+                            <ion-scroll zooming="true" direction="y" style="max-height: 200px">
+                                <a href="javascript:;" ng-click="seleDepartmentHandle(item)" ng-repeat="item in seleDepartment">{{item.name}}</a>
+                            </ion-scroll>
+                        </div>
+                    </div>
+                </div>
+                <div class="col text_align_right">
+                    <button class="kd_active_btn kd_btn">06-07</button>
+                </div>
+            </div>
+        </div>
+        <div class="padding">
+            <div class="bar search_box bar-header item-input-inset">
+                <label class="item-input-wrapper">
+                    <i class="icon ion-ios-search placeholder-icon"></i>
+                    <input type="search" placeholder="Search">
+                </label>
+            </div>
         </div>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
-        <div class="list">
-            <a href="#/work/onDuty/query/details/1" class="item">
-                <h2>万达店 值班人：吕慧</h2>
-                <span>2019-39-22 22:32</span>
-                <p>今日啥地方；离开的法律框架撒地方的法律接口的风景快乐</p>
-                <p>说到风口浪尖啊啥地方理解啊啥的法律框架来看结尾而立</p>
+        <div class="list" ng-repeat="item in items">
+            <a href="#/work/onDuty/query/details/{{item.id}}" class="item">
+                <div class="row">
+                    <div class="col col-67">
+                        <h2>{{item.deptName}} 值班人：{{item.userName}}</h2>
+                    </div>
+                    <div class="col text_align_right">
+                        <p class="colorRed">{{item.workDate}}</p>
+                    </div>
+                </div>
+
+                <p>{{item.sellTaget}}</p>
+                <p class="colorPurple padding_tb">{{item.sellResult}}</p>
             </a>
         </div>
 	</ion-content>

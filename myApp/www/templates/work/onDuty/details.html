@@ -4,9 +4,43 @@
     </ion-nav-buttons>
 
 	<ion-content>
-        <div class="list">
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">销售</div>
             <div class="item">
-                <h2>这里是消息</h2>
+                <p>{{data.sellTaget}}</p>
+                <p class="colorPurple padding_tb">{{data.sellResult}}</p>
+            </div>
+        </div>
+
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">服务</div>
+            <div class="item">
+                <p>{{data.serviceTaget}}</p>
+                <p class="colorPurple padding_tb">{{data.serviceResult}}</p>
+            </div>
+        </div>
+
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">运营</div>
+            <div class="item">
+                <p>{{data.manageTaget}}</p>
+                <p class="colorPurple padding_tb">{{data.manageResult}}</p>
+            </div>
+        </div>
+
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">其他</div>
+            <div class="item">
+                <p>{{data.otherTaget}}</p>
+                <p class="colorPurple padding_tb">{{data.otherResult}}</p>
+            </div>
+        </div>
+
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">检查</div>
+            <div class="item">
+                <p>{{data.sellTaget}}</p>
+                <p class="colorPurple padding_tb">{{data.sellResult}}</p>
             </div>
         </div>
 	</ion-content>

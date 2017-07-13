@@ -1,0 +1,44 @@
+<ion-view view-title="目的跟进">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" ng-click="sub()" class="button button-clear button-positive">保存</a>
+    </ion-nav-buttons>
+
+	<ion-content>
+		<div class="list_box">
+            <div class="padding_around padding_tb list_type_title">销售目标</div>
+            <div class="item">
+                <div>
+                    <textarea ng-model="data.sellTaget" readonly placeholder="未设定"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">销售目标跟进及结果</div>
+            <div class="item">
+                <div>
+                    <textarea ng-model="data.sellResult" placeholder="请输入跟进事项"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">服务目标</div>
+            <div class="item">
+                <div>
+                    <textarea ng-model="data.serviceTaget" readonly placeholder="未设定"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">服务目标及结果</div>
+            <div class="item">
+                <div>
+                    <textarea ng-model="data.serviceResult" placeholder="请输入跟进事项"></textarea>
+                </div>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>

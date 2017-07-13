@@ -4,12 +4,26 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a href="javascript:;" class="button button-clear button-positive">保存</a>
+        <a href="javascript:;" ng-click="sub()" class="button button-clear button-positive">保存</a>
     </ion-nav-buttons>
 
 	<ion-content>
 		<div class="list_box">
-            22      
+            <div class="item_list_box" ng-repeat="item in items">
+                <div class="row">
+                    <div class="col col-20 text_align_center">
+                        <span class="name_box">{{item.startTime}}</span>
+                    </div>
+                    <div class="col col-67">
+                        <h2 class="title f14">{{item.name}}</h2>
+                        <p class="info">负责人：{{item.userName}}</p>
+                    </div>
+                    <div class="col text_align_right col-10">
+                        <input ng-click="clickRadio(item, 1)" ng-checked="{{item.checked1}}" type="radio" name="radio_{{item.id}}" class="padding_around" />
+                        <input ng-click="clickRadio(item, 2)" ng-checked="{{item.checked2}}" type="radio" name="radio_{{item.id}}"/>
+                    </div>
+                </div>
+            </div>
         </div>
 	</ion-content>
 </ion-view>

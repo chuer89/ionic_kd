@@ -55,11 +55,15 @@ angular.module('workApply.controller', [])
         }
     }
 
+    //选择部门-start
     $scope.seleBrank = [];
     $scope.seleDepartment = [];
 
     $scope.seleBrankInfo = '品牌';
     $scope.seleDepartmentInfo = '部门';
+
+    $scope.isShowBrankSele = false;
+    $scope.isShowDepartmentSele = false;
 
     //选择菜单处理
     var toggleSeleHandle = function(type) {
@@ -98,13 +102,11 @@ angular.module('workApply.controller', [])
         $scope.seleDepartmentInfo = item.name;
     }
 
-    $scope.isShowBrankSele = false;
-    $scope.isShowDepartmentSele = false;
-
     //筛选切换
     $scope.toggleSele = function(type) {
         toggleSeleHandle(type);
     }
+    //选择部门-end
     
 	$scope.doRefresh = function() {
 		setTimeout(function() {
