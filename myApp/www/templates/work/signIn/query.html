@@ -4,6 +4,32 @@
     </ion-nav-buttons>
 
 	<ion-content>
+        <div class="kd_nav_filter">
+            <div class="padding_around row">
+                <div class="kd_sele_box col-25">
+                    <div ng-click="toggleSele('brank')" class="kd_sele_val">{{seleBrankInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowBrankSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleBrank" ng-click="seleBrankHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col-25 kd_m">
+                    <div ng-click="toggleSele('department')" class="kd_sele_val">{{seleDepartmentInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowDepartmentSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+
+                        <div class="kd_sele_item">
+                            <ion-scroll zooming="true" direction="y" style="max-height: 200px">
+                                <a href="javascript:;" ng-click="seleDepartmentHandle(item)" ng-repeat="item in seleDepartment">{{item.name}}</a>
+                            </ion-scroll>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 		<div class="bar bar-header item-input-inset">
 			<label class="item-input-wrapper">
 				<i class="icon ion-ios-search placeholder-icon"></i>

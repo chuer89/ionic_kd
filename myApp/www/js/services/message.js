@@ -104,6 +104,9 @@ angular.module('message.services', [])
     var remindtime = [{name: '事情发生时',key:'0'},{name: '提前30分钟',key:'30'},
     { name: '提前1小时',key:'60'},{ name: '提前2小时',key:'120'},{ name: '提前5小时',key:'300'}];
 
+    //签到类型
+    var qianDaoType = [{text:'早班', key:'ZAO_BAN'},{text:'晚班',key:'WAN_BAN'},{text:'正常班',key:'ZHENG_CHANG'}];
+
 
     return {
         menu: function() {
@@ -119,7 +122,8 @@ angular.module('message.services', [])
                 applicationType: applicationType,
                 taskStatus: taskStatus,
                 cycletime: cycletime,
-                remindtime: remindtime
+                remindtime: remindtime,
+                qianDaoType: qianDaoType
             };
         }
     }
@@ -395,6 +399,15 @@ angular.module('message.services', [])
             return fmt;
         },
 
+        getWeek: function() {
+            var _week = new Date().getDay();
+            var _obj = {
+                0: '天', 1: '一', 2: '二', 3: '三', 4: '四', 5: '五', 6: '六'
+            };
+
+            return '星期' + _obj[_week];
+        },
+
         //公司&部门
         getCompany: function(cb) {
             COMMON.post({
@@ -474,6 +487,7 @@ angular.module('message.services', [])
             }
         },
 
+        //获取选中人
         getCommonCheckedPerson: function(cb) {
             var common = COMMON;
             var _param = {
@@ -596,9 +610,9 @@ angular.module('message.services', [])
                 minDate: new Date() - 10000,
                 allowOldDates: true,
                 allowFutureDates: false,
-                doneButtonLabel: 'DONE',
+                doneButtonLabel: '确定',
                 doneButtonColor: '#F2F3F4',
-                cancelButtonLabel: 'CANCEL',
+                cancelButtonLabel: '取消',
                 cancelButtonColor: '#000000'
             };
 
@@ -609,6 +623,44 @@ angular.module('message.services', [])
                     }
                 });
             }, false);
+        },
+
+        //获取经纬度
+        getLocation: function(cb) {
+            var showPosition = function (position) {
+                //accuracy 位置精度;  latitude 十进制维度；longitude 十进制经度
+                if (typeof cb == 'function') {
+                    cb(position);
+                }
+            }, showError = function (error) {
+                // Permission denied - 用户不允许地理定位
+                // Position unavailable - 无法获取当前位置
+                // Timeout - 操作超时
+                var errorTips = '';
+
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        errorTips = '请允许地理定位';
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        errorTips = '无法获取当前位置';
+                        break;
+                    case error.TIMEOUT:
+                        errorTips = '定位超时';
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        errorTips = '定位异常';
+                        break;
+                }
+
+                if (errorTips != '') {
+                    COMMON.toast(errorTips);
+                }
+            }
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            }
         }
     };
 

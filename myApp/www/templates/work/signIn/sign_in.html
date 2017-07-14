@@ -4,36 +4,61 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-      <button ng-click="showNav()" class="ion-plus icon icon-accessory"></button>
+    	<a href="javascript:;" ng-click="showNav()" class="ion-plus icon icon-accessory button button-clear"></a>
     </ion-nav-buttons>
 
 	<ion-content>
 		<div class="list">
 			<a href="javascript:;" class="item item-icon-right" ng-click="showType()">
-			  类型
-			  <span class="item-note">{{seleType}}</span>
-			  <i class="icon ion-chevron-right icon-accessory"></i>
+				类型
+				<span class="item-note">{{seleType}}</span>
+				<i class="icon ion-chevron-right icon-accessory"></i>
 			</a>
 		</div>
 
-		<div class="padding">
-			<div class="list">
-				<div class="item">
-					<h2>2017-05-11 星期四</h2>
-					<p>签到时间：18:02</p>
-				</div>
-
-				<div class="item">
-					<p>打起精神，开始一天的工作！</p>
-				</div>
-
-				<div class="item">
-					<p>签到时间：<span>22:22</span></p>
-					<p>签到地点：<span>四川人民西路</span></p>
+		<div class="shift_list">
+			<div class="shift_item_list">
+				<div class="row">
+					<div class="col col-20">
+						<div class="left_icon_box">
+							<span class="left_icon now">今</span>
+						</div>
+					</div>
+					<div class="col right_content">
+						<p class="title">2017-03-13 星期五</p>
+						<p class="info">签到时间：08:45</p>
+					</div>
 				</div>
 			</div>
-			<div>
-				<button class="button button-royal">签到</button>
+			<div class="shift_item_list" ng-if="! hasHistory">
+				<div class="row">
+					<div class="col col-20">
+						<div class="left_icon_box">
+							<span class="left_icon"><img class="icon_loacked" src="img/icon/sign_loacked.png"/></span>
+						</div>
+					</div>
+					<div class="col right_content">
+						<p class="info">打起精神，开启一天的工作！</p>
+					</div>
+				</div>
+			</div>
+			<div class="shift_item_list" ng-repeat="item in historiesList">
+				<div class="row">
+					<div class="col col-20">
+						<div class="left_icon_box">
+							<span class="left_icon time">{{item.qianDaoTime}}</span>
+						</div>
+					</div>
+					<div class="col right_content">
+						<p class="title"><span class="info">签到时间：</span>{{item.qianDaoTime}}</p>
+						<p class="title"><span class="info">签到地点：</span>{{item.qianDaoPlace}}</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="sign_btn_box">
+				<button ng-click="sub(1)" ng-if="! hasHistory" class="button sign_btn button-royal">签到</button>
+				<button ng-click="sub(2)" ng-if="hasHistory" class="button sign_btn button-positive">签退</button>
 			</div>
 		</div>
 	</ion-content>

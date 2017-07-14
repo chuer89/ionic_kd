@@ -398,6 +398,72 @@ a.disable{
 	}
 }
 
+.shift_list{
+	display: block;
+	background: white;
+	.shift_item_list{
+		.left_icon_box{
+			display: -webkit-flex;
+		    align-items: center;
+		    justify-content: center;
+		    height: 100%;
+		    color: $colorGrey;
+		    .time{
+		    	@include font-dpr(12);
+		    	color: $colorRed;
+		    }
+		    .now{
+		    	@include font-dpr(22);
+		    }
+		    .red_color{
+		    	color: $colorRed;
+		    }
+			.left_icon{
+				border: 1px solid $colorGrey;
+				padding: pxRem(30) 0;
+				border-radius: pxRem(100);
+				text-align: center;
+				display: inline-block;
+				width: pxRem(160);
+			}
+		}
+		p{
+			margin: 0;
+		}
+		.right_content{
+			border-bottom: 1px solid $colorSimpleGrey;
+			padding: pxRem(80) 0;
+		}
+		.title{
+			@include font-dpr(16);
+			color: $colorBlack;
+		}
+		.ellipsis_info{
+			@extend %textOverflow;
+
+			color: $colorGrey;
+			@include font-dpr(14);
+		}
+		.info{
+			color: $colorGrey;
+			@include font-dpr(14);
+		}
+		.icon_loacked{
+			width: pxRem(80);
+			vertical-align: top;
+		}
+	}
+	.sign_btn_box{
+		text-align: center;
+		padding: pxRem(160) 0;
+		.sign_btn{
+		    padding: pxRem(100);
+		    border-radius: pxRem(200);
+		    @include font-dpr(22);
+		}
+	}
+}
+
 /*登录*/
 .login_box{
 	.logo_box{
