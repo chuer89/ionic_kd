@@ -1,5 +1,5 @@
 angular.module('workNotify.controller', [])
-
+//通知列表
 .controller('WorkNotifyCtrl', function ($scope, $state, $ionicActionSheet, common) {
     $scope.items = [];
 
@@ -105,7 +105,8 @@ angular.module('workNotify.controller', [])
     }
 })
 
-.controller('WorkNotifyDetailsCtrl', function($scope, $stateParams, $ionicActionSheet, common) {
+//详情
+.controller('WorkNotifyDetailsCtrl', function($scope, $state, $stateParams, $ionicActionSheet, common) {
     $scope.item = {};
 
     $scope.showNav = function() {
@@ -118,8 +119,15 @@ angular.module('workNotify.controller', [])
             cancelText: '取消',
             buttonClicked: function (index, item) {
                 if (index == 1) {
-                    del();
-                    history.back(-1);
+                    common.popup({
+                        content: '确认删除通知吗'
+                    }, function() {
+                        del();
+                    })
+                } else if (index == 0) {
+                    $state.go('work_notify_edit', {
+                        id: $stateParams.id
+                    })
                 }
 
                 return true;
@@ -131,18 +139,21 @@ angular.module('workNotify.controller', [])
         COMMON.post({
             type: 'delete_inform',
             data: {
-                "informId": $scope.item.id
+                informId: $stateParams.id
             },
             success: function(data) {
-                var _body = data.body;
+                common.toast(data.message, function() {
+                    common.back();
+                });
             }
         });
     }
 
+    //获取详情
     COMMON.post({
         type: 'inform_details',
         data: {
-            "id": common.userInfo.clientId,
+            id: common.userInfo.clientId,
             informId: $stateParams.id
         },
         success: function(data) {
@@ -153,10 +164,20 @@ angular.module('workNotify.controller', [])
     });
 })
 
+//新增
 .controller('WorkNotifyAddCtrl', function($scope, $cordovaFileTransfer, common) {
     $scope.seleSendName = '';
+    $scope.data = {
+        typePageName: 'WorkNotifyAddCtrl',
+        title: '',
+        description: ''
+    };
 
-    $scope.data = {};
+    if (common._localstorage.typePageName == $scope.data.typePageName) {
+        $scope.data = common._localstorage;
+    } else {
+        common._localstorage = $scope.data;
+    }
 
     if (common.setCheckedPerson._targetName != 'work_notify') {
         common.setCheckedPerson = {};
@@ -166,8 +187,16 @@ angular.module('workNotify.controller', [])
         $scope.seleSendName = sendName;
     });
 
+    //表单数据
+    var formElement = document.querySelector("form");
+    var formData = new FormData(formElement);
+
     $scope.showSelePhoto = function() {
-        common.showSelePhoto();
+        common.showSelePhoto({
+            appendPhone: function(the_file) {
+                formData.append("fuJians", the_file, "images.jpg");
+            }
+        });
     }
 
     $scope.submit = function() {
@@ -176,22 +205,108 @@ angular.module('workNotify.controller', [])
             userList: [],
             description: $scope.data.description,
             title: $scope.data.title,
-            "id": common.userInfo.clientId
+            id: common.userInfo.clientId
         }
 
         common.getCommonCheckedPerson(function(opt) {
             angular.extend(_param, opt);
-        })
+        });
 
-        COMMON.post({
+        common.formData({
             type: 'create_inform',
-            data: _param,
+            body: _param,
+            setData: function(json) {
+                formData.append("json", json);
+            },
+            data: formData,
             success: function(data) {
-                var _body = data.body;
-
-               console.log(data)
+                common.toast(data.message, function() {
+                    common.back();
+                });
             }
         });
+    }
+})
+
+//编辑
+.controller('WorkNotifyEditCtrl', function($scope, $stateParams, common) {
+    $scope.seleSendName = '';
+    $scope.data = {
+        typePageName: 'WorkNotifyEditCtrl',
+        title: '',
+        description: ''
+    };
+
+    var ajaxData = function(cb) {
+        //获取详情
+        COMMON.post({
+            type: 'inform_details',
+            data: {
+                id: common.userInfo.clientId,
+                informId: $stateParams.id
+            },
+            success: function(data) {
+                var _body = data.body;
+                angular.extend($scope.data, _body);
+
+                if (typeof cb == 'function') {
+                    cb();
+                }
+            }
+        });
+    }
+
+    if (common._localstorage.typePageName == $scope.data.typePageName) {
+        $scope.data = common._localstorage;
+    } else {
+        ajaxData(function() {
+            common._localstorage = $scope.data;
+        })
+    }
+
+    common.getCommonSendName(function(sendName) {
+        $scope.seleSendName = sendName;
+    });
+
+    //表单数据
+    var formElement = document.querySelector("form");
+    var formData = new FormData(formElement);
+
+    $scope.showSelePhoto = function() {
+        common.showSelePhoto({
+            appendPhone: function(the_file) {
+                formData.append("fuJians", the_file, "images.jpg");
+            }
+        });
+    }
+
+    $scope.submit = function() {
+        var _param = {
+            departmentList: [],
+            userList: [],
+            description: $scope.data.description,
+            title: $scope.data.title,
+            id: common.userInfo.clientId,
+            informId: $stateParams.id
+        }
+
+        common.getCommonCheckedPerson(function(opt) {
+            angular.extend(_param, opt);
+        });
+
+        common.formData({
+            type: 'update_inform',
+            body: _param,
+            setData: function(json) {
+                formData.append("json", json);
+            },
+            data: formData,
+            success: function(data) {
+                common.toast(data.message, function() {
+                    common.back();
+                });
+            }
+        })
     }
 })
 

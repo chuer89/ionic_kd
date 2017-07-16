@@ -1,0 +1,32 @@
+<ion-view view-title="编辑通知">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" ng-click="submit()" class="button button-clear button-positive">保存</a>
+    </ion-nav-buttons>
+
+	<ion-content>
+        <form enctype="multipart/form-data" method="post" name="fileinfo">
+		<div class="list">
+            <a href="#/common/seleSection/1" class="item item-icon-right">
+              发送
+              <span class="item-note">{{seleSendName}}</span>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <label class="item item-input">
+                <span class="input-label">标题</span>
+                <input type="text" placeholder="请输入标题" ng-model="data.title">
+            </label>
+            <div class="item">
+                <textarea placeholder="请输入内容..." ng-model="data.description"></textarea>
+            </div>
+            <div class="item">
+                <a href="javascript:;" ng-click="showSelePhoto()">
+                    <img src="img/icon/plus.png" class="icon_plus" />
+                </a>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>

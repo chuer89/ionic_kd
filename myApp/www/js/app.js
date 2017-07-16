@@ -386,13 +386,21 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_notify_details', {
         url: '/work/notify/details/:id',
         templateUrl: 'templates/work/notify/details.html',
-        controller: 'WorkNotifyDetailsCtrl'
+        controller: 'WorkNotifyDetailsCtrl',
+        cache: false
     })
     //申请－发布通知
     .state('work_notify_add', {
         url: '/work/notify/add',
         templateUrl: 'templates/work/notify/add.html',
         controller: 'WorkNotifyAddCtrl',
+        cache: false
+    })
+    //申请－发布通知
+    .state('work_notify_edit', {
+        url: '/work/notify/edit/:id',
+        templateUrl: 'templates/work/notify/edit.html',
+        controller: 'WorkNotifyEditCtrl',
         cache: false
     })
     

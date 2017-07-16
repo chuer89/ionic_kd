@@ -16,7 +16,7 @@ angular.module('workSign.controller', [])
 	        type: 'qiandao_user_date_info',
 	        data: {
 	        	clientId: common.userInfo.clientId,
-	        	searchDate: '2017-07-14'
+	        	searchDate: '2017-07-15'
 	        },
 	        success: function(data) {
 	            var _body = data.body;
@@ -126,17 +126,68 @@ angular.module('workSign.controller', [])
 	});
 })
 
-.controller('WorkSigInQueryCtrl', function($scope, workHistoryQuery, common) {
-	$scope.items = workHistoryQuery.all();
+//签到人员查询
+.controller('WorkSigInQueryCtrl', function($scope, workHistoryQuery, $timeout, common) {
+	var dataList = {
+		currentPage: 0,
+		phoneBook: []
+	};
 
-	$scope.doRefresh = function() {
-		setTimeout(function() {
-            $scope.$broadcast('scroll.refreshComplete');
-        }, 1000)
-        return true;
+	$scope.items = [];
+
+	var handleAjax = function () {
+		COMMON.getPhoneBook({
+			currentPage: dataList.currentPage + 1,
+        	departmentId: seleDepartmentId,
+        	name: ''
+		}, function(body) {
+			var _body = body,
+        		phoneBook = _body.phoneBook;
+
+        	dataList = _body;
+
+        	for (var i = 0, ii = phoneBook.length; i < ii; i++) {
+        		phoneBook[i].nickname = common.nickname(phoneBook[i].name);
+        		$scope.items.push(phoneBook[i]);
+        	}
+
+        	$timeout(function() {
+        		$scope.vm.moredata = true;
+        	}, 1000);
+		});
+	}, initData = function() {
+		dataList = {
+			currentPage: 0,
+			phoneBook: []
+		};
+
+		$scope.items = [];
+
+		handleAjax();
 	}
 
+	$scope.vm = {
+    	moredata: false,
+    	loadMore: function() {
+    		if (dataList.phoneBook.length < common._pageSize || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
+    			$scope.vm.moredata = false;
+    			return;
+    		}
+	 		console.log(dataList.totalPage, 'x');
+
+    		$timeout(function () {
+    			$scope.vm.moredata = false;
+	 			handleAjax();
+	        }, 1500);
+	        return true;
+	 	}
+    }
+ 	initData();
+
 	//选择部门-start
+
+	var seleDepartmentId = '';
+
     $scope.seleBrank = [];
     $scope.seleDepartment = [];
 
@@ -164,7 +215,7 @@ angular.module('workSign.controller', [])
         }
 
         if (isAjax) {
-            // initData();
+            initData();
         }
     }
 
@@ -175,7 +226,7 @@ angular.module('workSign.controller', [])
 
     //选择部门
     $scope.seleBrankHandle = function(item) {
-        brandID = item.departmentId;
+        seleDepartmentId = item.departmentId;
 
         $scope.seleBrankInfo = item.name;
         $scope.seleDepartmentInfo = '部门';
@@ -185,7 +236,7 @@ angular.module('workSign.controller', [])
         toggleSeleHandle('brank', true);
     }
     $scope.seleDepartmentHandle = function(item) {
-        deptID = item.departmentId;
+        seleDepartmentId = item.departmentId;
         $scope.seleDepartmentInfo = item.name;
 
         toggleSeleHandle('department', true);
@@ -198,7 +249,7 @@ angular.module('workSign.controller', [])
     //选择部门-end
 })
 
-.controller('WorkSigInHistoryCtrl', function($scope, $stateParams, workHistoryQuery, ionicDatePicker) {
+.controller('WorkSigInHistoryCtrl', function($scope, $stateParams, workHistoryQuery, ionicDatePicker, common) {
 	$scope.item = workHistoryQuery.get($stateParams.id);
 
 	var ipObj1 = {
@@ -226,6 +277,33 @@ angular.module('workSign.controller', [])
     $scope.openDatePicker = function(){
       ionicDatePicker.openDatePicker(ipObj1);
     };
+
+    $scope.items = [];
+
+    var ajaxUserData = function() {
+		//查询已签到
+		COMMON.post({
+	        type: 'qiandao_user_date_info',
+	        data: {
+	        	clientId: $stateParams.id,
+	        	searchDate: '2017-07-14'
+	        },
+	        success: function(data) {
+	            var _body = data.body,
+	            	_list = _body.histories;
+
+	            if (_list) {
+	            	for (var i = 0, ii = _list.length; i < ii; i++) {
+	            		_list[i].nickname = common.nickname(_list[i].name);
+	            	}
+	            	$scope.items = _list;
+	            }
+
+	            console.log(_body)
+	        }
+	    });
+	}
+	ajaxUserData();
 })
 
 .controller('WorkSigInApplyCtrl', function($scope, $ionicActionSheet) {

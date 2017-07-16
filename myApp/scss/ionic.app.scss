@@ -310,7 +310,7 @@ a.disable{
 		}
 		.name_box{
 			background: $colorPurple;
-			padding: pxRem(32) pxRem(30);
+			padding: pxRem(35) pxRem(30);
 			color: white;
 			border-radius: pxRem(80);
 			display: inline-block;
@@ -342,7 +342,7 @@ a.disable{
 		}
 		.details_img_thumbnail{
 			img{
-				@include height-dpr(60);
+				@include height-dpr(120);
 				float: left;
 				padding: pxRem(20);
 			}

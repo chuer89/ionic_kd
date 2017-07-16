@@ -10089,7 +10089,7 @@ a.disable {
       padding: 0; }
     .list_box .item_list_box .name_box {
       background: #7f6bac;
-      padding: 0.42667rem 0.4rem;
+      padding: 0.46667rem 0.4rem;
       color: white;
       border-radius: 1.06667rem;
       display: inline-block;
@@ -10129,13 +10129,13 @@ a.disable {
         [data-dpr='3'] .list_box .item_list_box .big_head .name_box {
           font-size: 66px; }
     .list_box .item_list_box .details_img_thumbnail img {
-      height: 60px;
+      height: 120px;
       float: left;
       padding: 0.26667rem; }
       [data-dpr='2'] .list_box .item_list_box .details_img_thumbnail img {
-        height: 120px; }
+        height: 240px; }
       [data-dpr='3'] .list_box .item_list_box .details_img_thumbnail img {
-        height: 186px; }
+        height: 366px; }
     .list_box .item_list_box .colorRed {
       color: #ff0014; }
     .list_box .item_list_box .label_right_top {

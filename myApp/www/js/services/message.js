@@ -130,8 +130,12 @@ angular.module('message.services', [])
 })
 
 .factory('common', function($http, $cordovaToast, $ionicActionSheet, 
-    $state, $cordovaCamera, $cordovaImagePicker, $cordovaDatePicker, $cordovaFileTransfer) {
+    $state, $cordovaCamera, $cordovaImagePicker, $cordovaDatePicker, $cordovaFileTransfer, $ionicPopup) {
     var obj = {
+
+        onlineHost: 'http://123.206.95.25:18080',
+        debugHost: 'http://192.168.201.237:8080',
+
         post: function(opt) {
             var data = opt.data || {};
             var type = opt.type || '';
@@ -166,7 +170,8 @@ angular.module('message.services', [])
 
             $http({
                 method: 'POST',
-                url: 'http://123.206.95.25:18080/kuaidao/client/resources.html',
+                url: COMMON.onlineHost + '/kuaidao/client/resources.html',
+                // url: 'http://123.206.95.25:18080/kuaidao/client/resources.html',
                 params: {
                     json: JSON.stringify(param)
                 }
@@ -179,19 +184,41 @@ angular.module('message.services', [])
             }).error(function(data) {
                 error(data);
             });
+        },
 
-            // $http({
-            //     method: 'POST',
-            //     url: 'http://123.206.95.25:18080/kuaidao/client/resources.html',
-            //     params: {
-            //         // json: '{"appType":"IOS","appVersion":"1.0.0","body":{},"businessType":"departmrnt_info"}'
-            //         json: '{"appType":"IOS","appVersion":"1.0.0","body":{"mobile":13889521999,"password":123456},"businessType":"client_login"}'
-            //     }
-            // }).success(function(data) {
-            //     console.log(data)
-            // }).error(function(data) {
+        //jquery formData附件上传
+        formData: function(opt) {
+            var _data = {
+                appType: 'IOS',
+                appVersion: '1.0.0',
+                businessType: opt.type || '',
+                body: opt.body || ''
+            }
 
-            // })
+            if (typeof opt.setData == 'function') {
+                //需要formData设置参数
+                opt.setData(JSON.stringify(_data));
+            } else {
+                return;
+            }
+
+            $.ajax({
+                url: COMMON.onlineHost + '/kuaidao/client/resources.html',
+                type: 'POST',
+                data: opt.data,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.status != '1000' && !opt.noFail) {
+                        COMMON.toast(data.message || '数据有误');
+                    } else {
+                        opt.success(data);
+                    }
+                },
+                error: function (responseStr) {
+                    COMMON.toast('接口异常');
+                }
+            });
         },
 
         //当前登录用户信息
@@ -206,8 +233,15 @@ angular.module('message.services', [])
         //分页条数
         _pageSize: 40,
 
-        showSelePhoto: function(id) {
-            id = id || 'myImage';
+        //调起相册
+        showSelePhoto: function(opt) {
+            var _opt = {
+                domId: 'myImage',//显示图片id
+                phone:  '',//相册回调
+                camera: '',//相机
+                appendPhone: ''
+            }
+            angular.extend(_opt, opt);
 
             $ionicActionSheet.show({
                 buttons: [
@@ -225,9 +259,46 @@ angular.module('message.services', [])
                 }
             });
 
-            var formData = new FormData();
+            var _appendPhone = function(imgData) {
+                window.resolveLocalFileSystemURL(imgData, function(fileEntry) {
+                    fileEntry.file(function(file) {
+                        var reader = new FileReader();
+                        reader.onloadend = function(e) {
+                            /*******华丽丽的分割线**********/
+                            //需要将图片路径转换为二进制流，并且指定类型为图像格式（还有其他格式，如文本格式等等）
+                            //这里用了两个files，代表上传两张图片
+                            var the_file = new Blob([e.target.result ], { type: "image/jpeg" } );
+                            if (typeof _opt.appendPhone == 'function') {
+                                _opt.appendPhone(the_file);
+                            }
+                        };
+                        reader.readAsArrayBuffer(file);
 
-            var camera = function() {
+                    }, function(e){
+                        COMMON.toast('加载相册内容失败');
+                    });
+                }, function(e){
+                    COMMON.toast('加载相册失败');
+                });
+            }, phone = function() {
+                var options = {
+                    maximumImagesCount: 10,
+                    width: 800,
+                    height: 800,
+                    quality: 80,
+                    saveToPhotoAlbum: true
+                };
+
+                //调起相册
+                $cordovaImagePicker.getPictures(options)
+                .then(function (results) {
+                    for (var i = 0; i < results.length; i++) {
+                        _appendPhone(results[i])
+                    }
+                }, function(error) {
+                    COMMON.toast('获取相册失败');
+                });
+            }, camera = function() {
                 var options = {  
                     quality: 50,  
                     destinationType: Camera.DestinationType.DATA_URL,  
@@ -248,19 +319,21 @@ angular.module('message.services', [])
 
                     // upImg();
 
-                    alert(0);
+                    alert(imageData)
 
-                    jj(imageData);
+                    // jj(imageData);
                 }, function(err) {  
                     // error  
                 });  
             }
 
+            var formData = new FormData();
+
             var jj = function(imgData) {
-                var url = 'http://123.206.95.25:18080/kuaidao/client/resources.html';
+                var url = COMMON.onlineHost+'/kuaidao/client/resources.html';
                 var options = new FileUploadOptions();
                 options.fileKey = 'fuJians';
-                var json = '{"appType":"IOS","appVersion":"1.0.0","body":{"departmentList":[{"departmentId":3}],"userList":[{"userId":153}],"description":"内容1和O","title":"测试文件上传h5-3号","id":153},"businessType":"create_inform"}';
+                var json = '{"appType":"IOS","appVersion":"1.0.0","body":{"typeId":1,"userId":153,"content":"0715l抗体001"},"businessType":"create_report"}'
 
                 options.json = json;
 
@@ -273,36 +346,7 @@ angular.module('message.services', [])
                     alert(3)
                     // constant progress updates
                   });
-            }
-
-            var CacheData = {
-                setImgFileList: function(the_file) {
-                    formData.append("fuJians", the_file, "images.jpg");
-                }
-            }
-
-            var phone = function() {
-                var options = {
-                    maximumImagesCount: 10,
-                    width: 800,
-                    height: 800,
-                    quality: 80,
-                    saveToPhotoAlbum: true
-                };
-
-                $cordovaImagePicker.getPictures(options)
-                .then(function (results) {
-                    
-                    for (var i = 0; i < results.length; i++) {
-                        rLFSURL(results[i]);
-                        // console.log('Image URI: ' + results[i]);
-                    }
-
-                    upImg();
-                }, function(error) {
-                    // error getting photos
-                });
-            }
+            };
 
             var rLFSURL = function (imageURI){
                 window.resolveLocalFileSystemURL(imageURI, function(fileEntry) {
@@ -312,7 +356,7 @@ angular.module('message.services', [])
                             //需要将图片路径转换为二进制流，并且指定类型为图像格式（还有其他格式，如文本格式等等）
                             var the_file = new Blob([e.target.result ], { type: "image/jpeg" } );
                             //存储图片二进制流
-                            CacheData.setImgFileList(the_file);
+                            formData.append("fuJians", the_file, "images.jpg");
 
                             //存储图片地址用于预览
                             // CacheData.setImageURIList(imageURI);
@@ -323,20 +367,21 @@ angular.module('message.services', [])
             }
 
             var upImg = function() {
-                var json = '{"appType":"IOS","appVersion":"1.0.0","body":{"departmentList":[{"departmentId":3}],"userList":[{"userId":153}],"description":"内容1和O","title":"测试文件上传h5-3号","id":153},"businessType":"create_inform"}';
+                var json = '{"appType":"IOS","appVersion":"1.0.0","body":{"typeId":1,"userId":153,"content":"0715l抗体002"},"businessType":"create_report"}'
 
                 formData.append('json', json);
 
-                // alert(JSON.stringify(formData));
+                alert(formData);
+                return;
 
                 $http({
                     method: 'POST',
-                    url: 'http://123.206.95.25:18080/kuaidao/client/resources.html',
+                    url: COMMON.onlineHost + '/kuaidao/client/resources.html',
                     params: formData
                 }).success(function(data) {
                     alert(JSON.stringify(data))
                 }).error(function(data) {
-
+                    alert('error_upImg')
                 });
             }
         },
@@ -575,6 +620,32 @@ angular.module('message.services', [])
                 }
             }, function (error) {
               // error
+            });
+        },
+
+        //弹框
+        popup: function(opt, cb) {
+            var _opt = {
+                title: opt.title || '提醒',
+                content: opt.content || '确认此操作吗'
+            }
+            // 自定义弹窗
+            var myPopup = $ionicPopup.show({
+                template: _opt.content,
+                title: _opt.title,
+                buttons: [
+                    { text: '取消' },
+                    {
+                        text: '<b>确认</b>',
+                        type: 'button-royal',
+                        onTap: function(e) {
+                            if (typeof cb == 'function') {
+                                cb();
+                            }
+                            return true;
+                        }
+                    }
+                ]
             });
         },
 
