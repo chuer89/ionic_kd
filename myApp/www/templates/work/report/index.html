@@ -70,6 +70,14 @@
                             {{item.content}}
                         </div>
 
+                        <div class="item_list_box">
+                            <div class="details_img_thumbnail clearfix">
+                                <span ng-repeat="fujianImg in item.fujian">
+                                    <img src="{{fujianImg.fujianPath}}"/>
+                                </span>
+                            </div>
+                        </div>
+
                         <div class="item_list_box" style="border-bottom: 0;">
                             评论（{{item.commentCount}}）
                         </div>

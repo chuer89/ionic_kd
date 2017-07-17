@@ -280,6 +280,17 @@ angular.module('message.services', [])
                 }, function(e){
                     COMMON.toast('加载相册失败');
                 });
+            }, convertBase64UrlToBlob = function (urlData){
+                var bytes=window.atob(urlData.split(',')[1]);
+
+                //处理异常,将ascii码小于0的转换为大于0
+                var ab = new ArrayBuffer(bytes.length);
+                var ia = new Uint8Array(ab);
+                for (var i = 0; i < bytes.length; i++) {
+                    ia[i] = bytes.charCodeAt(i);
+                }
+
+                return new Blob( [ab] , {type : 'image/jpg'});
             }, phone = function() {
                 var options = {
                     maximumImagesCount: 10,
@@ -312,77 +323,20 @@ angular.module('message.services', [])
                 };  
 
                 $cordovaCamera.getPicture(options).then(function(imageData) {  
-                    // var image = document.getElementById(id);  
+                    var image = document.getElementById(_opt.domId);  
                     // image.src = "data:image/jpeg;base64," + imageData;
 
-                    // rLFSURL(imageData);
+                    var _imageData = "data:image/jpeg;base64," + imageData;
+                    var the_file = convertBase64UrlToBlob(_imageData);
 
-                    // upImg();
+                    image.src = _imageData;
 
-                    alert(imageData)
-
-                    // jj(imageData);
-                }, function(err) {  
-                    // error  
+                    if (typeof _opt.appendPhone == 'function') {
+                        _opt.appendPhone(the_file);
+                    }
+                }, function(err) {
+                    COMMON.toast('无法启动相机，请检查授权');
                 });  
-            }
-
-            var formData = new FormData();
-
-            var jj = function(imgData) {
-                var url = COMMON.onlineHost+'/kuaidao/client/resources.html';
-                var options = new FileUploadOptions();
-                options.fileKey = 'fuJians';
-                var json = '{"appType":"IOS","appVersion":"1.0.0","body":{"typeId":1,"userId":153,"content":"0715l抗体001"},"businessType":"create_report"}'
-
-                options.json = json;
-
-                $cordovaFileTransfer.upload(encodeURI(url), imgData, options)
-                  .then(function (result) {
-                    alert(1)
-                  }, function (err) {
-                    alert(2)
-                  }, function (progress) {
-                    alert(3)
-                    // constant progress updates
-                  });
-            };
-
-            var rLFSURL = function (imageURI){
-                window.resolveLocalFileSystemURL(imageURI, function(fileEntry) {
-                    fileEntry.file(function(file) {
-                        var reader = new FileReader();
-                        reader.onloadend = function(e) {
-                            //需要将图片路径转换为二进制流，并且指定类型为图像格式（还有其他格式，如文本格式等等）
-                            var the_file = new Blob([e.target.result ], { type: "image/jpeg" } );
-                            //存储图片二进制流
-                            formData.append("fuJians", the_file, "images.jpg");
-
-                            //存储图片地址用于预览
-                            // CacheData.setImageURIList(imageURI);
-                        };
-                        reader.readAsArrayBuffer(file);
-                    }, function(e){$scope.errorHandler(e)});
-                }, function(e){$scope.errorHandler(e)});
-            }
-
-            var upImg = function() {
-                var json = '{"appType":"IOS","appVersion":"1.0.0","body":{"typeId":1,"userId":153,"content":"0715l抗体002"},"businessType":"create_report"}'
-
-                formData.append('json', json);
-
-                alert(formData);
-                return;
-
-                $http({
-                    method: 'POST',
-                    url: COMMON.onlineHost + '/kuaidao/client/resources.html',
-                    params: formData
-                }).success(function(data) {
-                    alert(JSON.stringify(data))
-                }).error(function(data) {
-                    alert('error_upImg')
-                });
             }
         },
 

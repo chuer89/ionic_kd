@@ -2,20 +2,32 @@ angular.module('workReport.controller', [])
 
 //日报申请
 .controller('WorkReportAddDailyCtrl', function($scope, common) {
-    $scope.showSelePhoto = function() {
-        common.showSelePhoto();
-    }
-
     $scope.data = {};
 
+    //表单数据
+    var formElement = document.querySelector("form");
+    var formData = new FormData(formElement);
+
+    $scope.showSelePhoto = function() {
+        common.showSelePhoto({
+            appendPhone: function(the_file) {
+                formData.append("fuJians", the_file, "images.jpg");
+            }
+        });
+    }
+
     var ajaxhandle = function() {
-        COMMON.post({
+        common.formData({
             type: 'create_report',
-            data: {
-                "userId": common.userInfo.clientId,
+            body: {
+                userId: common.userInfo.clientId,
                 content: $scope.data.content,
                 typeId: 1
             },
+            setData: function(json) {
+                formData.append("json", json);
+            },
+            data: formData,
             success: function(data) {
                 common.toast(data.message, function() {
                     common.back();
@@ -31,20 +43,32 @@ angular.module('workReport.controller', [])
 
 //周报申请
 .controller('WorkReportAddWeekCtrl', function($scope, common) {
-    $scope.showSelePhoto = function() {
-        common.showSelePhoto();
-    }
-
     $scope.data = {};
 
+    //表单数据
+    var formElement = document.querySelector("form");
+    var formData = new FormData(formElement);
+
+    $scope.showSelePhoto = function() {
+        common.showSelePhoto({
+            appendPhone: function(the_file) {
+                formData.append("fuJians", the_file, "images.jpg");
+            }
+        });
+    }
+
     var ajaxhandle = function() {
-        COMMON.post({
+        common.formData({
             type: 'create_report',
-            data: {
-                "userId": common.userInfo.clientId,
+            body: {
+                userId: common.userInfo.clientId,
                 content: $scope.data.content,
                 typeId: 3
             },
+            setData: function(json) {
+                formData.append("json", json);
+            },
+            data: formData,
             success: function(data) {
                 common.toast(data.message, function() {
                     common.back();
@@ -53,6 +77,7 @@ angular.module('workReport.controller', [])
         });
     }
 
+
     $scope.submit = function() {
         ajaxhandle();
     }
@@ -60,20 +85,32 @@ angular.module('workReport.controller', [])
 
 //月报申请
 .controller('WorkReportAddMonthCtrl', function($scope, common) {
-    $scope.showSelePhoto = function() {
-        common.showSelePhoto();
-    }
-
     $scope.data = {};
 
+    //表单数据
+    var formElement = document.querySelector("form");
+    var formData = new FormData(formElement);
+
+    $scope.showSelePhoto = function() {
+        common.showSelePhoto({
+            appendPhone: function(the_file) {
+                formData.append("fuJians", the_file, "images.jpg");
+            }
+        });
+    }
+
     var ajaxhandle = function() {
-        COMMON.post({
+        common.formData({
             type: 'create_report',
-            data: {
-                "userId": common.userInfo.clientId,
+            body: {
+                userId: common.userInfo.clientId,
                 content: $scope.data.content,
                 typeId: 2
             },
+            setData: function(json) {
+                formData.append("json", json);
+            },
+            data: formData,
             success: function(data) {
                 common.toast(data.message, function() {
                     common.back();
@@ -123,8 +160,6 @@ angular.module('workReport.controller', [])
                 var _body = data.body;
 
                 report = _body.report;
-
-                console.log(report)
 
                 for (var i = 0, ii = report.length; i < ii; i++) {
                     report[i].nickname = common.nickname(report[i].userName);
@@ -267,6 +302,7 @@ angular.module('workReport.controller', [])
     }
 })
 
+//日报详情
 .controller('WorkReportDetailCtrl', function($scope, $stateParams, $timeout, common) {
     $scope.item = {};
 
@@ -303,7 +339,7 @@ angular.module('workReport.controller', [])
                 currentPage: dataList.currentPage + 1
             },
             success: function(data) {
-                var _body = data.body,
+                var _body = data.body || {},
                     reportComment = _body.reportComment;
 
                 dataList = _body;
@@ -360,8 +396,7 @@ angular.module('workReport.controller', [])
                 var _body = data.body;
 
                 $scope.data.commentReport = '';
-
-                // initRepotList();
+                
                 common.toast(data.message, function() {
                     initRepotList();
                 });

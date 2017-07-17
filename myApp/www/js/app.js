@@ -539,17 +539,23 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
 
     //学习园区-start
 
-    //百科
+    //百科-模块
     .state('work_cyclopedia', {
         url: '/work/cyclopedia',
         templateUrl: 'templates/work/cyclopedia/index.html',
         controller: 'WorkCyclopediaCtrl'
     })
-    //百科
+    //百科-详情列表
     .state('work_cyclopedia_list', {
         url: '/work/cyclopedia/list/:id',
         templateUrl: 'templates/work/cyclopedia/list.html',
         controller: 'WorkCyclopediaListCtrl'
+    })
+    //百科-新建
+    .state('work_cyclopedia_add', {
+        url: '/work/cyclopedia/add',
+        templateUrl: 'templates/work/cyclopedia/add.html',
+        controller: 'WorkCyclopediaAddCtrl'
     })
 
     //学习园区-end

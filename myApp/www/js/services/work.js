@@ -384,13 +384,28 @@ angular.module('work.services', [])
         name: '猫眼石'
     }];
 
+    var _blockData = [];
+
     for (var i = 0, ii = blockData.length; i < ii; i++) {
         blockData[i].id = i;
     }
 
+    COMMON.post({
+        type: 'jewelry_category',
+        data: {},
+        success: function(data) {
+            _blockData = data.body.jewelryCategory;
+
+            for (var i = 0, ii = _blockData.length; i < ii; i++) {
+                _blockData[i].id = _blockData[i].sequence;
+                _blockData[i].text = _blockData[i].name;
+            }
+        }
+    });
+
     return {
         all: function() {
-            return blockData;
+            return _blockData;
         },
         get: function(id) {
           for (var i = 0; i < blockData.length; i++) {
