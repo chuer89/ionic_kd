@@ -10,10 +10,60 @@ angular.module('workCyclopedia.controller', [])
     });
 })
 
-.controller('WorkCyclopediaListCtrl', function($stateParams, $scope, workCyclopediaType) {
-	$scope.item = workCyclopediaType.get($stateParams.id);
+//百科类别列表
+.controller('WorkCyclopediaListCtrl', function($stateParams, $scope, $timeout, common) {
+	var dataList = {
+		currentPage: 0,
+		phoneBook: []
+	};
+
+	$scope.items = [];
+
+	var handleAjax = function() {
+		COMMON.post({
+	        type: 'obtain_jewelries',
+	        data: {
+	        	categoryId: $stateParams.id,
+	        	currentPage: dataList.currentPage + 1
+	        },
+	        success: function(data) {
+
+	            var _body = data.body,
+	        		list = _body.jewelry;
+
+	        	dataList = _body;
+
+	        	for (var i = 0, ii = list.length; i < ii; i++) {
+	        		$scope.items.push(list[i]);
+	        	}
+
+	        	$timeout(function() {
+	        		$scope.vm.moredata = true;
+	        	}, 1000);
+	        }
+	    });
+	}
+
+	handleAjax();
+
+    $scope.vm = {
+    	moredata: false,
+    	loadMore: function() {
+    		if (dataList.jewelry.length < common._pageSize || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
+    			$scope.vm.moredata = false;
+    			return;
+    		}
+
+    		$timeout(function () {
+    			$scope.vm.moredata = false;
+	 			handleAjax();
+	        }, 1500);
+	        return true;
+	 	}
+    }
 })
 
+//百科新建
 .controller('WorkCyclopediaAddCtrl', function($scope, $ionicActionSheet, common, workCyclopediaType) {
 	$scope.data = {};
 
@@ -69,4 +119,18 @@ angular.module('workCyclopedia.controller', [])
             }
         });
 	}
+})
+
+.controller('WorkCyclopediaDetailsCtrl', function($scope, $stateParams, common) {
+	$scope.item = {};
+	COMMON.post({
+        type: 'jewelry_details',
+        data: {
+        	jewelryId: $stateParams.id
+        },
+        success: function(data) {
+        	$scope.item = data.body;
+        	console.log(data.body)
+        }
+    });
 })

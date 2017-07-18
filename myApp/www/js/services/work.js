@@ -339,7 +339,7 @@ angular.module('work.services', [])
 })
 
 //百科-类型
-.factory('workCyclopediaType', function() {
+.factory('workCyclopediaType', function(common) {
     var blockData = [{
         name: '黄金'
     }, {

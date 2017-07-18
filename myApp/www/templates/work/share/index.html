@@ -1,0 +1,61 @@
+<ion-view view-title="案例分享">
+    <ion-nav-buttons side="left">  
+        <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" ng-click="showNav()" class="ion-more button button-clear button-positive"></a>
+    </ion-nav-buttons>
+
+    <ion-content>
+        <div class="kd_nav_filter">
+            <div class="padding_around row">
+                <div class="kd_sele_box col">
+                    <div ng-click="toggleSele('brank')" class="kd_sele_val">{{seleBrankInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowBrankSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleBrank" ng-click="seleBrankHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col kd_m">
+                    <div ng-click="toggleSele('department')" class="kd_sele_val">{{seleDepartmentInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowDepartmentSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+
+                        <div class="kd_sele_item">
+                            <ion-scroll zooming="true" direction="y" style="max-height: 200px">
+                                <a href="javascript:;" ng-click="seleDepartmentHandle(item)" ng-repeat="item in seleDepartment">{{item.name}}</a>
+                            </ion-scroll>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col">
+                    <div ng-click="toggleSele('date')" class="kd_sele_val">{{seleDateInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowDateSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleDate" ng-click="seleDateHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col col-20">
+                    <div ng-click="toggleSele('type')" class="kd_sele_val">{{seleTypeInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowTypeSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleType" ng-click="seleTypeHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="list_box padding_tb">
+            分享
+        </div>
+
+        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
+    </ion-content>
+</ion-view>
