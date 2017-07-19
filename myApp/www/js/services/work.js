@@ -72,15 +72,18 @@ angular.module('work.services', [])
     }, {
         name: '案例分享',
         info: '各种经典案例集合',
-        icon: 'img/icon/work/share.png'
+        icon: 'img/icon/work/share.png',
+        link: '#/work/share'
     }, {
         name: '经典FAB',
         info: '精彩FAB话术',
-        icon: 'img/icon/work/trick.png'
+        icon: 'img/icon/work/trick.png',
+        link: '#/work/fab'
     }, {
         name: '专题课程',
         info: '针对单一问题详细阐述',
-        icon: 'img/icon/work/course.png'
+        icon: 'img/icon/work/course.png',
+        link: '#/work/course'
     }]
 
     return {
@@ -286,56 +289,56 @@ angular.module('work.services', [])
 //申请新增列表
 .factory('workApplyAddList', function() {
      var list = [{
-        id: 0,
-        name: '请假申请',
-        tips: '请填写好你的请假原由',
-        link: '#/work/apply/addleave',
-        icon: 'img/icon/apply/addleave.png'
-    }, {
-        id: 1,
-        name: '采购申请',
-        tips: '请填写好你要申请采购的详细信息',
-        link: '#/work/apply/addPurchase',
-        icon: 'img/icon/apply/addPurchase.png'
-    }, {
-        id: 2,
-        name: '优惠申请',
-        tips: '请填写好你要申请优惠的详细信息',
-        link: '#/work/apply/addprivilege',
-        icon: 'img/icon/apply/addprivilege.png'
-    }, {
-        id: 3,
-        name: '报残申请',
-        tips: '请填写好残次情况的详细信息',
-        link: '#/work/apply/adddiscard',
-        icon: 'img/icon/apply/adddiscard.png'
-    }, {
-        id: 4,
-        name: '工程维修申请',
-        tips: '请填写好你要维修申请的详细信息',
-        link: '#/work/apply/addmaintain',
-        icon: 'img/icon/apply/addmaintain.png'
-    }, {
-        id: 5,
-        name: '其他申请',
-        tips: '其他类型申请',
-        link: '#/work/apply/addother',
-        icon: 'img/icon/apply/addother.png'
-    }];
+            id: 0,
+            name: '请假申请',
+            tips: '请填写好你的请假原由',
+            link: '#/work/apply/addleave',
+            icon: 'img/icon/apply/addleave.png'
+        }, {
+            id: 1,
+            name: '采购申请',
+            tips: '请填写好你要申请采购的详细信息',
+            link: '#/work/apply/addPurchase',
+            icon: 'img/icon/apply/addPurchase.png'
+        }, {
+            id: 2,
+            name: '优惠申请',
+            tips: '请填写好你要申请优惠的详细信息',
+            link: '#/work/apply/addprivilege',
+            icon: 'img/icon/apply/addprivilege.png'
+        }, {
+            id: 3,
+            name: '报残申请',
+            tips: '请填写好残次情况的详细信息',
+            link: '#/work/apply/adddiscard',
+            icon: 'img/icon/apply/adddiscard.png'
+        }, {
+            id: 4,
+            name: '工程维修申请',
+            tips: '请填写好你要维修申请的详细信息',
+            link: '#/work/apply/addmaintain',
+            icon: 'img/icon/apply/addmaintain.png'
+        }, {
+            id: 5,
+            name: '其他申请',
+            tips: '其他类型申请',
+            link: '#/work/apply/addother',
+            icon: 'img/icon/apply/addother.png'
+        }];
 
-    return {
-        all: function() {
-            return list;
-        },
-        get: function(id) {
-          for (var i = 0; i < list.length; i++) {
-            if (list[i].id === parseInt(id)) {
-              return list[i];
+        return {
+            all: function() {
+                return list;
+            },
+            get: function(id) {
+              for (var i = 0; i < list.length; i++) {
+                if (list[i].id === parseInt(id)) {
+                  return list[i];
+                }
+              }
+              return null;
             }
-          }
-          return null;
         }
-    }
 })
 
 //百科-类型
@@ -417,3 +420,63 @@ angular.module('work.services', [])
         }
     }
 })
+
+//案例分享模块-类别选择数据
+.factory('workShareSele', function(common) {
+    var ajax = function(type, cb) {
+        COMMON.post({
+            type: type,
+            data: {},
+            success: function(data) {
+                if (typeof cb == 'function') {
+                    cb(data);
+                }
+            }
+        });
+    }
+    return {
+        //客服类型
+        customer: function(cb) {
+            ajax('customer_category', cb);
+        },
+        //货品品类
+        goods: function(cb) {
+            ajax('goods_category', cb);
+        },
+        //人数
+        number: function(cb) {
+            ajax('people_number', cb);
+        },
+        //人物关系
+        relationship: function(cb) {
+            ajax('people_relationship', cb);
+        },
+        //购买用途
+        purpose: function(cb) {
+            ajax('purchase_purpose', cb);
+        },
+        //顾客年龄
+        age: function(cb) {
+            ajax('customer_age', cb);
+        },
+        //成交金额
+        amount: function(cb) {
+            ajax('transaction_amount', cb);
+        },
+
+        //fab-品类选择
+        fab_category: function(cb){
+            ajax('fab_goods_category', cb);
+        },
+        //fab-品名选择
+        fab_name: function(cb) {
+            ajax('fab_goods_name', cb);
+        },
+
+        //专题-tab
+        course_category: function(cb) {
+            ajax('topic_course_category', cb);
+        }
+    }
+})
+

@@ -4,56 +4,117 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a href="javascript:;" ng-click="showNav()" class="ion-more button button-clear button-positive"></a>
+        <a href="#/work/share/add" class="ion-plus icon icon-accessory button button-clear"></a>
     </ion-nav-buttons>
 
     <ion-content>
-        <div class="kd_nav_filter">
+        <div class="kd_nav_filter" style="z-index: 12;">
             <div class="padding_around row">
                 <div class="kd_sele_box col">
-                    <div ng-click="toggleSele('brank')" class="kd_sele_val">{{seleBrankInfo}}<i class="ion-arrow-down-b"></i></div>
-                    <div class="kd_sele_content" ng-show="isShowBrankSele">
+                    <div ng-click="toggleSele('customer')" class="kd_sele_val">{{seleCustomerInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowCustomerSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">
-                            <a href="javascript:;" ng-repeat="item in seleBrank" ng-click="seleBrankHandle(item)">{{item.name}}</a>
+                            <a href="javascript:;" ng-repeat="item in seleCustomer" ng-click="seleCustomerHandle(item)">{{item.name}}</a>
                         </div>
                     </div>
                 </div>
                 <div class="kd_sele_box col kd_m">
-                    <div ng-click="toggleSele('department')" class="kd_sele_val">{{seleDepartmentInfo}}<i class="ion-arrow-down-b"></i></div>
-                    <div class="kd_sele_content" ng-show="isShowDepartmentSele">
+                    <div ng-click="toggleSele('goods')" class="kd_sele_val">{{seleGoodsInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowGoodsSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
-
                         <div class="kd_sele_item">
                             <ion-scroll zooming="true" direction="y" style="max-height: 200px">
-                                <a href="javascript:;" ng-click="seleDepartmentHandle(item)" ng-repeat="item in seleDepartment">{{item.name}}</a>
+                                <a href="javascript:;" ng-click="seleGoodsHandle(item)" ng-repeat="item in seleGoods">{{item.name}}</a>
                             </ion-scroll>
                         </div>
                     </div>
                 </div>
                 <div class="kd_sele_box col">
-                    <div ng-click="toggleSele('date')" class="kd_sele_val">{{seleDateInfo}}<i class="ion-arrow-down-b"></i></div>
-                    <div class="kd_sele_content" ng-show="isShowDateSele">
+                    <div ng-click="toggleSele('number')" class="kd_sele_val">{{seleNumberInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowNumberSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">
-                            <a href="javascript:;" ng-repeat="item in seleDate" ng-click="seleDateHandle(item)">{{item.name}}</a>
+                            <a href="javascript:;" ng-repeat="item in seleNumber" ng-click="seleNumberHandle(item)">{{item.name}}</a>
                         </div>
                     </div>
                 </div>
-                <div class="kd_sele_box col col-20">
-                    <div ng-click="toggleSele('type')" class="kd_sele_val">{{seleTypeInfo}}<i class="ion-arrow-down-b"></i></div>
-                    <div class="kd_sele_content" ng-show="isShowTypeSele">
+                <div class="kd_sele_box col kd_m">
+                    <div ng-click="toggleSele('relationship')" class="kd_sele_val">{{seleRelationshipInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowRelationshipSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">
-                            <a href="javascript:;" ng-repeat="item in seleType" ng-click="seleTypeHandle(item)">{{item.name}}</a>
+                            <a href="javascript:;" ng-repeat="item in seleRelationship" ng-click="seleRelationshipHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="kd_nav_filter">
+            <div class="padding_around row">
+                <div class="kd_sele_box col col-25">
+                    <div ng-click="toggleSele('purpose')" class="kd_sele_val">{{selePurposeInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowPurposeSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in selePurpose" ng-click="selePurposeHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col kd_m col-25">
+                    <div ng-click="toggleSele('age')" class="kd_sele_val">{{seleAgeInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowAgeSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <ion-scroll zooming="true" direction="y" style="max-height: 200px">
+                                <a href="javascript:;" ng-click="seleAgeHandle(item)" ng-repeat="item in seleAge">{{item.name}}</a>
+                            </ion-scroll>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col col-33">
+                    <div ng-click="toggleSele('amount')" class="kd_sele_val">{{seleAmountInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowAmountSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleAmount" ng-click="seleAmountHandle(item)">{{item.name}}</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="list_box padding_tb">
-            分享
+        <div class="list_box padding_tb" ng-repeat="item in items">
+            <a href="#/work/share/details/{{item.id}}" class="item_list_box">
+                <div class="row">
+                    <div class="col col-50">
+                        <p class="title">{{item.sharingName}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="info">{{item.userName}}</p>
+                    </div>
+                    <div class="col"><p class="info">评论({{item.commentCount}})</p></div>
+                    <div class="col"><p class="info">赞({{item.thumbUpCount}})</p></div>
+                </div>
+                <p class="info">分享点：{{item.sharingPoint}}</p>
+                <div class="row">
+                    <div class="col">
+                        <p class="info border_btm">{{item.customerCategory}}</p>
+                        <p class="info">{{item.purchasePurpose}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="info border_btm colorPurple">{{item.goodsCategory}}</p>
+                        <p class="info">{{item.customerAge}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="info border_btm">{{item.peopleNumber}}</p>
+                        <p class="info colorPurple">{{item.transactionAmount}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="info border_btm">{{item.peopleRelationship}}</p>
+                    </div>
+                </div>
+            </a>
         </div>
 
         <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>

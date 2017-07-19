@@ -1,0 +1,47 @@
+<ion-view view-title="新建FAB案例">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" ng-click="submit()" class="button button-clear button-positive">完成</a>
+    </ion-nav-buttons>
+
+	<ion-content>
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">案例名称</span>
+                <input type="text" placeholder="请输入" ng-model="data.sharingName">
+            </label>
+        </div>
+
+        <div class="list">
+            <div class="item item-icon-right" ng-click="showNavCustomer()">
+                品类
+                <span class="item-note">{{data.goodsCategoryIdText}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+        <div class="list">
+            <div class="item item-icon-right" ng-click="showNavGoods()">
+                品名
+                <span class="item-note">{{data.goodsNameIdText}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="item">
+                <textarea placeholder="请输入内容..." ng-model="data.content"></textarea>
+            </div>
+        </div>
+        <form enctype="multipart/form-data" method="post" name="fileinfo"></form>
+        <div class="list">
+            <div class="item">
+                <a href="javascript:;" ng-click="showSelePhoto()">
+                    <img src="img/icon/plus.png" class="icon_plus" />
+                </a>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>

@@ -97,6 +97,10 @@ a{
 a.disable{
 	color: $colorSimpleGrey;
 }
+img{
+	width: 100%;
+	border-radius: pxRem(20);
+}
 
 .clearfix{overflow:hidden;_zoom:1;}
 
@@ -110,6 +114,13 @@ a.disable{
 .box_align{
 	display: -webkit-box;
     -webkit-box-align: center;
+}
+
+.height_100{
+	height: 100%;
+}
+.width_100{
+	widows: 100%;
 }
 
 /*上下－左右 间距*/
@@ -347,8 +358,16 @@ a.disable{
 				padding: pxRem(20);
 			}
 		}
+		.details_img_block{
+			img{
+				padding: pxRem(20);
+			}
+		}
 		.colorRed{
 			color: $colorRed;
+		}
+		.colorPurple{
+			color: $colorPurple;
 		}
 		.label_right_top{
 		    position: absolute;
@@ -380,6 +399,7 @@ a.disable{
 		@include height-dpr(20);
 		vertical-align: middle;
 		display: inline-block;
+		width: auto;
 	}
 
 	.title{

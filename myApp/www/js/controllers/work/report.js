@@ -159,7 +159,7 @@ angular.module('workReport.controller', [])
             success: function(data) {
                 var _body = data.body;
 
-                report = _body.report;
+                var report = _body.report;
 
                 for (var i = 0, ii = report.length; i < ii; i++) {
                     report[i].nickname = common.nickname(report[i].userName);

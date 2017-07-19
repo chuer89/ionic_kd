@@ -1,0 +1,58 @@
+<ion-view view-title="新建专题课程">
+
+    <ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+	<ion-nav-buttons side="right">
+        <a href="javascript:;" ng-click="submit()" class="button button-clear button-positive">保存</a>
+    </ion-nav-buttons>
+
+  	<ion-content>
+  		<form enctype="multipart/form-data" method="post" name="fileinfo">
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">课题名称</span>
+                <input type="text" placeholder="请输入" ng-model="data.courseName">
+            </label>
+        </div>
+
+        <div class="list">
+            <div class="item item-icon-right" ng-click="seleCategoryId()">
+                分类
+                <span class="item-note">{{data.seleTypeName}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+
+        <div class="list">
+        	<div class="item">
+        		<div class="row">
+        			<div class="col col-80">
+        				添加封面
+        			</div>
+        			<div class="col">
+        				<a href="javascript:;" ng-click="showSelePhoto()">
+		                    <img src="img/icon/plus.png" class="icon_plus" />
+		                </a>
+        			</div>
+        		</div>
+            </div>
+        </div>
+
+        <div class="list">
+        	<div class="item">
+        		<div class="row">
+        			<div class="col col-80">
+        				添加课题
+        			</div>
+        			<div class="col">
+        				<a href="javascript:;" ng-click="showSelePhoto()">
+		                    <img src="img/icon/plus.png" class="icon_plus" />
+		                </a>
+        			</div>
+        		</div>
+            </div>
+        </div>
+  	</ion-content>
+</ion-view>

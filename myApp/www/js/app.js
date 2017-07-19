@@ -564,6 +564,63 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkCyclopediaDetailsCtrl'
     })
 
+    //案例分享-模块
+    .state('work_share', {
+        url: '/work/share',
+        templateUrl: 'templates/work/share/index.html',
+        controller: 'WorkShareCtrl'
+    })
+    //案例分享-新增
+    .state('work_share_add', {
+        url: '/work/share/add',
+        templateUrl: 'templates/work/share/add.html',
+        controller: 'WorkShareAddCtrl'
+    })
+    //案例分享-新增
+    .state('work_share_details', {
+        url: '/work/share/details/:id',
+        templateUrl: 'templates/work/share/details.html',
+        controller: 'WorkShareDetailsCtrl'
+    })
+
+    //案例分享-模块
+    .state('work_fab', {
+        url: '/work/fab',
+        templateUrl: 'templates/work/fab/index.html',
+        controller: 'WorkFabCtrl'
+    })
+    //百科-新建
+    .state('work_fab_add', {
+        url: '/work/fab/add',
+        templateUrl: 'templates/work/fab/add.html',
+        controller: 'WorkFabAddCtrl'
+    })
+    //百科-详情
+    .state('work_fab_details', {
+        url: '/work/fab/details/:id',
+        templateUrl: 'templates/work/fab/details.html',
+        controller: 'WorkFabDetailsCtrl'
+    })
+
+    //案例分享-模块
+    .state('work_course', {
+        url: '/work/course',
+        templateUrl: 'templates/work/course/index.html',
+        controller: 'WorkCourseCtrl'
+    })
+    //案例分享-新增
+    .state('work_course_add', {
+        url: '/work/course/add',
+        templateUrl: 'templates/work/course/add.html',
+        controller: 'WorkCourseAddCtrl'
+    })
+    //案例分享-详情
+    .state('work_course_details', {
+        url: '/work/course/details/:id',
+        templateUrl: 'templates/work/course/details.html',
+        controller: 'WorkCourseDetailsCtrl'
+    })
+
     //学习园区-end
 
     //我

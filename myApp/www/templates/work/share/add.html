@@ -1,0 +1,79 @@
+<ion-view view-title="新建案例">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" ng-click="submit()" class="button button-clear button-positive">保存</a>
+    </ion-nav-buttons>
+
+	<ion-content>
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">案例名称</span>
+                <input type="text" placeholder="请输入" ng-model="data.sharingName">
+            </label>
+        </div>
+        
+        <div class="list">
+            <div class="item item-icon-right" ng-click="showNavCustomer()">
+                客户类型
+                <span class="item-note">{{data.customerCategoryIdText}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+        <div class="list">
+            <div class="item item-icon-right" ng-click="showNavGoods()">
+                货品类型
+                <span class="item-note">{{data.goodsCategoryIdText}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+        <div class="list">
+            <div class="item item-icon-right" ng-click="showNavNumber()">
+                人数
+                <span class="item-note">{{data.peopleNumberIdText}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+        <div class="list">
+            <div class="item item-icon-right" ng-click="showNavRelationship()">
+                人物关系
+                <span class="item-note">{{data.peopleRelationshipIdText}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+        <div class="list">
+            <div class="item item-icon-right" ng-click="showNavPurpose()">
+                购买用途
+                <span class="item-note">{{data.purchasePurposeIdText}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+        <div class="list">
+            <div class="item item-icon-right" ng-click="showNavAge()">
+                顾客年龄
+                <span class="item-note">{{data.customerAgeIdText}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+        <div class="list">
+            <div class="item item-icon-right" ng-click="showNavAmount()">
+                成交金额
+                <span class="item-note">{{data.transactionAmountIdText}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="item">
+                <textarea placeholder="分享点..." ng-model="data.sharingPoint"></textarea>
+            </div>
+        </div>
+        <div class="list">
+            <div class="item">
+                <textarea placeholder="过程描述..." ng-model="data.procedureDescription"></textarea>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>

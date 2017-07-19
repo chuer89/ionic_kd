@@ -12,7 +12,7 @@
   	<ion-content>
   		<div class="list_box padding_btm" ng-repeat="item in items">
             <a href="#/work/cyclopedia/details/{{item.id}}" class="item_list_box">
-                <img src="{{item.coverPath}}" style="width: 100%" />{{item.title}}
+                <img src="{{item.coverPath}}" />{{item.title}}
             </a>
         </div>
         <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>

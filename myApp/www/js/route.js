@@ -15,6 +15,9 @@ angular.module('route', [
 	'workOpportunity.controller',
 	'workVisit.controller',
 	'workCyclopedia.controller',
+	'workShare.controller',
+	'workFab.controller',
+	'workCourse.controller',
 
 	'me.controller',
 

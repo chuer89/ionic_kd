@@ -75,10 +75,8 @@ angular.module('workSchedule.controller', [])
                 riChengId: $stateParams.id
             },
             success: function(data) {
-                var _body = data.body;
-
-                common.toast(_body.message, function() {
-                    history.back(-1);
+                common.toast(data.message, function() {
+                    common.back();
                 });
             }
         });

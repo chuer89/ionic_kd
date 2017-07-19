@@ -1,0 +1,56 @@
+<ion-view view-title="经典FAB">
+    <ion-nav-buttons side="left">  
+        <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="#/work/fab/add" class="ion-plus icon icon-accessory button button-clear"></a>
+    </ion-nav-buttons>
+
+    <ion-content>
+        <div class="kd_nav_filter">
+            <div class="padding_around row">
+                <div class="kd_sele_box col col-25">
+                    <div ng-click="toggleSele('category')" class="kd_sele_val">{{seleCategoryInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowCategorySele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleCategory" ng-click="seleCategoryHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col kd_m col-25">
+                    <div ng-click="toggleSele('name')" class="kd_sele_val">{{seleNameInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowNameSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+
+                        <div class="kd_sele_item">
+                            <ion-scroll zooming="true" direction="y" style="max-height: 200px">
+                                <a href="javascript:;" ng-click="seleNameHandle(item)" ng-repeat="item in seleName">{{item.name}}</a>
+                            </ion-scroll>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="list_box padding_tb" ng-repeat="item in items">
+            <a href="#/work/fab/details/{{item.id}}" class="item_list_box">
+                <div class="row">
+                    <div class="col col-20" ng-if="item.homeImg">
+                        <div class="box_align height_100" style="padding-right: 5px;">
+                            <img src="{{item.homeImg}}" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <p class="title">{{item.sharingName}}</p>  
+                        <p class="info colorPurple">分享人：{{item.userName}}</p>  
+                        <p class="info">{{item.content}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
+    </ion-content>
+</ion-view>

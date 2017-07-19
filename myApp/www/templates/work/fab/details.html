@@ -1,0 +1,20 @@
+<ion-view view-title="FAB详情">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+	<ion-content>
+        <div class="list_box">
+            <div class="item_list_box">
+                <p class="title">{{item.sharingName}}</p>
+                <p class="info colorPurple">分享人：{{item.userName}}</p>  
+            </div>
+            <div class="item_list_box">
+                <p class="info">{{item.content}}</p>
+                <div class="details_img_block" ng-repeat="fujian in item.fujian">
+                    <img src="{{fujian.fujianPath}}">
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

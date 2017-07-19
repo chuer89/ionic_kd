@@ -223,8 +223,8 @@ angular.module('message.services', [])
 
         //当前登录用户信息
         userInfo: {
-            clientId: 153
-            // clientId: 28
+            // clientId: 153
+            clientId: 28
         },
 
         //内容缓存（预计父 子页面通信，保存数据）
