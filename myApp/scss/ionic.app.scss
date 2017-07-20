@@ -356,11 +356,13 @@ img{
 				@include height-dpr(120);
 				float: left;
 				padding: pxRem(20);
+				width: auto;
 			}
 		}
 		.details_img_block{
 			img{
 				padding: pxRem(20);
+				width: auto;
 			}
 		}
 		.colorRed{
@@ -415,6 +417,12 @@ img{
 	.info{
 		color: $colorGrey;
 		@include font-dpr(12);
+	}
+	.task_status{
+		.WORKING{color: #007130;}
+		.UNCONFIRMED{color: #ff0014}
+		.UNQUALIFIED{color: #7f6bac}
+		.QUALIFIED{color: #000000}
 	}
 }
 
@@ -503,6 +511,7 @@ img{
 		img{
 			height: pxRem(80);
 			vertical-align: middle;
+			width: auto;
 		}
 	}
 }

@@ -20,14 +20,14 @@
 
         <div class="padding_tb">
             <div class="list_box">
-                <a class="item_list_box" ng-repeat="item in taskList" href="#/work/task_list/{{item.id}}/details">
+                <a class="item_list_box task_status" ng-repeat="item in taskList" href="#/work/task_list/{{item.taskId}}/details">
                     <div class="row">
                         <div class="col col-80">
                             <h2 class="title">{{item.title}}</h2>
                             <p class="info">责任人：{{item.importantName}}  截至时间：{{item._endTime}}</p>
                         </div>
                         <div class="col text_align_right">
-                            <span class="info">{{item._status}}</span>
+                            <span ng-class="item.taskStatus" class="info">{{item._status}}</span>
                         </div>
                     </div>
                 </a>

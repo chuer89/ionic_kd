@@ -480,3 +480,48 @@ angular.module('work.services', [])
     }
 })
 
+//crm模块-类别选择数据
+.factory('workCrmSele', function(common) {
+    var ajax = function(type, cb) {
+        COMMON.post({
+            type: type,
+            data: {},
+            success: function(data) {
+                if (typeof cb == 'function') {
+                    cb(data);
+                }
+            }
+        });
+    }
+
+    return {
+        star: function(cb) {
+            ajax('obtain_stars', function(data) {
+                var _starList = data.body.stars,
+                    _star = [],
+                    _obj = {};
+
+                for (var i = 0; i < _starList.length; i++) {
+                    _obj = {
+                        id: _starList[i].id,
+                        name: '',
+                        value: _starList[i].value
+                    }
+
+                    for (var j = 0; j < _starList[i].value; j++) {
+                        _obj.name += '★';
+                    }
+
+                    _star.push(_obj);
+                }
+
+                cb(_star);
+            });
+        },
+
+        customer_types: function(cb) {
+            ajax('obtain_customer_types', cb);
+        }
+    }
+})
+

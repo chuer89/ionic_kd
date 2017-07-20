@@ -41,10 +41,9 @@ angular.module('work.controller', [])
     common.setAuditorUserList = {};
 
     var typeId = {
-        //请假申请
-        '1': 'work_apply_addleave',
+        '1': 'work_apply_addleave',//请假申请
         '2': 'work_task_add_ATTENTION',
-        '3': 'work_task_add_RESPONSIBLE'
+        '4': 'work_task_add_inspector'
     }
 
     common.getAuditorUser(function(data) {
@@ -73,10 +72,15 @@ angular.module('work.controller', [])
     common.setCheckedPerson = {list: []};
 
     var urlId = $stateParams.id;
-
     var typeId = {
         '1': 'work_notify',//通知
-        '2': 'work_schedule_add'//日程
+        '2': 'work_schedule_add',//日程
+        '3': 'work_task_add'//任务
+    }
+
+    //部门不可选
+    if (urlId == '3') {
+        $scope.notCheckSection = true;
     }
 
     //公司&部门列表

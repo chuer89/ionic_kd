@@ -1,8 +1,9 @@
 angular.module('message.controller', [])
 
 //
-.controller('MessageCtrl', function($scope, $state, 
-	$cordovaVibration, $cordovaToast, $cordovaDatePicker, $cordovaCamera, $cordovaImagePicker, messagePush) {
+.controller('MessageCtrl', function($scope, $state, $filter, 
+	$cordovaVibration, $cordovaToast, $cordovaDatePicker, $cordovaCamera, 
+	$cordovaImagePicker, messagePush, ionicDatePicker, common) {
     $scope.data = {};
 
     $scope.items = messagePush.all();
@@ -23,23 +24,12 @@ angular.module('message.controller', [])
 	};
 
 	$scope.date = function () {
-		var options = {
-		    date: new Date(),
-		    mode: 'date', // or 'time'
-		    minDate: new Date() - 10000,
-		    allowOldDates: true,
-		    allowFutureDates: false,
-		    doneButtonLabel: 'DONE',
-		    doneButtonColor: '#F2F3F4',
-		    cancelButtonLabel: 'CANCEL',
-		    cancelButtonColor: '#000000'
-	  	};
-
-	  	document.addEventListener("deviceready", function () {
-		    $cordovaDatePicker.show(options).then(function(date){
-		        alert(date);
-		    });
-	  	}, false);
+		// common.ionicDatePickerProvider(function(date) {
+		// 	alert(date)
+		// })
+		common.datePicker(function(date) {
+			alert(date)
+		})
 	}
 
 	$scope.camera = function() {

@@ -35,9 +35,8 @@
         		<div ng-repeat="item in items" class="item_list_box">
                     <div class="row">
                         <div class="col col-75">
-                            <ion-checkbox ng-model="item.checked">
-                                {{item.name}}
-                            </ion-checkbox>
+                            <ion-checkbox ng-if="!notCheckSection" ng-model="item.checked">{{item.name}}</ion-checkbox>
+                            <span ng-if="notCheckSection">{{item.name}}</span>
                         </div>
                         <div class="col col-20 text_align_right" ng-click="toPerson(item)">
                             <span class="info">{{item.userNum}}</span>

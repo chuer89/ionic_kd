@@ -1,12 +1,25 @@
 angular.module('workClient.controller', [])
 
-.controller('WorkClientCtrl', function ($scope, $state, $ionicActionSheet, seleMenuList) {
+.controller('WorkClientCtrl', function ($scope, $state, $ionicActionSheet, seleMenuList, common, workCrmSele) {
 	var menus = seleMenuList.menu();
 
-    $scope.seleStar = menus.star;
+    $scope.seleStar = [];
     $scope.selePeriod = menus.period;
     $scope.seleFrequency = menus.frequency;
     $scope.seleAmount = menus.amount;
+
+    workCrmSele.star(function(star) {
+        star.push({
+            name: '全部',
+            id: '-1',
+            value: '-1'
+        });
+
+        $scope.seleStar = star;
+    });
+    workCrmSele.customer_types(function(data) {
+        console.log(data);
+    })
 
     $scope.isShowStarSele = false;
     $scope.isShowPeriodSele = false;

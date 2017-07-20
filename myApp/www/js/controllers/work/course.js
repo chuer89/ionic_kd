@@ -22,8 +22,6 @@ angular.module('workCourse.controller', [])
                 "currentPage": dataList.currentPage + 1
             },
             success: function(data) {
-            	console.log(data);
-
                 var _body = data.body,
                     list = _body.jewelry;
 
@@ -122,7 +120,7 @@ angular.module('workCourse.controller', [])
         });
     }
     //附件上传
-    $scope.showSelePhotoHome = function() {
+    $scope.showSelePhoto = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
@@ -159,7 +157,6 @@ angular.module('workCourse.controller', [])
         },
         success: function(data) {
         	$scope.item = data.body;
-        	console.log(data.body)
         }
     });
 })

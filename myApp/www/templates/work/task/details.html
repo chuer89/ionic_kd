@@ -1,4 +1,4 @@
-<ion-view view-title="查看任务-{{itemFrom.person}}">
+<ion-view view-title="任务详情">
 	<ion-nav-buttons side="left">  
     	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
@@ -8,32 +8,42 @@
     </ion-nav-buttons>
 
 	<ion-content>
-		<div class="list">
-            <div class="item">
-                <h2>打理好所有柜台清洁</h2>
-                <p>截至时间：2017-20-25 11:30</p>
+        <div class="list_box">
+            <div class="item_list_box">
+                <p class="title">{{data.taskBasiInfo.taskTitle}}</p>
+                <p class="info">{{data.taskBasiInfo.endTime}}</p>
             </div>
-            <div class="item">
-                <div>提醒：提前3小时</div>
-                <div>描述：去拜访客户，再到公司拜访客户。</div>
+            <div class="item_list_box">
+                <p><span class="info">提醒：</span>提前{{data.taskBasiInfo.remindtime}}小时</p>
+                <p><span class="info">描述：</span>{{data.taskBasiInfo.taskDescription}}</p>
             </div>
-            <div class="item">
-                <div>负责人：王丽丽 催丽娜</div>
-                <div>检查人：孙总</div>
-                <div>关注人：朱总</div>
+            <div class="item_list_box">
+                <p><span class="info">负责人：</span>{{data.taskBasiInfo.creatorName}}</p>
+                <p><span class="info">检查人：</span>王某</p>
+                <p><span class="info">关注人：</span>李某</p>
             </div>
-            <div class="item">图片</div>
+            <div class="item_list_box" ng-if="data.taskImageArray.length">
+                <img src="{{taskImg.path}}" ng-repeat="taskImg in data.taskImageArray">
+            </div>
         </div>
 
-        <div class="list">
-            <div class="item">
-                <h2>王丽丽</h2>
-                <p>今天能完成吗，估计什么时候</p>
-            </div>
-            <div class="item">
-                <h2>催里娜</h2>
-                <p>下午还有客户需求过来</p>
+        <div class="padding">
+            <div class="text_align_center" ng-if="notCommentsData">--{{notCommentsData}}--</div>
+            <div class="list_box">
+                <div class="item_list_box" ng-repeat="comments in commentArray">
+                    <div class="row">
+                        <div class="col col-20 text_align_center">
+                            <span class="name_box">{{comments.nickname}}</span>
+                        </div>
+                        <div class="col col-67">
+                            <h2 class="title">{{comments.userName}}</h2>
+                            <p class="info">{{comments.content}}</p>
+                        </div>
+                        <div class="col text_align_right">{{comments._createTime}}</div>
+                    </div>
+                </div>
             </div>
         </div>
+        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
 	</ion-content>
 </ion-view>

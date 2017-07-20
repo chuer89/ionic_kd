@@ -41,23 +41,25 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     //ios 右滑 上一级
     $ionicConfigProvider.views.swipeBackEnabled(false);
 
-    var datePickerObj = {
-        inputDate: new Date(),
-        // setLabel: 'Set',
-        // todayLabel: 'Today',
-        // closeLabel: 'Close',
-        mondayFirst: false,
-        weeksList: ["S", "M", "T", "W", "T", "F", "S"],
-        monthsList: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
-        templateType: 'popup',
-        // from: new Date(2012, 8, 1),
-        // to: new Date(2018, 8, 1),
-        // showTodayButton: true,
-        dateFormat: 'yyyy-MM-dd'
-        // closeOnSelect: false,
-        // disableWeekdays: [6]
-    };
-    ionicDatePickerProvider.configDatePicker(datePickerObj);
+   //日期选择  
+      var datePickerObj = {  
+          inputDate: new Date(),
+          titleLabel: '选择日期',  
+          setLabel: '确定',  
+          todayLabel: '今天',  
+          closeLabel: '关闭',  
+          mondayFirst: false,  
+          weeksList: ["日", "一", "二", "三", "四", "五", "六"],  
+          monthsList: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],  
+          templateType: 'popup',  //modal or popup
+          // from: new Date(2012, 8, 1),  
+          // to: new Date(2028, 8, 1),  
+          showTodayButton: true,  
+          dateFormat: 'yyyy-MM-dd',  
+          closeOnSelect: true,  
+          disableWeekdays: []  
+      };  
+      ionicDatePickerProvider.configDatePicker(datePickerObj);
 
   // $ionicConfigProvider.views.swipeBackEnabled(false);
 
@@ -236,6 +238,13 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkTaskAddCtrl',
         cache: false
     })
+    //任务创建
+    .state('work_task_edit', {
+        url: '/work/task_edit',
+        templateUrl: 'templates/work/task/edit.html',
+        controller: 'WorkTaskEditCtrl',
+        cache: false
+    })
     //任务查看－列表
     .state('work_task_list', {
         url: '/work/task_list/:id',
@@ -246,7 +255,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_task_list_details', {
         url: '/work/task_list/:id/details',
         templateUrl: 'templates/work/task/details.html',
-        controller: 'WorkTaskListDetailsCtrl'
+        controller: 'WorkTaskListDetailsCtrl',
+        cache: false
     })
     //任务查看－列表－详情-审核
     .state('work_task_list_details_audit', {
@@ -265,6 +275,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         url: '/work/task_list/:id/details/refer',
         templateUrl: 'templates/work/task/refer.html',
         controller: 'WorkTaskListDetailsReferCtrl'
+    })
+    //任务查看－列表－详情-确认任务
+    .state('work_task_list_details_approve', {
+        url: '/work/task_list/:id/details/approve',
+        templateUrl: 'templates/work/task/approve.html',
+        controller: 'WorkTaskListDetailsApproveCtrl'
     })
     //任务查看－列表－详情-讨论
     .state('work_task_list_details_Discuss', {

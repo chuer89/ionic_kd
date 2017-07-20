@@ -10141,13 +10141,15 @@ img {
     .list_box .item_list_box .details_img_thumbnail img {
       height: 120px;
       float: left;
-      padding: 0.26667rem; }
+      padding: 0.26667rem;
+      width: auto; }
       [data-dpr='2'] .list_box .item_list_box .details_img_thumbnail img {
         height: 240px; }
       [data-dpr='3'] .list_box .item_list_box .details_img_thumbnail img {
         height: 366px; }
     .list_box .item_list_box .details_img_block img {
-      padding: 0.26667rem; }
+      padding: 0.26667rem;
+      width: auto; }
     .list_box .item_list_box .colorRed {
       color: #ff0014; }
     .list_box .item_list_box .colorPurple {
@@ -10203,6 +10205,14 @@ img {
       font-size: 24px; }
     [data-dpr='3'] .list_box .info {
       font-size: 42px; }
+  .list_box .task_status .WORKING {
+    color: #007130; }
+  .list_box .task_status .UNCONFIRMED {
+    color: #ff0014; }
+  .list_box .task_status .UNQUALIFIED {
+    color: #7f6bac; }
+  .list_box .task_status .QUALIFIED {
+    color: #000000; }
 
 .shift_list {
   display: block;
@@ -10295,7 +10305,8 @@ img {
 
 .login_box .import_box img {
   height: 1.06667rem;
-  vertical-align: middle; }
+  vertical-align: middle;
+  width: auto; }
 
 /*小红点*/
 .tab-red-point:after, .red-point:after {

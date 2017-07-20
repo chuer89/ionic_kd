@@ -94,7 +94,7 @@ angular.module('workCyclopedia.controller', [])
         });
     }
     //附件上传
-    $scope.showSelePhotoHome = function() {
+    $scope.showSelePhoto = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
@@ -130,7 +130,6 @@ angular.module('workCyclopedia.controller', [])
         },
         success: function(data) {
         	$scope.item = data.body;
-        	console.log(data.body)
         }
     });
 })

@@ -159,11 +159,11 @@ angular.module('workReport.controller', [])
             success: function(data) {
                 var _body = data.body;
 
-                var report = _body.report;
+                var list = _body.report;
 
-                for (var i = 0, ii = report.length; i < ii; i++) {
-                    report[i].nickname = common.nickname(report[i].userName);
-                    $scope.items.push(report[i]);
+                for (var i = 0, ii = list.length; i < ii; i++) {
+                    list[i].nickname = common.nickname(list[i].userName);
+                    $scope.items.push(list[i]);
                 }
 
                 $timeout(function() {
@@ -181,7 +181,6 @@ angular.module('workReport.controller', [])
                 $scope.vm.moredata = false;
                 return;
             }
-            console.log(dataList.totalPage, 'x');
 
             $timeout(function () {
                 $scope.vm.moredata = false;
