@@ -9,6 +9,7 @@
 
 	<ion-content>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
         <ion-list class="list_box">
             <ion-item class="item_list_box" ng-repeat="item in items">
                 <a href="#/work/notify/details/{{item.id}}" style="display: block;">
@@ -28,9 +29,6 @@
                             <i class="icon ion-chevron-right icon-accessory"></i>
                         </div>
                     </div>
-                    <ion-option-button ng-click="del(item)" class="button-assertive">
-                      删除
-                    </ion-option-button>
                 </a>
             </ion-item>
         </ion-list>

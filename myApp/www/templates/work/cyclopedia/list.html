@@ -10,6 +10,7 @@
     </ion-nav-buttons>
 
   	<ion-content>
+      <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
   		<div class="list_box padding_btm" ng-repeat="item in items">
             <a href="#/work/cyclopedia/details/{{item.id}}" class="item_list_box">
                 <img src="{{item.coverPath}}" />{{item.title}}

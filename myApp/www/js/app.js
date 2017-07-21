@@ -5,7 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'route', 'ionic-datepicker'])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 
+    'route', 'ionic-datepicker', 'ionic-timepicker'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -23,7 +24,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, ionicDatePickerProvider) {
+.config(function($stateProvider, $urlRouterProvider, 
+    $ionicConfigProvider, ionicDatePickerProvider, ionicTimePickerProvider) {
 
     // $ionicConfigProvider.backButton.text('').previousTitleText(false);
 
@@ -54,12 +56,21 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
           templateType: 'popup',  //modal or popup
           // from: new Date(2012, 8, 1),  
           // to: new Date(2028, 8, 1),  
-          showTodayButton: true,  
-          dateFormat: 'yyyy-MM-dd',  
-          closeOnSelect: true,  
+          // showTodayButton: true,  
+          // dateFormat: 'yyyy-MM-dd',  
+          // closeOnSelect: true,  
           disableWeekdays: []  
       };  
       ionicDatePickerProvider.configDatePicker(datePickerObj);
+
+      var timePickerObj = {
+          inputTime: (((new Date()).getHours() * 60 * 60) + ((new Date()).getMinutes() * 60)),
+          format: 12,
+          step: 15,
+          setLabel: '设置',
+          closeLabel: '关闭'
+        };
+        ionicTimePickerProvider.configTimePicker(timePickerObj);
 
   // $ionicConfigProvider.views.swipeBackEnabled(false);
 

@@ -9883,6 +9883,15 @@ a.button {
   background: transparent;
   color: #a4a4a4; }
 
+form {
+  width: 100%; }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0; }
+
 textarea {
   resize: none;
   width: 100%;
@@ -9967,6 +9976,11 @@ img {
   .search_purple .search_box .item-input-wrapper input {
     color: white; }
 
+.notData {
+  text-align: center;
+  color: #a4a4a4;
+  padding-top: 1.33333rem; }
+
 /*下拉菜单筛选*/
 .kd_nav_filter {
   height: 50px;
@@ -10031,15 +10045,22 @@ img {
   .kd_nav_filter .kd_m {
     margin: 0 0.26667rem; }
 
+input[type=search], input[type=text], input[type=password], input[type=datetime], input[type=datetime-local], input[type=date], input[type=month], input[type=time], input[type=week], input[type=number], input[type=email], input[type=url], input[type=tel], input[type=color], textarea {
+  height: auto;
+  line-height: normal; }
+
 /*输入框*/
 .import_box {
   background: white; }
   .import_box input {
     display: inline-block;
-    line-height: 2.66667rem;
-    height: 2.66667rem; }
+    padding: 1.06667rem 0; }
   .import_box .input_btn {
-    line-height: 2.66667rem; }
+    display: -webkit-box;
+    -webkit-box-align: center;
+    height: 100%; }
+  .import_box .row + .row {
+    margin: 0; }
 
 /*tab切换*/
 .tab_box {

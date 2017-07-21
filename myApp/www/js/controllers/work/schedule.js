@@ -3,7 +3,11 @@ angular.module('workSchedule.controller', [])
 .controller('WorkScheduleCtrl', function ($scope, $state, $ionicActionSheet, common) {
 	$scope.items = [];
 
-    var handleAjax = function() {
+    var handleAjax = function(isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
+        }
+
         COMMON.post({
             type: 'user_richeng_list',
             data: {
@@ -12,6 +16,13 @@ angular.module('workSchedule.controller', [])
             },
             success: function(data) {
                 var _body = data.body;
+                common.loadingHide();
+
+                if (!_body || (_body && _body.riChengList && !_body.riChengList.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                } else {
+                    $scope.notTaskListData = false;
+                }
 
                 for (var i = 0, ii = _body.riChengList.length; i < ii; i++) {
                     _body.riChengList[i]._beginTime = common.format(_body.riChengList[i].beginTime)
@@ -26,7 +37,7 @@ angular.module('workSchedule.controller', [])
 	$scope.doRefresh = function() {
 		setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
-            handleAjax();
+            handleAjax(true);
         }, 1000)
         return true;
 	}
@@ -225,7 +236,11 @@ angular.module('workSchedule.controller', [])
 .controller('WorkScheduleMyCtrl', function($scope, common) {
 	$scope.items = [];
 
-    var handleAjax = function() {
+    var handleAjax = function(isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
+        }
+
         COMMON.post({
             type: 'user_richeng_list',
             data: {
@@ -234,6 +249,14 @@ angular.module('workSchedule.controller', [])
             },
             success: function(data) {
                 var _body = data.body;
+
+                common.loadingHide();
+
+                if (!_body || (_body && _body.riChengList && !_body.riChengList.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                } else {
+                    $scope.notTaskListData = false;
+                }
 
                 for (var i = 0, ii = _body.riChengList.length; i < ii; i++) {
                     _body.riChengList[i]._beginTime = common.format(_body.riChengList[i].beginTime)
@@ -249,6 +272,7 @@ angular.module('workSchedule.controller', [])
 	$scope.doRefresh = function() {
 		setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
+            handleAjax(true);
         }, 1000)
         return true;
 	}

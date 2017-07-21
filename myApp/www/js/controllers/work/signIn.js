@@ -10,23 +10,25 @@ angular.module('workSign.controller', [])
 	var menus = seleMenuList.menu();
 	var qianDaoType = menus.qianDaoType;
 
+	$scope.todayDate = common.format(false, 'yyyy-MM-dd') + ' ' + common.getWeek();
+
 	var ajaxUserData = function() {
 		//查询已签到
 		COMMON.post({
 	        type: 'qiandao_user_date_info',
 	        data: {
 	        	clientId: common.userInfo.clientId,
-	        	searchDate: '2017-07-15'
+	        	searchDate: common.format( false, 'yyyy-MM-dd')
 	        },
 	        success: function(data) {
 	            var _body = data.body;
+
+	            console.log(data)
 
 	            if (_body.histories && _body.histories.length) {
 	            	$scope.hasHistory = true;
 	            	$scope.historiesList = _body.histories;
 	            }
-
-	            console.log(_body.histories)
 	        }
 	    });
 	}
@@ -101,7 +103,7 @@ angular.module('workSign.controller', [])
 	        data: {
 	        	clientId: common.userInfo.clientId,
 	        	qianDaoRight: '1',
-	        	qianDaoPlace: '妈妈皮单鞋高跟鞋003',
+	        	qianDaoPlace: '这里是测试地址',
 	        	qianDaoType: _type,
 	        	shangBanType: $scope.shangBanType
 	        },
@@ -120,8 +122,9 @@ angular.module('workSign.controller', [])
 	.then(function (position) {
 		var lat  = position.coords.latitude;
 		var long = position.coords.longitude;
-		console.log(lat)
+		console.log(lat, 'weix')
 	}, function(err) {
+		console.log(err, 'yy')
 		// error
 	});
 })
@@ -135,12 +138,17 @@ angular.module('workSign.controller', [])
 
 	$scope.items = [];
 
-	var handleAjax = function () {
+	var handleAjax = function (isNotLoading) {
+		if (isNotLoading) {
+			common.loadingShow();
+		}
+
 		COMMON.getPhoneBook({
 			currentPage: dataList.currentPage + 1,
         	departmentId: seleDepartmentId,
         	name: ''
 		}, function(body) {
+			common.loadingHide();
 			var _body = body,
         		phoneBook = _body.phoneBook;
 
@@ -173,16 +181,15 @@ angular.module('workSign.controller', [])
     			$scope.vm.moredata = false;
     			return;
     		}
-	 		console.log(dataList.totalPage, 'x');
 
     		$timeout(function () {
     			$scope.vm.moredata = false;
-	 			handleAjax();
+	 			handleAjax(true);
 	        }, 1500);
 	        return true;
 	 	}
     }
- 	initData();
+ 	
 
 	//选择部门-start
 
@@ -219,19 +226,20 @@ angular.module('workSign.controller', [])
         }
     }
 
-    //加载部门&公司
-    common.getCompany(function(data) {
-        $scope.seleBrank = data;
-    })
+    
 
     //选择部门
-    $scope.seleBrankHandle = function(item) {
-        seleDepartmentId = item.departmentId;
+    var _seleBrankHandle = function(item) {
+    	seleDepartmentId = item.departmentId;
 
         $scope.seleBrankInfo = item.name;
         $scope.seleDepartmentInfo = '部门';
 
         $scope.seleDepartment = item.childDepartment;
+    }
+    
+    $scope.seleBrankHandle = function(item) {
+        _seleBrankHandle(item);
 
         toggleSeleHandle('brank', true);
     }
@@ -246,36 +254,23 @@ angular.module('workSign.controller', [])
     $scope.toggleSele = function(type) {
         toggleSeleHandle(type);
     }
+
+    //加载部门&公司
+    common.getCompany(function(data) {
+        $scope.seleBrank = data;
+
+        _seleBrankHandle(data[0]);
+        initData();
+    });
+
     //选择部门-end
 })
 
-.controller('WorkSigInHistoryCtrl', function($scope, $stateParams, workHistoryQuery, ionicDatePicker, common) {
-	$scope.item = workHistoryQuery.get($stateParams.id);
-
-	var ipObj1 = {
-      callback: function (val) {  //Mandatory
-        console.log('Return value from the datepicker popup is : ' + val, new Date(val));
-      },
-      // disabledDates: [            //Optional
-      //   new Date(2016, 2, 16),
-      //   new Date(2015, 3, 16),
-      //   new Date(2015, 4, 16),
-      //   new Date(2015, 5, 16),
-      //   new Date('Wednesday, August 12, 2015'),
-      //   new Date("08-16-2016"),
-      //   new Date(1439676000000)
-      // ],
-      from: new Date(2012, 1, 1), //Optional
-      to: new Date(2016, 10, 30), //Optional
-      inputDate: new Date(),      //Optional
-      mondayFirst: true,          //Optional
-      disableWeekdays: [0],       //Optional
-      closeOnSelect: false,       //Optional
-      templateType: 'popup'       //Optional
-    };
-
+.controller('WorkSigInHistoryCtrl', function($scope, $stateParams, common) {
     $scope.openDatePicker = function(){
-      ionicDatePicker.openDatePicker(ipObj1);
+    	common.datePicker(function(date) {
+
+    	})
     };
 
     $scope.items = [];

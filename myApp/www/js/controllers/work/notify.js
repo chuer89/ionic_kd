@@ -1,18 +1,27 @@
 angular.module('workNotify.controller', [])
 //通知列表
-.controller('WorkNotifyCtrl', function ($scope, $state, $ionicActionSheet, common) {
+.controller('WorkNotifyCtrl', function ($scope, $state, $ionicActionSheet, $filter, common) {
     $scope.items = [];
-
-    var getList = function() {
+    
+    var getList = function(isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
+        }
+        
         COMMON.post({
             type: 'inform_list_info',
             data: {
                 "id": common.userInfo.clientId
             },
+            notPretreatment: true,
             success: function(data) {
+                common.loadingHide();
                 var _body = data.body;
                 if (_body && _body.inform) {
+                    $scope.notTaskListData = false;
                     $scope.items = _body.inform;
+                } else {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
                 }
             }
         });
@@ -23,7 +32,7 @@ angular.module('workNotify.controller', [])
 	$scope.doRefresh = function() {
 		setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
-            getList();
+            getList(true);
         }, 1000)
         return true;
 	}
@@ -54,34 +63,30 @@ angular.module('workNotify.controller', [])
             }
         });
     }
-
-    $scope.del = function(item) {
-        COMMON.post({
-            type: 'delete_inform',
-            data: {
-                "informId": item.id
-            },
-            success: function(data) {
-                var _body = data.body;
-                getList();
-            }
-        });
-    }
 })
 
 .controller('WorkNotifyMyCtrl', function($scope, $state, $ionicActionSheet, common) {
     $scope.items = [];
 
-    var getList = function() {
+    var getList = function(isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
+        }
+
         COMMON.post({
             type: 'my_send_inform',
             data: {
                 "id": common.userInfo.clientId
             },
             success: function(data) {
+                common.loadingHide();
+
                 var _body = data.body;
                 if (_body && _body.inform) {
+                    $scope.notTaskListData = false;
                     $scope.items = _body.inform;
+                } else {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
                 }
             }
         });
@@ -92,7 +97,7 @@ angular.module('workNotify.controller', [])
     $scope.doRefresh = function() {
         setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
-            getList();
+            getList(true);
         }, 1000)
         return true;
     }

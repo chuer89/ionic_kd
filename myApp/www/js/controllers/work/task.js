@@ -13,6 +13,8 @@ angular.module('workTask.controller', [])
         tasks: []
     };
 
+    common.loadingShow();
+
     var menus = seleMenuList.menu();
 
     var taskStatus = menus.taskStatus;
@@ -35,9 +37,19 @@ angular.module('workTask.controller', [])
                 "currentPage": dataList.currentPage + 1,
                 "myTaskStatus": $scope.data.myTaskStatus
             },
+            notPretreatment: true,
             success: function(data) {
-                var _body = data.body,
-                    tasks = _body.tasks;
+                var _body = data.body;
+                common.loadingHide();
+
+                if (!_body.tasks || (typeof _body.tasks == 'object' && !_body.tasks.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
+
+                var tasks = _body.tasks;
 
                 dataList = _body;
 

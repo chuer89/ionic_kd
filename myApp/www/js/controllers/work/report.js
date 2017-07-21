@@ -145,7 +145,11 @@ angular.module('workReport.controller', [])
     initData();
     
 
-    var ajaxhandle = function() {
+    var ajaxhandle = function(isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
+        }
+
         COMMON.post({
             type: 'obtain_report',
             data: {
@@ -156,8 +160,17 @@ angular.module('workReport.controller', [])
                 endDate: '2017-08-26',
                 typeId: $scope.data.typeId
             },
+            notPretreatment: true,
             success: function(data) {
                 var _body = data.body;
+                common.loadingHide();
+
+                if (!_body || (_body && _body.report && !_body.report.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
 
                 var list = _body.report;
 
@@ -184,7 +197,7 @@ angular.module('workReport.controller', [])
 
             $timeout(function () {
                 $scope.vm.moredata = false;
-                handleAjax();
+                handleAjax(true);
             }, 1500);
             return true;
         }

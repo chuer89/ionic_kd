@@ -134,11 +134,16 @@ angular.module('message.services', [])
 })
 
 .factory('common', function($http, $cordovaToast, $ionicActionSheet, $filter, ionicDatePicker, 
-    $state, $cordovaCamera, $cordovaImagePicker, $cordovaDatePicker, $cordovaFileTransfer, $ionicPopup) {
+    $state, $cordovaCamera, $cordovaImagePicker, $cordovaDatePicker, $cordovaFileTransfer, 
+    $ionicPopup, $ionicLoading) {
     var obj = {
 
         onlineHost: 'http://123.206.95.25:18080',
         debugHost: 'http://192.168.201.237:8080',
+
+        isChrome: true,
+
+        notTaskListDataTxt: '-暂无数据-',
 
         post: function(opt) {
             var data = opt.data || {};
@@ -149,21 +154,18 @@ angular.module('message.services', [])
             //opt.notPretreatment 不预处理 默认false
 
             var fail = function(msg) {
-                $cordovaToast
-                .show(msg, 'short', 'bottom');
+                COMMON.toast(msg);
             }
 
             if (typeof success != 'function') {
                 success = function(){
-                    $cordovaToast
-                    .show('成功', 'short', 'bottom');
+                    COMMON.toast('成功');
                 };
             }
 
             if (typeof error != 'function') {
                 error = function() {
-                    $cordovaToast
-                    .show('请稍后再试', 'short', 'bottom');
+                    COMMON.toast('请稍后再试');
                 }
             }
 
@@ -232,10 +234,24 @@ angular.module('message.services', [])
             });
         },
 
+        loadingShow: function() {
+            $ionicLoading.show({
+                template: '加载中...',
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 200,
+                showDelay: 0
+            });
+        },
+
+        loadingHide: function() {
+            $ionicLoading.hide();
+        },
+
         //当前登录用户信息
         userInfo: {
-            clientId: 153
-            // clientId: 28
+            // clientId: 153
+            clientId: 28
         },
 
         //内容缓存（预计父 子页面通信，保存数据）
@@ -380,6 +396,35 @@ angular.module('message.services', [])
         },
 
         format: function (date, fmt) {
+
+            var _d = '2017-07-16 19:21:44';
+
+            fmt = fmt || 'yyyy-MM-dd hh:mm';
+
+            if (!date || typeof date == 'object') {
+                return $filter('date')(new Date(), fmt);
+            }
+
+            var _arr = date.split(' '),
+                _y = _arr[0].split('-'),
+                _t = _arr[1].split(':');
+
+            var _o = {
+                yyyy: _y[0],
+                MM: _y[1],
+                dd: _y[2],
+                hh: _t[0], 
+                mm: _t[1], 
+                ss: _t[2]
+            }
+
+            for (var k in _o) {
+                if (new RegExp("(" + k + ")").test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, _o[k])
+                }
+            }
+
+            return fmt;
 
 
             // 对Date的扩展，将 Date 转化为指定格式的String
@@ -580,6 +625,14 @@ angular.module('message.services', [])
                 return;
             }
 
+            if (COMMON.isChrome) {
+                console.log(txt);
+                if (typeof cb == 'function') {
+                    cb();
+                }
+                return;
+            }
+
             $cordovaToast
             .show(txt, 'short', 'bottom')
             .then(function(success) {
@@ -644,22 +697,29 @@ angular.module('message.services', [])
         },
 
         //模拟 日期 选择
-        ionicDatePickerProvider: function(cb) {
+        ionicDatePickerProvider: function(cb, isTime) {
             var seleDate = '';
+
+            var fmt = 'yyyy-MM-dd';
+
+            if (isTime) {
+                fmt = 'yyyy-MM-dd hh:mm:ss';
+            }
 
             var datePickerObj = {  
                 //选择日期后的回掉  
                 callback: function (val) {  
                     if (typeof (val) === 'undefined') {  
                     } else {  
-                        seleDate = common.format(val, 'yyyy-MM-dd');
+                        seleDate = COMMON.format(val, fmt);
 
                         if (typeof cb == 'function') {
                             cb(seleDate);
                         }
                         datePickerObj.inputDate = new Date(val); //更新日期弹框上的日期  
                     }  
-                }
+                },
+                dateFormat: fmt
             };  
              
             //打开日期选择框  
@@ -677,22 +737,27 @@ angular.module('message.services', [])
             }
 
             var options = {
-                date: new Date(),
+                date: '2017-07-20',
                 mode: _mode, // date or 'time'
-                minDate: new Date() - 10000,
-                allowOldDates: true,
-                allowFutureDates: false,
+                // minDate: new Date() - 10000,
+                // allowOldDates: false,
+                // allowFutureDates: false,
                 doneButtonLabel: '确定',
                 doneButtonColor: '#F2F3F4',
                 cancelButtonLabel: '取消',
-                cancelButtonColor: '#000000'
+                cancelButtonColor: '#000000',
+                dateFormat: fmt,
+                doneButtonColor: '#000000'
             };
 
             document.addEventListener("deviceready", function () {
                 $cordovaDatePicker.show(options).then(function(date){
                     var _date = '';
+                    if (!date) {
+                        return;
+                    }
                     if (typeof cb == 'function') {
-                        _date = common.format(date, fmt);
+                        _date = COMMON.format(date, fmt);
                         cb(_date);
                     }
                 });

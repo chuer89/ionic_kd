@@ -1,5 +1,14 @@
 angular.module('workClient.controller', [])
 
+// lastFollowUpTimeStart: #可选，最后跟进时间起，时间戳
+// includeLastFollowUpTimeStart: #可选，包含最后跟进时间起，默认不包含
+// lastFollowUpTimeEnd: #可选，最后跟进时间止，时间戳
+// lastConsumptionTimeStart: #可选，最后消费时间起，时间戳
+// includeLastConsumptionTimeStart: #可选，包含最后消费时间起，默认不包含
+// lastConsumptionTimeEnd: #可选，最后消费时间止，时间戳
+// includeLastConsumptionTimeEnd: #可选，包含最后消费时间止，默认不包含
+// includeLastFollowUpTimeEnd: #可选，包含最后跟进时间止，默认不包含
+
 .controller('WorkClientCtrl', function ($scope, $state, $ionicActionSheet, seleMenuList, common, workCrmSele) {
 	var menus = seleMenuList.menu();
 

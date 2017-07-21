@@ -5,6 +5,7 @@
 
 	<ion-content>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
         <div class="list_box">
             <a href="#/work/notify/details/{{item.id}}" class="item_list_box" ng-repeat="item in items">
                 <div class="row">

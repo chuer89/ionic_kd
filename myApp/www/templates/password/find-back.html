@@ -4,7 +4,7 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a href="javascript:;" class="button button-clear button-positive" ng-click="handleCode()">下一步</a>
+        <a href="javascript:;" class="button button-clear button-positive" ng-click="handleModify()">确定</a>
     </ion-nav-buttons>
 
     <ion-content>
@@ -12,13 +12,26 @@
             <div class="import_box">
                 <div class="padding_around">
                     <div class="border_btm row">
-                        <div class="col">
-                            <input type="text" maxlength="11" name="mobile" placeholder="请输入手机号" ng-model="data.mobile" />
+                        <div class="col col-67">
+                            <input type="search" maxlength="11" name="mobile" placeholder="请输入手机号" ng-model="data.mobile" />
                         </div>
                         <div class="col text_align_right"><a class="input_btn" ng-class="{'disable': isSendCode}" ng-click="sendCode()" href="javascript:;">{{sendCodeText}}</a></div>
                     </div>
-                    <div>
-                        <input type="text" maxlength="6" name="code" placeholder="请输入短信中的验证码" ng-model="data.code" />
+                    <div style="margin-top: 3px;">
+                        <input type="number" maxlength="6" name="code" placeholder="请输入短信中的验证码" ng-model="data.code" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="padding_tb">
+            <div class="import_box">
+                <div class="padding_around">
+                    <div class="border_btm row">
+                        <input type="text" class="col" maxlength="16" name="npassword" placeholder="请输入6～10位密码数字、字母字符组成" ng-model="data.npassword" />
+                    </div>
+                    <div class="row">
+                        <input type="text" class="col" maxlength="16" name="cpassword" placeholder="请再输入密码" ng-model="data.cpassword" />
                     </div>
                 </div>
             </div>

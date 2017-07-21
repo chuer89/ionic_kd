@@ -12,7 +12,6 @@ angular.module('work.services', [])
         name: '日程',
         info: '时间安排',
         link: '#/work/schedule',
-        count: 1,
         icon: 'img/icon/work/schedule.png'
     }, {
     	id: 2,
@@ -49,7 +48,6 @@ angular.module('work.services', [])
     var crm = [{
         name: '客户',
         info: '管理客户信息，记录沟通细节',
-        count: 1,
         icon: 'img/icon/work/customer.png',
         link: '#/work/client'
     }, {

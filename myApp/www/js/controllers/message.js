@@ -1,7 +1,7 @@
 angular.module('message.controller', [])
 
 //
-.controller('MessageCtrl', function($scope, $state, $filter, 
+.controller('MessageCtrl', function($scope, $state, $filter, ionicTimePicker,
 	$cordovaVibration, $cordovaToast, $cordovaDatePicker, $cordovaCamera, 
 	$cordovaImagePicker, messagePush, ionicDatePicker, common) {
     $scope.data = {};
@@ -24,12 +24,29 @@ angular.module('message.controller', [])
 	};
 
 	$scope.date = function () {
+		// $('#mn_date').click();
 		// common.ionicDatePickerProvider(function(date) {
 		// 	alert(date)
 		// })
-		common.datePicker(function(date) {
-			alert(date)
-		})
+		// common.datePicker(function(date) {
+		// 	alert(date)
+		// }, true)
+
+		var ipObj1 = {
+    callback: function (val) {      //Mandatory
+      if (typeof (val) === 'undefined') {
+        console.log('Time not selected');
+      } else {
+        var selectedTime = new Date(val * 1000);
+        console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), 'H :', selectedTime.getUTCMinutes(), 'M');
+      }
+    },
+    inputTime: 50400,   //Optional
+    format: 12,         //Optional
+    step: 15           //Optional
+  };
+  
+  ionicTimePicker.openTimePicker(ipObj1);
 	}
 
 	$scope.camera = function() {

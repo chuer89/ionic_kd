@@ -86,6 +86,8 @@
             </a>
         </div>
 
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
+
         <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
     </ion-content>
 </ion-view>

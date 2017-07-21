@@ -6,3 +6,8 @@ ionic emulate ios --list
 ionic  emulate ios --target="iPhone-6s, 9.2"
 
 command 1/2/3 模拟器调整
+
+
+cordova plugin save
+cordova platform rm ios
+cordova platform add ios

@@ -31,11 +31,14 @@
         </div>
 
 		<div class="bar bar-header item-input-inset">
-			<label class="item-input-wrapper">
-				<i class="icon ion-ios-search placeholder-icon"></i>
-				<input type="search" placeholder="Search">
-			</label>
+            <form>
+    			<label class="item-input-wrapper">
+    				<i class="icon ion-ios-search placeholder-icon"></i>
+    				<input type="search" placeholder="Search"／>
+    			</label>
+            </form>
         </div>
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
         <div class="list_box">
             <a href="#/work/sign_in_history/{{item.id}}" class="item_list_box" ng-repeat="item in items">
                 <div class="row">

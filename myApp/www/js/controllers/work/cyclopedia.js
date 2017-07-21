@@ -19,14 +19,27 @@ angular.module('workCyclopedia.controller', [])
 
 	$scope.items = [];
 
-	var handleAjax = function() {
+	var handleAjax = function(isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
+        }
+
 		COMMON.post({
 	        type: 'obtain_jewelries',
 	        data: {
 	        	categoryId: $stateParams.id,
 	        	currentPage: dataList.currentPage + 1
 	        },
+            notPretreatment: true,
 	        success: function(data) {
+                common.loadingHide();
+
+                if (!data.body || (data.body && data.body.jewelry && !data.body.jewelry.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
 
 	            var _body = data.body,
 	        		list = _body.jewelry;

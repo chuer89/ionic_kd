@@ -20,6 +20,7 @@
 
         <div class="padding_tb">
             <div class="list_box">
+                <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
                 <a class="item_list_box task_status" ng-repeat="item in taskList" href="#/work/task_list/{{item.taskId}}/details">
                     <div class="row">
                         <div class="col col-80">

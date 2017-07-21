@@ -11,11 +11,10 @@ angular.module('login.controller', [])
     }
 
     $scope.login = function() {
-        if ($scope.data.mobile || $scope.data.password) {
+        if ($scope.data.mobile && $scope.data.password) {
 
         } else {
-            $cordovaToast
-            .show('请输入手机号和密码', 'short', 'bottom');
+            common.toast('请输入手机号和密码');
             return;
         }
 
@@ -26,7 +25,7 @@ angular.module('login.controller', [])
                 // password: $scope.data.password
 
                 mobile: 15608203716,
-                password: 123456
+                password: 111111
             },
             success: function(data) {
                 angular.extend(common.userInfo, data.body);
@@ -39,15 +38,33 @@ angular.module('login.controller', [])
 
 //忘记密码
 .controller('ForgotPsdCtrl', function ($scope, $ionicPopup, $state, $cordovaToast, $interval, common) {
-    $scope.data = {};
-
     $scope.sendCodeText = '获取验证码';
     $scope.isSendCode = false;
     var timeStep = 0;
 
-    $scope.handleCode = function() {
+    $scope.data = {};
+
+    $scope.handleModify = function() {
+        if ($scope.data.code != $scope.data.sendCode || !$scope.data.code) {
+            common.toast('请输入正确的短信验证码');return;
+        }
+
+        if (!$scope.data.npassword || $scope.data.npassword != $scope.data.cpassword) {
+            common.toast('两次密码不一致');return;
+        }
+
         if ($scope.data.mobile && $scope.data.code) {
-            $state.go('modifyPsd', {code: $scope.data.code, mobile: $scope.data.mobile});
+            common.post({
+                type: 'change_password',
+                data: {
+                    mobile: $scope.data.mobile,
+                    password: $scope.data.npassword,
+                    code: $scope.data.code
+                },
+                success: function(data) {
+                    common.back();
+                }
+            });
         }
     }
 
@@ -60,8 +77,7 @@ angular.module('login.controller', [])
         if ($scope.data.mobile) {
 
         } else {
-            $cordovaToast
-            .show('请输入手机号', 'short', 'bottom');
+            common.toast('请输入手机号')
             return;
         }
 
@@ -89,6 +105,7 @@ angular.module('login.controller', [])
                 mobile: 15608203716
             },
             success: function(data) {
+                $scope.data.sendCode = data.body.code;
                 console.log(data)
             }
         });
@@ -97,7 +114,9 @@ angular.module('login.controller', [])
 
 //修改密码
 .controller('ModifyPsdCtrl', function($scope, $state, $stateParams) {
-    // $scope.data = {};
+    $scope.data = {
+        typePageName: 'ForgotPsdCtrl'
+    };
     console.log($stateParams, $state.params)
 })
 

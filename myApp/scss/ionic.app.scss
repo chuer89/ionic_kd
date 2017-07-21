@@ -83,6 +83,15 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	    color: $colorGrey;
 	}
 }
+form{
+	width: 100%;
+}
+input[type=number]::-webkit-inner-spin-button,  
+input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        appearance: none; 
+        margin: 0; 
+}
 
 textarea{
 	resize: none;
@@ -173,6 +182,12 @@ img{
 	}
 }
 
+.notData{
+	text-align: center;
+	color: $colorGrey;
+	padding-top: pxRem(100);
+}
+
 /*下拉菜单筛选*/
 .kd_nav_filter{
 	@include height-dpr(50);
@@ -247,16 +262,25 @@ img{
 	}
 }
 
+input[type=search], input[type=text], input[type=password], input[type=datetime], input[type=datetime-local], input[type=date], input[type=month], input[type=time], input[type=week], input[type=number], input[type=email], input[type=url], input[type=tel], input[type=color], textarea{
+	height: auto;
+	line-height: normal;
+}
+
 /*输入框*/
 .import_box{
 	background: white;
 	input {
 		display: inline-block;
-		line-height: pxRem(200);
-		height: pxRem(200);
+		padding: pxRem(80) 0;
 	}
 	.input_btn{
-		line-height: pxRem(200);
+		display: -webkit-box;
+        -webkit-box-align: center;
+        height: 100%;
+	}
+	.row+.row{
+		margin: 0;
 	}
 }
 
