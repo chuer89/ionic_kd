@@ -1,18 +1,23 @@
 angular.module('workSign.controller', [])
 
-.controller('WorkSigInCtrl', function ($scope, $state, $ionicActionSheet, $cordovaGeolocation, common, seleMenuList) {
+.controller('WorkSigInCtrl', function ($scope, $state, $ionicActionSheet, $filter, common, seleMenuList) {
 	$scope.historiesList = [];
-	$scope.qiandaoUser = {};
 	$scope.shangBanType = '';
 
-	$scope.hasHistory = false;
+	$scope.hasHistory = true;
+
+	$scope.hasSignIn = false;
+
+	var qianDaoData = {
+		qiandaoCanQianDaoSite: true
+	}
 
 	var menus = seleMenuList.menu();
 	var qianDaoType = menus.qianDaoType;
 
 	$scope.todayDate = common.format(false, 'yyyy-MM-dd') + ' ' + common.getWeek();
 
-	var ajaxUserData = function() {
+	var ajaxUserData = function(cb) {
 		//查询已签到
 		COMMON.post({
 	        type: 'qiandao_user_date_info',
@@ -23,36 +28,22 @@ angular.module('workSign.controller', [])
 	        success: function(data) {
 	            var _body = data.body;
 
-	            console.log(data)
-
 	            if (_body.histories && _body.histories.length) {
 	            	$scope.hasHistory = true;
 	            	$scope.historiesList = _body.histories;
+	            } else {
+	            	$scope.hasHistory = false;
+	            	$scope.historiesList = [];
+	            }
+
+	            if (typeof cb == 'function') {
+	            	cb();
 	            }
 	        }
 	    });
 	}
 
-	ajaxUserData();
-
-    COMMON.post({
-        type: 'qiandao_info_get',
-        data: {
-        	clientId: common.userInfo.clientId
-        },
-        success: function(data) {
-            var _body = data.body;
-
-            $scope.qiandaoUser = _body;
-
-            console.log(_body, 'x');
-        }
-    });
-
-	//地理位置
-    common.getLocation(function(position) {
-    	console.log(position, 'weizhi');
-    });
+	
 
 	$scope.seleType = '请选择';
 
@@ -63,6 +54,13 @@ angular.module('workSign.controller', [])
 			buttonClicked: function(index, item) {
 				$scope.seleType = item.text;
 				$scope.shangBanType = item.key;
+
+				var qiandaoTimes = JSON.parse( common.getLocalStorage('qiandaoTimes') );
+				if (!common.getId(qiandaoTimes, item.key, 'qianDaoType')) {
+					$scope.hasSignIn = false;
+				} else {
+					$scope.hasSignIn = hasSignIn();
+				}
 
 				return true;
 			}
@@ -91,6 +89,78 @@ angular.module('workSign.controller', [])
 		})
 	}
 
+	var getSignInData = function(cb) {
+		common.toast('位置获取中，请稍等...');
+
+		//地理位置
+	    common.getLocation(function(position) {
+	    	var _coords = position.coords;
+
+	    	console.log(position)
+
+			COMMON.post({
+		        type: 'qiandao_distance',
+		        data: {
+		        	clientId: common.userInfo.clientId,
+		        	jingDu: _coords.longitude + '',
+		        	weiDu: _coords.latitude + ''
+		        },
+		        success: function(data) {
+		        	common.setLocalStorage('qiandaoBeforeTime', data.body.applyBeforeTime);
+		        	common.setLocalStorage('qiandaoTimes', JSON.stringify(data.body.times));
+		        	common.setLocalStorage('qiandaoApiDate', common.format(false, 'yyyy-MM-dd'));
+		        	qianDaoData.qiandaoCanQianDaoSite = data.body.canQianDao;
+
+		        	if (typeof cb == 'function') {
+		        		cb(data);
+		        	}
+		        }
+		    });
+	    });
+	}
+
+	var hasSignIn = function() {
+		var nowTime = common.format(false, 'HH:mm');
+
+		// nowTime = '17:35';
+
+		var qiandaoTimes = JSON.parse( common.getLocalStorage('qiandaoTimes') );
+
+		if (!qiandaoTimes.length || !qianDaoData.qiandaoCanQianDaoSite) {
+			return false;
+		}
+
+		var _shangBanNum = 0,
+			_xiaBanNum = 0;
+		
+		for (var i = 0, ii = qiandaoTimes.length; i < ii; i++) {
+			qiandaoTimes[i]._qianDaoShangBan = common.timeNumber(qiandaoTimes[i].qianDaoShangBan);
+			qiandaoTimes[i]._qianDaoXiaBan = common.timeNumber(qiandaoTimes[i].qianDaoXiaBan);
+
+			_shangBanNum = common.minusTime(qiandaoTimes[i]._qianDaoShangBan, common.timeNumber(nowTime));
+			qiandaoTimes[i].canShangBan = _shangBanNum < common.getLocalStorage('qiandaoBeforeTime');
+
+			_xiaBanNum = common.minusTime(qiandaoTimes[i]._qianDaoXiaBan, common.timeNumber(nowTime));
+			qiandaoTimes[i].canXiaBan = _xiaBanNum < common.getLocalStorage('qiandaoBeforeTime');
+
+			if ($scope.hasHistory && qiandaoTimes[i].canXiaBan) {
+				return true;
+			} else if (qiandaoTimes[i].canShangBan && !$scope.hasHistory) {
+				return true;
+			}
+		}
+	}
+
+	ajaxUserData(function() {
+		if (common.format(false, 'yyyy-MM-dd') != common.getLocalStorage('qiandaoApiDate')){
+			getSignInData(function() {
+				$scope.hasSignIn = hasSignIn();
+			});
+		} else {
+			$scope.hasSignIn = hasSignIn();
+		}
+	});
+
 	//发送签到
 	$scope.sub = function (type) {
 		var _type = 'XIA_BAN';
@@ -98,35 +168,39 @@ angular.module('workSign.controller', [])
 			_type = 'SHANG_BAN'
 		}
 
-		COMMON.post({
-	        type: 'qiandao_submit',
-	        data: {
-	        	clientId: common.userInfo.clientId,
-	        	qianDaoRight: '1',
-	        	qianDaoPlace: '这里是测试地址',
-	        	qianDaoType: _type,
-	        	shangBanType: $scope.shangBanType
-	        },
-	        success: function(data) {
-	            var _body = data.body;
+		if (!$scope.shangBanType) {
+			common.toast('请选择签到类型');return;
+		}
 
-	            ajaxUserData();
-	        }
-	    });
+		var ajax = function(qianDaoPlace) {
+			COMMON.post({
+		        type: 'qiandao_submit',
+		        data: {
+		        	clientId: common.userInfo.clientId,
+		        	qianDaoRight: '1',
+		        	qianDaoPlace: qianDaoPlace,
+		        	qianDaoType: _type,
+		        	shangBanType: $scope.shangBanType
+		        },
+		        success: function(data) {
+		            var _body = data.body;
+		            common.loadingHide();
+
+		            ajaxUserData();
+		        }
+		    });
+		}
+
+		common.loadingShow();
+
+		getSignInData(function(data) {
+			if (hasSignIn()) {
+				ajax(data.body.place.qianDaoPlace);
+			} else {
+				common.toast('当前位置或时间不支持签到');
+			}
+		})
 	}
-
-	//定位
-	var posOptions = {timeout: 10000, enableHighAccuracy: false};
-	$cordovaGeolocation
-	.getCurrentPosition(posOptions)
-	.then(function (position) {
-		var lat  = position.coords.latitude;
-		var long = position.coords.longitude;
-		console.log(lat, 'weix')
-	}, function(err) {
-		console.log(err, 'yy')
-		// error
-	});
 })
 
 //签到人员查询

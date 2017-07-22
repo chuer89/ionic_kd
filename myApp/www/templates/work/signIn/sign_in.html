@@ -56,7 +56,7 @@
 				</div>
 			</div>
 
-			<div class="sign_btn_box">
+			<div class="sign_btn_box" ng-if="hasSignIn">
 				<button ng-click="sub(1)" ng-if="! hasHistory" class="button sign_btn button-royal">签到</button>
 				<button ng-click="sub(2)" ng-if="hasHistory" class="button sign_btn button-positive">签退</button>
 			</div>

@@ -108,7 +108,7 @@ angular.module('message.services', [])
     { name: '提前1小时',key:'60'},{ name: '提前2小时',key:'120'},{ name: '提前5小时',key:'300'}];
 
     //签到类型
-    var qianDaoType = [{text:'早班', key:'ZAO_BAN'},{text:'晚班',key:'WAN_BAN'},{text:'正常班',key:'ZHENG_CHANG'}];
+    var qianDaoType = [{text:'早班', key:'ZAO_BAN'},{text:'中班',key:'ZHONG_BAN'},{text:'晚班',key:'WAN_BAN'}];
 
 
     return {
@@ -135,7 +135,7 @@ angular.module('message.services', [])
 
 .factory('common', function($http, $cordovaToast, $ionicActionSheet, $filter, ionicDatePicker, 
     $state, $cordovaCamera, $cordovaImagePicker, $cordovaDatePicker, $cordovaFileTransfer, 
-    $ionicPopup, $ionicLoading) {
+    $ionicPopup, $ionicLoading, $cordovaGeolocation) {
     var obj = {
 
         onlineHost: 'http://123.206.95.25:18080',
@@ -234,14 +234,16 @@ angular.module('message.services', [])
             });
         },
 
-        loadingShow: function() {
-            $ionicLoading.show({
+        loadingShow: function(opt) {
+            var _opt = angular.extend({
                 template: '加载中...',
                 animation: 'fade-in',
                 showBackdrop: true,
                 maxWidth: 200,
                 showDelay: 0
-            });
+            }, opt);
+
+            $ionicLoading.show(_opt);
         },
 
         loadingHide: function() {
@@ -250,8 +252,26 @@ angular.module('message.services', [])
 
         //当前登录用户信息
         userInfo: {
-            // clientId: 153
-            clientId: 28
+            clientId: 153
+            // clientId: 18
+        },
+
+        setLocalStorage: function(key, value) {
+            if (localStorage) {
+                localStorage[key] = value;
+            }
+        },
+        getLocalStorage: function(key) {
+            if (localStorage){
+                return localStorage[key];
+            } else {
+                return '';
+            }
+        },
+        clearLocalStorage: function() {
+            if (localStorage) {
+                localStorage.clear();
+            }
         },
 
         //内容缓存（预计父 子页面通信，保存数据）
@@ -399,7 +419,9 @@ angular.module('message.services', [])
 
             var _d = '2017-07-16 19:21:44';
 
-            fmt = fmt || 'yyyy-MM-dd hh:mm';
+            //yyyy-MM-dd HH:mm 24小时
+
+            fmt = fmt || 'yyyy-MM-dd HH:mm';
 
             if (!date || typeof date == 'object') {
                 return $filter('date')(new Date(), fmt);
@@ -457,6 +479,25 @@ angular.module('message.services', [])
             for (var k in o)
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             return fmt;
+        },
+
+        timeNumber: function(time) {
+            if (!time) {
+                return '';
+            }
+            return time.replace(/\-|\:|\s/g, '');
+        },
+
+        minusTime: function(a, b) {
+            var _a1 = a.substr(0, 2) - 0,
+                _a2 = a.substr(2, 2) - 0,
+                _b1 = b.substr(0, 2) - 0,
+                _b2 = b.substr(2, 2) - 0;
+
+            var _a = _a1 * 60 + _a2,
+                _b = _b1 * 60 + _b2;
+
+            return _a - _b;
         },
 
         getWeek: function() {
@@ -766,8 +807,23 @@ angular.module('message.services', [])
 
         //获取经纬度
         getLocation: function(cb) {
+            //定位
+            // var posOptions = {timeout: 10000, enableHighAccuracy: false};
+            // $cordovaGeolocation
+            // .getCurrentPosition(posOptions)
+            // .then(function (position) {
+            //     if (typeof cb == 'function') {
+            //         cb(position);
+            //     }
+            // }, function(err) {
+            //     COMMON.toast('获取定位失败');
+            //     COMMON.loadingHide();
+            //     // error
+            // });
+            // return;
+
             var showPosition = function (position) {
-                //accuracy 位置精度;  latitude 十进制维度；longitude 十进制经度
+                //accuracy 位置精度;  latitude 十进制伟度；longitude 十进制经度
                 if (typeof cb == 'function') {
                     cb(position);
                 }
@@ -776,6 +832,8 @@ angular.module('message.services', [])
                 // Position unavailable - 无法获取当前位置
                 // Timeout - 操作超时
                 var errorTips = '';
+
+                COMMON.loadingHide();
 
                 switch(error.code) {
                     case error.PERMISSION_DENIED:

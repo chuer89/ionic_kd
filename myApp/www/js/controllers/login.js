@@ -28,7 +28,16 @@ angular.module('login.controller', [])
                 password: 111111
             },
             success: function(data) {
-                angular.extend(common.userInfo, data.body);
+                var _body = data.body;
+
+                _body.clientId = 28;
+
+                if (_body.clientId != common.getLocalStorage('clientId')) {
+                    common.clearLocalStorage();
+                }
+
+                angular.extend(common.userInfo, _body);
+                common.setLocalStorage('clientId', _body.clientId);
 
                 $state.go('tab.dash');
             }
