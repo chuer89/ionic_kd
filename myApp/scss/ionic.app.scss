@@ -262,14 +262,13 @@ img{
 	}
 }
 
-input[type=search], input[type=text], input[type=password], input[type=datetime], input[type=datetime-local], input[type=date], input[type=month], input[type=time], input[type=week], input[type=number], input[type=email], input[type=url], input[type=tel], input[type=color], textarea{
-	height: auto;
-	line-height: normal;
-}
-
 /*输入框*/
 .import_box{
 	background: white;
+	input[type=search], input[type=text], input[type=password], input[type=number]{
+		height: auto;
+		line-height: normal;
+	}
 	input {
 		display: inline-block;
 		padding: pxRem(80) 0;

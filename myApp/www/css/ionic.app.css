@@ -10045,13 +10045,12 @@ img {
   .kd_nav_filter .kd_m {
     margin: 0 0.26667rem; }
 
-input[type=search], input[type=text], input[type=password], input[type=datetime], input[type=datetime-local], input[type=date], input[type=month], input[type=time], input[type=week], input[type=number], input[type=email], input[type=url], input[type=tel], input[type=color], textarea {
-  height: auto;
-  line-height: normal; }
-
 /*输入框*/
 .import_box {
   background: white; }
+  .import_box input[type=search], .import_box input[type=text], .import_box input[type=password], .import_box input[type=number] {
+    height: auto;
+    line-height: normal; }
   .import_box input {
     display: inline-block;
     padding: 1.06667rem 0; }
