@@ -18,8 +18,9 @@ angular.module('workSchedule.controller', [])
                 var _body = data.body;
                 common.loadingHide();
 
-                if (!_body || (_body && _body.riChengList && !_body.riChengList.length)) {
+                if (!_body || (_body && !_body.riChengList) || (_body && _body.riChengList && !_body.riChengList.length)) {
                     $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
                 } else {
                     $scope.notTaskListData = false;
                 }

@@ -668,6 +668,10 @@ angular.module('message.services', [])
             return _arr;
         },
 
+        delEmptyObj: function(obj) {
+            
+        },
+
         //气泡提醒
         toast: function(txt, cb) {
             if (!txt) {

@@ -27,28 +27,33 @@
                         </div>
                     </div>
                 </div>
-                
-      			<div class="col text_align_right">
-      				<button class="kd_btn">全部</button>
-                    <button class="kd_active_btn kd_btn kd_m">加分</button>
-                    <button class="kd_btn">扣分</button>
-      			</div>
+
+                <div class="kd_sele_box col col-20">
+                    <div ng-click="toggleSele('type')" class="kd_sele_val">{{seleTypeInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowTypeSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleType" ng-click="seleTypeHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
             </div>
   		</div>
         <div class="list_box">
-            <div class="list_type_title padding_around">考核时间：2017年6月</div>
+            <div class="list_type_title padding_around">考核时间：{{data.year}}年{{data.month}}月</div>
+            <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
             <div class="item_list_box" ng-repeat="item in items">
                 <a href="#/perfomance/details/{{item.id}}" class="row">
                     <div class="col col-20 text_align_center">
-                        <span class="name_box">伟恒</span>
+                        <span class="name_box">{{item.nickname}}</span>
                     </div>
                     <div class="col col-70">
-                        <h2 class="title">{{item.name}}</h2>
-                        <p class="info">{{item.marks}}</p>
+                        <h2 class="title">{{item.name}}[{{item.department}}]</h2>
+                        <p class="info">{{item.title}},PK{{item.pk || '0'}}分</p>
                     </div>
                 </a>
             </div>
-            </div>
+            <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
         </div>
   	</ion-content>
 </ion-view>

@@ -1,14 +1,18 @@
 angular.module('perfomance.controller', [])
 
 //绩效
-.controller('PerfomanceCtrl', function($scope, $state, $ionicPopup, $ionicActionSheet, perfomanceList, common) {
-    $scope.data = {};
+.controller('PerfomanceCtrl', function($scope, $state, $ionicPopup, $timeout, $ionicActionSheet, common) {
+    $scope.data = {
+        month: common.format(false, 'MM'),
+        year: common.format(false, 'yyyy'),
+        type: ''
+    };
 
-    $scope.items = perfomanceList.all();
+    $scope.items = [];
 
     var dataList = {
         currentPage: 0,
-        phoneBook: []
+        items: []
     };
 
     $scope.showNav = function () {
@@ -42,27 +46,63 @@ angular.module('perfomance.controller', [])
             common.loadingShow();
         }
 
+        var _param = angular.extend({}, $scope.data, {
+            currentPage: dataList.currentPage + 1,
+            departmentId: seleDepartmentId
+        });
+
         common.post({
             type: 'jixiao_index_page',
-            data: {
-                "currentPage": dataList.currentPage + 1,
-                "month": 4,
-                "year": 2016
-            },
+            data: _param,
+            notPretreatment: true,
             success: function(data) {
                 common.loadingHide();
-                console.log(data)
+                var _body = data.body;
+
+                if (!_body || (_body && !_body.items) || (_body && _body.items && !_body.items.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
+
+                var list = _body.items;
+                
+                for (var i = 0, ii = list.length; i < ii; i++) {
+                    list[i].nickname = common.nickname(list[i].name);
+                    $scope.items.push(list[i]);
+                }
+
+                $timeout(function() {
+                    $scope.vm.moredata = true;
+                }, 1000);
             }
         });
     }, initData = function() {
         dataList = {
             currentPage: 0,
-            phoneBook: []
+            items: []
         };
 
-        // $scope.items = [];
+        $scope.items = [];
 
         handleAjax();
+    }
+
+    $scope.vm = {
+        moredata: false,
+        loadMore: function() {
+            if (dataList.items.length < common._pageSize || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
+                $scope.vm.moredata = false;
+                return;
+            }
+
+            $timeout(function () {
+                $scope.vm.moredata = false;
+                handleAjax(true);
+            }, 1500);
+            return true;
+        }
     }
 
     //选择部门-start
@@ -71,21 +111,26 @@ angular.module('perfomance.controller', [])
 
     $scope.seleBrank = [];
     $scope.seleDepartment = [];
+    $scope.seleType = [{name:'全部', key:''}, {name:'奖励',key:'JIANG_LI'},{name:'扣分',key:'KOU_FEN'}]
 
     $scope.seleBrankInfo = '品牌';
     $scope.seleDepartmentInfo = '部门';
+    $scope.seleTypeInfo = '类别';
 
     $scope.isShowBrankSele = false;
     $scope.isShowDepartmentSele = false;
+    $scope.isShowTypeSele = false;
 
     //选择菜单处理
     var toggleSeleHandle = function(type, isAjax) {
         if (type == 'brank') {
             $scope.isShowDepartmentSele = false;
+            $scope.isShowTypeSele = false;
 
             $scope.isShowBrankSele = !$scope.isShowBrankSele;
         } else if (type == 'department') {
             $scope.isShowBrankSele = false;
+            $scope.isShowTypeSele = false;
 
             if (!$scope.seleDepartment.length) {
                 common.toast('请选择正确品牌');
@@ -93,14 +138,17 @@ angular.module('perfomance.controller', [])
             }
 
             $scope.isShowDepartmentSele = !$scope.isShowDepartmentSele;
+        } else if (type == 'type') {
+            $scope.isShowBrankSele = false;
+            $scope.isShowDepartmentSele = false;
+
+            $scope.isShowTypeSele = !$scope.isShowTypeSele;
         }
 
         if (isAjax) {
-            initData();
+            initData(true);
         }
     }
-
-    
 
     //选择部门
     var _seleBrankHandle = function(item) {
@@ -122,6 +170,13 @@ angular.module('perfomance.controller', [])
         $scope.seleDepartmentInfo = item.name;
 
         toggleSeleHandle('department', true);
+    }
+
+    $scope.seleTypeHandle = function(item) {
+        $scope.data.type = item.key;
+        $scope.seleTypeInfo = item.name;
+
+        toggleSeleHandle('type', true);
     }
 
     //筛选切换
