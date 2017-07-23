@@ -9945,6 +9945,9 @@ img {
 .padding_btm {
   padding-bottom: 1.33333rem; }
 
+.padding_btm_small {
+  padding-bottom: 0.66667rem; }
+
 .icon_plus {
   width: 40px; }
   [data-dpr='2'] .icon_plus {
@@ -9980,6 +9983,13 @@ img {
   text-align: center;
   color: #a4a4a4;
   padding-top: 1.33333rem; }
+
+.space_back {
+  position: absolute;
+  left: 0;
+  top: -50px;
+  width: 100px;
+  height: 40px; }
 
 /*下拉菜单筛选*/
 .kd_nav_filter {

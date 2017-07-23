@@ -43,7 +43,8 @@ angular.module('work.controller', [])
     var typeId = {
         '1': 'work_apply_addleave',//请假申请
         '2': 'work_task_add_ATTENTION',
-        '4': 'work_task_add_inspector'
+        '4': 'work_task_add_inspector',
+        '5': 'perfomance_add'//绩效开单
     }
 
     common.getAuditorUser(function(data) {

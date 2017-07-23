@@ -144,6 +144,9 @@ img{
 .padding_btm{
 	padding-bottom: pxRem(100);
 }
+.padding_btm_small{
+	padding-bottom: pxRem(50);
+}
 
 .icon_plus{
 	@include width-dpr(40);
@@ -186,6 +189,13 @@ img{
 	text-align: center;
 	color: $colorGrey;
 	padding-top: pxRem(100);
+}
+.space_back{
+	position: absolute;
+	left: 0;
+	top: -50px;
+	width: 100px;
+	height: 40px;
 }
 
 /*下拉菜单筛选*/

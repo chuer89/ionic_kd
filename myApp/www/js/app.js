@@ -164,7 +164,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('perfomance_add', {
         url: '/perfomance/add',
         templateUrl: 'templates/perfomance/add.html',
-        controller: 'AddPerfomance'
+        controller: 'AddPerfomance',
+        cache: false
     })
 
     //消息
@@ -209,19 +210,22 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_sign_in_query', {
         url: '/work/sign_in_query',
         templateUrl: 'templates/work/signIn/query.html',
-        controller: 'WorkSigInQueryCtrl'
+        controller: 'WorkSigInQueryCtrl',
+        cache: false
     })
     //签到历史
     .state('work_sign_in_query_history', {
-        url: '/work/sign_in_history/:id',
+        url: '/work/sign_in_query/history/:id',
         templateUrl: 'templates/work/signIn/history.html',
-        controller: 'WorkSigInHistoryCtrl'
+        controller: 'WorkSigInHistoryCtrl',
+        cache: false
     })
     //签到申请
     .state('work_sign_in_apply', {
         url: '/work/sign_in_apply',
         templateUrl: 'templates/work/signIn/apply.html',
-        controller: 'WorkSigInApplyCtrl'
+        controller: 'WorkSigInApplyCtrl',
+        cache: false
     })
     //签到设置
     .state('work_sign_in_set', {

@@ -4,7 +4,7 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a href="javascript:;" class="button button-clear button-positive">提交</a>
+        <a href="javascript:;" ng-click="create()" class="button button-clear button-positive">提交</a>
     </ion-nav-buttons>
 
 	<ion-content>
@@ -23,26 +23,9 @@
               <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
         </div>
-
-        <div class="list">
-            <a href="javascript:;" class="item item-icon-right">
-              时间
-              <input class="item-note" type="date" ng-model="time"/>
-              <i class="icon ion-chevron-right icon-accessory"></i>
-            </a>
-        </div>
-
-         <div class="list">
-            <a href="javascript:;" class="item item-icon-right" ng-click="showType()">
-              审批人
-              <span class="item-note">{{seleType}}</span>
-              <i class="icon ion-chevron-right icon-accessory"></i>
-            </a>
-        </div>
-
          <div class="list">
             <div class="item">
-                <label>原因</label><textarea></textarea>
+                <textarea placeholder="请输入" ng-model="data.reason"></textarea>
             </div>
         </div>
 	</ion-content>

@@ -5,28 +5,11 @@ angular.module('perfomance.controller', [])
     $scope.data = {};
 
     $scope.items = perfomanceList.all();
-    $scope.seleBrand = perfomanceList.seleBrand();
-    $scope.seleDepartment = perfomanceList.seleDepartment();
 
-    $scope.isShowBrandSele = false;
-    $scope.isShowDepartment = false;
-
-    var toggleSele = function(type) {
-        if (type == 'brand') {
-            $scope.isShowDepartment = false;
-            $scope.isShowBrandSele = !$scope.isShowBrandSele;
-        } else {
-            $scope.isShowBrandSele = false;
-            $scope.isShowDepartment = !$scope.isShowDepartment;
-        }
-    }
-
-    $scope.toggleSeleBrank = function() {
-        toggleSele('brand');
-    }
-    $scope.toggleSeleDepartment = function() {
-        toggleSele('department');
-    }
+    var dataList = {
+        currentPage: 0,
+        phoneBook: []
+    };
 
     $scope.showNav = function () {
         $ionicActionSheet.show({
@@ -54,17 +37,107 @@ angular.module('perfomance.controller', [])
         });
     }
 
-    common.post({
-        type: 'jixiao_index_page',
-        data: {
-            "currentPage":1,
-            "month":4,
-            "year":2016
-        },
-        success: function(data) {
-            console.log(data)
+    var handleAjax = function (isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
         }
+
+        common.post({
+            type: 'jixiao_index_page',
+            data: {
+                "currentPage": dataList.currentPage + 1,
+                "month": 4,
+                "year": 2016
+            },
+            success: function(data) {
+                common.loadingHide();
+                console.log(data)
+            }
+        });
+    }, initData = function() {
+        dataList = {
+            currentPage: 0,
+            phoneBook: []
+        };
+
+        // $scope.items = [];
+
+        handleAjax();
+    }
+
+    //选择部门-start
+
+    var seleDepartmentId = '';
+
+    $scope.seleBrank = [];
+    $scope.seleDepartment = [];
+
+    $scope.seleBrankInfo = '品牌';
+    $scope.seleDepartmentInfo = '部门';
+
+    $scope.isShowBrankSele = false;
+    $scope.isShowDepartmentSele = false;
+
+    //选择菜单处理
+    var toggleSeleHandle = function(type, isAjax) {
+        if (type == 'brank') {
+            $scope.isShowDepartmentSele = false;
+
+            $scope.isShowBrankSele = !$scope.isShowBrankSele;
+        } else if (type == 'department') {
+            $scope.isShowBrankSele = false;
+
+            if (!$scope.seleDepartment.length) {
+                common.toast('请选择正确品牌');
+                return;
+            }
+
+            $scope.isShowDepartmentSele = !$scope.isShowDepartmentSele;
+        }
+
+        if (isAjax) {
+            initData();
+        }
+    }
+
+    
+
+    //选择部门
+    var _seleBrankHandle = function(item) {
+        seleDepartmentId = item.departmentId;
+
+        $scope.seleBrankInfo = item.name;
+        $scope.seleDepartmentInfo = '部门';
+
+        $scope.seleDepartment = item.childDepartment;
+    }
+    
+    $scope.seleBrankHandle = function(item) {
+        _seleBrankHandle(item);
+
+        toggleSeleHandle('brank', true);
+    }
+    $scope.seleDepartmentHandle = function(item) {
+        seleDepartmentId = item.departmentId;
+        $scope.seleDepartmentInfo = item.name;
+
+        toggleSeleHandle('department', true);
+    }
+
+    //筛选切换
+    $scope.toggleSele = function(type) {
+        toggleSeleHandle(type);
+    }
+
+    //加载部门&公司
+    common.getCompany(function(data) {
+        $scope.seleBrank = data;
+
+        _seleBrankHandle(data[0]);
+        initData();
     });
+
+    //选择部门-end
 })
 
 // 绩效查询
@@ -117,14 +190,86 @@ angular.module('perfomance.controller', [])
 })
 
 // 绩效开单
-.controller('AddPerfomance', function ($scope, $state, $stateParams, $cordovaCamera, perfomanceQuery, common) {
-    var project = [];
+.controller('AddPerfomance', function ($scope, $ionicActionSheet, $stateParams, $cordovaCamera, perfomanceQuery, common) {
+    $scope.data = {
+        typePageName: 'AddPerfomance',
+        clientIdSele: {name: '请选择'}
+    };
 
-    common.post({
-        type: 'jixiao_items',
-        data: {},
-        success: function(data) {
-            console.log(data)
+    perfomanceQuery.projectItems(function(data) {
+        var _projectItems = common.setSeleRepeat(data.body.items, 'itemTitle');
+
+        $scope.showSeleProject = function() {
+            $ionicActionSheet.show({
+                buttons: _projectItems,
+                cancelText: '取消',
+                buttonClicked: function(index, item) {
+                    $scope.data.title = item.text;
+                    return true;
+                }
+            })
         }
     });
+
+    $scope.showSeleType = function() {
+        $ionicActionSheet.show({
+            buttons: perfomanceQuery.seleMenusType,
+            cancelText: '取消',
+            buttonClicked: function(index, item) {
+                $scope.data.type = item.key;
+                return true;
+            }
+        })
+    }
+
+    //表单数据
+    var formElement = document.querySelector("form");
+    var formData = new FormData(formElement);
+
+    $scope.showSelePhoto = function() {
+        common.showSelePhoto({
+            appendPhone: function(the_file) {
+                formData.append("fuJians", the_file, "images.jpg");
+            }
+        });
+    }
+
+
+    $scope.create = function() {
+        var _data = $scope.data;
+
+        var _param = angular.extend(_data, {
+            creatorId: common.userInfo.clientId,
+            clientId: _data.clientIdSele.id
+        });
+
+        common.formData({
+            type: 'jixiao_create',
+            body: _param,
+            setData: function(json) {
+                formData.append("json", json);
+            },
+            data: formData,
+            success: function(data) {
+                common.toast(data.message, function() {
+                    common.back();
+                });
+            }
+        });
+    };
+
+    if (common.setAuditorUserList.id) {
+        if (common.setAuditorUserList._targetName == 'perfomance_add') {
+            common._localstorage.clientIdSele = common.setAuditorUserList;
+        }
+    }
+
+    if (common._localstorage.typePageName == $scope.data.typePageName) {
+        $scope.data = common._localstorage;
+    } else {
+        common._localstorage = $scope.data;
+    }
 })
+
+
+

@@ -1,6 +1,6 @@
 angular.module('perfomance.services', [])
 
-.factory('perfomanceQuery', function() {
+.factory('perfomanceQuery', function(common) {
     var list = [{
         id: 0,
         name: '汪旭',
@@ -25,7 +25,24 @@ angular.module('perfomance.services', [])
             }
           }
           return null;
-        }
+        },
+
+        projectItems: function(cb) {
+            common.post({
+                type: 'jixiao_items',
+                data: {
+                    clientId: common.userInfo.clientId
+                },
+                notPretreatment: true,
+                success: function(data) {
+                    if (typeof cb == 'function') {
+                        cb(data);
+                    }
+                }
+            });
+        },
+
+        seleMenusType: [{text: '奖励', key: 'JIANG_LI'}, {text: '扣分', key: 'KOU_FEN'}]
     }
 })
 

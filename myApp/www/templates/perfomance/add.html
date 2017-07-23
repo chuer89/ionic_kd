@@ -4,65 +4,53 @@
     </ion-nav-buttons>
     
     <ion-nav-buttons side="right">
-        <a href="javascript:;" class="button button-clear button-positive">保存</a>
+        <a href="javascript:;" ng-click="create()" class="button button-clear button-positive">保存</a>
     </ion-nav-buttons>
 
   	<ion-content>
-        <div class="list_box">
-            <div class="item_list_box">
-                <div class="row">
-                    <div class="col col-20">
-                        <h2 class="title f14">考核对象</h2>
-                    </div>
-                    <div class="col text_align_right">
-                        <span class="info f14">请选择</span>
-                        <i class="icon ion-chevron-right icon-accessory"></i>
-                    </div>
-                </div>
+        <div class="list">
+            <a href="#/common/seleGuys/5" class="item item-icon-right">
+              考核对象
+              <span class="item-note">{{data.clientIdSele.name}}</span>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+
+        <div class="list">
+            <div class="item item-icon-right" ng-click="showSeleProject()">
+                项目
+                <span class="item-note">{{data.title}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
             </div>
-            <div class="item_list_box">
-                <div class="row">
-                    <div class="col col-20">
-                        <h2 class="title f14">绩效类型</h2>
-                    </div>
-                    <div class="col text_align_right">
-                        <span class="info f14">请选择</span>
-                        <i class="icon ion-chevron-right icon-accessory"></i>
-                    </div>
-                </div>
+            <div class="item item-icon-right" ng-click="showSeleType()">
+                绩效类型
+                <span class="item-note">{{data.type}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
             </div>
         </div>
 
         <div class="list card list_box">
             <label class="item item-input">
                 <span class="input-label">分值</span>
-                <input type="text" placeholder="请输入">
+                <input type="text" placeholder="请输入" ng-model="data.fenZhi">
               </label>
               <label class="item item-input">
                 <span class="input-label">金额</span>
-                <input type="password" placeholder="0">
+                <input type="password" placeholder="0" ng-model="data.jinE">
               </label>
               <label class="item item-input">
                 <span class="input-label">PK</span>
-                <input type="password" placeholder="0">
+                <input type="password" placeholder="0" ng-model="data.pk">
               </label>
         </div>
 
-        <div class="list card list_box">
-            <div class="item item-input item-select">
-                <div class="input-label">
-                项目
-                </div>
-                <select>
-                    <option>Blue</option>
-                    <option selected="">Green</option>
-                    <option>Red</option>
-                </select>
+        <div class="list list_box">
+            <div class="item">
+                <textarea placeholder="请输入内容..." ng-model="data.content"></textarea>
             </div>
-            <label class="item item-input">
-                <span class="input-label">原因</span>
-                <textarea placeholder="请输入原因（必填）"></textarea>
-              </label>
+            <div class="item">
+                <textarea placeholder="请输入原因..." ng-model="data.reason"></textarea>
+            </div>
         </div>
 
         <div class="list card list_box">

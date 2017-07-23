@@ -39,6 +39,8 @@
 
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
 
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
+
         <div class="list_box">
             <div class="row border_btm padding_tb" style="background: white;">
                 <div class="col col-offset-10 col-50">部门/姓名</div>

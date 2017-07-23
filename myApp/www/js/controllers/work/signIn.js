@@ -43,10 +43,7 @@ angular.module('workSign.controller', [])
 	    });
 	}
 
-	
-
 	$scope.seleType = '请选择';
-
 	$scope.showType = function() {
 		$ionicActionSheet.show({
 			buttons: qianDaoType,
@@ -59,7 +56,7 @@ angular.module('workSign.controller', [])
 				if (!common.getId(qiandaoTimes, item.key, 'qianDaoType')) {
 					$scope.hasSignIn = false;
 				} else {
-					$scope.hasSignIn = hasSignIn();
+					$scope.hasSignIn = hasSignIn(item.key);
 				}
 
 				return true;
@@ -96,7 +93,7 @@ angular.module('workSign.controller', [])
 	    common.getLocation(function(position) {
 	    	var _coords = position.coords;
 
-	    	console.log(position)
+	    	console.log(position, '位置')
 
 			COMMON.post({
 		        type: 'qiandao_distance',
@@ -122,7 +119,7 @@ angular.module('workSign.controller', [])
 	var hasSignIn = function() {
 		var nowTime = common.format(false, 'HH:mm');
 
-		// nowTime = '17:35';
+		// nowTime = '08:31';
 
 		var qiandaoTimes = JSON.parse( common.getLocalStorage('qiandaoTimes') );
 
@@ -132,28 +129,40 @@ angular.module('workSign.controller', [])
 
 		var _shangBanNum = 0,
 			_xiaBanNum = 0;
-		
+
 		for (var i = 0, ii = qiandaoTimes.length; i < ii; i++) {
 			qiandaoTimes[i]._qianDaoShangBan = common.timeNumber(qiandaoTimes[i].qianDaoShangBan);
 			qiandaoTimes[i]._qianDaoXiaBan = common.timeNumber(qiandaoTimes[i].qianDaoXiaBan);
 
 			_shangBanNum = common.minusTime(qiandaoTimes[i]._qianDaoShangBan, common.timeNumber(nowTime));
-			qiandaoTimes[i].canShangBan = _shangBanNum < common.getLocalStorage('qiandaoBeforeTime');
+			qiandaoTimes[i].canShangBan = _shangBanNum > 0 ? _shangBanNum < common.getLocalStorage('qiandaoBeforeTime') : false;
 
 			_xiaBanNum = common.minusTime(qiandaoTimes[i]._qianDaoXiaBan, common.timeNumber(nowTime));
-			qiandaoTimes[i].canXiaBan = _xiaBanNum < common.getLocalStorage('qiandaoBeforeTime');
+			qiandaoTimes[i].canXiaBan = _xiaBanNum > 0 ? _xiaBanNum < common.getLocalStorage('qiandaoBeforeTime') : false;
+		}
 
-			if ($scope.hasHistory && qiandaoTimes[i].canXiaBan) {
-				return true;
-			} else if (qiandaoTimes[i].canShangBan && !$scope.hasHistory) {
-				return true;
+		for (var i = 0, ii = qiandaoTimes.length; i < ii; i++) {
+			if ($scope.shangBanType) {
+				if ($scope.shangBanType == qiandaoTimes[i].qianDaoType) {
+					if ($scope.hasHistory && qiandaoTimes[i].canXiaBan) {
+						return  true;
+					} else if (qiandaoTimes[i].canShangBan && !$scope.hasHistory) {
+						return true;
+					}
+				}
+			} else {
+				if ($scope.hasHistory && qiandaoTimes[i].canXiaBan) {
+					return  true;
+				} else if (qiandaoTimes[i].canShangBan && !$scope.hasHistory) {
+					return true;
+				}
 			}
 		}
 	}
 
 	ajaxUserData(function() {
 		if (common.format(false, 'yyyy-MM-dd') != common.getLocalStorage('qiandaoApiDate')){
-			getSignInData(function() {
+			getSignInData(function(data) {
 				$scope.hasSignIn = hasSignIn();
 			});
 		} else {
@@ -198,6 +207,7 @@ angular.module('workSign.controller', [])
 				ajax(data.body.place.qianDaoPlace);
 			} else {
 				common.toast('当前位置或时间不支持签到');
+				common.loadingHide();
 			}
 		})
 	}
@@ -209,6 +219,10 @@ angular.module('workSign.controller', [])
 		currentPage: 0,
 		phoneBook: []
 	};
+
+	$timeout(function() {
+		$('.button_close').click();
+	}, 0)
 
 	$scope.items = [];
 
@@ -340,75 +354,147 @@ angular.module('workSign.controller', [])
     //选择部门-end
 })
 
-.controller('WorkSigInHistoryCtrl', function($scope, $stateParams, common) {
-    $scope.openDatePicker = function(){
-    	common.datePicker(function(date) {
-
-    	})
-    };
-
+.controller('WorkSigInHistoryCtrl', function($scope, $stateParams, $timeout, common) {
     $scope.items = [];
 
-    var ajaxUserData = function() {
+    // $stateParams.id = 28;
+
+    $scope.data = {
+    	searchDate: common.format(false, 'yyyy-MM-dd'),
+    	month: common.format(false, 'MM'),
+    	year: common.format(false, 'yyyy')
+    }
+
+    $timeout(function() {
+		common.ionicDatePickerProvider(function(date) {
+			
+		}, {
+			
+		});
+		
+		$timeout(function() {
+			$('.ionic_datepicker_popup .popup-body').append('<a href="javascript:history.back(-1)" class="space_back"></a>');
+
+			common.changeDate = function(d) {
+				$scope.data.searchDate = common.format(d, 'yyyy-MM-dd', true);
+				$scope.data.month = common.format(d, 'MM', true);
+    			$scope.data.year = common.format(d, 'yyyy', true);
+
+    			ajaxUserData(true);
+			}
+		}, 0);
+	}, 0)
+
+    //id-》name
+    common.getUserinfo_simple($stateParams.id, function(data) {
+    	$scope.name = data.name;
+    	$scope.nickname = common.nickname(data.name);
+    })
+
+    var ajaxUserData = function(isNotLoading) {
+    	if (isNotLoading) {
+            common.loadingShow();
+        }
+
 		//查询已签到
 		COMMON.post({
-	        type: 'qiandao_user_date_info',
+	        type: 'qiandao_user_month_info',
 	        data: {
 	        	clientId: $stateParams.id,
-	        	searchDate: '2017-07-14'
+	        	searchDate: $scope.data.searchDate,
+	        	month: $scope.data.month,
+	        	year: $scope.data.year
 	        },
 	        success: function(data) {
 	            var _body = data.body,
-	            	_list = _body.histories;
+	            	_list = _body.qianDaoInfos;
 
-	            if (_list) {
-	            	for (var i = 0, ii = _list.length; i < ii; i++) {
-	            		_list[i].nickname = common.nickname(_list[i].name);
-	            	}
-	            	$scope.items = _list;
+	            common.loadingHide();
+
+	            var _qianDaoType = {
+	            	'XIA_BAN': '签退',
+	            	'SHANG_BAN': '签到'
 	            }
 
-	            console.log(_body)
+	            if (_list.length) {
+	            	$scope.notTaskListData = false;
+	            	for (var i = 0, ii = _list.length; i < ii; i++) {
+	            		_list[i]._qianDaoType = _qianDaoType[_list[i].qianDaoType];
+	            		_list[i]._qianDaoRight = _list[i].qianDaoRight != '1' ? true : false;
+	            	}
+	            	$scope.items = _list;
+	            } else {
+	            	$scope.notTaskListData = common.notTaskListDataTxt;
+	            }
 	        }
 	    });
 	}
 	ajaxUserData();
 })
 
-.controller('WorkSigInApplyCtrl', function($scope, $ionicActionSheet) {
+//签到申请
+.controller('WorkSigInApplyCtrl', function($scope, $ionicActionSheet, seleMenuList, common) {
 	$scope.data = {
+		typePageName: 'WorkSigInApplyCtrl',
 		seleOfficeType: '请选择',
-		seleApplyType: '请选择'
+		seleApplyType: '请选择',
+
+		qianDaoType: '',
+		shangBanType: '',
+		reason: ''
 	}
+
+	var menus = seleMenuList.menu();
+	var qianDaoType = menus.qianDaoType;
 
 	$scope.showOfficeType = function() {
 		$ionicActionSheet.show({
-			buttons: [
-				{ text: '早班' },
-				{ text: '中班' },
-				{ text: '晚班' }
-			],
+			buttons: qianDaoType,
 			cancelText: '取消',
 			buttonClicked: function(index, item) {
 				$scope.data.seleOfficeType = item.text;
+				$scope.data.qianDaoType = item.key;
+
 				return true;
 			}
 		})
 	}
-
 	$scope.showApplyType = function() {
 		$ionicActionSheet.show({
 			buttons: [
-				{ text: '签到申请' },
-				{ text: '签退申请' }
+				{ text: '签到申请', key: 'SHANG_BAN' },
+				{ text: '签退申请', key: 'XIA_BAN' }
 			],
 			cancelText: '取消',
 			buttonClicked: function(index, item) {
 				$scope.data.seleApplyType = item.text;
+				$scope.data.shangBanType = item.key;
+
 				return true;
 			}
 		})
 	}
+
+	$scope.create = function() {
+        var _data = $scope.data;
+
+        var _param = {
+            clientId: common.userInfo.clientId,
+            qianDaoType: _data.qianDaoType,
+            shangBanType: _data.shangBanType,
+            reason: _data.reason
+        }
+
+        common.post({
+            type: 'qiandao_apply',
+            data: _param,
+            success: function(data) {
+                common.toast(data.message, function() {
+                    common.back();
+                });
+            }
+        });
+    };
 })
 
 .controller('WorkSigInSetCtrl', function($scope, $ionicActionSheet) {

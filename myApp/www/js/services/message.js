@@ -253,7 +253,7 @@ angular.module('message.services', [])
         //当前登录用户信息
         userInfo: {
             clientId: 153
-            // clientId: 18
+            // clientId: 28
         },
 
         setLocalStorage: function(key, value) {
@@ -405,17 +405,19 @@ angular.module('message.services', [])
         },
 
         //选择转化默认上拉数据
-        setSeleRepeat: function(list) {
+        setSeleRepeat: function(list, key) {
             list = list || [];
 
+            key = key || 'name';
+
             for (var i = 0, ii = list.length; i < ii; i++) {
-                list[i].text = list[i].name;
+                list[i].text = list[i][key];
             }
 
             return list;
         },
 
-        format: function (date, fmt) {
+        format: function (date, fmt, isNotHanle) {
 
             var _d = '2017-07-16 19:21:44';
 
@@ -425,6 +427,10 @@ angular.module('message.services', [])
 
             if (!date || typeof date == 'object') {
                 return $filter('date')(new Date(), fmt);
+            }
+
+            if (isNotHanle) {
+                return $filter('date')(new Date(date), fmt);
             }
 
             var _arr = date.split(' '),
@@ -543,9 +549,11 @@ angular.module('message.services', [])
         },
 
         //审核人 & 可查询人（有权限控制）
+        //templates /common/seleGuys/:id
         getAuditorUser: function (cb, isQuery) {
             var _type = 'auditor_user';
 
+            //有权限
             if (isQuery) {
                 _type = 'query_user_list';
             }
@@ -738,21 +746,19 @@ angular.module('message.services', [])
         },
 
         //模拟 日期 选择
-        ionicDatePickerProvider: function(cb, isTime) {
+        ionicDatePickerProvider: function(cb, opt) {
             var seleDate = '';
 
             var fmt = 'yyyy-MM-dd';
 
-            if (isTime) {
-                fmt = 'yyyy-MM-dd hh:mm:ss';
-            }
-
             var datePickerObj = {  
                 //选择日期后的回掉  
-                callback: function (val) {  
-                    if (typeof (val) === 'undefined') {  
-                    } else {  
-                        seleDate = COMMON.format(val, fmt);
+                callback: function (val) {
+                    console.log(val, 'yyy')
+                    if (typeof (val) === 'undefined') {
+
+                    } else {
+                        seleDate = $filter('date')(new Date(val), fmt)
 
                         if (typeof cb == 'function') {
                             cb(seleDate);
@@ -761,11 +767,15 @@ angular.module('message.services', [])
                     }  
                 },
                 dateFormat: fmt
-            };  
-             
+            };
+
+            var _param = angular.extend(datePickerObj, opt);
+
             //打开日期选择框  
-            ionicDatePicker.openDatePicker(datePickerObj); 
+            ionicDatePicker.openDatePicker(_param); 
         },
+
+        changeDate: function(date){},
 
         //本地日期选择
         datePicker: function(cb, isTime) {
@@ -808,19 +818,19 @@ angular.module('message.services', [])
         //获取经纬度
         getLocation: function(cb) {
             //定位
-            // var posOptions = {timeout: 10000, enableHighAccuracy: false};
-            // $cordovaGeolocation
-            // .getCurrentPosition(posOptions)
-            // .then(function (position) {
-            //     if (typeof cb == 'function') {
-            //         cb(position);
-            //     }
-            // }, function(err) {
-            //     COMMON.toast('获取定位失败');
-            //     COMMON.loadingHide();
-            //     // error
-            // });
-            // return;
+            var posOptions = {timeout: 10000, enableHighAccuracy: false};
+            $cordovaGeolocation
+            .getCurrentPosition(posOptions)
+            .then(function (position) {
+                if (typeof cb == 'function') {
+                    cb(position);
+                }
+            }, function(err) {
+                COMMON.toast('获取定位失败');
+                COMMON.loadingHide();
+                // error
+            });
+            return;
 
             var showPosition = function (position) {
                 //accuracy 位置精度;  latitude 十进制伟度；longitude 十进制经度

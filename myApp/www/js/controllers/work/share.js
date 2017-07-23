@@ -3,7 +3,15 @@ angular.module('workShare.controller', [])
 .controller('WorkShareCtrl', function ($scope, $state, $timeout, common, workShareSele) {
 	var dataList = {};
     $scope.data = {
-        departmentId: 1
+        departmentId: 1,
+        sharingName: '-1',//案例名称
+        customerCategoryId: '-1',//顾客类型
+        goodsCategoryId: '-1',//货品类型
+        peopleNumberId: '-1',//人数
+        peopleRelationshipId: '-1',//人物关系
+        purchasePurposeId: '-1',//购买用途
+        customerAgeId: '-1',//购买年龄
+        transactionAmountId: '-1'//成交金额
     };
     $scope.items = [];
 
@@ -17,26 +25,33 @@ angular.module('workShare.controller', [])
     }
     initData();
 
-    var ajaxhandle = function() {
+    var ajaxhandle = function(isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
+        }
+
+        var _param = angular.extend({}, $scope.data, {
+            currentPage: dataList.currentPage + 1,
+            sharingName: '-1'
+        })
+
         COMMON.post({
             type: 'obtain_case_sharing',
-            data: {
-                currentPage: dataList.currentPage + 1,
-                sharingName: '-1',//案例名称
-                customerCategoryId: '-1',//顾客类型
-		        goodsCategoryId: '-1',//货品类型
-		        peopleNumberId: '-1',//人数
-		        peopleRelationshipId: '-1',//人物关系
-		        purchasePurposeId: '-1',//购买用途
-		        customerAgeId: '-1',//购买年龄
-		        transactionAmountId: '-1'//成交金额
-            },
+            data: _param,
+            notPretreatment: true,
             success: function(data) {
-            	console.log(data)
+                common.loadingHide();
                 var _body = data.body;
 
-                var list = _body.caseSharing;
+                if (!_body || (_body && _body.caseSharing && !_body.caseSharing.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
 
+                var list = _body.caseSharing;
+                
                 for (var i = 0, ii = list.length; i < ii; i++) {
                     list[i].nickname = common.nickname(list[i].userName);
                     $scope.items.push(list[i]);
@@ -60,7 +75,7 @@ angular.module('workShare.controller', [])
 
             $timeout(function () {
                 $scope.vm.moredata = false;
-                handleAjax();
+                handleAjax(true);
             }, 1500);
             return true;
         }
@@ -120,8 +135,8 @@ angular.module('workShare.controller', [])
 	//选择菜单处理
     var toggleSeleHandle = function(type, isToggle) {
         if (!isToggle) {
-            // initData();
-            // ajaxhandle();
+            initData();
+            ajaxhandle();
         }
 
         if (type == 'customer') {
@@ -192,43 +207,43 @@ angular.module('workShare.controller', [])
 
 
     $scope.seleCustomerHandle = function(item) {
-        $scope.data.typeId = item.key;
+        $scope.data.customerCategoryId = item.id;
         $scope.seleCustomerInfo = item.name;
 
         toggleSeleHandle('customer');
     }
     $scope.seleGoodsHandle = function(item) {
-        $scope.data.typeId = item.key;
+        $scope.data.goodsCategoryId = item.id;
         $scope.seleGoodsInfo = item.name;
 
         toggleSeleHandle('goods');
     }
     $scope.seleNumberHandle = function(item) {
-        $scope.data.typeId = item.key;
+        $scope.data.peopleNumberId = item.id;
         $scope.seleNumberInfo = item.name;
 
         toggleSeleHandle('number');
     }
     $scope.seleRelationshipHandle = function(item) {
-        $scope.data.typeId = item.key;
+        $scope.data.peopleRelationshipId = item.id;
         $scope.seleRelationshipInfo = item.name;
 
         toggleSeleHandle('relationship');
     }
     $scope.selePurposeHandle = function(item) {
-        $scope.data.typeId = item.key;
+        $scope.data.purchasePurposeId = item.id;
         $scope.selePurposeInfo = item.name;
 
         toggleSeleHandle('purpose');
     }
     $scope.seleAgeHandle = function(item) {
-        $scope.data.typeId = item.key;
+        $scope.data.customerAgeId = item.id;
         $scope.seleAgeInfo = item.name;
 
         toggleSeleHandle('age');
     }
     $scope.seleAmountHandle = function(item) {
-        $scope.data.typeId = item.key;
+        $scope.data.transactionAmountId = item.id;
         $scope.seleAmountInfo = item.name;
 
         toggleSeleHandle('amount');
