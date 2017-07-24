@@ -7,21 +7,33 @@
   	<ion-content>
         <div class="kd_nav_filter">
             <div class="padding_around row">
-                <div class="kd_sele_box col col-20">
-                    <div ng-click="toggleSeleBrank()" class="kd_sele_val">品牌<i class="ion-arrow-down-b"></i></div>
-                    <div class="kd_sele_content" ng-show="isShowBrandSele">
+                <div class="kd_sele_box col-25">
+                    <div ng-click="toggleSele('brank')" class="kd_sele_val">{{seleBrankInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowBrankSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">
-                            <a href="javascript:;" ng-repeat="item in seleBrand">{{item.name}}</a>
+                            <a href="javascript:;" ng-repeat="item in seleBrank" ng-click="seleBrankHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kd_sele_box col-25 kd_m">
+                    <div ng-click="toggleSele('department')" class="kd_sele_val">{{seleDepartmentInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowDepartmentSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+
+                        <div class="kd_sele_item">
+                            <ion-scroll zooming="true" direction="y" style="max-height: 200px">
+                                <a href="javascript:;" ng-click="seleDepartmentHandle(item)" ng-repeat="item in seleDepartment">{{item.name}}</a>
+                            </ion-scroll>
                         </div>
                     </div>
                 </div>
                 <div class="kd_sele_box col col-20">
-                    <div ng-click="toggleSeleDepartment()" class="kd_sele_val">部门<i class="ion-arrow-down-b"></i></div>
-                    <div class="kd_sele_content" ng-show="isShowDepartment">
+                    <div ng-click="toggleSele('date')" class="kd_sele_val">{{seleDateInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowDateSele" style="left: 15%;">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">
-                            <a href="javascript:;" ng-repeat="item in seleDepartment">{{item.name}}</a>
+                            <a href="javascript:;" ng-repeat="item in seleDate" ng-click="seleDateHandle(item)">{{item.name}}</a>
                         </div>
                     </div>
                 </div>
@@ -39,28 +51,25 @@
 
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
 
-        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
-
         <div class="list_box">
             <div class="row border_btm padding_tb" style="background: white;">
                 <div class="col col-offset-10 col-50">部门/姓名</div>
                 <div class="col text_align_center">分值</div>
                 <div class="col text_align_center">排名</div>
             </div>
+            <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
             <div class="item_list_box" ng-repeat="item in items">
-                <a href="#/perfomance/list/{{item.id}}" class="row">
-                    <div class="col col-10 text_align_center">
-                        <span class="name_box" ng-if="item.head">伟</span>
-                        <img src="img/adam.jpg" ng-if="! item.head" class="head_name" />
+                <a href="#/perfomance/list/{{queryDate}}" class="row">
+                    <div class="col col-20 text_align_center">
+                        <span class="name_box">{{item.nickname}}</span>
                     </div>
                     <div class="col col-50">
-                        <p class="info f14">{{item.institution}}</p>
+                        <p class="info f14">{{item.departmentName}}</p>
                         <p class="title f14">{{item.name}}</p>
                     </div>
-                    <div class="col colorPurple text_align_center">{{item.score}}</div>
-                    <div class="col colorRed text_align_center">{{item.score}}</div>
+                    <div class="col colorPurple text_align_center">{{item.fenZhi}}</div>
+                    <div class="col colorRed text_align_center">{{item.sort}}</div>
                 </a>
-            </div>
             </div>
         </div>
   	</ion-content>

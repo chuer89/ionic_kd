@@ -200,7 +200,7 @@ img{
 
 /*下拉菜单筛选*/
 .kd_nav_filter{
-	@include height-dpr(50);
+	@include height-dpr(45);
 	border-bottom: 1px solid $colorSimpleGrey;
 	@include font-dpr(14);
 	background: white;
@@ -216,11 +216,12 @@ img{
 		.kd_sele_val{
 			border: 1px solid $colorGrey;
 			@extend %textOverflow;
-			border-radius: pxRem(80);
-			padding: pxRem(20) pxRem(40);
+			border-radius: pxRem(50);
+			padding: pxRem(10) pxRem(20);
 			position: absolute;
 			color: $colorBlack;
 			width: 100%;
+			@include font-dpr(12);
 			.ion-arrow-down-b{
 				right: pxRem(20);
 				color: $colorBlack;
@@ -230,7 +231,7 @@ img{
 		.kd_sele_content{
 			position: absolute;
 			z-index: 2;
-			top: pxRem(200);
+			top: pxRem(180);
 			.kd_sele_item{
 				border-radius: pxRem(15);
 				background: $colorPurple;
@@ -248,6 +249,7 @@ img{
 				padding: pxRem(40);
 				text-decoration: none;
 				border-bottom: 1px solid $colorGrey;
+				@include font-dpr(12);
 				&:last-child{
 					border-bottom: none;
 				}
@@ -378,7 +380,7 @@ img{
 				border-radius: pxRem(120);
 			}
 			.name_box{
-				padding: pxRem(75);
+				padding: pxRem(75) pxRem(37);
 				border-radius: pxRem(120);
 				@include font-dpr(20);
 				font-weight: bold;

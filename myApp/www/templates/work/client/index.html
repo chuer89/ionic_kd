@@ -22,38 +22,38 @@
   		<div class="kd_nav_filter">
             <div class="padding_around row">
       			<div class="kd_sele_box col col-20">
-      				<div ng-click="toggleSele('star')" class="kd_sele_val">星级<i class="ion-arrow-down-b"></i></div>
+      				<div ng-click="toggleSele('star')" class="kd_sele_val">{{seleStarInfo}}<i class="ion-arrow-down-b"></i></div>
       				<div class="kd_sele_content" ng-show="isShowStarSele">
       					<i class="ion-arrow-up-b kd_sele_arrow"></i>
       					<div class="kd_sele_item">
-      						<a href="javascript:;" ng-repeat="item in seleStar">{{item.name}}</a>
+      						<a href="javascript:;" ng-click="seleStarHandle(item)" ng-repeat="item in seleStar">{{item.name}}</a>
       					</div>
       				</div>
       			</div>
-                <div class="kd_sele_box col col-20">
-                    <div ng-click="toggleSele('period')" class="kd_sele_val">周期<i class="ion-arrow-down-b"></i></div>
+                <div class="kd_sele_box col col-20 kd_m">
+                    <div ng-click="toggleSele('period')" class="kd_sele_val">{{selePeriodInfo}}<i class="ion-arrow-down-b"></i></div>
                     <div class="kd_sele_content" ng-show="isShowPeriodSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">
-                            <a href="javascript:;" ng-repeat="item in selePeriod">{{item.name}}</a>
+                            <a href="javascript:;" ng-click="selePeriodHandle(item)" ng-repeat="item in selePeriod">{{item.name}}</a>
                         </div>
                     </div>
                 </div>
                 <div class="kd_sele_box col col-20">
-                    <div ng-click="toggleSele('frequency')" class="kd_sele_val">频率<i class="ion-arrow-down-b"></i></div>
+                    <div ng-click="toggleSele('frequency')" class="kd_sele_val">{{seleFrequencyInfo}}<i class="ion-arrow-down-b"></i></div>
                     <div class="kd_sele_content" ng-show="isShowFrequencySele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">
-                            <a href="javascript:;" ng-repeat="item in seleFrequency">{{item.name}}</a>
+                            <a href="javascript:;" ng-click="seleFrequencyHandle(item)" ng-repeat="item in seleFrequency">{{item.name}}</a>
                         </div>
                     </div>
                 </div>
-                <div class="kd_sele_box col col-20">
-                    <div ng-click="toggleSele('amount')" class="kd_sele_val">金额<i class="ion-arrow-down-b"></i></div>
+                <div class="kd_sele_box col col-20 kd_m">
+                    <div ng-click="toggleSele('amount')" class="kd_sele_val">{{seleAmountInfo}}<i class="ion-arrow-down-b"></i></div>
                     <div class="kd_sele_content" ng-show="isShowAmountSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">
-                            <a href="javascript:;" ng-repeat="item in seleAmount">{{item.name}}</a>
+                            <a href="javascript:;" ng-click="seleAmountHandle(item)" ng-repeat="item in seleAmount">{{item.name}}</a>
                         </div>
                     </div>
                 </div>

@@ -12,10 +12,16 @@ angular.module('workClient.controller', [])
 .controller('WorkClientCtrl', function ($scope, $state, $ionicActionSheet, seleMenuList, common, workCrmSele) {
 	var menus = seleMenuList.menu();
 
+    var ajaxHandle = function() {
+
+    }, initData = function() {
+
+    }
+
     $scope.seleStar = [];
-    $scope.selePeriod = menus.period;
-    $scope.seleFrequency = menus.frequency;
-    $scope.seleAmount = menus.amount;
+    $scope.selePeriod = [];
+    $scope.seleFrequency = [];
+    $scope.seleAmount = [];
 
     workCrmSele.star(function(star) {
         star.push({
@@ -26,14 +32,71 @@ angular.module('workClient.controller', [])
 
         $scope.seleStar = star;
     });
-    workCrmSele.customer_types(function(data) {
-        console.log(data);
+    workCrmSele.total_consumption_times(function(data) {
+        $scope.seleFrequency = data.body.totalConsumptionTimesFilters;
+    });
+    workCrmSele.last_follow_time_filters(function(data) {
+        $scope.selePeriod = data.body.lastFollowUpTimeFilters;
+    });
+    workCrmSele.total_consumption_money(function(data) {
+        $scope.seleAmount = data.body.totalConsumptionMoneyFilters;
     })
 
     $scope.isShowStarSele = false;
     $scope.isShowPeriodSele = false;
     $scope.isShowFrequencySele = false;
     $scope.isShowAmountSele = false;
+
+    $scope.seleStarInfo = '星级';
+    $scope.selePeriodInfo = '周期';
+    $scope.seleFrequencyInfo = '频次';
+    $scope.seleAmountInfo = '金额';
+
+    //选择菜单处理
+    var toggleSeleHandle = function(type, isAjax) {
+        if (type == 'star') {
+            $scope.isShowPeriodSele = false;
+            $scope.isShowFrequencySele = false;
+            $scope.isShowAmountSele = false;
+
+            $scope.isShowStarSele = !$scope.isShowStarSele;
+        } else if (type == 'period') {
+            $scope.isShowStarSele = false;
+            $scope.isShowFrequencySele = false;
+            $scope.isShowAmountSele = false;
+
+            $scope.isShowPeriodSele = !$scope.isShowPeriodSele;
+        } else if (type == 'frequency') {
+            $scope.isShowStarSele = false;
+            $scope.isShowPeriodSele = false;
+            $scope.isShowAmountSele = false;
+
+            $scope.isShowFrequencySele = !$scope.isShowFrequencySele;
+        } else if(type == 'amount') {
+            $scope.isShowStarSele = false;
+            $scope.isShowPeriodSele = false;
+            $scope.isShowFrequencySele = false;
+
+            $scope.isShowAmountSele = !$scope.isShowAmountSele;
+        }
+
+        if (isAjax) {
+            initData(true);
+        }
+    }
+
+    $scope.seleStarHandle = function(item) {
+        $scope.seleStarInfo = item.name;
+    }
+    $scope.selePeriodHandle = function(item) {
+        $scope.selePeriodInfo = item.name;
+    }
+    $scope.seleFrequencyHandle = function(item) {
+        $scope.seleFrequencyInfo = item.name;
+    }
+    $scope.seleAmountHandle = function(item) {
+        $scope.seleAmountInfo = item.name;
+    }
 
     $scope.toggleSele = function(type) {
         if (type == 'star') {

@@ -30,10 +30,20 @@
 
                 <div class="kd_sele_box col col-20">
                     <div ng-click="toggleSele('type')" class="kd_sele_val">{{seleTypeInfo}}<i class="ion-arrow-down-b"></i></div>
-                    <div class="kd_sele_content" ng-show="isShowTypeSele">
+                    <div class="kd_sele_content" ng-show="isShowTypeSele" style="left: 10%;">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">
                             <a href="javascript:;" ng-repeat="item in seleType" ng-click="seleTypeHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kd_sele_box col col-20 kd_m">
+                    <div ng-click="toggleSele('date')" class="kd_sele_val">{{seleDateInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowDateSele" style="left: 15%;">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleDate" ng-click="seleDateHandle(item)">{{item.name}}</a>
                         </div>
                     </div>
                 </div>
@@ -43,7 +53,7 @@
             <div class="list_type_title padding_around">考核时间：{{data.year}}年{{data.month}}月</div>
             <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
             <div class="item_list_box" ng-repeat="item in items">
-                <a href="#/perfomance/details/{{item.id}}" class="row">
+                <a href="#/perfomance/details/{{item.jiXiaoId}}" class="row">
                     <div class="col col-20 text_align_center">
                         <span class="name_box">{{item.nickname}}</span>
                     </div>

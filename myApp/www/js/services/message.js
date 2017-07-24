@@ -66,13 +66,13 @@ angular.module('message.services', [])
     //星级-可删
     var star = [{name: '★'}, {name: '★★'}, {name: '★★★'}, {name: '★★★★'}, {name: '★★★★★'}, {name: '全部'}];
 
-    //周期
+    //周期-可删
     var period = [{name: '半年'}, {name: '一年'}, {name: '一年半'}, {name: '两年'}, {name: '三年'}, {name: '三年以上'}];
 
-    //频次
+    //频次-可删
     var frequency = [{name: '一次'}, {name: '两次'}, {name: '三次'}, {name: '四次'}, {name: '五次以上'}];
 
-    //全额
+    //全额-可删
     var amount = [{name: '1000'}, {name: '2000'}, {name: '4000'}, {name: '6000'}, {name: '8000+'}];
 
     //销售阶段
@@ -110,6 +110,9 @@ angular.module('message.services', [])
     //签到类型
     var qianDaoType = [{text:'早班', key:'ZAO_BAN'},{text:'中班',key:'ZHONG_BAN'},{text:'晚班',key:'WAN_BAN'}];
 
+    //月份选择
+    var seleMonth = [{name:'上月',key:'prev'},{name:'本月',key:'now'},{name:'下月',key:'next'}];
+
 
     return {
         menu: function() {
@@ -127,7 +130,8 @@ angular.module('message.services', [])
                 cycletime: cycletime,
                 remindtime: remindtime,
                 qianDaoType: qianDaoType,
-                taskWarn: taskWarn
+                taskWarn: taskWarn,
+                seleMonth: seleMonth
             };
         }
     }
@@ -433,17 +437,24 @@ angular.module('message.services', [])
                 return $filter('date')(new Date(date), fmt);
             }
 
-            var _arr = date.split(' '),
-                _y = _arr[0].split('-'),
-                _t = _arr[1].split(':');
+            var _arr = date.split(' ');
 
-            var _o = {
+            var _y, _t, _o;
+
+            _y = _arr[0].split('-');
+            _o = {
                 yyyy: _y[0],
                 MM: _y[1],
-                dd: _y[2],
-                hh: _t[0], 
-                mm: _t[1], 
-                ss: _t[2]
+                dd: _y[2]
+            }
+
+            if (_arr[1] && fmt.indexOf(':')) {
+                _t = _arr[1].split(':');
+                _o = angular.extend(_o, {
+                    hh: _t[0], 
+                    mm: _t[1], 
+                    ss: _t[2]
+                });
             }
 
             for (var k in _o) {
@@ -513,6 +524,78 @@ angular.module('message.services', [])
             };
 
             return '星期' + _obj[_week];
+        },
+
+        //获取上一月
+        getPrevDate: function(date) {
+            var nowDate = COMMON.format(date, 'yyyy-MM-dd');
+            var oldArr = nowDate.split('-');
+
+            var old = {
+                year: oldArr[0] - 0,
+                month: oldArr[1] - 1
+            }
+            
+            if (old.month == 0) {
+                old.year -= 1;
+                old.month = 12;
+            }
+
+            old.day = COMMON.getLastDay(old.year, old.month);
+            old.date = old.year + '-' + (old.month < 10 ? '0' + old.month : old.month);
+
+            return old;
+        },
+
+        //获取当月
+        getNowDate: function(date) {
+            var nowDate = COMMON.format(date, 'yyyy-MM-dd');
+            var oldArr = nowDate.split('-');
+
+            var old = {
+                year: oldArr[0] - 0,
+                month: oldArr[1] - 0
+            }
+
+            old.day = COMMON.getLastDay(old.year, old.month);
+            old.date = old.year + '-' + (old.month < 10 ? '0' + old.month : old.month);
+
+            return old;
+        },
+
+        //获取下月
+        getNextDate: function(date) {
+            var nowDate = COMMON.format(date, 'yyyy-MM-dd');
+            var oldArr = nowDate.split('-');
+
+            var old = {
+                year: oldArr[0] - 0,
+                month: oldArr[1] - 0  + 1
+            }
+            
+            if (old.month > 12) {
+                old.year += 1;
+                old.month = 1;
+            }
+
+            old.day = COMMON.getLastDay(old.year, old.month);
+            old.date = old.year + '-' + (old.month < 10 ? '0' + old.month : old.month);
+
+            return old;
+        },
+
+        //获取一月中多少天
+        getLastDay: function (year,month) {
+            return (new Date(year, month, 0)).getDate();
+
+            var new_year = year;  //取当前的年份
+            var new_month = month++;//取下一个月的第一天，方便计算（最后一天不固定）
+            if(month>12) {     //如果当前大于12月，则年份转到下一年
+                new_month -=12;    //月份减
+                new_year++;      //年份增
+            }   
+            var new_date = new Date(new_year,new_month,1);        //取当年当月中的第一天
+            return (new Date(new_date.getTime()-1000*60*60*24)).getDate();//获取当月最后一天日期
         },
 
         //公司&部门
@@ -669,7 +752,7 @@ angular.module('message.services', [])
         },
 
         delEmptyObj: function(obj) {
-            
+
         },
 
         //气泡提醒

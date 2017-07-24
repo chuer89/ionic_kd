@@ -129,21 +129,8 @@ angular.module('workReport.controller', [])
     var menus = seleMenuList.menu();
 
     var dataList = {};
-    $scope.data = {
-        departmentId: 1
-    };
+    $scope.data = {};
     $scope.items = [];
-
-    var initData = function() {
-        dataList = {
-            currentPage: 0,
-            report: []
-        };
-
-        $scope.items = [];
-    }
-    initData();
-    
 
     var ajaxhandle = function(isNotLoading) {
         if (isNotLoading) {
@@ -155,7 +142,7 @@ angular.module('workReport.controller', [])
             data: {
                 userId: common.userInfo.clientId,
                 currentPage: dataList.currentPage + 1,
-                departmentId: $scope.data.departmentId,
+                departmentId: seleDepartmentId,
                 startDate: '2017-01-04',
                 endDate: '2017-08-26',
                 typeId: $scope.data.typeId
@@ -184,8 +171,16 @@ angular.module('workReport.controller', [])
                 }, 1000);
             }
         });
-    };
-    ajaxhandle();
+    }, initData = function(isNotLoading) {
+        dataList = {
+            currentPage: 0,
+            report: []
+        };
+
+        $scope.items = [];
+
+        ajaxhandle(isNotLoading);
+    }
 
     $scope.vm = {
         moredata: false,
@@ -203,9 +198,11 @@ angular.module('workReport.controller', [])
         }
     }
 
+    var seleDepartmentId = '';
+
     $scope.seleBrank = [];
     $scope.seleDepartment = [];
-    $scope.seleDate = [{name:'本月',key:''},{name:'上月'},{name:'起止时间'}];
+    $scope.seleDate = menus.seleMonth;
     $scope.seleType = [{name:'全部',key:'-1'},{name:'日报',key:'1'},{name:'周报',key:'2'},{name:'月报',key:'3'}];
 
     $scope.isShowBrankSele = false;
@@ -221,8 +218,7 @@ angular.module('workReport.controller', [])
     //选择菜单处理
     var toggleSeleHandle = function(type, isToggle) {
         if (!isToggle) {
-            initData();
-            ajaxhandle();
+            initData(true);
         }
 
         if (type == 'brank') {
@@ -257,22 +253,33 @@ angular.module('workReport.controller', [])
         }
     }
 
+    //选择部门
+    var _seleBrankHandle = function(item) {
+        seleDepartmentId = item.departmentId;
+
+        $scope.seleBrankInfo = item.name;
+        $scope.seleDepartmentInfo = '部门';
+
+        $scope.seleDepartment = item.childDepartment;
+    }
+
     //加载部门&公司
     common.getCompany(function(data) {
         $scope.seleBrank = data;
+
+        _seleBrankHandle(data[0]);
+        initData();
     })
 
     //选择部门
     $scope.seleBrankHandle = function(item) {
-        $scope.seleDepartment = item.childDepartment;
-        toggleSeleHandle('brank', true);
+        _seleBrankHandle(item);
 
-        $scope.seleBrankInfo = item.name;
-        $scope.seleDepartmentInfo = '部门';
+        toggleSeleHandle('brank', true);
     }
     $scope.seleDepartmentHandle = function(item) {
         $scope.seleDepartmentInfo = item.name;
-        $scope.data.departmentId = item.departmentId;
+        seleDepartmentId = item.departmentId;
 
         toggleSeleHandle('department');
     }

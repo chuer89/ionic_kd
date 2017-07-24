@@ -9993,16 +9993,16 @@ img {
 
 /*下拉菜单筛选*/
 .kd_nav_filter {
-  height: 50px;
+  height: 45px;
   border-bottom: 1px solid #e6e6e6;
   font-size: 14px;
   background: white;
   position: relative;
   z-index: 10; }
   [data-dpr='2'] .kd_nav_filter {
-    height: 100px; }
+    height: 90px; }
   [data-dpr='3'] .kd_nav_filter {
-    height: 156px; }
+    height: 141px; }
   [data-dpr='2'] .kd_nav_filter {
     font-size: 28px; }
   [data-dpr='3'] .kd_nav_filter {
@@ -10013,11 +10013,16 @@ img {
     position: relative; }
     .kd_nav_filter .kd_sele_box .kd_sele_val {
       border: 1px solid #a4a4a4;
-      border-radius: 1.06667rem;
-      padding: 0.26667rem 0.53333rem;
+      border-radius: 0.66667rem;
+      padding: 0.13333rem 0.26667rem;
       position: absolute;
       color: #444444;
-      width: 100%; }
+      width: 100%;
+      font-size: 12px; }
+      [data-dpr='2'] .kd_nav_filter .kd_sele_box .kd_sele_val {
+        font-size: 24px; }
+      [data-dpr='3'] .kd_nav_filter .kd_sele_box .kd_sele_val {
+        font-size: 42px; }
       .kd_nav_filter .kd_sele_box .kd_sele_val .ion-arrow-down-b {
         right: 0.26667rem;
         color: #444444;
@@ -10025,7 +10030,7 @@ img {
     .kd_nav_filter .kd_sele_box .kd_sele_content {
       position: absolute;
       z-index: 2;
-      top: 2.66667rem; }
+      top: 2.4rem; }
       .kd_nav_filter .kd_sele_box .kd_sele_content .kd_sele_item {
         border-radius: 0.2rem;
         background: #7f6bac; }
@@ -10039,7 +10044,12 @@ img {
         color: #ffffff;
         padding: 0.53333rem;
         text-decoration: none;
-        border-bottom: 1px solid #a4a4a4; }
+        border-bottom: 1px solid #a4a4a4;
+        font-size: 12px; }
+        [data-dpr='2'] .kd_nav_filter .kd_sele_box .kd_sele_content a {
+          font-size: 24px; }
+        [data-dpr='3'] .kd_nav_filter .kd_sele_box .kd_sele_content a {
+          font-size: 42px; }
         .kd_nav_filter .kd_sele_box .kd_sele_content a:last-child {
           border-bottom: none; }
   .kd_nav_filter .kd_btn {
@@ -10160,7 +10170,7 @@ img {
         [data-dpr='3'] .list_box .item_list_box .big_head .head_name {
           height: 156px; }
       .list_box .item_list_box .big_head .name_box {
-        padding: 1rem;
+        padding: 1rem 0.49333rem;
         border-radius: 1.6rem;
         font-size: 20px;
         font-weight: bold; }

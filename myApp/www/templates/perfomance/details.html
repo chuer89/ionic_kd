@@ -1,4 +1,4 @@
-<ion-view view-title="绩效详情－{{item.name}}">
+<ion-view view-title="绩效详情">
 
 	<ion-nav-buttons side="left">  
     <a href="javascript:history.back(-1)" class="button button-icon icon ion-ios-arrow-back" nav-direction="back"></a>  
@@ -8,15 +8,14 @@
 		<div class="list_box">
 			<div class="item_list_box">
 				<div class="row">
-					<div class="col col-20 text_align_center">
+					<div class="col col-25 text_align_center">
                         <div class="big_head">
-                        	<span class="name_box" ng-if="!item.head">伟</span>
-                        	<img src="img/perry.png" ng-if="item.head" class="head_name" />
+                        	<span class="name_box">{{item.nickname}}</span>
                         </div>
                     </div>
                     <div class="col">
-                        <h2 class="title border_btm padding_tb">考核对象：{{item.name}}</h2>
-                        <h2 class="title padding_tb">考核人：系统</h2>
+                        <p class="title border_btm padding_tb">考核对象：{{item.kaoHeDuiXiang}}</p>
+                        <p class="title padding_tb">考核人：{{item.kaoHeRen}}</p>
                     </div>
 				</div>
 			</div>
@@ -28,7 +27,7 @@
 						<span class="info f14">类型：</span>
 					</div>
 					<div class="col">
-						<span class="title">扣分</span>
+						<span class="title">{{item.type}}</span>
 					</div>
 				</div>
 			</div>
@@ -38,7 +37,7 @@
 						<span class="info f14">分值：</span>
 					</div>
 					<div class="col">
-						<span class="title">3</span>
+						<span class="title">{{item.fenZhi}}</span>
 					</div>
 				</div>
 			</div>
@@ -48,7 +47,7 @@
 						<span class="info f14">金额：</span>
 					</div>
 					<div class="col">
-						<span class="title">0元</span>
+						<span class="title">&yen;{{item.jinE}}元</span>
 					</div>
 				</div>
 			</div>
@@ -58,7 +57,7 @@
 						<span class="info f14">PK值：</span>
 					</div>
 					<div class="col">
-						<span class="title">0</span>
+						<span class="title">{{item.pk}}</span>
 					</div>
 				</div>
 			</div>
@@ -68,7 +67,17 @@
 						<span class="info f14">项目：</span>
 					</div>
 					<div class="col">
-						<span class="title">铁窗处理</span>
+						<span class="title">{{item.title}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="item_list_box">
+				<div class="row">
+					<div class="col col-20 text_align_center">
+						<span class="info f14">内容：</span>
+					</div>
+					<div class="col">
+						<span class="title">{{item.content}}</span>
 					</div>
 				</div>
 			</div>
@@ -78,14 +87,13 @@
 						<span class="info f14">原由：</span>
 					</div>
 					<div class="col">
-						<span class="title">任务不合格</span>
+						<span class="title">{{item.reason}}</span>
 					</div>
 				</div>
 			</div>
-			<div class="item_list_box">
+			<div class="item_list_box" ng-if="item.pics.length">
 				<div class="details_img_thumbnail clearfix">
-					<img src="img/ben.png"/>
-					<img src="img/mike.png"/>
+					<img src="{{img.path}}" ng-repeat="img in item.pics"/>
 				</div>
 			</div>
 		</div>

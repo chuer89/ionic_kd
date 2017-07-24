@@ -493,6 +493,7 @@ angular.module('work.services', [])
     }
 
     return {
+        //星级
         star: function(cb) {
             ajax('obtain_stars', function(data) {
                 var _starList = data.body.stars,
@@ -517,8 +518,44 @@ angular.module('work.services', [])
             });
         },
 
+        //客户类型
         customer_types: function(cb) {
             ajax('obtain_customer_types', cb);
+        },
+
+        //消费方式
+        consumption_modes: function(cb){
+            ajax('obtain_consumption_modes', cb);
+        },
+
+        //回访类型
+        visit_types: function(cb) {
+            ajax('obtain_visit_types', cb);
+        },
+
+        //最后跟进时间
+        last_follow_time_filters: function(cb) {
+            ajax('obtain_last_follow_up_time_filters', cb);
+        },
+
+        //最后消费时间
+        last_consumption_time_filters: function(cb) {
+            ajax('obtain_last_consumption_time_filters', cb);
+        },
+
+        //消费次数
+        total_consumption_times: function(cb) {
+            ajax('obtain_total_consumption_times_filters', cb);
+        },
+
+        //消费金额
+        total_consumption_money: function(cb) {
+            ajax('obtain_total_consumption_money_filters', cb);
+        },
+
+        //回访时间
+        visit_time: function(cb) {
+            ajax('obtain_visit_time_filters', cb);
         }
     }
 })
