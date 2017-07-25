@@ -3,8 +3,12 @@
         <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
 
+    <ion-nav-buttons side="right">
+        <button ng-click="showNav()" class="ion-more icon icon-accessory"></button>
+    </ion-nav-buttons>
+
     <ion-content>
-        <div class="list_box">
+        <div class="list_box padding_btm_small">
             <div class="item_list_box">
                 <div class="row padding_btm_small">
                     <div class="col">
@@ -40,50 +44,52 @@
                 </div>
             </div>
         </div>
-        <div class="list_box padding_tb">
-            <div>
-                <div class="notData" ng-if="notFollowListData">{{notFollowListData}}</div>
-
-                <div class="item_list_box" ng-if="followItems.length" ng-repeat="item in followItems">
+        <div class="list_box padding_btm_small">
+            <div class="item_list_box" ng-if="item.visitRecord">
+                <p>回访记录：<span class="colorPurple">{{item.visitRecord}}</span></p>
+                <div class="row info f14">
+                    <div class="col">访问时间：{{item._visitTime}}</div>
+                    <div class="col">跟进人：{{item.creater.name}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="list_box">
+            <div class="item_list_box" ng-repeat="consumption in item.customer.consumptionRecords">
+                <div class="row">
+                    <div class="col col-20 left_icon_box">
+                        <span class="name_box">{{consumption.nickname}}</span>
+                    </div>
+                    <div class="col col-80">
+                        <p class="title f14">导购员：{{consumption.creater.name}}</p>
+                        <p class="info">{{consumption._consumptionTime}}</p>
+                    </div>
+                </div>
+                <div class="padding_tb">
+                    <div class="row padding_btm_small">
+                        <div class="col col-20">&nbsp;</div>
+                        <div class="col">
+                            <p class="title 14">品名：{{consumption.name}}</p>
+                        </div>
+                        
+                    </div>
+                    <div class="row padding_btm_small">
+                        <div class="col col-20">&nbsp;</div>
+                        <div class="col">
+                            <p class="title f14">标价：&yen;{{consumption.price}}</p>
+                        </div>
+                        <div class="col">
+                            <p class="title f14">折扣：{{consumption.discount}}折</p>
+                        </div>
+                    </div>
                     <div class="row">
-                        <div class="col col-20 left_icon_box">
-                            <span class="name_box">{{item.nickname}}</span>
+                        <div class="col col-20">&nbsp;</div>
+                        <div class="col">
+                            <p class="title f14">结算价：&yen;{{consumption.settlementPrice}}</p>
                         </div>
-                        <div class="col col-67">
-                            <p class="title f14">跟进人：{{item.creater.name}}</p>
-                            <p class="info">{{item._followUpTime}}</p>
-                        </div>
-                        <div class="col text_align_right">
-                            <a ng-click="editFollow(item)" href="javascript:;" ng-if="!item.isEdit" class="colorPurple">编辑</a>
-                            <a href="javascript:;" ng-click="updateFollow(item)" class="colorPurple" ng-if="item.isEdit">保存</a>
+                        <div class="col">
+                            <p class="title f14">方式：{{consumption.consumptionMode.name}}</p>
                         </div>
                     </div>
-                    <div class="padding_tb">
-                        <p class="title" ng-if="!item.isEdit">{{item.visitRecord}}</p>
-                        <textarea ng-model="item.visitRecord" ng-if="item.isEdit">{{item.visitRecord}}</textarea>
-                    </div>
-                </div>
-
-                <div ng-if="isHasAddFollow">
-                    <div class="text_align_right padding_around">
-                        <a class="colorPurple" href="javascript:;" ng-click="createFollow()">保存</a>
-                    </div>
-                    <div class="list">
-                        <div class="">
-                            <a ng-click="showSeleMarket()" class="item item-icon-right">
-                                回访类型
-                                <span class="item-note">{{seleVisitType}}</span>
-                                <i class="icon ion-chevron-right icon-accessory"></i>
-                            </a>
-                            <div class="item">
-                                <textarea placeholder="请输入跟进内容" ng-model="followData.visitRecord"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div>
-                    <button ng-click="showAddFollow()" class="button button-full button-light colorPurple">添加跟进记录+</button>
                 </div>
             </div>
         </div>

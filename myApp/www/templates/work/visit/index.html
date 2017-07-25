@@ -5,6 +5,10 @@
 
         </ion-nav-buttons>
 
+    <ion-nav-buttons side="right">
+      <a href="#/work/visit/create" class="ion-plus icon icon-accessory button button-clear"></a>
+    </ion-nav-buttons>
+
   	<ion-content>
   		<div class="kd_nav_filter">
             <div class="padding_around row">
@@ -38,8 +42,8 @@
             </div>
   		</div>
         <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
-        <div class="list_box">
-            <a href="#/work/visit/details/{{item.id}}" class="item_list_box" ng-repeat="item in items">
+        <div class="list_box padding_btm_small" ng-repeat="item in items">
+            <a href="#/work/visit/details/{{item.id}}" class="item_list_box">
                 <div class="border_btm">
                     <div class="row padding_btm_small">
                         <div class="col">
@@ -74,11 +78,11 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <p>回访记录：这里是极了</p>
-                    <div class="row">
-                        <div class="col">访问时间：2017-03-22</div>
-                        <div class="col">跟进人：丽莎</div>
+                <div class="padding_tb" ng-if="item.visitRecord">
+                    <p>回访记录：<span class="colorPurple">{{item.visitRecord}}</span></p>
+                    <div class="row info f14">
+                        <div class="col">访问时间：{{item._visitTime}}</div>
+                        <div class="col">跟进人：{{item.creater.name}}</div>
                     </div>
                 </div>
             </a>

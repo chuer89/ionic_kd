@@ -584,6 +584,18 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/visit/details.html',
         controller: 'WorkVisitDetailsCtrl'
     })
+    //回访-添加
+    .state('work_visit_create', {
+        url: '/work/visit/create',
+        templateUrl: 'templates/work/visit/create.html',
+        controller: 'WorkVisitCreateCtrl'
+    })
+    //回访-编辑
+    .state('work_visit_edit', {
+        url: '/work/visit/edit/:id',
+        templateUrl: 'templates/work/visit/edit.html',
+        controller: 'WorkVisitEditCtrl'
+    })
 
     //crm-end
 

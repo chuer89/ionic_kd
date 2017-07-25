@@ -42,12 +42,11 @@ angular.module('workVisit.controller', [])
                 
                 for (var i = 0, ii = list.length; i < ii; i++) {
                     list[i]._star = workCrmSele.joinStar(list[i].customer.star);
+                    list[i]._visitTime = common.format(list[i].visitTime, 'yyyy-MM-dd', true);
                     list[i]._lastFollowUpTime = common.format(list[i].customer.lastFollowUpTime, 'yyyy-MM-dd', true);
                     list[i]._lastConsumptionTime = common.format(list[i].customer.lastConsumptionTime, 'yyyy-MM-dd', true);
                     $scope.items.push(list[i]);
                 }
-
-                console.log(list)
 
                 $timeout(function() {
                     $scope.vm.moredata = true;
@@ -171,7 +170,7 @@ angular.module('workVisit.controller', [])
 	}
 })
 
-.controller('WorkVisitDetailsCtrl', function($scope, $stateParams, $ionicActionSheet, common, workCrmSele) {
+.controller('WorkVisitDetailsCtrl', function($scope, $state, $stateParams, $ionicActionSheet, common, workCrmSele) {
     $scope.item = {};
 
     var getDetails = function() {
@@ -187,13 +186,23 @@ angular.module('workVisit.controller', [])
                 var _body = data.body;
                 common.loadingHide();
 
-                console.log(data)
-
                 if (!_body) {
                     $scope.notTaskListData = common.notTaskListDataTxt;
                     return;
                 } else {
                     $scope.notTaskListData = false;
+                }
+
+                _body._consumptionRecords = [];
+                if (!_body.customer.consumptionRecords) {
+                    _body.customer.consumptionRecords = [];
+                }
+
+                for (var i = 0, ii = _body.customer.consumptionRecords.length; i < ii; i++) {
+                    _body.customer.consumptionRecords[i].nickname = common.nickname(_body.customer.consumptionRecords[i].creater.name);
+
+                    _body.customer.consumptionRecords[i]._consumptionTime = common.format(_body.customer.consumptionRecords[i].consumptionTime, 'yyyy-MM-dd', true);
+                    _body._consumptionRecords.push(_body.customer.consumptionRecords);
                 }
 
                 _body._lastConsumptionTime = common.format(_body.lastConsumptionTime, 'yyyy-MM-dd HH:ss', true);
@@ -205,38 +214,84 @@ angular.module('workVisit.controller', [])
 
     getDetails();
 
-    //添加跟进记录
-    $scope.followData = {
-        createrId: common.userInfo.clientId,
-        customerId: $stateParams.id
-    };
-    $scope.isHasAddFollow = false;
-    $scope.showAddFollow = function() {
-        $scope.isHasAddFollow = true;
-        $scope.followData.visitRecord = '';
-    }
-    $scope.createFollow = function() {
-        common.loadingShow();
-        common.post({
-            type: 'create_visit_record',
-            data: $scope.followData,
-            success: function(data) {
-                common.loadingHide();
+    $scope.showNav = function() {
+        $ionicActionSheet.show({
+            buttons: [
+                { text: '编辑' },
+                { text: '删除' }
+            ],
+            cancelText: '取消',
+            buttonClicked: function(index, item) {
 
-                $scope.isHasAddFollow = false;
+                if (index == 0) {
+                    common.post({
+                        type: 'obtain_visit_record_form',
+                        data: {
+                            id: $stateParams.id,
+                            userId: common.userInfo.clientId
+                        },
+                        success: function(data) {
+                            $state.go('work_visit_edit', {
+                                id: $stateParams.id
+                            });
+                        }
+                    });
+                } else if (index == 1) {
+                    common.popup({
+                        content: '确认删除么'
+                    }, function() {
+                        common.post({
+                            type: 'delete_visit_record',
+                            data: {
+                                id: $stateParams.id,
+                                userId: common.userInfo.clientId
+                            },
+                            success: function(data) {
+                                common.toast(data.message, function() {
+                                    common.back();
+                                })
+                            }
+                        });
+                    })
+                }
+
+                return true;
             }
-        });
+        })
     }
+})
+
+.controller('WorkVisitEditCtrl', function($scope, $ionicActionSheet, $stateParams, common, workCrmSele) {
+    $scope.data = {
+        createrId: common.userInfo.clientId,
+        customerId: 9
+    }
+
+    common.loadingShow();
+    common.post({
+        type: 'obtain_visit_record_form',
+        data: {
+            id: $stateParams.id,
+            userId: common.userInfo.clientId
+        },
+        success: function(data) {
+            console.log(data)
+            common.loadingHide();
+            angular.extend($scope.data, data.body);
+
+            $scope.seleVisitType = data.body.visitTypeName;
+        }
+    });
 
     $scope.seleVisitType = '请选择';
     workCrmSele.visit_types(function(data) {
-        $scope.showSeleMarket = function () {
+        $scope.showSeleVisitType = function () {
             $ionicActionSheet.show({
                 buttons: common.setSeleRepeat(data.body.visitTypes),
                 cancelText: '取消',
                 buttonClicked: function(index, item) {
                     $scope.seleVisitType = item.text;
-                    $scope.followData.visitTypeId = item.id;
+                    $scope.data.visitTypeId = item.id;
 
                     return true;
                 }
@@ -244,37 +299,59 @@ angular.module('workVisit.controller', [])
         }
     });
 
-    //编辑跟进
-    $scope.editFollow = function(item) {
+    $scope.submit = function() {
         common.loadingShow();
+
         common.post({
-            type: 'obtain_follow_up_record_form',
-            data: {
-                userId: common.userInfo.clientId,
-                id: item.id
-            },
+            type: 'update_visit_record',
+            data: $scope.data,
             success: function(data) {
                 common.loadingHide();
 
-                item.isEdit = true;
-            }
-        });
-    }
-    $scope.updateFollow = function(item) {
-        common.loadingShow();
-        common.post({
-            type: 'create_visit_record',
-            data: {
-                createrId: common.userInfo.clientId,
-                customerId: $stateParams.id,
-                visitRecord: item.id,
-                visitRecord: item.visitRecord
-            },
-            success: function(data) {
-                common.loadingHide();
-
-                item.isEdit = false;
+                common.toast(data.message, function() {
+                    common.back();
+                });
             }
         });
     }
 })
+
+.controller('WorkVisitCreateCtrl', function($scope, $state, $ionicActionSheet, common, workCrmSele) {
+    $scope.data = {
+        createrId: common.userInfo.clientId,
+        customerId: 9
+    }
+
+    $scope.seleVisitType = '请选择';
+    workCrmSele.visit_types(function(data) {
+        $scope.showSeleVisitType = function () {
+            $ionicActionSheet.show({
+                buttons: common.setSeleRepeat(data.body.visitTypes),
+                cancelText: '取消',
+                buttonClicked: function(index, item) {
+                    $scope.seleVisitType = item.text;
+                    $scope.data.visitTypeId = item.id;
+
+                    return true;
+                }
+            })
+        }
+    });
+
+    $scope.create = function() {
+        common.loadingShow();
+
+        common.post({
+            type: 'create_visit_record',
+            data: $scope.data,
+            success: function(data) {
+                common.loadingHide();
+
+                common.toast(data.message, function() {
+                    common.back();
+                });
+            }
+        });
+    }
+})
+

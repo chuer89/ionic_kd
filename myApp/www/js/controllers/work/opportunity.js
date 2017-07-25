@@ -415,7 +415,6 @@ angular.module('workOpportunity.controller', [])
         customerId: 9
     }
 
-
     $scope.seleMarket = '请选择';
     workCrmSele.salesPhases(function(data) {
         $scope.showSeleMarket = function () {
