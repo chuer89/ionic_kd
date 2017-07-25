@@ -20,27 +20,27 @@
 
   		<div class="kd_nav_filter">
             <div class="padding_around row">
-                <div class="kd_sele_box col">
-                    <div ng-click="toggleSele('market')" class="kd_sele_val">销售阶段<i class="ion-arrow-down-b"></i></div>
-                    <div class="kd_sele_content" ng-show="isShowMarketSele">
+                <div class="kd_sele_box col col-20" ng-if="!isShowTab2">
+                    <div ng-click="toggleSele('phases')" class="kd_sele_val">{{selePhasesInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowPhasesSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">
-                            <a href="javascript:;" ng-repeat="item in seleMarket">{{item.name}}</a>
+                            <a href="javascript:;" ng-click="selePhasesHandle(item)" ng-repeat="item in selePhases">{{item.name}}</a>
                         </div>
                     </div>
                 </div>
 
-      			<div class="kd_sele_box col">
-      				<div ng-click="toggleSele('star')" class="kd_sele_val">星级<i class="ion-arrow-down-b"></i></div>
-      				<div class="kd_sele_content" ng-show="isShowStarSele">
-      					<i class="ion-arrow-up-b kd_sele_arrow"></i>
-      					<div class="kd_sele_item">
-      						<a href="javascript:;" ng-repeat="item in seleStar">{{item.name}}</a>
-      					</div>
-      				</div>
-      			</div>
-
-                <div class="col search_purple">
+                <div class="kd_sele_box col col-20 kd_m">
+                    <div ng-click="toggleSele('star')" class="kd_sele_val">{{seleStarInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowStarSele">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-click="seleStarHandle(item)" ng-repeat="item in seleStar">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col search_purple" ng-if="isSearch">
                     <div class="bar search_box bar-header item-input-inset">
                         <label class="item-input-wrapper">
                             <i class="icon ion-ios-search placeholder-icon"></i>
@@ -50,24 +50,45 @@
                 </div>
             </div>
   		</div>
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
         <div class="list_box">
-            <a href="#/work/opportunity/details/1" class="item_list_box" ng-repeat="item in items">
-                <h2 class="title">1克拉玛依钻石</h2>
-                <div class="row">
-                    <div class="col">
-                        <p>张洪达</p>
-                        <p>级别大餐</p>
+            <a href="#/work/opportunity/details/{{item.id}}" class="item_list_box" ng-repeat="item in items">
+                <div ng-if="!isShowTab2">
+                    <h2 class="title padding_btm_small">{{item.name}}</h2>
+                    <div class="row">
+                        <div class="col">
+                            <p class="title f14">{{item.customer.name}}</p>
+                            <p class="colorPurple">{{item.salesPhase.name}}</p>
+                        </div>
+                        <div class="col">
+                            <P class="info">{{item.customer.telephone}}</P>
+                            <p class="colorPurple">{{item._lastFollowUpTime}}</p>
+                        </div>
+                        <div class="col">
+                            <p>&nbsp;</p>
+                            <p class="colorPurple">{{item._star}}</p>
+                        </div>
                     </div>
-                    <div class="col">
-                        <P>13409204938</P>
-                        <p>2017-09-20</p>
+                </div>
+                <div ng-if="isShowTab2">
+                    <div class="row">
+                        <div class="col">
+                            <p class="title f14">{{item.customer.name}}</p>
+                            <p class="info">{{item.customer.telephone}}</p>
+                        </div>
+                        <div class="col col-50">
+                            <p class="colorPurple info">最后消费：{{item._lastConsumptionTime}}</p>
+                            <p class="info">微信：{{item.customer.weChat}}</p>
+                        </div>
+                        <div class="col">
+                            <p>&nbsp;</p>
+                            <p class="colorPurple info">{{item._star}}</p>
+                        </div>
                     </div>
-                    <div class="col">
-                        <p>&nbsp;</p>
-                        <p>★★</p>
-                    </div>
+                    <div class="info">最近购买：{{item.name}}</div>
                 </div>
             </a>
         </div>
+        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
   	</ion-content>
 </ion-view>

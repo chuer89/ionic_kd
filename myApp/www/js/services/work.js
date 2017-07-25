@@ -536,6 +536,11 @@ angular.module('work.services', [])
             ajax('obtain_customer_types', cb);
         },
 
+        //销售阶段
+        salesPhases: function(cb) {
+            ajax('obtain_sales_phases', cb);
+        },
+
         //消费方式
         consumption_modes: function(cb){
             ajax('obtain_consumption_modes', cb);

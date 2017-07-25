@@ -1,0 +1,51 @@
+<ion-view view-title="客户修改">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" ng-click="submit()" class="button button-clear button-positive">保存</a>
+    </ion-nav-buttons>
+
+	<ion-content>
+        <div class="list card list_box">
+            <label class="item item-input">
+                <span class="input-label">客户</span>
+                <input type="text" ng-model="data.name" placeholder="请输入姓名">
+            </label>
+        </div>
+
+        <div class="list_box list card">
+             <label class="item item-input">
+                <span class="input-label">电话</span>
+                <input type="text" ng-model="data.telephone" placeholder="请输入手机号">
+            </label>
+        </div>
+
+        <div class="list_box list card">
+            <label class="item item-input">
+                <span class="input-label">微信</span>
+                <input type="text" ng-model="data.weChat" placeholder="请输入微信号">
+            </label>
+        </div>
+
+        <div class="list">
+            <div class="item item-icon-right" ng-click="showSeleType()">
+                客户类型
+                <span class="item-note">{{seleType}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+            <div class="item item-icon-right" ng-click="showSeleStar()">
+                星级
+                <span class="item-note">{{seleStar}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="item">
+                <textarea placeholder="请输入备注" ng-model="data.remark"></textarea>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>

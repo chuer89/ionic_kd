@@ -1,0 +1,91 @@
+<ion-view view-title="回访详情">
+    <ion-nav-buttons side="left">  
+        <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-content>
+        <div class="list_box">
+            <div class="item_list_box">
+                <div class="row padding_btm_small">
+                    <div class="col">
+                        <p class="title">{{item.customer.name}}</p>
+                    </div>
+                    <div class="col info col-67">
+                        <p>微信：{{item.customer.weChat}}</p>
+                    </div>
+                </div>
+                <div class="row padding_btm_small">
+                    <div class="col info">
+                        <P>{{item.customer.telephone}}</P>
+                    </div>
+                    <div class="col info">
+                        <p class="colorPurple">{{item.customer.customerType.name}}</p>
+                    </div>
+                    <div class="col info">
+                        <p class="info">{{item._star}}</p>
+                    </div>
+                </div>
+                <div class="row padding_btm_small" ng-if="item.customer.consumptionRecords.length">
+                    <div class="col info col-20">购买记录</div>
+                    <div class="col info">
+                        <div class="row" ng-repeat="consumption in item.customer.consumptionRecords">
+                            <div class="col">
+                                <p>{{consumption.name}}</p>
+                            </div>
+                            <div class="col">
+                                <p>&yen;{{consumption.settlementPrice}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list_box padding_tb">
+            <div>
+                <div class="notData" ng-if="notFollowListData">{{notFollowListData}}</div>
+
+                <div class="item_list_box" ng-if="followItems.length" ng-repeat="item in followItems">
+                    <div class="row">
+                        <div class="col col-20 left_icon_box">
+                            <span class="name_box">{{item.nickname}}</span>
+                        </div>
+                        <div class="col col-67">
+                            <p class="title f14">跟进人：{{item.creater.name}}</p>
+                            <p class="info">{{item._followUpTime}}</p>
+                        </div>
+                        <div class="col text_align_right">
+                            <a ng-click="editFollow(item)" href="javascript:;" ng-if="!item.isEdit" class="colorPurple">编辑</a>
+                            <a href="javascript:;" ng-click="updateFollow(item)" class="colorPurple" ng-if="item.isEdit">保存</a>
+                        </div>
+                    </div>
+                    <div class="padding_tb">
+                        <p class="title" ng-if="!item.isEdit">{{item.visitRecord}}</p>
+                        <textarea ng-model="item.visitRecord" ng-if="item.isEdit">{{item.visitRecord}}</textarea>
+                    </div>
+                </div>
+
+                <div ng-if="isHasAddFollow">
+                    <div class="text_align_right padding_around">
+                        <a class="colorPurple" href="javascript:;" ng-click="createFollow()">保存</a>
+                    </div>
+                    <div class="list">
+                        <div class="">
+                            <a ng-click="showSeleMarket()" class="item item-icon-right">
+                                回访类型
+                                <span class="item-note">{{seleVisitType}}</span>
+                                <i class="icon ion-chevron-right icon-accessory"></i>
+                            </a>
+                            <div class="item">
+                                <textarea placeholder="请输入跟进内容" ng-model="followData.visitRecord"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <button ng-click="showAddFollow()" class="button button-full button-light colorPurple">添加跟进记录+</button>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

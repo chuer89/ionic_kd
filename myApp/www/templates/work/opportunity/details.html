@@ -1,33 +1,40 @@
 <ion-view view-title="商机详情">
-	<ion-nav-buttons side="left">  
-    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    <ion-nav-buttons side="left">  
+        <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-      <button ng-click="showNav()" class="ion-more icon icon-accessory"></button>
+        <button ng-click="showNav()" class="ion-more icon icon-accessory"></button>
     </ion-nav-buttons>
 
-	<ion-content>
+    <ion-content>
         <div class="list_box padding_tb">
             <div class="purple_bg_title">
+                <div class="row padding_btm_small">
+                    <div class="col f14">{{item.customer.name}}</div>
+                    <div class="col col-67 f14">{{item.name}}</div>
+                    
+                </div>
+                <div class="row padding_btm_small">
+                    <div class="col f14">{{item.customer.customerType.name}}</div>
+                    <div class="col col-67 f14">微信号：{{item.customer.weChat}}</div>
+                </div>
                 <div class="row">
-                    <div class="col">
-                        <p>1克拉炫酷钻石</p>
-                        <p class="f14">张德超</p>
-                        <p class="f14">智能分析师</p>
-                    </div>
-                    <div class="col f14 col-60">
-                        <p>电话：18729387262</p>
-                        <p>微信：chu8813</p>
-                        <p>最后跟进：2018-03-22 23:11</p>
-                    </div>
+                    <div class="col f14">{{item.customer.telephone}}</div>
+                    <div class="col col-67 f14">最后消费时间：{{item._lastConsumptionTime}}</div>
+                </div>
+            </div>
+            <div class="tab_box">
+                <div class="row">
+                    <a href="javascript:;" ng-click="checkTab(0)" ng-class="{'tab_btn_active': isShowTab0}" class="col padding_tb tab_btn">跟进记录({{followItems.length || 0}})</a>
+                    <a href="javascript:;" ng-click="checkTab(1)" ng-class="{'tab_btn_active': isShowTab1}" class="col padding_tb tab_btn">消费记录({{consumptionItems.length || 0}})</a>
                 </div>
             </div>
 
             <div class="list">
-                <div class="item item-icon-right" ng-click="showSeleMarket()">
+                <div class="item item-icon-right">
                     销售阶段
-                    <span class="item-note">{{seleMarket}}</span>
+                    <span class="item-note">{{item.salesPhase.name}}</span>
                     <i class="icon ion-chevron-right icon-accessory"></i>
                 </div>
             </div>
@@ -35,64 +42,88 @@
             <div class="list">
                 <div class="item item-icon-right">
                     跟进人
-                    <span class="item-note">22</span>
+                    <span class="item-note">{{item.creater.name}}</span>
                     <i class="icon ion-chevron-right icon-accessory"></i>
                 </div>
             </div>
 
-            <div class="tab_box">
-                <div class="row">
-                    <a href="javascript:;" ng-click="checkTab(0)" ng-class="{'tab_btn_active': isShowTab0}" class="col padding_tb tab_btn">跟进记录(1)</a>
-                    <a href="javascript:;" ng-click="checkTab(1)" ng-class="{'tab_btn_active': isShowTab1}" class="col padding_tb tab_btn">消费记录(2)</a>
-                </div>
-            </div>
+            
+
             <div ng-show="isShowTab0">
-                <div class="item_list_box">
+                <div class="notData" ng-if="notFollowListData">{{notFollowListData}}</div>
+
+                <div class="item_list_box" ng-if="followItems.length" ng-repeat="item in followItems">
                     <div class="row">
-                        <div class="col col-10 left_icon_box">
-                            <span class="name_box" ng-if="!item.head">伟</span>
-                            <img src="img/perry.png" ng-if="item.head" class="head_name" />
+                        <div class="col col-20 left_icon_box">
+                            <span class="name_box">{{item.nickname}}</span>
                         </div>
-                        <div class="col col-80">
-                            <h2 class="title f14">跟进人：蛤蟆皮</h2>
-                            <p class="info">2017-08-20 12:33</p>
+                        <div class="col col-67">
+                            <p class="title f14">跟进人：{{item.creater.name}}</p>
+                            <p class="info">{{item._followUpTime}}</p>
+                        </div>
+                        <div class="col text_align_right">
+                            <a ng-click="editFollow(item)" href="javascript:;" ng-if="!item.isEdit" class="colorPurple">编辑</a>
+                            <a href="javascript:;" ng-click="updateFollow(item)" class="colorPurple" ng-if="item.isEdit">保存</a>
                         </div>
                     </div>
                     <div class="padding_tb">
-                        <h2 class="title">除了最新使用React Native等之外,目前首选的为稳定的ionic+Angularjs来开发iOS和...**ps:不安装的情况下就是不能在此环境下编译等,但是对于浏览器运行</h2>
+                        <p class="title" ng-if="!item.isEdit">{{item.content}}</p>
+                        <textarea ng-model="item.content" ng-if="item.isEdit">{{item.content}}</textarea>
                     </div>
                 </div>
+
+                <div ng-if="isHasAddFollow">
+                    <div class="text_align_right padding_around">
+                        <a class="colorPurple" href="javascript:;" ng-click="createFollow()">保存</a>
+                    </div>
+                    <div class="item_list_box">
+                        <div>
+                            <textarea placeholder="请输入跟进内容" ng-model="followData.content"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
                 <div>
-                    <button class="button button-full button-light colorPurple">添加根据记录+</button>
+                    <button ng-click="showAddFollow()" class="button button-full button-light colorPurple">添加跟进记录+</button>
                 </div>
             </div>
             <div ng-show="isShowTab1">
-                <div class="item_list_box" ng-repeat="item in items">
+                <div class="notData" ng-if="notConsumptionListData">{{notConsumptionListData}}</div>
+                <div class="item_list_box" ng-repeat="item in consumptionItems">
                     <div class="row">
-                        <div class="col col-10 left_icon_box">
-                            <img src="img/perry.png" class="head_name" />
+                        <div class="col col-20 left_icon_box">
+                            <span class="name_box">{{item.nickname}}</span>
                         </div>
                         <div class="col col-80">
-                            <h2 class="title f14">跟进人：蛤蟆皮</h2>
-                            <p class="info">2017-08-20 12:33</p>
+                            <p class="title f14">导购员：{{item.creater.name}}</p>
+                            <p class="info">{{item._consumptionTime}}</p>
                         </div>
                     </div>
                     <div class="padding_tb">
-                        <div class="row">
-                            <div class="col col-10">&nbsp;</div>
+                        <div class="row padding_btm_small">
+                            <div class="col col-20">&nbsp;</div>
                             <div class="col">
-                                品名：18k金钻石耳钉
+                                <p class="title 14">品名：{{item.name}}</p>
                             </div>
-                            <div class="col">方式：兑换</div>
+                            
+                        </div>
+                        <div class="row padding_btm_small">
+                            <div class="col col-20">&nbsp;</div>
+                            <div class="col">
+                                <p class="title f14">标价：&yen;{{item.price}}</p>
+                            </div>
+                            <div class="col">
+                                <p class="title f14">折扣：{{item.discount}}折</p>
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="col col-10">&nbsp;</div>
-                            <div class="col">标价：&yen;6000</div>
-                            <div class="col">折扣：9折</div>
-                        </div>
-                        <div class="row">
-                            <div class="col col-10">&nbsp;</div>
-                            <div class="col">结算价：&yen;5400</div>
+                            <div class="col col-20">&nbsp;</div>
+                            <div class="col">
+                                <p class="title f14">结算价：&yen;{{item.settlementPrice}}</p>
+                            </div>
+                            <div class="col">
+                                <p class="title f14">方式：{{item.consumptionMode.name}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

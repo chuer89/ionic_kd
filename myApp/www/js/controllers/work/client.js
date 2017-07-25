@@ -194,31 +194,7 @@ angular.module('workClient.controller', [])
     }
 
     $scope.toggleSele = function(type) {
-        if (type == 'star') {
-            $scope.isShowPeriodSele = false;
-            $scope.isShowFrequencySele = false;
-            $scope.isShowAmountSele = false;
-
-            $scope.isShowStarSele = !$scope.isShowStarSele;
-        } else if( type == 'period' ) {
-            $scope.isShowStarSele = false;
-            $scope.isShowFrequencySele = false;
-            $scope.isShowAmountSele = false;
-
-            $scope.isShowPeriodSele = !$scope.isShowPeriodSele;
-        } else if (type == 'frequency') {
-            $scope.isShowStarSele = false;
-            $scope.isShowPeriodSele = false;
-            $scope.isShowAmountSele = false;
-
-            $scope.isShowFrequencySele = !$scope.isShowFrequencySele;
-        } else {
-            $scope.isShowStarSele = false;
-            $scope.isShowPeriodSele = false;
-            $scope.isShowFrequencySele = false;
-    
-            $scope.isShowAmountSele = !$scope.isShowAmountSele;
-        }
+        toggleSeleHandle(type);
     }
 
 	$scope.doRefresh = function() {
@@ -229,17 +205,13 @@ angular.module('workClient.controller', [])
 	}
 })
 
-.controller('WorkClientDetailsCtrl', function($scope, $stateParams, $state, common, workCrmSele) {
+.controller('WorkClientDetailsCtrl', function($scope, $ionicActionSheet, $stateParams, $state, common, workCrmSele) {
     $scope.activeTab = '0';
 
     $scope.isShowTab0 = true;
     $scope.isShowTab1 = false;
 
     $scope.item = {};
-
-    workCrmSele.consumption_modes(function(data) {
-        // console.log(data)
-    })
 
     $scope.checkTab = function(index) {
         $scope.activeTab = index;
@@ -273,8 +245,6 @@ angular.module('workClient.controller', [])
                 } else {
                     $scope.notTaskListData = false;
                 }
-
-                console.log(data.body)
 
                 getFollowList();
                 getConsumptionList();
@@ -405,6 +375,52 @@ angular.module('workClient.controller', [])
         });
     }
 
+    $scope.showNav = function() {
+        $ionicActionSheet.show({
+            buttons: [
+                { text: '编辑' },
+                { text: '删除' }
+            ],
+            cancelText: '取消',
+            buttonClicked: function(index, item) {
+
+                if (index == 0) {
+                    common.post({
+                        type: 'obtain_customer_form',
+                        data: {
+                            id: $stateParams.id,
+                            userId: common.userInfo.clientId
+                        },
+                        success: function(data) {
+                            $state.go('work_client_edit', {
+                                id: $stateParams.id
+                            });
+                        }
+                    });
+                } else if (index == 1) {
+                    common.popup({
+                        content: '确认删除么'
+                    }, function() {
+                        common.post({
+                            type: 'delete_customer',
+                            data: {
+                                id: $stateParams.id,
+                                userId: common.userInfo.clientId
+                            },
+                            success: function(data) {
+                                common.toast(data.message, function() {
+                                    common.back();
+                                })
+                            }
+                        });
+                    })
+                }
+
+                return true;
+            }
+        })
+    }
+
     //消费记录
     var createConsumption = function() {
         common.post({
@@ -472,6 +488,78 @@ angular.module('workClient.controller', [])
 
         common.post({
             type: 'create_customer',
+            data: $scope.data,
+            success: function(data) {
+                common.loadingHide();
+
+                common.toast(data.message, function() {
+                    common.back();
+                });
+            }
+        });
+    }
+})
+
+.controller('WorkClientEditCtrl', function($scope, $ionicActionSheet, $stateParams, common, workCrmSele) {
+    $scope.data = {
+        createrId: common.userInfo.clientId,
+        customerTypeId: '',
+        starId: ''
+    }
+
+    common.loadingShow();
+    common.post({
+        type: 'obtain_customer_form',
+        data: {
+            id: $stateParams.id,
+            userId: common.userInfo.clientId
+        },
+        success: function(data) {
+            common.loadingHide();
+            angular.extend($scope.data, data.body);
+
+            $scope.seleType = data.body.customerTypeName;
+            $scope.seleStar = workCrmSele.joinStar({value: data.body.starValue});
+        }
+    });
+
+    $scope.seleType = '请选择';
+    workCrmSele.customer_types(function(data) {
+        $scope.showSeleType = function () {
+            $ionicActionSheet.show({
+                buttons: common.setSeleRepeat(data.body.customerTypes),
+                cancelText: '取消',
+                buttonClicked: function(index, item) {
+                    $scope.seleType = item.text;
+                    $scope.data.customerTypeId = item.id;
+
+                    return true;
+                }
+            })
+        }
+    });
+
+    $scope.seleStar = '请选择';
+    workCrmSele.star(function(data) {
+        $scope.showSeleStar = function () {
+            $ionicActionSheet.show({
+                buttons: common.setSeleRepeat(data),
+                cancelText: '取消',
+                buttonClicked: function(index, item) {
+                    $scope.seleStar = item.text;
+                    $scope.data.starId = item.id;
+
+                    return true;
+                }
+            })
+        }
+    });
+
+    $scope.submit = function() {
+        common.loadingShow();
+
+        common.post({
+            type: 'update_customer',
             data: $scope.data,
             notPretreatment: true,
             success: function(data) {

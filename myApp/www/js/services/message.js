@@ -257,8 +257,8 @@ angular.module('message.services', [])
 
         //当前登录用户信息
         userInfo: {
-            // clientId: 153
-            clientId: 28
+            clientId: 153
+            // clientId: 28
         },
 
         setLocalStorage: function(key, value) {

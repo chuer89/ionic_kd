@@ -8,63 +8,69 @@
   	<ion-content>
   		<div class="kd_nav_filter">
             <div class="padding_around row">
-      			<div class="kd_sele_box col">
+      			<div class="kd_sele_box col col-25">
       				<div ng-click="toggleSele('star')" class="kd_sele_val">星级<i class="ion-arrow-down-b"></i></div>
       				<div class="kd_sele_content" ng-show="isShowStarSele">
       					<i class="ion-arrow-up-b kd_sele_arrow"></i>
       					<div class="kd_sele_item">
-      						<a href="javascript:;" ng-repeat="item in seleStar">{{item.name}}</a>
+      						<a href="javascript:;" ng-click="seleStarHandle(item)" ng-repeat="item in seleStar">{{item.name}}</a>
       					</div>
       				</div>
       			</div>
-                <div class="kd_sele_box col">
-                    <div ng-click="toggleSele('period')" class="kd_sele_val">时间段<i class="ion-arrow-down-b"></i></div>
-                    <div class="kd_sele_content" ng-show="isShowPeriodSele">
+                <div class="kd_sele_box col col-20 kd_m">
+                    <div ng-click="toggleSele('time')" class="kd_sele_val">时间段<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowTimeSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">
-                            <a href="javascript:;" ng-repeat="item in selePeriod">{{item.name}}</a>
+                            <a href="javascript:;" ng-click="seleTimeHandle(item)" ng-repeat="item in seleTime">{{item.name}}</a>
                         </div>
                     </div>
                 </div>
-                <div class="kd_sele_box col">
-                    <div ng-click="toggleSele('special')" class="kd_sele_val">特殊日<i class="ion-arrow-down-b"></i></div>
-                    <div class="kd_sele_content" ng-show="isShowSpecialSele">
+                <div class="kd_sele_box col col-20 ">
+                    <div ng-click="toggleSele('types')" class="kd_sele_val">特殊日<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowTypesSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">
-                            <a href="javascript:;" ng-repeat="item in seleSpecial">{{item.name}}</a>
+                            <a href="javascript:;" ng-click="seleTypesHandle(item)" ng-repeat="item in seleTypes">{{item.name}}</a>
                         </div>
                     </div>
                 </div>
             </div>
   		</div>
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
         <div class="list_box">
-            <a href="javascript:;" class="item_list_box">
+            <a href="#/work/visit/details/{{item.id}}" class="item_list_box" ng-repeat="item in items">
                 <div class="border_btm">
-                    <div class="row">
+                    <div class="row padding_btm_small">
                         <div class="col">
-                            <p class="title">丽丽了女士</p>
+                            <p class="title">{{item.customer.name}}</p>
                         </div>
                         <div class="col info col-67">
-                            <p>微信：huanghuangwekk9983</p>
+                            <p>微信：{{item.customer.weChat}}</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row padding_btm_small">
                         <div class="col info">
-                            <P>13409204938</P>
+                            <P>{{item.customer.telephone}}</P>
                         </div>
                         <div class="col info">
-                            <p class="colorPurple">智能分析师</p>
+                            <p class="colorPurple">{{item.customer.customerType.name}}</p>
                         </div>
                         <div class="col info">
-                            <p class="colorPurple">★★</p>
+                            <p class="info">{{item._star}}</p>
                         </div>
                     </div>
-                    <div class="row info">
-                        <div class="col">
-                            <p>k斤吊坠炫酷环钻</p>
-                        </div>
-                        <div class="col">
-                            <p>&yen;190</p>
+                    <div class="row padding_btm_small" ng-if="item.customer.consumptionRecords.length">
+                        <div class="col info col-20">购买记录</div>
+                        <div class="col info">
+                            <div class="row" ng-repeat="consumption in item.customer.consumptionRecords">
+                                <div class="col">
+                                    <p>{{consumption.name}}</p>
+                                </div>
+                                <div class="col">
+                                    <p>&yen;{{consumption.settlementPrice}}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -77,5 +83,6 @@
                 </div>
             </a>
         </div>
+        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
   	</ion-content>
 </ion-view>

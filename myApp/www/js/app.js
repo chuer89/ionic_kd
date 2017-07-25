@@ -540,6 +540,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/client/create.html',
         controller: 'WorkClientCreateCtrl'
     })
+    //客户-修改
+    .state('work_client_edit', {
+        url: '/work/client/edit/:id',
+        templateUrl: 'templates/work/client/edit.html',
+        controller: 'WorkClientEditCtrl'
+    })
 
     //商机
     .state('work_opportunity', {
@@ -559,12 +565,24 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/opportunity/create.html',
         controller: 'WorkOpportunityCreateCtrl'
     })
+    //商机-修改
+    .state('work_opportunity_edit', {
+        url: '/work/opportunity/edit/:id',
+        templateUrl: 'templates/work/opportunity/edit.html',
+        controller: 'WorkOpportunityEditCtrl'
+    })
 
     //回访
     .state('work_visit', {
         url: '/work/visit',
         templateUrl: 'templates/work/visit/index.html',
         controller: 'WorkVisitCtrl'
+    })
+    //回访-详情
+    .state('work_visit_details', {
+        url: '/work/visit/details/:id',
+        templateUrl: 'templates/work/visit/details.html',
+        controller: 'WorkVisitDetailsCtrl'
     })
 
     //crm-end
