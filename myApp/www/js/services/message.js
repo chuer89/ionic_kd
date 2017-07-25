@@ -193,6 +193,7 @@ angular.module('message.services', [])
                 }
 
                 if (data.status != '1000' && !opt.noFail) {
+                    COMMON.loadingHide();
                     fail(data.message || '数据有误');
                 } else {
                     success(data);
@@ -256,8 +257,8 @@ angular.module('message.services', [])
 
         //当前登录用户信息
         userInfo: {
-            clientId: 153
-            // clientId: 28
+            // clientId: 153
+            clientId: 28
         },
 
         setLocalStorage: function(key, value) {
@@ -451,7 +452,7 @@ angular.module('message.services', [])
             if (_arr[1] && fmt.indexOf(':')) {
                 _t = _arr[1].split(':');
                 _o = angular.extend(_o, {
-                    hh: _t[0], 
+                    HH: _t[0], 
                     mm: _t[1], 
                     ss: _t[2]
                 });

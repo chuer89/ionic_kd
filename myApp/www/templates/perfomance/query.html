@@ -59,7 +59,7 @@
             </div>
             <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
             <div class="item_list_box" ng-repeat="item in items">
-                <a href="#/perfomance/list/{{queryDate}}" class="row">
+                <a href="#/perfomance/list/{{queryDate}}_{{item.userId}}" class="row">
                     <div class="col col-20 text_align_center">
                         <span class="name_box">{{item.nickname}}</span>
                     </div>

@@ -26,7 +26,7 @@ angular.module('workSchedule.controller', [])
                 }
 
                 for (var i = 0, ii = _body.riChengList.length; i < ii; i++) {
-                    _body.riChengList[i]._beginTime = common.format(_body.riChengList[i].beginTime)
+                    _body.riChengList[i]._beginTime = common.format(_body.riChengList[i].beginTime, 'yyyy-MM-dd HH:ss')
                 }
 
                 $scope.items = _body.riChengList;
@@ -170,7 +170,7 @@ angular.module('workSchedule.controller', [])
             content: $scope.data.content,
             title: $scope.data.title,
             clientId: common.userInfo.clientId,
-            beginTime: "2017-07-07 13:40",
+            beginTime: "2017-08-07 13:40",
             cycletime: $scope.data.cycletime.key,
             remindtime: $scope.data.remindtime.key
         };

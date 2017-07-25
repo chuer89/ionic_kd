@@ -406,17 +406,20 @@ angular.module('perfomance.controller', [])
 // 绩效列表
 .controller('ListPerfomance', function($scope, $stateParams, $timeout, common) {
     $scope.items = [];
+    $scope.titleName = '';
 
-    var _nowDate = common.getNowDate($stateParams.id);
+    var _up = $stateParams.id.split('_'),
+        _nowDate = common.getNowDate(_up[0]),
+        _userId = _up[1];
 
-    common.getUserinfo_simple(28, function(data) {
+    common.getUserinfo_simple(_userId, function(data) {
         $scope.titleName = data.name;
     });
 
     $scope.data = {
         month: _nowDate.month,
         year: _nowDate.year,
-        clientId: 28
+        clientId: _userId
     };
     var dataList = {
         currentPage: 0,

@@ -138,7 +138,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         views: {
             'tab-perfomance': {
                 templateUrl: 'templates/perfomance/index.html',
-                controller: 'PerfomanceCtrl'
+                controller: 'PerfomanceCtrl',
+                cache: false
             }
         }
     })
@@ -524,7 +525,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_client', {
         url: '/work/client',
         templateUrl: 'templates/work/client/index.html',
-        controller: 'WorkClientCtrl'
+        controller: 'WorkClientCtrl',
+        cache: false
     })
     //客户-详情
     .state('work_client_details', {

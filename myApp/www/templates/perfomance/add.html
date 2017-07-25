@@ -36,11 +36,11 @@
               </label>
               <label class="item item-input">
                 <span class="input-label">金额</span>
-                <input type="password" placeholder="0" ng-model="data.jinE">
+                <input type="text" placeholder="0" ng-model="data.jinE">
               </label>
               <label class="item item-input">
                 <span class="input-label">PK</span>
-                <input type="password" placeholder="0" ng-model="data.pk">
+                <input type="text" placeholder="0" ng-model="data.pk">
               </label>
         </div>
 
@@ -54,8 +54,9 @@
         </div>
 
         <div class="list card list_box">
+            <form enctype="multipart/form-data" method="post" name="fileinfo"></form>
             <div class="item">
-                <a href="javascript:;">
+                <a href="javascript:;" ng-click="showSelePhoto()">
                     <img src="img/icon/plus.png" class="icon_plus" />
                 </a>
             </div>

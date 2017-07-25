@@ -59,35 +59,23 @@
                 </div>
             </div>
   		</div>
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
         <div class="list_box">
-            <a href="#/work/client/details/:1" class="item_list_box">
+            <a href="#/work/client/details/{{item.id}}" class="item_list_box" ng-repeat="item in items">
                 <div class="row">
                     <div class="col">
-                        <p>张洪达</p>
-                        <P>13409204938</P>
+                        <p>{{item.name}}</p>
+                        <P>{{item.telephone}}</P>
                     </div>
                     <div class="col">
-                        <p>2019-02-32</p>
+                        <p class="colorPurple">{{item._lastConsumptionTime}}</p>
                     </div>
                     <div class="col">
-                        <p>★★</p>
+                        <p class="colorPurple">{{item._star}}</p>
                     </div>
                 </div>
             </a>
-            <div class="item_list_box">
-                <div class="row">
-                    <div class="col">
-                        <p>陈红</p>
-                        <P>16729480483</P>
-                    </div>
-                    <div class="col">
-                        <p>2017-06-11</p>
-                    </div>
-                    <div class="col">
-                        <p>★★★★</p>
-                    </div>
-                </div>
-            </div>
+            <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
         </div>
   	</ion-content>
 </ion-view>

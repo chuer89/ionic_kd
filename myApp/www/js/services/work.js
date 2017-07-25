@@ -518,6 +518,19 @@ angular.module('work.services', [])
             });
         },
 
+        //星级组合
+        joinStar: function(starVal) {
+            var star = '';
+            if (!starVal || (starVal && !starVal.value)) {
+                starVal = {value: 0};
+            }
+
+            for (var i = 0; i < starVal.value; i ++) {
+                star += '★';
+            }
+            return star;
+        },
+
         //客户类型
         customer_types: function(cb) {
             ajax('obtain_customer_types', cb);
