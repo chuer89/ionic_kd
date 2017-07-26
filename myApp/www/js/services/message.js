@@ -155,6 +155,12 @@ angular.module('message.services', [])
             var success = opt.success;
             var error = opt.error;
 
+            if (!COMMON.userInfo.clientId && (
+                type != 'send_code' && type != 'client_login' && type != 'change_password'
+                )){
+                $state.go('login');
+            }
+
             //opt.notPretreatment 不预处理 默认false
 
             var fail = function(msg) {
@@ -256,10 +262,7 @@ angular.module('message.services', [])
         },
 
         //当前登录用户信息
-        userInfo: {
-            clientId: 153
-            // clientId: 28
-        },
+        userInfo: {},
 
         setLocalStorage: function(key, value) {
             if (localStorage) {
@@ -622,6 +625,7 @@ angular.module('message.services', [])
             COMMON.post({
                 type: 'phone_book',
                 data: _param,
+                notPretreatment: true,
                 success: function(data) {
                     var _body = data.body;
 
@@ -866,26 +870,30 @@ angular.module('message.services', [])
         changeDate: function(date){},
 
         //本地日期选择
-        datePicker: function(cb, isTime) {
+        datePicker: function(cb, isDateTime) {
             var _mode = 'date',
                 fmt = 'yyyy-MM-dd';
 
-            if (isTime) {
-                _mode = 'time';
-                fmt = 'yyyy-MM-dd hh:mm';
+            if (isDateTime) {
+                _mode = 'datetime';
+                fmt = 'yyyy-MM-dd HH:mm';
             }
 
+            //http://www.jianshu.com/p/e7b3e44e366d
+
             var options = {
-                date: '2017-07-20',
-                mode: _mode, // date or 'time'
+                date: new Date,
+                mode: _mode, // date丨time丨datetime
                 // minDate: new Date() - 10000,
-                // allowOldDates: false,
-                // allowFutureDates: false,
+                allowOldDates: true,
+                allowFutureDates: true,
+                // is24Hour: false,
+                locale: "NL",
+                locale: "zh_cn",
                 doneButtonLabel: '确定',
                 doneButtonColor: '#F2F3F4',
                 cancelButtonLabel: '取消',
                 cancelButtonColor: '#000000',
-                dateFormat: fmt,
                 doneButtonColor: '#000000'
             };
 
@@ -896,7 +904,7 @@ angular.module('message.services', [])
                         return;
                     }
                     if (typeof cb == 'function') {
-                        _date = COMMON.format(date, fmt);
+                        _date = COMMON.format(date + '', fmt, true);
                         cb(_date);
                     }
                 });
@@ -960,6 +968,8 @@ angular.module('message.services', [])
     };
 
     window.COMMON = obj;
+
+    obj.userInfo.clientId = obj.getLocalStorage('clientId');
 
     return obj;
 })

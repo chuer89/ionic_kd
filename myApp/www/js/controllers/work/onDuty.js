@@ -4,19 +4,42 @@ angular.module('workOnDuty.controller', [])
     $scope.items = [];
     $scope.scheduleID = '';
 
-	COMMON.post({
-        type: 'zhiban_list',
-        data: {
-            "userId": common.userInfo.clientId,
-            "date": '2017-07-12'
-        },
-        success: function(data) {
-            var _body = data.body;
+    $scope.data = {
+        date: common.format(false, 'yyyy-MM-dd'),
+        userId: common.userInfo.clientId
+    };
 
-            $scope.items = _body.data;
-            $scope.scheduleID = _body.scheduleID;
-        }
-    });    
+    $scope.seleDate = function() {
+        common.datePicker(function(date) {
+            $scope.data.date = date;
+            getAjax();
+        });
+    }
+
+	var getAjax = function() {
+        common.loadingShow();
+        COMMON.post({
+            type: 'zhiban_list',
+            data: $scope.data,
+            notPretreatment: true,
+            success: function(data) {
+                var _body = data.body;
+                common.loadingHide();
+
+                if (!_body) {
+                    $scope.notTaskListData = data.message;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
+
+                $scope.items = _body.data;
+                $scope.scheduleID = _body.scheduleID;
+            }
+        }); 
+    };
+
+    getAjax();
 })
 
 //设定
@@ -57,60 +80,91 @@ angular.module('workOnDuty.controller', [])
 })
 
 //值班查询
-.controller('WorkOnDutyQueryCtrl', function($scope, common) {
+.controller('WorkOnDutyQueryCtrl', function($scope, common, seleMenuList) {
     $scope.items = [];
+
+    var month= common.format(false, 'MM'),
+        year= common.format(false, 'yyyy');
 
     var brandID = '',
         deptID = '';
 
+    var menus = seleMenuList.menu();
+
+    $scope.data = {
+        endDate: common.format(false, 'yyyy-MM') + '-' + common.getLastDay(year, month),
+        startDate: common.format(false, 'yyyy-MM')+'-01'
+    }
+
     $scope.doRefresh = function() {
         setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
+            initData(true)
         }, 1000)
         return true;
     };
 
-    var searchAjax = function () {
+    var searchAjax = function (isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
+        }
+
+        angular.extend($scope.data, {
+            brandID: brandID,
+            deptID: deptID
+        });
+
         COMMON.post({
             type: 'zhiban_listsearch',
-            data: {
-                endDate: '2017-07-13',
-                startDate: '2017-01-01',
-                brandID: brandID,
-                deptID: deptID
-            },
+            data: $scope.data,
+            notPretreatment: true,
             success: function(data) {
+                common.loadingHide();
+
                 var _body = data.body;
+
+                if (!_body || (_body && !_body.length)) {
+                     $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
 
                 $scope.items = _body;
             }
         });
-    }, initData = function() {
+    }, initData = function(isNotLoading) {
         $scope.items = [];
 
-        searchAjax();
+        searchAjax(isNotLoading);
     }
 
-    initData();
+     //选择部门-start
 
-    //选择部门-start
+    var seleDepartmentId = '';
+
     $scope.seleBrank = [];
     $scope.seleDepartment = [];
+    $scope.seleDate = menus.seleMonth;
 
     $scope.seleBrankInfo = '品牌';
     $scope.seleDepartmentInfo = '部门';
+    $scope.seleDateInfo = common.format(false, 'yyyy-MM');
 
     $scope.isShowBrankSele = false;
     $scope.isShowDepartmentSele = false;
+    $scope.isShowDateSele = false;
 
     //选择菜单处理
     var toggleSeleHandle = function(type, isAjax) {
         if (type == 'brank') {
             $scope.isShowDepartmentSele = false;
+            $scope.isShowDateSele = false;
 
             $scope.isShowBrankSele = !$scope.isShowBrankSele;
         } else if (type == 'department') {
             $scope.isShowBrankSele = false;
+            $scope.isShowDateSele = false;
 
             if (!$scope.seleDepartment.length) {
                 common.toast('请选择正确品牌');
@@ -118,41 +172,75 @@ angular.module('workOnDuty.controller', [])
             }
 
             $scope.isShowDepartmentSele = !$scope.isShowDepartmentSele;
+        } else if (type == 'date') {
+            $scope.isShowBrankSele = false;
+            $scope.isShowDepartmentSele = false;
+
+            $scope.isShowDateSele = !$scope.isShowDateSele;
         }
 
         if (isAjax) {
-            initData();
+            initData(true);
         }
     }
 
-    //加载部门&公司
-    common.getCompany(function(data) {
-        $scope.seleBrank = data;
-    })
-
     //选择部门
-    $scope.seleBrankHandle = function(item) {
+    var _seleBrankHandle = function(item) {
+        seleDepartmentId = item.departmentId;
         brandID = item.departmentId;
+        deptID = '';
 
         $scope.seleBrankInfo = item.name;
         $scope.seleDepartmentInfo = '部门';
 
         $scope.seleDepartment = item.childDepartment;
+    }
+    
+    $scope.seleBrankHandle = function(item) {
+        _seleBrankHandle(item);
 
         toggleSeleHandle('brank', true);
     }
     $scope.seleDepartmentHandle = function(item) {
+        seleDepartmentId = item.departmentId;
         deptID = item.departmentId;
+
         $scope.seleDepartmentInfo = item.name;
 
         toggleSeleHandle('department', true);
+    }
+
+    $scope.seleDateHandle = function(item) {
+        var date = {};
+
+        if (item.key == 'prev') {
+            date = common.getPrevDate($scope.seleDateInfo)
+        } else if (item.key == 'next') {
+            date = common.getNextDate($scope.seleDateInfo)
+        } else {
+            date = common.getNowDate();
+        }
+
+        $scope.data.startDate = date.date + '-01';
+        $scope.data.endDate = date.date + '-' + date.day;
+
+        $scope.seleDateInfo = date.date;
+
+        toggleSeleHandle('date', true);
     }
 
     //筛选切换
     $scope.toggleSele = function(type) {
         toggleSeleHandle(type);
     }
-    //选择部门-end
+
+    //加载部门&公司
+    common.getCompany(function(data) {
+        $scope.seleBrank = data;
+
+        _seleBrankHandle(data[0]);
+        initData();
+    });
 })
 
 .controller('WorkOnDutyDetailsCtrl', function($scope, $stateParams, common) {

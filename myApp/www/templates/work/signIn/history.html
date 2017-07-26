@@ -1,20 +1,20 @@
-<ion-view view-title="签到记录-{{name}}">
+<ion-view view-title="签到记录">
     <style type="text/css">
         .backdrop{
             display: none;
         }
         .popup-container{
             bottom: auto;
-            top: 50px;
+            top: 60px;
         }
         .popup-container .popup{
-            width: 90%;
+            width: 95%;
         }
         .ionic_datepicker_popup .popup-buttons{
             display: none;
         }
         .ionic_datepicker_popup .calendar_grid{
-            height: 120px;
+            /*height: 120px;*/
         }
     </style>
 
@@ -23,7 +23,8 @@
     </ion-nav-buttons>
 
 	<ion-content>
-        <div style="height: 250px;"></div>
+        <div style="height: 340px;"></div>
+        <div class="padding colorGrey">{{data.searchDate}}&nbsp;&nbsp;&nbsp;&nbsp;{{name}}</div>
         <div class="list_box">
             <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
             <a href="javascript:;" class="item_list_box" ng-repeat="item in items">

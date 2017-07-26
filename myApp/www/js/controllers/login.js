@@ -21,16 +21,16 @@ angular.module('login.controller', [])
         common.post({
             type: 'client_login',
             data: {
-                // mobile: $scope.data.mobile,
-                // password: $scope.data.password
+                mobile: $scope.data.mobile,
+                password: $scope.data.password
 
-                mobile: 15608203716,
-                password: 111111
+                // mobile: 15608203716,
+                // password: 111111
             },
             success: function(data) {
                 var _body = data.body;
 
-                _body.clientId = 28;
+                // _body.clientId = 28;
 
                 if (_body.clientId != common.getLocalStorage('clientId')) {
                     common.clearLocalStorage();
@@ -110,8 +110,8 @@ angular.module('login.controller', [])
         common.post({
             type: 'send_code',
             data: {
-                // mobile: $scope.data.mobile
-                mobile: 15608203716
+                mobile: $scope.data.mobile
+                // mobile: 15608203716
             },
             success: function(data) {
                 $scope.data.sendCode = data.body.code;

@@ -9,15 +9,21 @@
 
 	<ion-content>
         <div class="list_box">
-            <div class="item_list_box">
-                <p class="title">{{data.taskBasiInfo.taskTitle}}</p>
+            <div class="item_list_box info_f_14">
+                <div class="row task_status">
+                    <div class="col col-80"><p class="title">{{data.taskBasiInfo.taskTitle}}</p></div>
+                    <div class="col">
+                        <p class="text_align_right" ng-class="data.taskBasiInfo.status">{{data.taskBasiInfo._status}}</p>
+                    </div>
+                </div>
+                
                 <p class="info">{{data.taskBasiInfo.endTime}}</p>
             </div>
-            <div class="item_list_box">
+            <div class="item_list_box info_f_14">
                 <p><span class="info">提醒：</span>提前{{data.taskBasiInfo.remindtime}}小时</p>
                 <p><span class="info">描述：</span>{{data.taskBasiInfo.taskDescription}}</p>
             </div>
-            <div class="item_list_box">
+            <div class="item_list_box info_f_14">
                 <p><span class="info">负责人：</span>{{data.taskBasiInfo.creatorName}}</p>
                 <p><span class="info">检查人：</span>王某</p>
                 <p><span class="info">关注人：</span>李某</p>
@@ -28,14 +34,14 @@
         </div>
 
         <div class="padding">
-            <div class="text_align_center" ng-if="notCommentsData">--{{notCommentsData}}--</div>
+            <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
             <div class="list_box">
                 <div class="item_list_box" ng-repeat="comments in commentArray">
                     <div class="row">
                         <div class="col col-20 text_align_center">
                             <span class="name_box">{{comments.nickname}}</span>
                         </div>
-                        <div class="col col-67">
+                        <div class="col col-50">
                             <h2 class="title">{{comments.userName}}</h2>
                             <p class="info">{{comments.content}}</p>
                         </div>

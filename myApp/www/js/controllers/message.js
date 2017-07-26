@@ -1,17 +1,24 @@
 angular.module('message.controller', [])
 
 //
-.controller('MessageCtrl', function($scope, $state, $filter, ionicTimePicker,
-	$cordovaVibration, $cordovaToast, $cordovaDatePicker, $cordovaCamera, 
-	$cordovaImagePicker, $timeout, messagePush, ionicDatePicker, common) {
+.controller('MessageCtrl', function($scope, $state, messagePush, common) {
     $scope.data = {};
 
     $scope.items = messagePush.all();
 
-    // $cordovaVibration.vibrate(50);
-    // console.log($cordovaVibration)
+    $scope.doRefresh = function() {
+        setTimeout(function() {
+            $scope.$broadcast('scroll.refreshComplete');
+        }, 1000)
+        return true;
+    }
+})
 
-    $scope.startVib=function(){ 
+.controller('CommonDemoCtrl', function($scope, $state, $filter, ionicTimePicker,
+	$cordovaVibration, $cordovaToast, $cordovaDatePicker, $cordovaCamera, 
+	$cordovaImagePicker, $timeout, messagePush, ionicDatePicker, common) {
+
+	$scope.startVib=function(){ 
 	  // 震动 1000ms 
 	  	$cordovaVibration.vibrate(1000); 
 
@@ -23,14 +30,47 @@ angular.module('message.controller', [])
 	  				})
 	};
 
+	var dp = function() {
+		var options = {
+		    date: new Date(),
+		    mode: 'date', // date丨time丨datetime
+		    // minDate: new Date() - 10000,
+		    allowOldDates: true,
+		    allowFutureDates: true,
+		    is24Hour: true,
+		    locale: "NL",
+		    locale: "zh_cn",
+		    doneButtonLabel: 'DONE',
+		    doneButtonColor: '#F2F3F4',
+		    cancelButtonLabel: 'CANCEL',
+		    cancelButtonColor: '#000000'
+		  };
+
+		  document.addEventListener("deviceready", function () {
+
+		    $cordovaDatePicker.show(options).then(function(date){
+		        var _date = '';
+                if (!date) {
+                    return;
+                }
+                // alert(date)
+                _date = COMMON.format(date + '', 'yyyy-MM-dd', true);
+                alert(_date);
+                // alert(date)
+		    });
+
+		  }, false);
+	}
+
 	$scope.date = function () {
 		// $('#mn_date').click();
-		common.ionicDatePickerProvider(function(date) {
-			alert(date)
-		})
+		// common.ionicDatePickerProvider(function(date) {
+		// 	alert(date)
+		// })
 		// common.datePicker(function(date) {
 		// 	alert(date)
-		// }, true);
+		// });
+		dp();
 		return;
 
 		var ipObj1 = {
@@ -91,11 +131,4 @@ angular.module('message.controller', [])
 			// error getting photos
 		});
 	}
-
-    $scope.doRefresh = function() {
-        setTimeout(function() {
-            $scope.$broadcast('scroll.refreshComplete');
-        }, 1000)
-        return true;
-    }
 })

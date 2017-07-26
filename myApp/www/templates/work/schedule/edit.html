@@ -1,4 +1,4 @@
-<ion-view view-title="创建日程">
+<ion-view view-title="日程修改">
 	<ion-nav-buttons side="left">  
     	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
@@ -20,11 +20,10 @@
             </div>
         </div>
         <div class="list">
-            <div class="item item-icon-right" ng-click="seleDate()">
-                时间
-                <span class="item-note">{{data.beginTime}}</span>
-                <i class="icon ion-chevron-right icon-accessory"></i>
-            </div>
+            <label class="item item-input">
+                <span class="input-label">时间</span>
+                <input type="datetime" class="text_align_right" ng-model="data.beginTime" placeholder="请选择时间"/>
+            </label>
             <div class="item item-icon-right" ng-click="showSeleRepeat()">
                 重复
                 <span class="item-note">{{data.cycletime.text}}</span>

@@ -1,0 +1,32 @@
+<ion-view view-title="demo">
+    <style type="text/css">
+    .backdrop{
+        display: none;
+    }
+    .popup-container{
+        bottom: auto;
+        top: 50px;
+    }
+    .popup-container .popup{
+        width: 90%;
+    }
+    .ionic_datepicker_popup .popup-buttons{
+        display: none;
+    }
+    .ionic_datepicker_popup .calendar_grid{
+        height: auto;
+    }
+</style>
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-content>
+        <button class="button" ng-click="startVib()">整栋</button>
+        <button class="button" ng-click="date()">日期</button>
+        <button class="button" ng-click="camera()">相机</button>
+        <button class="button" ng-click="phone()">相册</button>
+        <input type="date">
+        <input type="time" >
+	</ion-content>
+</ion-view>

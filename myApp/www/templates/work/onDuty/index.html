@@ -8,6 +8,16 @@
     </ion-nav-buttons>
 
 	<ion-content>
+        <div class="list">
+            <div class="item item-icon-right" ng-click="seleDate()">
+                日期
+                <span class="item-note">{{data.date}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
+
         <div class="list_box">
             <div class="item_list_box" ng-repeat="item in items">
                 <div class="row">

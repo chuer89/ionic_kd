@@ -237,6 +237,14 @@ angular.module('workSign.controller', [])
         	name: ''
 		}, function(body) {
 			common.loadingHide();
+
+			if (!body) {
+				$scope.notTaskListData = common.notTaskListDataTxt;
+				return;
+			} else {
+				$scope.notTaskListData = false;
+			}
+
 			var _body = body,
         		phoneBook = _body.phoneBook;
 
@@ -357,8 +365,6 @@ angular.module('workSign.controller', [])
 .controller('WorkSigInHistoryCtrl', function($scope, $stateParams, $timeout, common) {
     $scope.items = [];
 
-    // $stateParams.id = 28;
-
     $scope.data = {
     	searchDate: common.format(false, 'yyyy-MM-dd'),
     	month: common.format(false, 'MM'),
@@ -405,10 +411,12 @@ angular.module('workSign.controller', [])
 	        	month: $scope.data.month,
 	        	year: $scope.data.year
 	        },
+	        notPretreatment: true,
 	        success: function(data) {
 	            var _body = data.body,
 	            	_list = _body.qianDaoInfos;
 
+	            $scope.items = [];
 	            common.loadingHide();
 
 	            var _qianDaoType = {

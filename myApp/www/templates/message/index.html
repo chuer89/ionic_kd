@@ -1,21 +1,4 @@
-<style type="text/css">
-	.backdrop{
-		display: none;
-	}
-	.popup-container{
-		bottom: auto;
-		top: 50px;
-	}
-	.popup-container .popup{
-		width: 90%;
-	}
-	.ionic_datepicker_popup .popup-buttons{
-		display: none;
-	}
-	.ionic_datepicker_popup .calendar_grid{
-		height: auto;
-	}
-</style>
+
 <ion-view view-title="消息">
 	<ion-nav-title ng-if="xx">
 	    <ion-header-bar class="item-input-inset">
@@ -38,12 +21,7 @@
 				</label>
 	        </div>
 		</div>
-		<button class="button" ng-click="startVib()">整栋</button>
-		<button class="button" ng-click="date()">日期</button>
-		<button class="button" ng-click="camera()">相机</button>
-		<button class="button" ng-click="phone()">相册</button>
-		<input type="date">
-		<input type="time" >
+		
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <ion-list class="list_box">
         	<ion-item class="item_list_box" ng-repeat="item in items">

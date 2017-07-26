@@ -1,5 +1,6 @@
 angular.module('workTask.controller', [])
 
+
 //'DECLARATION'or 'WORKING' or 'UNCONFIRMED' or 'QUALIFIED' or 'UNQUALIFIED' 
 //(申报，工作中，未确认，合格，不合格) default 'DECLARATION'
 // 责任人申报状态：DECLARATION
@@ -7,13 +8,19 @@ angular.module('workTask.controller', [])
 // 责任人提交后状态：UNCONFIRMED
 // 检查人审批后：QUALIFIED 或者 UNQUALIFIED
 
+// 按钮是否可见
+// 编辑：责任人和检查人都可以见，任务状态不是QUALIFIED或者UNQUALIFIED
+// 提交：责任人可见，任务状态是WORKING
+// 确认：检查人可见，任务状态是DECLARATION
+// 审核：检查人可见，任务状态是UNCONFIRMED
+// 申请延期：责任人可见，任务状态是WORKING
+// 添加讨论:都可见
+
 .controller('WorkTaskCtrl', function ($scope, $state, $ionicActionSheet, $timeout, workTaskList, common, seleMenuList) {
 	var dataList = {
         currentPage: 0,
         tasks: []
     };
-
-    common.loadingShow();
 
     var menus = seleMenuList.menu();
 
@@ -29,7 +36,11 @@ angular.module('workTask.controller', [])
     $scope.taskList = [];
     $scope.data = {};
 
-    var handleAjax = function() {
+    var handleAjax = function(isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
+        }
+
         COMMON.post({
             type: 'obtain_my_tasks',
             data: {
@@ -60,14 +71,12 @@ angular.module('workTask.controller', [])
                     $scope.taskList.push(tasks[i]);
                 }
 
-                console.log(dataList)
-
                 $timeout(function() {
                     $scope.vm.moredata = true;
                 }, 1000);
             }
         });
-    }, initAjax = function(isInitTab) {
+    }, initAjax = function(isInitTab, isNotLoading) {
         if (isInitTab) {
             $scope.tabs[0].isShowTab = true;
             $scope.data.myTaskStatus = $scope.tabs[0].type;
@@ -75,9 +84,9 @@ angular.module('workTask.controller', [])
 
         $scope.taskList = [];
         dataList.currentPage = 0;
-        handleAjax();
+        handleAjax(isNotLoading);
     }
-    initAjax(true);
+    initAjax(true, true);
 
     $scope.vm = {
         moredata: false,
@@ -89,7 +98,7 @@ angular.module('workTask.controller', [])
 
             $timeout(function () {
                 $scope.vm.moredata = false;
-                handleAjax();
+                handleAjax(true);
             }, 1500);
             return true;
         }
@@ -98,7 +107,7 @@ angular.module('workTask.controller', [])
 	$scope.doRefresh = function() {
 		setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
-            initAjax();
+            initAjax(false, true);
         }, 1000)
         return true;
 	}
@@ -131,12 +140,12 @@ angular.module('workTask.controller', [])
 
         $scope.data.myTaskStatus = item.type;
         
-        handleAjax();
+        handleAjax(true);
     }
 })
 
 //任务查询
-.controller('WorkTaskQueryCtrl', function($scope, $state, workTaskQuery) {
+.controller('WorkTaskQueryCtrl', function($scope, $state, workTaskQuery, common) {
     $scope.items = workTaskQuery.all();
 
     $scope.doRefresh = function() {
@@ -144,6 +153,79 @@ angular.module('workTask.controller', [])
             $scope.$broadcast('scroll.refreshComplete');
         }, 1000)
         return true;
+    }
+
+    var initData = function() {
+        
+    }
+
+    var seleDepartmentId = '';
+
+    $scope.seleBrank = [];
+    $scope.seleDepartment = [];
+
+    $scope.isShowBrankSele = false;
+    $scope.isShowDepartmentSele = false;
+
+    $scope.seleBrankInfo = '品牌';
+    $scope.seleDepartmentInfo = '部门';
+
+    //选择菜单处理
+    var toggleSeleHandle = function(type, isToggle) {
+        if (!isToggle) {
+            initData(true);
+        }
+
+        if (type == 'brank') {
+            $scope.isShowDepartmentSele = false;
+
+            $scope.isShowBrankSele = !$scope.isShowBrankSele;
+        } else if (type == 'department') {
+            $scope.isShowBrankSele = false;
+
+            if (!$scope.seleDepartment.length) {
+                common.toast('请选择正确品牌');
+                return;
+            }
+
+            $scope.isShowDepartmentSele = !$scope.isShowDepartmentSele;
+        }
+    }
+
+    //选择部门
+    var _seleBrankHandle = function(item) {
+        seleDepartmentId = item.departmentId;
+
+        $scope.seleBrankInfo = item.name;
+        $scope.seleDepartmentInfo = '部门';
+
+        $scope.seleDepartment = item.childDepartment;
+    }
+
+    //加载部门&公司
+    common.getCompany(function(data) {
+        $scope.seleBrank = data;
+
+        _seleBrankHandle(data[0]);
+        initData();
+    })
+
+    //选择部门
+    $scope.seleBrankHandle = function(item) {
+        _seleBrankHandle(item);
+
+        toggleSeleHandle('brank', true);
+    }
+    $scope.seleDepartmentHandle = function(item) {
+        $scope.seleDepartmentInfo = item.name;
+        seleDepartmentId = item.departmentId;
+
+        toggleSeleHandle('department');
+    }
+
+    //筛选切换
+    $scope.toggleSele = function(type) {
+        toggleSeleHandle(type, true);
     }
 })
 
@@ -194,8 +276,6 @@ angular.module('workTask.controller', [])
         var _data = $scope.data;
 
         var _param = {
-            // categoryName: '',
-            // importantName: '',
             creatorId: common.userInfo.clientId,
             description: _data.description,
             endTime: "2017-08-30 12:40",
@@ -261,18 +341,22 @@ angular.module('workTask.controller', [])
 })
 
 //查看详情
-.controller('WorkTaskListDetailsCtrl', function($scope, $stateParams, $ionicActionSheet, $state, $timeout, common) {
+.controller('WorkTaskListDetailsCtrl', function($scope, $stateParams, $ionicActionSheet, $state, $timeout, common, seleMenuList) {
     $scope.data = {};
 
+    var menus = seleMenuList.menu();
+    var taskStatus = menus.taskStatus;
+
+    //任务详情
     COMMON.post({
         type: 'task_detail_info',
         data: {
             taskId: $stateParams.id
         },
         success: function(data) {
-            $scope.data = data.body;
+            data.body.taskBasiInfo._status = common.getId(taskStatus, data.body.taskBasiInfo.status, 'key').name;
 
-            console.log(data.body)
+            $scope.data = data.body;
         }
     });
 
@@ -297,18 +381,20 @@ angular.module('workTask.controller', [])
             },
             notPretreatment: true,
             success: function(data) {
-                if (!data.body) {
-                    $scope.notCommentsData = '暂无讨论数据';
-                    return;
-                }
-
                 var _body = data.body;
+
+                if (!_body || (_body && !_body.commentArray) || (_body && _body.commentArray && !_body.commentArray.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
 
                 var list = _body.commentArray;
 
                 for (var i = 0, ii = list.length; i < ii; i++) {
                     list[i].nickname = common.nickname(list[i].userName);
-                    list[i]._createTime = common.format(list[i].createTime, 'hh:mm');
+                    list[i]._createTime = common.format(list[i].createTime, 'MM-dd HH:mm');
 
                     $scope.commentArray.push(list[i]);
                 }
@@ -332,7 +418,7 @@ angular.module('workTask.controller', [])
 
             $timeout(function () {
                 $scope.vm.moredata = false;
-                handleAjax();
+                ajaxComments();
             }, 1500);
             return true;
         }

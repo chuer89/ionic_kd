@@ -128,8 +128,15 @@ angular.module('workReport.controller', [])
 .controller('WorkReportCtrl', function($scope, $state, $ionicActionSheet, $timeout, common, seleMenuList) {
     var menus = seleMenuList.menu();
 
+    var month= common.format(false, 'MM'),
+        year= common.format(false, 'yyyy');
+
     var dataList = {};
-    $scope.data = {};
+    $scope.data = {
+        endDate: common.format(false, 'yyyy-MM') + '-' + common.getLastDay(year, month),
+        startDate: common.format(false, 'yyyy-MM')+'-01',
+        userId: common.userInfo.clientId
+    };
     $scope.items = [];
 
     var ajaxhandle = function(isNotLoading) {
@@ -137,16 +144,14 @@ angular.module('workReport.controller', [])
             common.loadingShow();
         }
 
+        angular.extend($scope.data, {
+            currentPage: dataList.currentPage + 1,
+            departmentId: seleDepartmentId
+        });
+
         COMMON.post({
             type: 'obtain_report',
-            data: {
-                userId: common.userInfo.clientId,
-                currentPage: dataList.currentPage + 1,
-                departmentId: seleDepartmentId,
-                startDate: '2017-01-04',
-                endDate: '2017-08-26',
-                typeId: $scope.data.typeId
-            },
+            data: $scope.data,
             notPretreatment: true,
             success: function(data) {
                 var _body = data.body;
@@ -212,12 +217,12 @@ angular.module('workReport.controller', [])
 
     $scope.seleBrankInfo = '品牌';
     $scope.seleDepartmentInfo = '部门';
-    $scope.seleDateInfo = '17/02-17/04';
+    $scope.seleDateInfo = common.format(false, 'yyyy-MM');
     $scope.seleTypeInfo = '类型';
 
     //选择菜单处理
-    var toggleSeleHandle = function(type, isToggle) {
-        if (!isToggle) {
+    var toggleSeleHandle = function(type, isAjax) {
+        if (isAjax) {
             initData(true);
         }
 
@@ -272,32 +277,56 @@ angular.module('workReport.controller', [])
     })
 
     //选择部门
+    var _seleBrankHandle = function(item) {
+        seleDepartmentId = item.departmentId;
+
+        $scope.seleBrankInfo = item.name;
+        $scope.seleDepartmentInfo = '部门';
+
+        $scope.seleDepartment = item.childDepartment;
+    }
+    
     $scope.seleBrankHandle = function(item) {
         _seleBrankHandle(item);
 
         toggleSeleHandle('brank', true);
     }
     $scope.seleDepartmentHandle = function(item) {
-        $scope.seleDepartmentInfo = item.name;
         seleDepartmentId = item.departmentId;
+        $scope.seleDepartmentInfo = item.name;
 
-        toggleSeleHandle('department');
+        toggleSeleHandle('department', true);
     }
 
     $scope.seleDateHandle = function(item) {
-        toggleSeleHandle('date');
+        var date = {};
+
+        if (item.key == 'prev') {
+            date = common.getPrevDate($scope.seleDateInfo)
+        } else if (item.key == 'next') {
+            date = common.getNextDate($scope.seleDateInfo)
+        } else {
+            date = common.getNowDate();
+        }
+
+        $scope.data.startDate = date.date + '-01';
+        $scope.data.endDate = date.date + '-' + date.day;
+
+        $scope.seleDateInfo = date.date;
+
+        toggleSeleHandle('date', true);
     }
 
     $scope.seleTypeHandle = function(item) {
         $scope.data.typeId = item.key;
         $scope.seleTypeInfo = item.name;
 
-        toggleSeleHandle('type');
+        toggleSeleHandle('type', true);
     }
 
     //筛选切换
     $scope.toggleSele = function(type) {
-        toggleSeleHandle(type, true);
+        toggleSeleHandle(type);
     }
 
     $scope.showNav = function() {

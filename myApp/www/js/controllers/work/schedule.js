@@ -45,11 +45,13 @@ angular.module('workSchedule.controller', [])
 })
 
 //日程详情
-.controller('WorkScheduleDetailsCtrl', function($scope, $stateParams, $ionicPopup, $ionicActionSheet, workScheduleWarn, common) {
+.controller('WorkScheduleDetailsCtrl', function($scope, $state, $stateParams, $ionicPopup, $ionicActionSheet, workScheduleWarn, common) {
 	$scope.item = {};
 
-    $scope.relationGuys = '';
+    common.setCheckedPerson._targetName = '';
 
+    $scope.relationGuys = '';
+    common.loadingShow();
     COMMON.post({
         type: 'richeng_detail_info',
         data: {
@@ -59,6 +61,7 @@ angular.module('workSchedule.controller', [])
         },
         success: function(data) {
             var _body = data.body;
+            common.loadingHide();
 
             var _relationGuys = '';
 
@@ -79,33 +82,25 @@ angular.module('workSchedule.controller', [])
 
     });
 
-    var ajaxDel = function() {
-        COMMON.post({
-            type: 'delete_richeng',
-            data: {
-                clientId: common.userInfo.clientId,
-                riChengId: $stateParams.id
-            },
-            success: function(data) {
-                common.toast(data.message, function() {
-                    common.back();
-                });
-            }
-        });
-    }
-
 	var showConfirm = function() {
-		var confirmPopup = $ionicPopup.confirm({
-			title: '提示',
-			template: '您是否删除该日程？'
-		});
-		confirmPopup.then(function(res) {
-			if(res) {
-				ajaxDel();
-			} else {
-				console.log('You are not sure');
-			}
-		});
+        common.popup({
+            content: '您是否删除该日程？'
+        }, function() {
+            common.loadingShow();
+            COMMON.post({
+                type: 'delete_richeng',
+                data: {
+                    clientId: common.userInfo.clientId,
+                    riChengId: $stateParams.id
+                },
+                success: function(data) {
+                    common.loadingHide();
+                    common.toast(data.message, function() {
+                        common.back();
+                    });
+                }
+            });
+        });
    	};
 
 	$scope.showNav = function () {
@@ -120,6 +115,10 @@ angular.module('workSchedule.controller', [])
                 // $state.go(item.link);
                 if (index == 1) {
                 	showConfirm();
+                } else {
+                    $state.go('work_schedule_edit', {
+                        id: $stateParams.id
+                    });
                 }
                 return true;
             }
@@ -127,17 +126,24 @@ angular.module('workSchedule.controller', [])
     }
 
     $scope.quit = function () {
-   		var confirmPopup = $ionicPopup.confirm({
-			title: '提示',
-			template: '退出后，你将不再参与该日程'
-		});
-		confirmPopup.then(function(res) {
-			if(res) {
-				console.log('You are sure');
-			} else {
-				console.log('You are not sure');
-			}
-		});
+   		common.popup({
+            content: '退出后，你将不再参与该日程'   
+        }, function() {
+            common.loadingShow();
+            COMMON.post({
+                type: 'exit_richeng',
+                data: {
+                    clientId: common.userInfo.clientId,
+                    riChengId: $stateParams.id
+                },
+                success: function(data) {
+                    common.loadingHide();
+                    common.toast(data.message, function() {
+                        common.back();
+                    });
+                }
+            });
+        })
    	}
 })
 
@@ -163,17 +169,19 @@ angular.module('workSchedule.controller', [])
         $scope.seleSendName = sendName;
     });
 
+    $scope.seleDate = function() {
+        common.datePicker(function(date) {
+            $scope.data.beginTime = date;
+        }, true);
+    }
+
     $scope.submit = function() {
-        var _param = {
+
+        var _param = angular.extend({}, $scope.data, {
             departmentList: [],
             userList: [],
-            content: $scope.data.content,
-            title: $scope.data.title,
-            clientId: common.userInfo.clientId,
-            beginTime: "2017-08-07 13:40",
-            cycletime: $scope.data.cycletime.key,
-            remindtime: $scope.data.remindtime.key
-        };
+            clientId: common.userInfo.clientId
+        })
 
         if (!_param.title) {
             return;
@@ -187,9 +195,7 @@ angular.module('workSchedule.controller', [])
             type: 'create_richeng',
             data: _param,
             success: function(data) {
-                var _body = data.body;
-
-               common.toast(_body.message, function() {
+               common.toast(data.message, function() {
                     history.back(-1);
                 });
             }
@@ -233,6 +239,146 @@ angular.module('workSchedule.controller', [])
     }
 })
 
+//日程修改
+.controller('WorkScheduleEidtCtrl', function($scope, $ionicActionSheet, $stateParams, common, seleMenuList) {
+    $scope.data = {
+        typePageName: 'WorkScheduleEidtCtrl',
+        beginTime: '',
+        title: '',
+        content: '',
+        userlist: [],
+        cycletime: {text: '请选择'},
+        remindtime: {text: '请选择'}
+    }
+
+    var menus = seleMenuList.menu();
+
+    $scope.seleSendName = '';
+    
+    var getDetails = function() {
+        common.loadingShow();
+        COMMON.post({
+            type: 'richeng_detail_info',
+            data: {
+                "userId": common.userInfo.clientId,
+                "riChengType": "richeng",
+                riChengId: $stateParams.id
+            },
+            success: function(data) {
+                var _body = data.body;
+                common.loadingHide();
+
+                var _relationGuys = '';
+
+                for (var i = 0, ii = _body.jieshourenList.length; i < ii; i++) {
+                    _relationGuys += _body.jieshourenList[i].userName + ' ';
+                }
+
+                var _remindtime = common.getId(menus.remindtime, _body.riChengbasicInffo.remindtime, 'key'),
+                    _cycletime = common.getId(menus.cycletime, _body.riChengbasicInffo.cycletime, 'key');
+
+                $scope.data.remindtime = angular.extend(_remindtime, {text: _remindtime.name});
+                $scope.data.cycletime = angular.extend(_cycletime, {text: _cycletime.name});
+
+                common.getUserinfo_simple(_body.riChengbasicInffo.riChengCreatorId, function(_data) {
+                    _body.riChengbasicInffo.userName = _data.name;
+
+                    _body.riChengbasicInffo._time = common.format(_body.riChengbasicInffo.riChengBegingtime);
+
+                    angular.extend($scope.data, {
+                        title: _body.riChengbasicInffo.riChengTitle,
+                        content: _body.riChengbasicInffo.riChengContent,
+                        beginTime: _body.riChengbasicInffo._time
+                    });
+
+                    console.log(_body.riChengbasicInffo, _relationGuys)
+                });
+
+                $scope.seleSendName = _relationGuys;
+            }
+
+        });
+    }
+    
+
+    if (common.setCheckedPerson._targetName != 'work_schedule_add') {
+        common.setCheckedPerson = {};
+    }
+
+    common.getCommonSendName(function(sendName) {
+        $scope.seleSendName = sendName;
+    });
+
+    $scope.submit = function() {
+        var _param = {
+            departmentList: [],
+            userList: [],
+            content: $scope.data.content,
+            title: $scope.data.title,
+            clientId: common.userInfo.clientId,
+            id: $stateParams.id,
+            beginTime: "2017-08-07 13:40",
+            cycletime: $scope.data.cycletime.key,
+            remindtime: $scope.data.remindtime.key
+        };
+
+        if (!_param.title) {
+            return;
+        }
+
+        common.getCommonCheckedPerson(function(opt) {
+            angular.extend(_param, opt);
+        });
+
+        COMMON.post({
+            type: 'update_richeng',
+            data: _param,
+            success: function(data) {
+               common.toast(data.message, function() {
+                    history.back(-1);
+                });
+            }
+        });
+    }
+
+    //重复
+    $scope.showSeleRepeat = function () {
+        $ionicActionSheet.show({
+            buttons: common.setSeleRepeat(menus.cycletime),
+            cancelText: '取消',
+            buttonClicked: function(index, item) {
+                $scope.data.cycletime = item;
+                return true;
+            }
+        })
+    }
+
+    //时间
+    $scope.showSeleWarn = function() {
+        $ionicActionSheet.show({
+            buttons: common.setSeleRepeat(menus.remindtime),
+            cancelText: '取消',
+            buttonClicked: function(index, item) {
+                $scope.data.remindtime = item;
+                return true;
+            }
+        })
+    }
+
+    if (common.setAuditorUserList.id) {
+        if (common.setAuditorUserList._targetName == 'work_schedule_add') {
+            common._localstorage.userlist = common.setAuditorUserList;
+        }
+    }
+
+    if (common._localstorage.typePageName == $scope.data.typePageName) {
+        $scope.data = common._localstorage;
+    } else {
+        common._localstorage = $scope.data;
+        getDetails();
+    }
+})
+
 //我的日程
 .controller('WorkScheduleMyCtrl', function($scope, common) {
 	$scope.items = [];
@@ -246,12 +392,14 @@ angular.module('workSchedule.controller', [])
             type: 'user_richeng_list',
             data: {
                 "userId": common.userInfo.clientId,
-                "isNotification": true
+                "isNotification": false
             },
             success: function(data) {
                 var _body = data.body;
 
                 common.loadingHide();
+
+                console.log(data)
 
                 if (!_body || (_body && _body.riChengList && !_body.riChengList.length)) {
                     $scope.notTaskListData = common.notTaskListDataTxt;
@@ -268,7 +416,7 @@ angular.module('workSchedule.controller', [])
 
         });
     }
-    handleAjax();
+    handleAjax(true);
 
 	$scope.doRefresh = function() {
 		setTimeout(function() {

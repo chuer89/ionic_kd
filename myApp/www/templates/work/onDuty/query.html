@@ -27,20 +27,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="col text_align_right">
-                    <button class="kd_active_btn kd_btn">06-07</button>
+                <div class="kd_sele_box col col-20">
+                    <div ng-click="toggleSele('date')" class="kd_sele_val">{{seleDateInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowDateSele" style="left: 15%;">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleDate" ng-click="seleDateHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="padding">
-            <div class="bar search_box bar-header item-input-inset">
-                <label class="item-input-wrapper">
-                    <i class="icon ion-ios-search placeholder-icon"></i>
-                    <input type="search" placeholder="Search">
-                </label>
-            </div>
-        </div>
+
+        <div class="padding_btm_small"></div>
+
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
+
         <div class="list" ng-repeat="item in items">
             <a href="#/work/onDuty/query/details/{{item.id}}" class="item">
                 <div class="row">

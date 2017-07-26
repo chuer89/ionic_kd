@@ -9923,6 +9923,9 @@ img {
 .colorRed {
   color: #ff0014; }
 
+.colorGrey {
+  color: #a4a4a4; }
+
 .box_align {
   display: -webkit-box;
   -webkit-box-align: center; }
@@ -9964,6 +9967,41 @@ img {
 .text_align_center {
   text-align: center; }
 
+/*日期-start*/
+.popup-container {
+  /*background: white;*/ }
+
+.ionic_datepicker_popup .popup-body .selected_date_full {
+  background: white;
+  color: #333;
+  font-weight: normal; }
+
+.ionic_datepicker_popup .selected_date {
+  background: transparent;
+  border-color: transparent; }
+  .ionic_datepicker_popup .selected_date .date_cell {
+    background: #7f6bac; }
+
+.ionic_datepicker_popup .date_col .date_cell {
+  padding: 5px 0; }
+
+.ionic_datepicker_popup .today {
+  border-color: #7f6bac;
+  border-radius: 0; }
+
+.ionic_datepicker_popup .popup-body .month_select, .ionic_datepicker_popup .popup-body .year_select {
+  border-color: #7f6bac; }
+
+.ionic_datepicker_popup .popup-body .button-clear {
+  color: #7f6bac; }
+
+.ionic_datepicker_popup .popup-body .month_select:after, .ionic_datepicker_popup .popup-body .year_select:after {
+  color: #7f6bac; }
+
+.item-select select {
+  min-width: 40%; }
+
+/*日期-end*/
 /*搜索*/
 .search_box {
   height: auto;
@@ -9986,7 +10024,7 @@ img {
 
 .space_back {
   position: absolute;
-  left: 0;
+  left: -20px;
   top: -50px;
   width: 100px;
   height: 40px; }
@@ -10245,6 +10283,12 @@ img {
       font-size: 24px; }
     [data-dpr='3'] .list_box .info {
       font-size: 42px; }
+  .list_box .info_f_14 .info {
+    font-size: 14px; }
+    [data-dpr='2'] .list_box .info_f_14 .info {
+      font-size: 28px; }
+    [data-dpr='3'] .list_box .info_f_14 .info {
+      font-size: 48px; }
   .list_box .task_status .WORKING {
     color: #007130; }
   .list_box .task_status .UNCONFIRMED {

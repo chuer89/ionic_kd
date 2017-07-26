@@ -121,6 +121,13 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'CommonSelePersonCtrl'
     })
 
+    .state('common_demo', {
+        url: '/common/demo',
+        templateUrl: 'templates/common/demo.html',
+        controller: 'CommonDemoCtrl',
+        cache: false
+    })
+
 
   // setup an abstract state for the tabs directive
     .state('tab', {
@@ -309,13 +316,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_schedule', {
         url: '/work/schedule',
         templateUrl: 'templates/work/schedule/index.html',
-        controller: 'WorkScheduleCtrl'
+        controller: 'WorkScheduleCtrl',
+        cache: false
     })
     //日程详情
     .state('work_schedule_details', {
         url: '/work/schedule/:id',
         templateUrl: 'templates/work/schedule/details.html',
-        controller: 'WorkScheduleDetailsCtrl'
+        controller: 'WorkScheduleDetailsCtrl',
+        cache: false
     })
     //日程新增
     .state('work_schedule_add', {
@@ -324,11 +333,19 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkScheduleAddCtrl',
         cache: false
     })
+    //日程编辑
+    .state('work_schedule_edit', {
+        url: '/work/schedule_edit/:id',
+        templateUrl: 'templates/work/schedule/edit.html',
+        controller: 'WorkScheduleEidtCtrl',
+        cache: false
+    })
     //我的日程
     .state('work_schedule_my', {
         url: '/work/schedule_my',
         templateUrl: 'templates/work/schedule/my.html',
-        controller: 'WorkScheduleMyCtrl'
+        controller: 'WorkScheduleMyCtrl',
+        case: false
     })
 
 
@@ -714,6 +731,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         url: '/me/address',
         templateUrl: 'templates/me/address.html',
         controller: 'MeAddressCtrl'
+    })
+    //我－通讯录
+    .state('me_set_address_guys', {
+        url: '/me/address/:id',
+        templateUrl: 'templates/me/guys.html',
+        controller: 'MeAddressGuysCtrl'
     })
     //我－关于
     .state('me_about', {

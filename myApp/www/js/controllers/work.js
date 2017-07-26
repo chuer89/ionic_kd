@@ -75,7 +75,7 @@ angular.module('work.controller', [])
     var urlId = $stateParams.id;
     var typeId = {
         '1': 'work_notify',//通知
-        '2': 'work_schedule_add',//日程
+        '2': 'work_schedule_add',//日程-新增
         '3': 'work_task_add'//任务
     }
 
