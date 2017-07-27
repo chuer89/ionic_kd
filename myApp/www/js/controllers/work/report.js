@@ -17,6 +17,7 @@ angular.module('workReport.controller', [])
     }
 
     var ajaxhandle = function() {
+        common.loadingShow();
         common.formData({
             type: 'create_report',
             body: {
@@ -29,6 +30,7 @@ angular.module('workReport.controller', [])
             },
             data: formData,
             success: function(data) {
+                common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });
@@ -58,6 +60,7 @@ angular.module('workReport.controller', [])
     }
 
     var ajaxhandle = function() {
+        common.loadingShow();
         common.formData({
             type: 'create_report',
             body: {
@@ -70,6 +73,7 @@ angular.module('workReport.controller', [])
             },
             data: formData,
             success: function(data) {
+                common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });
@@ -100,6 +104,7 @@ angular.module('workReport.controller', [])
     }
 
     var ajaxhandle = function() {
+        common.loadingShow();
         common.formData({
             type: 'create_report',
             body: {
@@ -112,6 +117,7 @@ angular.module('workReport.controller', [])
             },
             data: formData,
             success: function(data) {
+                common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });

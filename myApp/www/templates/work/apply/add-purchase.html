@@ -4,34 +4,58 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a href="javascript:;" class="button button-clear button-royal">提交</a>
+        <a href="javascript:;" ng-click="submit()" class="button button-clear button-positive">提交</a>
     </ion-nav-buttons>
 
-	<ion-content class="stable-bg">
-		<div class="list">
+	<ion-content>
+        <div class="list list_box">
             <label class="item item-input">
-                <span class="input-label">物品名称</span>
-                <input type="text" placeholder="请输入(必填)" />
+                <span class="input-label">标题</span>
+                <input type="text" placeholder="请输入标题(必填)" ng-model="data.applicationName">
             </label>
-            <label class="item item-input">
-                <span class="input-label">数量</span>
-                <input type="text" placeholder="请输入(必填)" />
-            </label>
-            <label class="item item-input">
-                <span class="input-label">预算(元)</span>
-                <input type="text" placeholder="请输入(必填)" />
-            </label>
-            <label class="item item-input">
-                <span class="input-label">说明</span>
-                <textarea placeholder="请写清用途可快速通过"></textarea>
-            </label>
-            <p>如有多个采购申请点击“增加明细”按钮</p>
-            <button class="button button-full button-light"><i class="ion-plus"></i>增加明细</button>
-            <div class="item item-icon-right">
-                审批人
-                <span class="item-note">请选择</span>
-                <i class="icon ion-chevron-right icon-accessory"></i>
+        </div>
+
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">明细({{data.purchaseApplication.length}})</div>
+        </div>
+
+        <div ng-repeat="item in data.purchaseApplication">
+            <div class="text_align_right padding colorGrey" ng-click="rm(item)" ng-if="item.indexId">删除</div>
+    		<div class="list list_box">
+                <label class="item item-input">
+                    <span class="input-label">物品名称</span>
+                    <input type="text" ng-model="item.purchaseName" placeholder="请输入(必填)" />
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">数量</span>
+                    <input type="text" ng-model="item.purchaseNumber" placeholder="请输入(必填)" />
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">预算(元)</span>
+                    <input type="text" ng-change="changeInput()" ng-model="item.purchaseBudget" placeholder="请输入(必填)" />
+                </label>
+                <label class="item">
+                    <textarea ng-model="item.purchaseDescription" placeholder="请写清用途可快速通过"></textarea>
+                </label>
             </div>
+        </div>
+
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">如有多个采购申请点击“增加明细”按钮</div>
+            <button class="button button-full button-light" ng-click="add()">
+                <span class="colorPurple"><i class="ion-plus"></i>增加明细</span>
+            </button>
+        </div>
+
+        <div class="list_box">
+            <div class="padding_around padding_tb list_type_title">总结算(<span class="colorRed">&yen;{{data.allPurchaseBudget}}</span>)</div>
+        </div>
+        <div class="list">
+            <a href="#/common/seleGuys/3" class="item item-icon-right">
+                审批人
+                <span class="item-note">{{data.clientIdSele.name}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
         </div>
 	</ion-content>
 </ion-view>

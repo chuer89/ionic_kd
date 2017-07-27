@@ -10,7 +10,7 @@
 	<ion-content>
         <div class="kd_nav_filter">
             <div class="padding_around row">
-                <div class="kd_sele_box col col-20">
+                <div class="kd_sele_box col-25">
                     <div ng-click="toggleSele('brank')" class="kd_sele_val">{{seleBrankInfo}}<i class="ion-arrow-down-b"></i></div>
                     <div class="kd_sele_content" ng-show="isShowBrankSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="kd_sele_box col col-20 kd_m">
+                <div class="kd_sele_box col-20 kd_m">
                     <div ng-click="toggleSele('department')" class="kd_sele_val">{{seleDepartmentInfo}}<i class="ion-arrow-down-b"></i></div>
                     <div class="kd_sele_content" ng-show="isShowDepartmentSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
@@ -31,8 +31,18 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="kd_sele_box col col-20">
+                    <div ng-click="toggleSele('date')" class="kd_sele_val">{{seleDateInfo}}<i class="ion-arrow-down-b"></i></div>
+                    <div class="kd_sele_content" ng-show="isShowDateSele" style="left: 15%;">
+                        <i class="ion-arrow-up-b kd_sele_arrow"></i>
+                        <div class="kd_sele_item">
+                            <a href="javascript:;" ng-repeat="item in seleDate" ng-click="seleDateHandle(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col text_align_right">
-                    <button class="kd_active_btn kd_btn">06-07</button>
                     <button class="kd_btn kd_m" ng-click="checkTab(0)" ng-class="{'kd_active_btn': isShowTab0}">申请</button>
                     <button class="kd_btn" ng-click="checkTab(1)" ng-class="{'kd_active_btn': isShowTab1}">审批</button>
                 </div>
@@ -45,6 +55,7 @@
 			</label>
         </div>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
         <div class="list_box">
         	<a href={{item._link}} ng-repeat="item in items" class="item_list_box" style="overflow: hidden;">
                 <h2 class="title">{{item._applicationName}}</h2>
@@ -52,5 +63,6 @@
                 <span class="label_right_top">{{item._status}}</span>
             </a>
         </div>
+        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
 	</ion-content>
 </ion-view>

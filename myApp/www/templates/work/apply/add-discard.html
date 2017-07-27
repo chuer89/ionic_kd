@@ -4,24 +4,36 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a href="javascript:;" class="button button-clear button-positive">提交</a>
+        <a href="javascript:;" ng-click="submit()" class="button button-clear button-positive">提交</a>
     </ion-nav-buttons>
 
 	<ion-content>
-		<div class="list">
+        <div class="list list_box padding_tb">
             <label class="item item-input">
                 <span class="input-label">报残项</span>
-                <input type="text" placeholder="请输入报残内容" />
+                <input type="text" placeholder="请输入报残内容(必填)" ng-model="data.applicationName">
             </label>
+        </div>
+
+        <div class="list_box padding_tb">
             <div class="item">
-                货品信息
-                <textarea placeholder="请输入(必填)"></textarea>
+                <textarea ng-model="data.otherReason" placeholder="请输入内容(必填)"></textarea>
             </div>
-            <div class="item item-icon-right">
+            <div class="item">
+                <a href="javascript:;" ng-click="showSelePhoto()">
+                    <img src="img/icon/plus.png" class="icon_plus" />
+                </a>
+            </div>
+        </div>
+
+        <form enctype="multipart/form-data" method="post" name="fileinfo"></form>
+
+        <div class="list">
+            <a href="#/common/seleGuys/7" class="item item-icon-right">
                 审批人
-                <span class="item-note">请选择</span>
+                <span class="item-note">{{data.clientIdSele.name}}</span>
                 <i class="icon ion-chevron-right icon-accessory"></i>
-            </div>
+            </a>
         </div>
 	</ion-content>
 </ion-view>

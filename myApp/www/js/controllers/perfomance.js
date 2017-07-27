@@ -583,6 +583,8 @@ angular.module('perfomance.controller', [])
             clientId: _data.clientIdSele.id
         });
 
+        common.loadingShow();
+
         common.formData({
             type: 'jixiao_create',
             body: _param,
@@ -591,6 +593,7 @@ angular.module('perfomance.controller', [])
             },
             data: formData,
             success: function(data) {
+                common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });

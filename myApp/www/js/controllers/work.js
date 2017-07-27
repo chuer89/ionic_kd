@@ -39,9 +39,16 @@ angular.module('work.controller', [])
 
 
     common.setAuditorUserList = {};
+    common.setQueryUserList = {};
 
     var typeId = {
         '1': 'work_apply_addleave',//请假申请
+        '3': 'work_apply_addPurchase',//采购申请
+        '6': 'work_apply_addprivilege',//优惠申请
+        '7': 'work_apply_adddiscard',//报残申请
+        '8': 'work_apply_addmaintain',//工程维修申请
+        '801': 'work_apply_addmaintain_1',//工程维修申请——维修人
+        '9': 'work_apply_addother',//其他申请
         '2': 'work_task_add_ATTENTION',
         '4': 'work_task_add_inspector',
         '5': 'perfomance_add'//绩效开单
@@ -59,6 +66,7 @@ angular.module('work.controller', [])
         item._targetName = typeId[guysTypeId];
 
         common.setAuditorUserList = item;
+        common.setQueryUserList = item;
 
         // $state.go(typeId[guysTypeId]);
         history.back(-1);

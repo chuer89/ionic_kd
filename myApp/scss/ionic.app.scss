@@ -31,6 +31,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .button.button-royal{
 	background: $colorPurple;
 }
+.button.button-light.activated, .button.button-light.active{
+	border-color: white;
+}
 .col, .row{
 	padding: 0;
 }
@@ -470,7 +473,7 @@ img{
 		.red-point{
 			position: relative;
 			top: pxRem(-60);
-			right: pxRem(-18);
+			left: 0;
 		}
 	}
 	.left_icon{
@@ -599,12 +602,13 @@ img{
 
 /*小红点*/
 .tab-red-point:after,.red-point:after{
-   position: absolute;
-  content: ' ';
-  height: 6px;
-  width: 6px;
-  border-radius: 3px;
-  background-color: red;
+	position: absolute;
+	content: ' ';
+	height: 8px;
+	width: 8px;
+	border-radius: 5px;
+	background-color: red;
+	box-shadow: 0px 0px 1px 3px rgba(255,255,255,.9);
 }
 .tab-red-point:after{
   top: 7px;

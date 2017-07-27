@@ -85,11 +85,13 @@ angular.module('message.services', [])
     var department = [{name: '办公室'}, {name:'华南店'}, {name: '开发区店'}];
 
     //申请的状态
-    var applicationStatus = [{name:'等批准',key:'PENDING'},{name:'批准',key:'APPROVE'},{name:'拒绝',key:'REJECT'}];
+    var applicationStatus = [{name:'等批准',key:'PENDING'},{name:'批准',key:'APPROVE'},
+    {name:'拒绝',key:'REJECT'}];
 
     //申请的类型
-    var applicationType = [{name:'请假',key:'LEAVE'},{name:'采购',key:'PURCHASE'},
-    {name:'其他',key:'OTHER'},{name:'任务延迟',key:'TASK_DELAY'}];
+    var applicationType = [{name:'请假',key:'LEAVE'},{name:'采购',key:'PURCHASE'},{name:'优惠',key:'DISCOUNT'},
+    {name:'其他',key:'OTHER'},{name:'任务延迟',key:'TASK_DELAY'},{name:'报残',key:'DISABLED'},
+    {name:'维修工程',key:'MAINTAIN'}];
 
 
     //任务状态
@@ -114,6 +116,12 @@ angular.module('message.services', [])
     var seleMonth = [{name:'上月',key:'prev'},{name:'本月',key:'now'},{name:'下月',key:'next'}];
 
 
+    //申请-start
+    var leaveType = [{text:'年假',key:'Annual_leave'},{text:'病假',key:'Sick_leave'},{text: '事假',key:'Personal_leave'},
+    {text: '婚假',key:'Marriage_leave'},{text: '丧假',key:'Bereavement_leave'},{text: '无薪假',key:'Unpaid_leave'}];
+    //申请-end
+
+
     return {
         menu: function() {
             return {
@@ -131,7 +139,8 @@ angular.module('message.services', [])
                 remindtime: remindtime,
                 qianDaoType: qianDaoType,
                 taskWarn: taskWarn,
-                seleMonth: seleMonth
+                seleMonth: seleMonth,
+                leaveType: leaveType
             };
         }
     }
@@ -639,7 +648,7 @@ angular.module('message.services', [])
         //审核人 & 可查询人（有权限控制）
         //templates /common/seleGuys/:id
         getAuditorUser: function (cb, isQuery) {
-            var _type = 'auditor_user';
+            var _type = 'auditor_user';//上级或平级
 
             //有权限
             if (isQuery) {
@@ -715,9 +724,9 @@ angular.module('message.services', [])
                 cb(_param);
             }
         },
-
-        //选中审核人
-        setAuditorUserList: {},
+        
+        setAuditorUserList: {},//选中审核人
+        setQueryUserList: {},//选择可查询人
         setCheckedPerson: {list: [], _targetName: ''},//记录-选择通讯录-部门/人
 
         //筛选选中

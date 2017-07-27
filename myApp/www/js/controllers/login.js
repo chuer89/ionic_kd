@@ -10,6 +10,11 @@ angular.module('login.controller', [])
         $state.go('forgotPsd')
     }
 
+    if (common.getLocalStorage('clientId')) {
+        common.toast('自动登录中...');
+        $state.go('tab.message');
+    }
+
     $scope.login = function() {
         if ($scope.data.mobile && $scope.data.password) {
 

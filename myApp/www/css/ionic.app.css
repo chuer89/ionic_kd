@@ -9836,6 +9836,9 @@ a.button {
 .button.button-royal {
   background: #7f6bac; }
 
+.button.button-light.activated, .button.button-light.active {
+  border-color: white; }
+
 .col, .row {
   padding: 0; }
 
@@ -10252,7 +10255,7 @@ img {
     .list_box .left_icon_box .red-point {
       position: relative;
       top: -0.8rem;
-      right: -0.24rem; }
+      left: 0; }
   .list_box .left_icon {
     height: 20px;
     vertical-align: middle;
@@ -10396,10 +10399,11 @@ img {
 .tab-red-point:after, .red-point:after {
   position: absolute;
   content: ' ';
-  height: 6px;
-  width: 6px;
-  border-radius: 3px;
-  background-color: red; }
+  height: 8px;
+  width: 8px;
+  border-radius: 5px;
+  background-color: red;
+  box-shadow: 0px 0px 1px 3px rgba(255, 255, 255, 0.9); }
 
 .tab-red-point:after {
   top: 7px;

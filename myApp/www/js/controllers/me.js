@@ -102,10 +102,10 @@ angular.module('me.controller', [])
 
 		common.showSelePhoto({
             appendPhone: function(the_file) {
-                formData.append("fuJians", the_file, "images.jpg");
+                formData.append("avatar", the_file, "images.jpg");
 
                 common.formData({
-		            type: 'change_userinfo',
+		            type: 'modify_avatar',
 		            body: {
 		                id: common.userInfo.clientId
 		            },

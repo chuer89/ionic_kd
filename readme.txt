@@ -1,5 +1,5 @@
 ionic serve 启动debug
-source ~/.bash_profile 启动环境变量
+source ~/.bash_profile 启动环境变量(打包目录)
 
 
 ionic emulate ios --list

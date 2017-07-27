@@ -365,19 +365,22 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_apply_addother', {
         url: '/work/apply/addother',
         templateUrl: 'templates/work/apply/add-other.html',
-        controller: 'WorkApplyAddOtherCtrl'
+        controller: 'WorkApplyAddOtherCtrl',
+        cache: false
     })
     //申请-报残申请
     .state('work_apply_adddiscard', {
         url: '/work/apply/adddiscard',
         templateUrl: 'templates/work/apply/add-discard.html',
-        controller: 'WorkApplyAddDiscardCtrl'
+        controller: 'WorkApplyAddDiscardCtrl',
+        cache: false
     })
     //申请-优惠申请
     .state('work_apply_addprivilege', {
         url: '/work/apply/addprivilege',
         templateUrl: 'templates/work/apply/add-privilege.html',
-        controller: 'WorkApplyAddPrivilegeCtrl'
+        controller: 'WorkApplyAddPrivilegeCtrl',
+        cache: false
     })
     //申请-请假申请
     .state('work_apply_addleave', {
@@ -390,13 +393,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_apply_addmaintain', {
         url: '/work/apply/addmaintain',
         templateUrl: 'templates/work/apply/add-maintain.html',
-        controller: 'WorkApplyAddMaintainCtrl'
+        controller: 'WorkApplyAddMaintainCtrl',
+        cache: false
     })
     //申请-采购申请
     .state('work_apply_addPurchase', {
         url: '/work/apply/addPurchase',
         templateUrl: 'templates/work/apply/add-purchase.html',
-        controller: 'WorkApplyAddPurchaseCtrl'
+        controller: 'WorkApplyAddPurchaseCtrl',
+        cache: false
     })
     //申请-请假审批
     .state('work_apply_auditLeave', {
