@@ -1,19 +1,35 @@
-<ion-view view-title="查看任务-{{itemFrom.name}}">
+<ion-view view-title="查看任务{{name}}">
 	<ion-nav-buttons side="left">  
     	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
 
 	<ion-content>
-		<div class="row">
-            <div class="col" ng-repeat="item in items">{{item.name}}</div>
+		<div class="list_box">
+            <div class="tab_box">
+                <div class="row">
+                    <div ng-click="checkTab(item)" ng-class="{'tab_btn_active': item.isShowTab}" class="col padding_tb tab_btn text_align_center" ng-repeat="item in tabs">{{item.name}}</div>
+                </div>
+            </div>
         </div>
+        
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
-        <div class="list">
-        	<a class="item" ng-repeat="item in taskList" href="#/work/task_list/{{item.id}}/details">
-        		<h2>{{item.title}}</h2>
-        		<p>责任人：{{item.person}}  截至时间：{{item.time}}</p>
-        		<i>{{item.status}}</i>
-        	</a>
+
+        <div class="padding_tb">
+            <div class="list_box">
+                <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
+                <a class="item_list_box task_status" ng-repeat="item in taskList" href="#/work/task_list/{{item.taskId}}/details">
+                    <div class="row">
+                        <div class="col col-80">
+                            <h2 class="title padding_btm_small">{{item.title}}</h2>
+                            <p class="info">责任人：{{item.importantName}}  截至时间：{{item._endTime}}</p>
+                        </div>
+                        <div class="col text_align_right">
+                            <span ng-class="item.taskStatus" class="info">{{item._status}}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
+        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
 	</ion-content>
 </ion-view>

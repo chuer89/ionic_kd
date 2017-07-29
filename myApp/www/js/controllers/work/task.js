@@ -91,7 +91,7 @@ angular.module('workTask.controller', [])
     $scope.vm = {
         moredata: false,
         loadMore: function() {
-            if (dataList.tasks && dataList.tasks.length < 20 || dataList.total <= 20) {
+            if (dataList.tasks.length < common._pageSize || dataList.currentPage == dataList.total || dataList.total <= 1) {
                 $scope.vm.moredata = false;
                 return;
             }
@@ -145,37 +145,90 @@ angular.module('workTask.controller', [])
 })
 
 //任务查询
-.controller('WorkTaskQueryCtrl', function($scope, $state, workTaskQuery, common) {
-    $scope.items = workTaskQuery.all();
+.controller('WorkTaskQueryCtrl', function($scope, $timeout, common) {
+    var dataList = {
+        currentPage: 0,
+        phoneBook: []
+    };
 
-    $scope.doRefresh = function() {
-        setTimeout(function() {
-            $scope.$broadcast('scroll.refreshComplete');
-        }, 1000)
-        return true;
+    $scope.items = [];
+
+    var handleAjax = function (isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
+        }
+
+        COMMON.getPhoneBook({
+            currentPage: dataList.currentPage + 1,
+            departmentId: seleDepartmentId,
+            name: ''
+        }, function(body) {
+            common.loadingHide();
+
+            if (!body) {
+                $scope.notTaskListData = common.notTaskListDataTxt;
+                return;
+            } else {
+                $scope.notTaskListData = false;
+            }
+
+            var _body = body,
+                phoneBook = _body.phoneBook;
+
+            dataList = _body;
+
+            for (var i = 0, ii = phoneBook.length; i < ii; i++) {
+                phoneBook[i].nickname = common.nickname(phoneBook[i].name);
+                $scope.items.push(phoneBook[i]);
+            }
+
+            $timeout(function() {
+                $scope.vm.moredata = true;
+            }, 1000);
+        });
+    }, initData = function() {
+        dataList = {
+            currentPage: 0,
+            phoneBook: []
+        };
+
+        $scope.items = [];
+
+        handleAjax();
     }
 
-    var initData = function() {
-        
+    $scope.vm = {
+        moredata: false,
+        loadMore: function() {
+            if (dataList.phoneBook.length < common._pageSize || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
+                $scope.vm.moredata = false;
+                return;
+            }
+
+            $timeout(function () {
+                $scope.vm.moredata = false;
+                handleAjax(true);
+            }, 1500);
+            return true;
+        }
     }
+    
+
+    //选择部门-start
 
     var seleDepartmentId = '';
 
     $scope.seleBrank = [];
     $scope.seleDepartment = [];
 
-    $scope.isShowBrankSele = false;
-    $scope.isShowDepartmentSele = false;
-
     $scope.seleBrankInfo = '品牌';
     $scope.seleDepartmentInfo = '部门';
 
-    //选择菜单处理
-    var toggleSeleHandle = function(type, isToggle) {
-        if (!isToggle) {
-            initData(true);
-        }
+    $scope.isShowBrankSele = false;
+    $scope.isShowDepartmentSele = false;
 
+    //选择菜单处理
+    var toggleSeleHandle = function(type, isAjax) {
         if (type == 'brank') {
             $scope.isShowDepartmentSele = false;
 
@@ -190,6 +243,10 @@ angular.module('workTask.controller', [])
 
             $scope.isShowDepartmentSele = !$scope.isShowDepartmentSele;
         }
+
+        if (isAjax) {
+            initData();
+        }
     }
 
     //选择部门
@@ -201,6 +258,23 @@ angular.module('workTask.controller', [])
 
         $scope.seleDepartment = item.childDepartment;
     }
+    
+    $scope.seleBrankHandle = function(item) {
+        _seleBrankHandle(item);
+
+        toggleSeleHandle('brank', true);
+    }
+    $scope.seleDepartmentHandle = function(item) {
+        seleDepartmentId = item.departmentId;
+        $scope.seleDepartmentInfo = item.name;
+
+        toggleSeleHandle('department', true);
+    }
+
+    //筛选切换
+    $scope.toggleSele = function(type) {
+        toggleSeleHandle(type);
+    }
 
     //加载部门&公司
     common.getCompany(function(data) {
@@ -208,25 +282,9 @@ angular.module('workTask.controller', [])
 
         _seleBrankHandle(data[0]);
         initData();
-    })
+    });
 
-    //选择部门
-    $scope.seleBrankHandle = function(item) {
-        _seleBrankHandle(item);
-
-        toggleSeleHandle('brank', true);
-    }
-    $scope.seleDepartmentHandle = function(item) {
-        $scope.seleDepartmentInfo = item.name;
-        seleDepartmentId = item.departmentId;
-
-        toggleSeleHandle('department');
-    }
-
-    //筛选切换
-    $scope.toggleSele = function(type) {
-        toggleSeleHandle(type, true);
-    }
+    //选择部门-end
 })
 
 //创建任务
@@ -326,18 +384,125 @@ angular.module('workTask.controller', [])
 
 })
 
-.controller('WorkTaskListCtrl', function($scope, $stateParams, workTaskList, workTaskQuery) {
-	$scope.itemFrom = workTaskQuery.get($stateParams.id);
+.controller('WorkTaskListCtrl', function($scope, $stateParams, $timeout, workTaskList, common, seleMenuList) {
+	var dataList = {
+        currentPage: 0,
+        tasks: []
+    };
 
-	$scope.items = workTaskList.all();
-	$scope.taskList = workTaskList.taskList();
+    //id-》name
+    common.getUserinfo_simple($stateParams.id, function(data) {
+        $scope.name = '-'+data.name;
+    })
 
-	$scope.doRefresh = function() {
-		setTimeout(function() {
+    var menus = seleMenuList.menu();
+
+    var taskStatus = menus.taskStatus;
+
+    $scope.tabs = [
+        {name:'待办', type: 'DAIBAN'},
+        {name:'已完成', type: 'CONFIRMED'},
+        {name:'发起', type: 'CREATED'},
+        {name:'关注', type: 'GUANZHU'},
+        {name:'检查'}
+    ];
+    $scope.taskList = [];
+    $scope.data = {};
+
+    var handleAjax = function(isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
+        }
+
+        COMMON.post({
+            type: 'obtain_my_tasks',
+            data: {
+                "userId": $stateParams.id,
+                "currentPage": dataList.currentPage + 1,
+                "myTaskStatus": $scope.data.myTaskStatus
+            },
+            notPretreatment: true,
+            success: function(data) {
+                var _body = data.body;
+                common.loadingHide();
+
+                if (!_body.tasks || (typeof _body.tasks == 'object' && !_body.tasks.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
+
+                var tasks = _body.tasks;
+
+                dataList = _body;
+
+                for (var i = 0, ii = tasks.length; i < ii; i++) {
+                    if (tasks[i].taskStatus) {
+                        tasks[i]._endTime = common.format(tasks[i].endTime);
+                        tasks[i]._status = common.getId(taskStatus, tasks[i].taskStatus, 'key').name;
+
+                        $scope.taskList.push(tasks[i]);
+                    }
+                }
+
+                $timeout(function() {
+                    $scope.vm.moredata = true;
+                }, 1000);
+            }
+        });
+    }, initAjax = function(isInitTab, isNotLoading) {
+        if (isInitTab) {
+            $scope.tabs[0].isShowTab = true;
+            $scope.data.myTaskStatus = $scope.tabs[0].type;
+        }
+
+        $scope.taskList = [];
+        dataList.currentPage = 0;
+        handleAjax(isNotLoading);
+    }
+    initAjax(true, true);
+
+    $scope.vm = {
+        moredata: false,
+        loadMore: function() {
+
+            if (dataList.tasks.length < common._pageSize || dataList.currentPage == dataList.total || dataList.total <= 1) {
+                $scope.vm.moredata = false;
+                return;
+            }
+
+            $timeout(function () {
+                $scope.vm.moredata = false;
+                handleAjax(true);
+            }, 1500);
+            return true;
+        }
+    }
+
+    $scope.doRefresh = function() {
+        setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
+            initAjax(false, true);
         }, 1000)
         return true;
-	}
+    }
+
+    $scope.checkTab = function(item) {
+        var _tab = $scope.tabs;
+        for (var i = 0, ii = _tab.length; i < ii; i++) {
+            _tab[i].isShowTab = false;
+        }
+
+        item.isShowTab = true;
+
+        $scope.taskList = [];
+        dataList.currentPage = 0;
+
+        $scope.data.myTaskStatus = item.type;
+        
+        handleAjax(true);
+    }
 })
 
 //查看详情

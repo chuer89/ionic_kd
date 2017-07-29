@@ -11,8 +11,8 @@ angular.module('login.controller', [])
     }
 
     if (common.getLocalStorage('clientId')) {
-        common.toast('自动登录中...');
-        $state.go('tab.message');
+        // common.toast('自动登录中...');
+        // $state.go('tab.message');
     }
 
     $scope.login = function() {

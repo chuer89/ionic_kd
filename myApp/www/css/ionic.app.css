@@ -10122,6 +10122,22 @@ img {
   .import_box .row + .row {
     margin: 0; }
 
+/*表格*/
+.table_box table {
+  width: 100%;
+  background: white; }
+  .table_box table thead {
+    background: #f2f2f7; }
+    .table_box table thead th {
+      padding: 0.66667rem 0;
+      color: #a4a4a4; }
+  .table_box table tbody tr {
+    border-bottom: 1px solid #e6e6e6; }
+    .table_box table tbody tr td {
+      padding: 0.66667rem 0;
+      color: #333333;
+      text-align: center; }
+
 /*tab切换*/
 .tab_box {
   background: white; }
@@ -10169,7 +10185,7 @@ img {
     border-bottom: 1px solid #e6e6e6;
     display: block;
     background: white;
-    padding: 0.66667rem;
+    padding: 1.06667rem 0.66667rem;
     color: #444444;
     position: relative; }
     .list_box .item_list_box h2, .list_box .item_list_box p {

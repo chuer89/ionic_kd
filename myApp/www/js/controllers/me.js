@@ -2,19 +2,15 @@ angular.module('me.controller', [])
 
 //我
 .controller('AccountCtrl', function($scope, common) {
-
-	$scope.name = '';
-	$scope.position = '';
+	$scope.item = {};
 
 	common.getUserinfo_simple(common.userInfo.clientId, function(_data) {
 		angular.extend(common.userInfo, _data);
 
-        $scope.name = _data.name;
-        $scope.position = _data.position;
+        _data.nickname = common.nickname(_data.name);
+        _data.avatarPath = _data.avatarPath || 'img/logo.png';
 
-        $scope.nickname = common.nickname(_data.name);
-
-        console.log(_data)
+        $scope.item = _data;
 	});
 })
 
@@ -30,7 +26,8 @@ angular.module('me.controller', [])
         },
         success: function(data) {
         	var _data = data.body;
-        	console.log(data)
+        	_data.nickname = common.nickname(_data.name);
+        	_data.avatarPath = _data.avatarPath || 'img/logo.png';
         	$scope.item = _data;
         }
     });

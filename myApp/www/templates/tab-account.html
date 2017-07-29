@@ -1,14 +1,16 @@
 <ion-view view-title="我">
     <ion-content>
-        <div class="list_box padding_tb">
+        <div class="list_box list padding_tb">
             <div class="item_list_box">
                 <a href="#/me/info" class="row">
-                    <div class="col col-20 text_align_center">
-                        <span class="name_box">{{nickname}}</span>
+                    <div class="col col-20">
+                        <div class="item-avatar">
+                            <img src="{{item.avatarPath}}"  id="myImage" class="head_left_box" />
+                        </div>
                     </div>
                     <div class="col col-70">
-                        <h2 class="title">{{name}}</h2>
-                        <p class="info">{{position}}</p>
+                        <h2 class="title">{{item.name}}</h2>
+                        <p class="info">{{item.position}}</p>
                     </div>
                 </a>
             </div>

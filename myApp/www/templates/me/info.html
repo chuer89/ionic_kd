@@ -8,7 +8,7 @@
             <form enctype="multipart/form-data" method="post" name="fileinfo"></form>
         	<div class="item item-avatar" ng-click="showSelePhoto()">
                 头像
-                <img src="img/adam.jpg" id="myImage" class="head_right_box" />
+                <img src="{{item.avatarPath}}" id="myImage" class="head_right_box" />
             </div>
             <div class="item" ng-click="showPopup('name')">
                 姓名<span class="item-note">{{item.name}}</span>

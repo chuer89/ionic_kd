@@ -142,11 +142,11 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     //绩效tab
     .state('tab.perfomance', {
         url: '/perfomance',
+        cache: false,
         views: {
             'tab-perfomance': {
                 templateUrl: 'templates/perfomance/index.html',
-                controller: 'PerfomanceCtrl',
-                cache: false
+                controller: 'PerfomanceCtrl'
             }
         }
     })
@@ -368,6 +368,13 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkApplyAddOtherCtrl',
         cache: false
     })
+    //申请-其他审批
+    .state('work_apply_auditOther', {
+        url: '/work/apply/auditOther/:id',
+        templateUrl: 'templates/work/apply/audit-other.html',
+        controller: 'WorkApplyAuditOtherCtrl',
+        cache: false
+    })
     //申请-报残申请
     .state('work_apply_adddiscard', {
         url: '/work/apply/adddiscard',
@@ -396,6 +403,13 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkApplyAddMaintainCtrl',
         cache: false
     })
+    //申请-工程维修审批
+    .state('work_apply_auditMaintain', {
+        url: '/work/apply/auditMaintain/:id',
+        templateUrl: 'templates/work/apply/audit-maintain.html',
+        controller: 'WorkApplyAuditMaintainCtrl',
+        cache: false
+    })
     //申请-采购申请
     .state('work_apply_addPurchase', {
         url: '/work/apply/addPurchase',
@@ -405,22 +419,18 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     })
     //申请-请假审批
     .state('work_apply_auditLeave', {
-        url: '/work/apply/auditLeave',
+        url: '/work/apply/auditLeave/:id',
         templateUrl: 'templates/work/apply/audit-leave.html',
         controller: 'WorkApplyAuditLeaveCtrl'
     })
     //申请-采购审批
     .state('work_apply_auditPurchase', {
-        url: '/work/apply/auditPurchase',
+        url: '/work/apply/auditPurchase/:id',
         templateUrl: 'templates/work/apply/audit-purchase.html',
-        controller: 'WorkApplyAuditPurchaseCtrl'
+        controller: 'WorkApplyAuditPurchaseCtrl',
+        cache: false
     })
-    //申请-其他审批
-    .state('work_apply_auditOther', {
-        url: '/work/apply/auditOther',
-        templateUrl: 'templates/work/apply/audit-other.html',
-        controller: 'WorkApplyAuditOtherCtrl'
-    })
+
 
     //申请-通知
     .state('work_notify', {
@@ -711,6 +721,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     //我
     .state('tab.account', {
         url: '/account',
+        cache: false,
         views: {
             'tab-account': {
                 templateUrl: 'templates/tab-account.html',

@@ -1,4 +1,4 @@
-<ion-view view-title="其他{{pageName}}">
+<ion-view view-title="工程维修{{pageName}}">
 	<ion-nav-buttons side="left">  
     	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
@@ -9,14 +9,28 @@
 
 	<ion-content>
         <div class="list list_box padding_tb">
-            <div class="item">
-                <span>申请项：{{item.applicationBaseInfoJson.applicationName}}</span>
-            </div>
+            <div class="item">维修项：{{item.applicationBaseInfoJson.applicationName}}</div>
         </div>
 
         <div class="list_box padding_tb">
             <div class="item_list_box">
-                <p class="title">描述：{{item.specificApplicationArray[0].otherReason}}</p>
+                <p class="title">描述：{{item.specificApplicationArray[0].maintainReason}}</p>
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="item item-icon-right">
+                维修用时
+                <span class="item-note" style="color: red;">7天20小时</span>
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="item item-icon-right">
+                维修人
+                <span class="item-note">
+                    {{item.servicemanIdName}}
+                </span>
             </div>
         </div>
 
@@ -36,5 +50,6 @@
                 <textarea ng-model="data.approvalReason" placeholder="请输入审批原因(必填)"></textarea>
             </div>
         </div>
+
 	</ion-content>
 </ion-view>

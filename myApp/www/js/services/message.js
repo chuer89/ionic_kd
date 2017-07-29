@@ -86,7 +86,7 @@ angular.module('message.services', [])
 
     //申请的状态
     var applicationStatus = [{name:'等批准',key:'PENDING'},{name:'批准',key:'APPROVE'},
-    {name:'拒绝',key:'REJECT'}];
+    {name:'拒绝',key:'REJECT'},{name:'工作中',key:'WORKING'},{name:'完成',key:'UNCONFIRNED'}];
 
     //申请的类型
     var applicationType = [{name:'请假',key:'LEAVE'},{name:'采购',key:'PURCHASE'},{name:'优惠',key:'DISCOUNT'},
@@ -95,7 +95,7 @@ angular.module('message.services', [])
 
 
     //任务状态
-    var taskStatus = [{name:'工作中',key:'WORKING'},{name:'未确认',key:'UNCONFIRMED'},
+    var taskStatus = [{name:'工作中',key:'WORKING'},{name:'未确认',key:'UNCONFIRMED'},{name:'申报',key:'DECLARATION'},
     {name:'合格',key:'QUALIFIED'},{name:'不合格',key:'UNQUALIFIED'}];
 
     //任务提醒时间
@@ -797,7 +797,7 @@ angular.module('message.services', [])
         },
 
         //弹框
-        popup: function(opt, cb) {
+        popup: function(opt, cb, cbCancel) {
             var _opt = {
                 title: opt.title || '提醒',
                 content: opt.content || '确认此操作吗'
@@ -807,7 +807,15 @@ angular.module('message.services', [])
                 template: _opt.content,
                 title: _opt.title,
                 buttons: [
-                    { text: '取消' },
+                    { 
+                        text: '取消',
+                        onTap: function() {
+                            if (typeof cbCancel == 'function') {
+                                cbCancel();
+                            }
+                            return true;
+                        }
+                    },
                     {
                         text: '<b>确认</b>',
                         type: 'button-royal',

@@ -47,8 +47,11 @@ angular.module('work.controller', [])
         '6': 'work_apply_addprivilege',//优惠申请
         '7': 'work_apply_adddiscard',//报残申请
         '8': 'work_apply_addmaintain',//工程维修申请
+        '08': 'work_apply_auditMaintain',//工程维修申请-审核
         '801': 'work_apply_addmaintain_1',//工程维修申请——维修人
         '9': 'work_apply_addother',//其他申请
+        '09': 'work_apply_auditOther',//其他申请-审核
+
         '2': 'work_task_add_ATTENTION',
         '4': 'work_task_add_inspector',
         '5': 'perfomance_add'//绩效开单

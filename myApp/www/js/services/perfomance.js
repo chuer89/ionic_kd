@@ -96,3 +96,78 @@ angular.module('perfomance.services', [])
     }
 })
 
+//工作-申请-公共方法
+.factory('applyCommon', function(common) {
+    return {
+        //审核（同意 | 拒绝）
+        updateStatus: function(id, reason, isRefuse) {
+            var _approvalStatus = 'APPROVE';
+            var txt = '确认审核通过吗？';
+
+            //（批准/拒绝）值为 （APPROVE / REJECT）
+
+            if (isRefuse) {
+                _approvalStatus = 'REJECT';
+                txt = '确认拒绝审核吗？';
+            }
+
+            if (!reason) {
+                common.toast('请填写审核理由');
+                return;
+            }
+
+            common.popup({
+                content: txt
+            }, function() {
+                common.loadingShow();
+                COMMON.post({
+                    type: 'update_application_status',
+                    data: {
+                        applicationId: id,
+                        approvalReason: reason,
+                        approvalStatus: _approvalStatus,
+                        approverId: common.userInfo.clientId
+                    },
+                    success: function(data) {
+                        common.loadingHide();
+
+                        common.toast(data.message, function(){
+                            common.back();
+                        });
+                    }
+                });
+            })
+        },
+
+        forwardApproval: function(opt) {
+            var txt = '确认转交给<b>' + opt.to.name + '[' + opt.to.position + ']</b>吗';
+
+            var _param = {
+                applicationId: opt.applicationId,
+                oldApproverId: opt.oldApproverId,
+                newApproverId: opt.to.id
+            }
+
+            common.popup({
+                content: txt
+            }, function() {
+                common.loadingShow();
+                common.setAuditorUserList.id = '';
+                COMMON.post({
+                    type: 'forward_approval',
+                    data: _param,
+                    success: function(data) {
+                        common.loadingHide();
+
+                        common.toast(data.message, function(){
+                            common.back();
+                        })
+                    }
+                });
+            }, function() {
+                common.setAuditorUserList.id = '';
+            })
+        }
+    }
+})
+

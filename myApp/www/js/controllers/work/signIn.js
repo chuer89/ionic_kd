@@ -214,7 +214,7 @@ angular.module('workSign.controller', [])
 })
 
 //签到人员查询
-.controller('WorkSigInQueryCtrl', function($scope, workHistoryQuery, $timeout, common) {
+.controller('WorkSigInQueryCtrl', function($scope, $timeout, common) {
 	var dataList = {
 		currentPage: 0,
 		phoneBook: []

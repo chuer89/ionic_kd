@@ -338,6 +338,31 @@ img{
 	}
 }
 
+/*表格*/
+.table_box{
+	table{
+		width: 100%;
+		background: white;
+		thead{
+			background: $colorBody;
+			th{
+				padding: pxRem(50) 0;
+				color: $colorGrey;
+			}
+		}
+		tbody{
+			tr{
+				border-bottom: 1px solid $colorSimpleGrey;
+				td{
+					padding: pxRem(50) 0;
+					color: #333333;
+					text-align: center;
+				}
+			}
+		}
+	}
+}
+
 /*tab切换*/
 .tab_box{
 	background: white;
@@ -385,7 +410,7 @@ img{
 		border-bottom: 1px solid $colorSimpleGrey;
 		display: block;
 		background: white;
-		padding: pxRem(50);
+		padding: pxRem(80) pxRem(50);
 		color: $colorBlack;
 		position: relative;
 		h2, p{
