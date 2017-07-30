@@ -27,7 +27,10 @@
                         </span>
                     </div>
                     <div class="col">
-                        <div ng-if="item.type == 1">{{item.name}}</div>
+                        <div ng-if="item.type == 1">
+                            <p>{{item.name}}</p>
+                            <p class="info">{{item.regionName}}</p>
+                        </div>
                         <div ng-if="item.type == 2">
                             <div class="item-icon-right">
                                 <a href="#/work/onDuty/check/{{scheduleID}}_{{item.id}}" class="button button-royal">值班检查</a>

@@ -5,8 +5,10 @@ angular.module('workOnDuty.controller', [])
     $scope.scheduleID = '';
 
     $scope.data = {
-        date: common.format(false, 'yyyy-MM-dd'),
-        userId: common.userInfo.clientId
+        // date: common.format(false, 'yyyy-MM-dd'),
+        // userId: common.userInfo.clientId
+        date: '2017-07-29',
+        userId: 27
     };
 
     $scope.seleDate = function() {
@@ -89,6 +91,8 @@ angular.module('workOnDuty.controller', [])
     var brandID = '',
         deptID = '';
 
+    var dataList = {};
+
     var menus = seleMenuList.menu();
 
     $scope.data = {
@@ -111,7 +115,8 @@ angular.module('workOnDuty.controller', [])
 
         angular.extend($scope.data, {
             brandID: brandID,
-            deptID: deptID
+            deptID: deptID,
+            page: dataList.currentPage + 1
         });
 
         COMMON.post({
@@ -130,10 +135,28 @@ angular.module('workOnDuty.controller', [])
                     $scope.notTaskListData = false;
                 }
 
+                console.log(data)
+
+                // var list = _body.report;
+
+                // for (var i = 0, ii = list.length; i < ii; i++) {
+                //     list[i].nickname = common.nickname(list[i].userName);
+                //     $scope.items.push(list[i]);
+                // }
+
+                // $timeout(function() {
+                //     $scope.vm.moredata = true;
+                // }, 1000);
+
                 $scope.items = _body;
             }
         });
     }, initData = function(isNotLoading) {
+        dataList = {
+            currentPage: 0,
+            report: []
+        };
+
         $scope.items = [];
 
         searchAjax(isNotLoading);
@@ -302,7 +325,10 @@ angular.module('workOnDuty.controller', [])
     $scope.sub = function () {
         COMMON.post({
             type: 'zhiban_check_submit',
-            data: $scope.items,
+            data: {
+                items: $scope.items,
+                checkID: checkID
+            },
             success: function(data) {
                 var _body = data.body;
 

@@ -132,3 +132,7 @@ angular.module('message.controller', [])
 		});
 	}
 })
+
+.controller('RemoteNotificationCtrl', function($scope, common) {
+
+})
