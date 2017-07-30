@@ -613,10 +613,12 @@ angular.module('message.services', [])
 
         //公司&部门
         getCompany: function(cb) {
+            COMMON.loadingShow();
             COMMON.post({
                 type: 'departmrnt_info',
                 data: {},
                 success: function(data) {
+                    COMMON.loadingHide();
                     var _department = data.body.department;
                     if (typeof cb == 'function') {
                         cb(_department);
@@ -630,14 +632,14 @@ angular.module('message.services', [])
             var _param = angular.extend({
                 id: COMMON.userInfo.clientId
             }, param);
-
+            COMMON.loadingShow();
             COMMON.post({
                 type: 'phone_book',
                 data: _param,
                 notPretreatment: true,
                 success: function(data) {
                     var _body = data.body;
-
+                    COMMON.loadingHide();
                     if (typeof cb == 'function') {
                         cb(_body);
                     }
@@ -654,13 +656,14 @@ angular.module('message.services', [])
             if (isQuery) {
                 _type = 'query_user_list';
             }
-
+            COMMON.loadingShow();
             COMMON.post({
                 type: _type,
                 data: {
                     "id": COMMON.userInfo.clientId,
                 },
                 success: function(data) {
+                    COMMON.loadingHide();
                     var _userArray = data.body.userArray;
                     if (typeof cb == 'function') {
                         cb(_userArray);

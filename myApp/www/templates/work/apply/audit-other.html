@@ -8,6 +8,12 @@
     </ion-nav-buttons>
 
 	<ion-content>
+        <div class="list list_box">
+            <div class="item">
+                <span>申请人：{{item.applicationBaseInfoJson.applicantName}}</span>
+            </div>
+        </div>
+
         <div class="list list_box padding_tb">
             <div class="item">
                 <span>申请项：{{item.applicationBaseInfoJson.applicationName}}</span>
@@ -16,7 +22,7 @@
 
         <div class="list_box padding_tb">
             <div class="item_list_box">
-                <p class="title">描述：{{item.specificApplicationArray[0].otherReason}}</p>
+                <p class="title">描述项：{{item.specificApplicationArray[0].otherReason}}</p>
             </div>
         </div>
 

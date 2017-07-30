@@ -23,6 +23,7 @@ angular.module('login.controller', [])
             return;
         }
 
+        common.loadingShow();
         common.post({
             type: 'client_login',
             data: {
@@ -34,8 +35,7 @@ angular.module('login.controller', [])
             },
             success: function(data) {
                 var _body = data.body;
-
-                // _body.clientId = 28;
+                common.loadingHide();
 
                 if (_body.clientId != common.getLocalStorage('clientId')) {
                     common.clearLocalStorage();
@@ -45,6 +45,7 @@ angular.module('login.controller', [])
                 common.setLocalStorage('clientId', _body.clientId);
 
                 $state.go('tab.dash');
+                
             }
         });
     }

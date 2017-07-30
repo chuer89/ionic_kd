@@ -128,6 +128,13 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         cache: false
     })
 
+    .state('demo_notify', {
+        url: '/demo/notify',
+        templateUrl: 'templates/demo/remoteNotification.html',
+        controller: 'RemoteNotificationCtrl',
+        cache: false
+    })
+
 
   // setup an abstract state for the tabs directive
     .state('tab', {
@@ -382,11 +389,25 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkApplyAddDiscardCtrl',
         cache: false
     })
+    //申请-报残申请-审核
+    .state('work_apply_auditDiscount', {
+        url: '/work/apply/auditDiscount/:id',
+        templateUrl: 'templates/work/apply/audit-discard.html',
+        controller: 'WorkApplyAuditDiscardCtrl',
+        cache: false
+    })
     //申请-优惠申请
     .state('work_apply_addprivilege', {
         url: '/work/apply/addprivilege',
         templateUrl: 'templates/work/apply/add-privilege.html',
         controller: 'WorkApplyAddPrivilegeCtrl',
+        cache: false
+    })
+    //申请-优惠申请-审核
+    .state('work_apply_auditprivilege', {
+        url: '/work/apply/auditprivilege/:id',
+        templateUrl: 'templates/work/apply/audit-privilege.html',
+        controller: 'WorkApplyAuditPrivilegeCtrl',
         cache: false
     })
     //申请-请假申请
@@ -395,6 +416,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/work/apply/add-leave.html',
         controller: 'WorkApplyAddLeaveCtrl',
         cache: false
+    })
+    //申请-请假审批
+    .state('work_apply_auditLeave', {
+        url: '/work/apply/auditLeave/:id',
+        templateUrl: 'templates/work/apply/audit-leave.html',
+        controller: 'WorkApplyAuditLeaveCtrl'
     })
     //申请-工程维修申请
     .state('work_apply_addmaintain', {
@@ -417,12 +444,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkApplyAddPurchaseCtrl',
         cache: false
     })
-    //申请-请假审批
-    .state('work_apply_auditLeave', {
-        url: '/work/apply/auditLeave/:id',
-        templateUrl: 'templates/work/apply/audit-leave.html',
-        controller: 'WorkApplyAuditLeaveCtrl'
-    })
     //申请-采购审批
     .state('work_apply_auditPurchase', {
         url: '/work/apply/auditPurchase/:id',
@@ -430,6 +451,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkApplyAuditPurchaseCtrl',
         cache: false
     })
+    
+    
 
 
     //申请-通知

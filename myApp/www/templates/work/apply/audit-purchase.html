@@ -1,4 +1,4 @@
-<ion-view view-title="采购审批">
+<ion-view view-title="采购{{pageName}}">
 	<ion-nav-buttons side="left">  
     	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
@@ -8,6 +8,12 @@
     </ion-nav-buttons>
 
 	<ion-content>
+        <div class="list list_box">
+            <div class="item">
+                <span>申请人：{{item.applicationBaseInfoJson.applicantName}}</span>
+            </div>
+        </div>
+
 		<div class="list list_box">
             <div class="item">
                 <span>申请项：{{item.applicationBaseInfoJson.applicationName}}</span>
@@ -33,7 +39,7 @@
         </div>
 
         <div class="list_box">
-            <div class="padding_around padding_tb list_type_title">总结算(<span class="colorRed">&yen;{{data.allPurchaseBudget}}</span>)</div>
+            <div class="padding_around padding_tb list_type_title">总结算(<span class="colorRed">&yen;{{item.allPurchaseBudget}}</span>)</div>
         </div>
         
         <div class="list">
@@ -44,6 +50,12 @@
                     {{approval.userName}}
                     </span>
                 </span>
+            </div>
+        </div>
+
+        <div class="list" ng-if="!isApply">
+            <div class="item">
+                <textarea ng-model="data.approvalReason" placeholder="请输入审批原因(必填)"></textarea>
             </div>
         </div>
 	</ion-content>

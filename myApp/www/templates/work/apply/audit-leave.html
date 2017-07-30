@@ -1,56 +1,68 @@
-<ion-view view-title="请假审批">
+<ion-view view-title="请假{{pageName}}">
 	<ion-nav-buttons side="left">  
     	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-      <a href="javascript:;" ng-click="showNav()" class="ion-more button button-clear button-positive"></a>
+        <a href="javascript:;" ng-click="showNav()" ng-if="!isApply" class="ion-more button button-clear button-positive"></a>
     </ion-nav-buttons>
 
 	<ion-content> 
         <div class="list">
             <div class="item">
                 申请人
-                <span class="item-note">章小惠</span>
+                <span class="item-note">{{item.applicationBaseInfoJson.applicantName}}</span>
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="item">
+                请假项
+                <span class="item-note">{{item.applicationBaseInfoJson.applicationName}}</span>
             </div>
         </div>
 
         <div class="list">
             <div class="item">
                 类型
-                <span class="item-note">年假</span>
+                <span class="item-note">{{item.specificApplicationArray[0].leaveTypeCN.text}}</span>
             </div>
         </div>
 
         <div class="list">
             <div class="item">
                 开始时间
-                <span class="item-note">2017-03-15 09:00</span>
+                <span class="item-note">{{item.specificApplicationArray[0].leaveBegintime}}</span>
             </div>
             <div class="item">
                 结束时间
-                <span class="item-note">2017-03-19 19:00</span>
+                <span class="item-note">{{item.specificApplicationArray[0].leaveEndtime}}</span>
             </div>
         </div>
 
-        <div class="list">
-            <div class="item">
-                事项理由
-                <span>家里有事，骨瓷请假两天，汪批准!</span>
+        <div class="list_box padding_btm">
+            <div class="item_list_box">
+                <div class="row">
+                    <div class="col col-25">事项理由</div>
+                    <div class="col">{{item.specificApplicationArray[0].leaveReason}}</div>
+                </div>
             </div>
         </div>
 
 		<div class="list">
             <div class="item item-icon-right">
                 审批人
-                <span class="item-note">孙红</span>
+                <span class="item-note">
+                    <span ng-repeat="approval in item.approvalInfoArray">
+                    {{approval.userName}}
+                    </span>
+                </span>
             </div>
         </div>
 
-        <div class="list">
+        <div class="list" ng-if="!isApply">
             <div class="item">
-                审批原因
-                <textarea></textarea>
+                <textarea ng-model="data.approvalReason" placeholder="请输入审批原因(必填)"></textarea>
             </div>
         </div>
 	</ion-content>

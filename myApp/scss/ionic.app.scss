@@ -410,7 +410,7 @@ img{
 		border-bottom: 1px solid $colorSimpleGrey;
 		display: block;
 		background: white;
-		padding: pxRem(80) pxRem(50);
+		padding: pxRem(80) pxRem(80);
 		color: $colorBlack;
 		position: relative;
 		h2, p{
@@ -532,6 +532,12 @@ img{
 		.UNCONFIRMED{color: #ff0014}
 		.UNQUALIFIED{color: #7f6bac}
 		.QUALIFIED{color: #000000}
+	}
+	.apply_status{
+		.APPROVE,.WORKING{color: #009944;border-color: #009944;}
+		.PENDING{color: #ff9a00;border-color: #ff9a00;}
+		.REJECT{color: #ff0014;border-color: #ff0014;}
+		.UNQUALIFIED{color: #7f6bac;border-color: #7f6bac;}
 	}
 }
 

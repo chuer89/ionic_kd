@@ -57,10 +57,10 @@
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
         <div class="list_box">
-        	<a href="{{item._link}}/{{item._applicationId}}" ng-repeat="item in items" class="item_list_box" style="overflow: hidden;">
+        	<a href="{{item._link}}/{{item._applicationId}}" ng-repeat="item in items" class="item_list_box apply_status" style="overflow: hidden;">
                 <h2 class="title">{{item._applicationName}}</h2>
                 <p class="info">{{item._createTime}}</p>
-                <span class="label_right_top">{{item._status}}</span>
+                <span class="label_right_top" ng-class="item.applicationStatus">{{item._status}}</span>
             </a>
         </div>
         <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>

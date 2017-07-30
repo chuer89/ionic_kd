@@ -10185,7 +10185,7 @@ img {
     border-bottom: 1px solid #e6e6e6;
     display: block;
     background: white;
-    padding: 1.06667rem 0.66667rem;
+    padding: 1.06667rem 1.06667rem;
     color: #444444;
     position: relative; }
     .list_box .item_list_box h2, .list_box .item_list_box p {
@@ -10316,6 +10316,18 @@ img {
     color: #7f6bac; }
   .list_box .task_status .QUALIFIED {
     color: #000000; }
+  .list_box .apply_status .APPROVE, .list_box .apply_status .WORKING {
+    color: #009944;
+    border-color: #009944; }
+  .list_box .apply_status .PENDING {
+    color: #ff9a00;
+    border-color: #ff9a00; }
+  .list_box .apply_status .REJECT {
+    color: #ff0014;
+    border-color: #ff0014; }
+  .list_box .apply_status .UNQUALIFIED {
+    color: #7f6bac;
+    border-color: #7f6bac; }
 
 .shift_list {
   display: block;

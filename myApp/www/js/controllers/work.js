@@ -43,9 +43,13 @@ angular.module('work.controller', [])
 
     var typeId = {
         '1': 'work_apply_addleave',//请假申请
+        '01': 'work_apply_auditLeave',//请假申请-审核
         '3': 'work_apply_addPurchase',//采购申请
+        '03': 'work_apply_auditPurchase',//采购申请-审核
         '6': 'work_apply_addprivilege',//优惠申请
+        '06': 'work_apply_auditprivilege',//优惠申请-审核
         '7': 'work_apply_adddiscard',//报残申请
+        '07': 'work_apply_auditDiscount',//报残申请
         '8': 'work_apply_addmaintain',//工程维修申请
         '08': 'work_apply_auditMaintain',//工程维修申请-审核
         '801': 'work_apply_addmaintain_1',//工程维修申请——维修人

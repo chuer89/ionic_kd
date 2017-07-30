@@ -1,0 +1,53 @@
+<ion-view title="Notification">
+<ion-content>
+    <div class="row">
+        <div class="col">
+            RegistrationID:{{registrationID}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            Tags:
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label class="item item-input">
+                <input type="text"  placeholder="tag1" placeholder="formData.tag1">
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label class="item item-input">
+                <input type="text"  placeholder="tag2" placeholder="formData.tag1">
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            Alias:
+            <label class="item item-input">
+                <input type="text" placeholder="Alias" ng-model="formData.alias">
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="button button-positive" ng-click="setTagsAndAlias()">add tags and alias</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            设置tag/alias结果:{{tagAliasResult}} <br> 接受的通知内容:{{notificationResult}} <br> 接受的自定义消息:{{messageResult}}
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <p>{{message}}</p>
+    </div>
+    <div class="row">
+        <p>错误异常：{{errorMsg}}</p>
+    </div>
+</ion-content>
+</ion-view>

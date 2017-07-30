@@ -49,9 +49,9 @@ angular.module('workApply.controller', [])
         'LEAVE': '#/work/apply/auditLeave',//请假
         'PURCHASE': '#/work/apply/auditPurchase',//采购
         'OTHER': '#/work/apply/auditOther',//其他
-        'TASK_DELAY': '',
-        'DISCOUNT': '',
-        'DISABLED': '',
+        // 'TASK_DELAY': '',
+        'DISCOUNT': '#/work/apply/auditprivilege',
+        'DISABLED': '#/work/apply/auditDiscount',//报残
         'MAINTAIN': '#/work/apply/auditMaintain'//维修
     }
 
@@ -469,7 +469,8 @@ angular.module('workApply.controller', [])
         applicationStatus: 'PENDING',
         applicationType: 'DISABLED',
         approverList: [],
-        clientIdSele: {name: '请选择'}
+        clientIdSele: {name: '请选择'},
+        otherApplication: {}
     }
 
     //表单数据
@@ -488,6 +489,7 @@ angular.module('workApply.controller', [])
         $scope.data.approverList = [{
             approverId: $scope.data.clientIdSele.id
         }];
+        $scope.data.otherApplication.otherTitle = $scope.data.applicationName;
 
         common.loadingShow();
         common.formData({
@@ -520,6 +522,86 @@ angular.module('workApply.controller', [])
         common._localstorage = $scope.data;
     }
 })
+//申请报残-审核
+.controller('WorkApplyAuditDiscardCtrl', function($scope, $state, $ionicActionSheet, $stateParams, common, applyCommon) {
+    $scope.data = {};
+    $scope.item = {};
+
+    var _applicationId = $stateParams.id;
+
+    $scope.isApply = '';//是否申请
+    $scope.pageName = '审核';
+
+    if (_applicationId.indexOf('_') > 0) {
+        _applicationId = _applicationId.slice(0, -2);
+        $scope.isApply = true;
+        $scope.pageName = '申请详情';
+    }
+
+    var getData = function(cb) {
+        if (!cb) {
+            common.loadingShow();
+        }
+
+        COMMON.post({
+            type: 'obtain_application_info',
+            data: {
+                applicationId: _applicationId
+            },
+            success: function(data) {
+                common.loadingHide();
+
+                $scope.item = data.body;
+
+                if (typeof cb == 'function') {
+                    cb();
+                }
+
+                console.log(data.body)
+            }
+        });
+    }
+
+    $scope.showNav = function() {
+        $ionicActionSheet.show({
+            buttons: [{
+                text: '同意'
+            }, {
+                text: '拒绝'
+            }, {
+                text: '转交'
+            }],
+            cancelText: '取消',
+            buttonClicked: function (index, item) {
+                if (index == 0) {
+                    applyCommon.updateStatus(_applicationId, $scope.data.approvalReason, false);
+                } else if (index == 1) {
+                    applyCommon.updateStatus(_applicationId, $scope.data.approvalReason, true);
+                } else if (index == 2) {
+                    $state.go('common_seleGuys', {
+                        id: '07'
+                    });
+                }
+                return true;
+            }
+        });
+    }
+
+    //审核人
+    if (common.setAuditorUserList.id && common.setAuditorUserList._targetName == 'work_apply_auditDiscount') {
+        if (common.setAuditorUserList.name) {
+            getData(function() {
+                applyCommon.forwardApproval({
+                    to: common.setAuditorUserList,
+                    applicationId: _applicationId,
+                    oldApproverId: $scope.item.approvalInfoArray[0].approverId
+                })
+            })
+        }
+    } else {
+        getData();
+    }
+})
 
 //申请优惠
 .controller('WorkApplyAddPrivilegeCtrl', function($scope, common) {
@@ -529,7 +611,8 @@ angular.module('workApply.controller', [])
         applicationStatus: 'PENDING',
         applicationType: 'DISCOUNT',
         approverList: [],
-        clientIdSele: {name: '请选择'}
+        clientIdSele: {name: '请选择'},
+        otherApplication: {}
     }
 
     //表单数据
@@ -548,6 +631,7 @@ angular.module('workApply.controller', [])
         $scope.data.approverList = [{
             approverId: $scope.data.clientIdSele.id
         }];
+        $scope.data.otherApplication.otherTitle = $scope.data.applicationName;
 
         common.loadingShow();
         common.formData({
@@ -578,6 +662,86 @@ angular.module('workApply.controller', [])
         $scope.data = common._localstorage;
     } else {
         common._localstorage = $scope.data;
+    }
+})
+//申请优惠-审核
+.controller('WorkApplyAuditPrivilegeCtrl', function($scope, $state, $ionicActionSheet, $stateParams, common, applyCommon) {
+    $scope.data = {};
+    $scope.item = {};
+
+    var _applicationId = $stateParams.id;
+
+    $scope.isApply = '';//是否申请
+    $scope.pageName = '审核';
+
+    if (_applicationId.indexOf('_') > 0) {
+        _applicationId = _applicationId.slice(0, -2);
+        $scope.isApply = true;
+        $scope.pageName = '申请详情';
+    }
+
+    var getData = function(cb) {
+        if (!cb) {
+            common.loadingShow();
+        }
+
+        COMMON.post({
+            type: 'obtain_application_info',
+            data: {
+                applicationId: _applicationId
+            },
+            success: function(data) {
+                common.loadingHide();
+
+                $scope.item = data.body;
+
+                if (typeof cb == 'function') {
+                    cb();
+                }
+
+                console.log(data.body)
+            }
+        });
+    }
+
+    $scope.showNav = function() {
+        $ionicActionSheet.show({
+            buttons: [{
+                text: '同意'
+            }, {
+                text: '拒绝'
+            }, {
+                text: '转交'
+            }],
+            cancelText: '取消',
+            buttonClicked: function (index, item) {
+                if (index == 0) {
+                    applyCommon.updateStatus(_applicationId, $scope.data.approvalReason, false);
+                } else if (index == 1) {
+                    applyCommon.updateStatus(_applicationId, $scope.data.approvalReason, true);
+                } else if (index == 2) {
+                    $state.go('common_seleGuys', {
+                        id: '06'
+                    });
+                }
+                return true;
+            }
+        });
+    }
+
+    //审核人
+    if (common.setAuditorUserList.id && common.setAuditorUserList._targetName == 'work_apply_auditprivilege') {
+        if (common.setAuditorUserList.name) {
+            getData(function() {
+                applyCommon.forwardApproval({
+                    to: common.setAuditorUserList,
+                    applicationId: _applicationId,
+                    oldApproverId: $scope.item.approvalInfoArray[0].approverId
+                })
+            })
+        }
+    } else {
+        getData();
     }
 })
 
@@ -658,6 +822,92 @@ angular.module('workApply.controller', [])
         $scope.data = common._localstorage;
     } else {
         common._localstorage = $scope.data;
+    }
+})
+
+//请假审批
+.controller('WorkApplyAuditLeaveCtrl', function($scope, $state, $ionicActionSheet, $stateParams, common, applyCommon, seleMenuList) {
+    $scope.data = {};
+    $scope.item = {};
+
+    var _applicationId = $stateParams.id;
+    var menus = seleMenuList.menu();
+
+    $scope.isApply = '';//是否申请
+    $scope.pageName = '审核';
+
+    if (_applicationId.indexOf('_') > 0) {
+        _applicationId = _applicationId.slice(0, -2);
+        $scope.isApply = true;
+        $scope.pageName = '申请详情';
+    }
+
+    var getData = function(cb) {
+        if (!cb) {
+            common.loadingShow();
+        }
+
+        COMMON.post({
+            type: 'obtain_application_info',
+            data: {
+                applicationId: _applicationId
+            },
+            success: function(data) {
+                common.loadingHide();
+
+                var specific = data.body.specificApplicationArray;
+
+                var _cn = common.getId(menus.leaveType, specific[0].leaveType, 'key')
+
+                specific[0].leaveTypeCN = _cn;
+
+                $scope.item = data.body;
+
+                if (typeof cb == 'function') {
+                    cb();
+                }
+            }
+        });
+    }
+
+    $scope.showNav = function() {
+        $ionicActionSheet.show({
+            buttons: [{
+                text: '同意'
+            }, {
+                text: '拒绝'
+            }, {
+                text: '转交'
+            }],
+            cancelText: '取消',
+            buttonClicked: function (index, item) {
+                if (index == 0) {
+                    applyCommon.updateStatus(_applicationId, $scope.data.approvalReason, false);
+                } else if (index == 1) {
+                    applyCommon.updateStatus(_applicationId, $scope.data.approvalReason, true);
+                } else if (index == 2) {
+                    $state.go('common_seleGuys', {
+                        id: '01'
+                    });
+                }
+                return true;
+            }
+        });
+    }
+
+    //审核人
+    if (common.setAuditorUserList.id && common.setAuditorUserList._targetName == 'work_apply_auditLeave') {
+        if (common.setAuditorUserList.name) {
+            getData(function() {
+                applyCommon.forwardApproval({
+                    to: common.setAuditorUserList,
+                    applicationId: _applicationId,
+                    oldApproverId: $scope.item.approvalInfoArray[0].approverId
+                })
+            })
+        }
+    } else {
+        getData();
     }
 })
 
@@ -921,6 +1171,12 @@ angular.module('workApply.controller', [])
                 common.loadingHide();
 
                 var _body = data.body;
+                var allPurchaseBudget = 0;
+                for (var i = 0, ii = _body.specificApplicationArray.length; i < ii; i++) {
+                    allPurchaseBudget += (_body.specificApplicationArray[i].purchaseBudget - 0);
+                }
+
+                _body.allPurchaseBudget = allPurchaseBudget;
                 
                 $scope.item = _body;
 
@@ -950,7 +1206,7 @@ angular.module('workApply.controller', [])
                     applyCommon.updateStatus(_applicationId, $scope.data.approvalReason, true);
                 } else if (index == 2) {
                     $state.go('common_seleGuys', {
-                        id: '08'
+                        id: '03'
                     });
                 }
                 return true;
@@ -959,7 +1215,7 @@ angular.module('workApply.controller', [])
     }
 
     //审核人
-    if (common.setAuditorUserList.id && common.setAuditorUserList._targetName == 'work_apply_auditMaintain') {
+    if (common.setAuditorUserList.id && common.setAuditorUserList._targetName == 'work_apply_auditPurchase') {
         if (common.setAuditorUserList.name) {
             getData(function() {
                 applyCommon.forwardApproval({
@@ -974,25 +1230,7 @@ angular.module('workApply.controller', [])
     }
 })
 
-//请假审批
-.controller('WorkApplyAuditLeaveCtrl', function($scope, $ionicActionSheet) {
-    $scope.showNav = function() {
-        $ionicActionSheet.show({
-            buttons: [{
-                text: '同意'
-            }, {
-                text: '拒绝'
-            }, {
-                text: '转交'
-            }],
-            cancelText: '取消',
-            buttonClicked: function (index, item) {
-                
-                return true;
-            }
-        });
-    }
-})
+
 
 
 
