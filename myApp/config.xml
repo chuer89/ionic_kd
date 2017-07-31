@@ -83,9 +83,9 @@
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-datepicker" spec="https://github.com/VitaliiBlagodir/cordova-plugin-datepicker.git" />
-    <plugin name="jpush-phonegap-plugin" spec="~3.1.4">
+    <!-- <plugin name="jpush-phonegap-plugin" spec="~3.1.4">
         <variable name="APP_KEY" value="your_jpush_appkey" />
-    </plugin>
+    </plugin> -->
     <plugin name="cordova-plugin-geolocation" spec="~2.4.3" />
     <plugin name="cordova-plugin-vibration" spec="~2.1.5" />
     <plugin name="cordova-plugin-x-toast" spec="https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git" />

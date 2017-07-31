@@ -1,23 +1,20 @@
-
-<ion-view view-title="消息">
-	<ion-nav-title ng-if="xx">
-	    <ion-header-bar class="item-input-inset">
-	        <label class="item-input-wrapper">
-	            <i class="icon ion-ios-search placeholder-icon"></i>
-	            <input type="search" placeholder="Search" ng-model="searchContent">
-	        </label>
-	        <button class="button button-clear">
-	            取消
-	        </button>
-	    </ion-header-bar>
-	</ion-nav-title>
-
+<ion-view view-title="消息" hide-nav-bar="isSearchVal">
 	<ion-content>
-		<div class="padding">
+		<div ng-if="isSearchVal" class="padding_btm_small">
+		    <ion-header-bar class="item-input-inset">
+		        <label class="item-input-wrapper">
+		            <i class="icon ion-ios-search placeholder-icon"></i>
+		            <input type="search" placeholder="Search" ng-model="searchContent">
+		        </label>
+		        <button class="button button-light" ng-click="cancelSearch()">取消</button>
+		    </ion-header-bar>
+		</div>
+
+		<div class="padding" ng-if="isSearchTxt">
 			<div class="bar search_box bar-header item-input-inset">
 				<label class="item-input-wrapper">
 					<i class="icon ion-ios-search placeholder-icon"></i>
-					<input type="search" placeholder="搜索" />
+					<input ng-focus="showSearch()" type="search" placeholder="搜索" />
 				</label>
 	        </div>
 		</div>

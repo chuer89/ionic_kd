@@ -1,4 +1,4 @@
-<ion-view view-title="申请">
+<ion-view view-title="申请" hide-nav-bar="isSearchVal">
 	<ion-nav-buttons side="left">  
     	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
@@ -8,6 +8,16 @@
     </ion-nav-buttons>
 
 	<ion-content>
+        <div ng-if="isSearchVal" class="padding_btm_small">
+            <ion-header-bar class="item-input-inset">
+                <label class="item-input-wrapper">
+                    <i class="icon ion-ios-search placeholder-icon"></i>
+                    <input type="search" ng-change="handleSearch()" placeholder="Search" ng-model="data.keywords">
+                </label>
+                <button class="button button-light" ng-click="cancelSearch()">取消</button>
+            </ion-header-bar>
+        </div>
+
         <div class="kd_nav_filter">
             <div class="padding_around row">
                 <div class="kd_sele_box col-25">
@@ -48,12 +58,14 @@
                 </div>
             </div>
         </div>
-		<div class="bar bar-header item-input-inset">
+
+		<div class="bar bar-header item-input-inset" ng-if="isSearchTxt">
 			<label class="item-input-wrapper">
 				<i class="icon ion-ios-search placeholder-icon"></i>
-				<input type="search" placeholder="Search">
+				<input ng-focus="showSearch()" ng-model="data.keywords" type="search" placeholder="Search">
 			</label>
         </div>
+
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
         <div class="list_box">

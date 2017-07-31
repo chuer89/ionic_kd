@@ -26,6 +26,32 @@ angular.module('workApply.controller', [])
 .controller('WorkApplyCtrl', function ($scope, $state, $timeout, $ionicActionSheet, workApplyList, common, seleMenuList) {
     var menus = seleMenuList.menu();
 
+    //搜索--start
+    $scope.isSearchVal = false;
+    $scope.isSearchTxt = true;
+    $scope.showSearch = function() {
+        $scope.isSearchVal = true;
+        $scope.isSearchTxt = false;
+    }
+    $scope.cancelSearch = function() {
+        $scope.isSearchVal = false;
+        $scope.isSearchTxt = true;
+    }
+    var isSearchAjax = false;
+    $scope.handleSearch = function() {
+        if ($scope.data.keywords && !isSearchAjax) {
+            isSearchAjax = true;
+        }
+
+        if (isSearchAjax) {
+            $timeout(function() {
+                isSearchAjax = true;
+                console.log($scope.data.keywords, e);
+            }, 500);
+        }
+    }
+    //搜索--end
+
     var applicationStatus = menus.applicationStatus,
         applicationType = menus.applicationType;
 

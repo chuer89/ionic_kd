@@ -186,6 +186,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     //消息
     .state('tab.message', {
         url: '/message',
+        cache: false,
         views: {
             'tab-message': {
                 templateUrl: 'templates/message/index.html',

@@ -243,12 +243,14 @@ angular.module('message.services', [])
                 contentType: false,
                 success: function (data) {
                     if (data.status != '1000' && !opt.noFail) {
+                        COMMON.loadingHide();
                         COMMON.toast(data.message || '数据有误');
                     } else {
                         opt.success(data);
                     }
                 },
                 error: function (responseStr) {
+                    COMMON.loadingHide();
                     COMMON.toast('接口异常');
                 }
             });
@@ -933,20 +935,20 @@ angular.module('message.services', [])
 
         //获取经纬度
         getLocation: function(cb) {
-            //定位
-            var posOptions = {timeout: 10000, enableHighAccuracy: false};
-            $cordovaGeolocation
-            .getCurrentPosition(posOptions)
-            .then(function (position) {
-                if (typeof cb == 'function') {
-                    cb(position);
-                }
-            }, function(err) {
-                COMMON.toast('获取定位失败');
-                COMMON.loadingHide();
-                // error
-            });
-            return;
+            // //定位
+            // var posOptions = {timeout: 10000, enableHighAccuracy: false};
+            // $cordovaGeolocation
+            // .getCurrentPosition(posOptions)
+            // .then(function (position) {
+            //     if (typeof cb == 'function') {
+            //         cb(position);
+            //     }
+            // }, function(err) {
+            //     COMMON.toast('获取定位失败');
+            //     COMMON.loadingHide();
+            //     // error
+            // });
+            // return;
 
             var showPosition = function (position) {
                 //accuracy 位置精度;  latitude 十进制伟度；longitude 十进制经度

@@ -141,12 +141,14 @@ angular.module('workNotify.controller', [])
     }
 
     var del = function () {
+        common.loadingShow();
         COMMON.post({
             type: 'delete_inform',
             data: {
                 informId: $stateParams.id
             },
             success: function(data) {
+                common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });
@@ -155,6 +157,7 @@ angular.module('workNotify.controller', [])
     }
 
     //获取详情
+    common.loadingShow();
     COMMON.post({
         type: 'inform_details',
         data: {
@@ -162,8 +165,9 @@ angular.module('workNotify.controller', [])
             informId: $stateParams.id
         },
         success: function(data) {
-            var _body = data.body;
+            common.loadingHide();
 
+            var _body = data.body;
             $scope.item = _body;
         }
     });
@@ -217,6 +221,7 @@ angular.module('workNotify.controller', [])
             angular.extend(_param, opt);
         });
 
+        common.loadingShow();
         common.formData({
             type: 'create_inform',
             body: _param,
@@ -225,6 +230,7 @@ angular.module('workNotify.controller', [])
             },
             data: formData,
             success: function(data) {
+                common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });
@@ -299,6 +305,7 @@ angular.module('workNotify.controller', [])
             angular.extend(_param, opt);
         });
 
+        common.loadingShow();
         common.formData({
             type: 'update_inform',
             body: _param,
@@ -307,6 +314,7 @@ angular.module('workNotify.controller', [])
             },
             data: formData,
             success: function(data) {
+                common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });

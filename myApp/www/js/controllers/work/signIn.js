@@ -12,10 +12,13 @@ angular.module('workSign.controller', [])
 		qiandaoCanQianDaoSite: true
 	}
 
+	var qianDaoRight = 1;//是否正常签到 1 正常； 0 迟到
+
 	var menus = seleMenuList.menu();
 	var qianDaoType = menus.qianDaoType;
 
 	$scope.todayDate = common.format(false, 'yyyy-MM-dd') + ' ' + common.getWeek();
+	$scope.qianDaoShangBan = '';
 
 	var ajaxUserData = function(cb) {
 		//查询已签到
@@ -53,10 +56,14 @@ angular.module('workSign.controller', [])
 				$scope.shangBanType = item.key;
 
 				var qiandaoTimes = JSON.parse( common.getLocalStorage('qiandaoTimes') );
-				if (!common.getId(qiandaoTimes, item.key, 'qianDaoType')) {
+
+				var _qiandaoObj = common.getId(qiandaoTimes, item.key, 'qianDaoType');
+
+				if (!_qiandaoObj) {
 					$scope.hasSignIn = false;
 				} else {
 					$scope.hasSignIn = hasSignIn(item.key);
+					$scope.qianDaoShangBan = _qiandaoObj.qianDaoShangBan;
 				}
 
 				return true;
@@ -93,6 +100,8 @@ angular.module('workSign.controller', [])
 	    common.getLocation(function(position) {
 	    	var _coords = position.coords;
 
+	    	//localStorage.clear();localStorage.clientId = 152;
+
 	    	console.log(position, '位置')
 
 			COMMON.post({
@@ -119,12 +128,16 @@ angular.module('workSign.controller', [])
 	var hasSignIn = function() {
 		var nowTime = common.format(false, 'HH:mm');
 
-		// nowTime = '08:31';
+		// nowTime = '11:31';
 
 		var qiandaoTimes = JSON.parse( common.getLocalStorage('qiandaoTimes') );
 
 		if (!qiandaoTimes.length || !qianDaoData.qiandaoCanQianDaoSite) {
 			return false;
+		}
+
+		if (!$scope.qianDaoShangBan) {
+			$scope.qianDaoShangBan = qiandaoTimes[0].qianDaoShangBan;
 		}
 
 		var _shangBanNum = 0,
@@ -139,6 +152,12 @@ angular.module('workSign.controller', [])
 
 			_xiaBanNum = common.minusTime(qiandaoTimes[i]._qianDaoXiaBan, common.timeNumber(nowTime));
 			qiandaoTimes[i].canXiaBan = _xiaBanNum > 0 ? _xiaBanNum < common.getLocalStorage('qiandaoBeforeTime') : false;
+
+
+			if (_shangBanNum < 0 && !$scope.hasHistory)  {
+				qiandaoTimes[i].canShangBan = true;
+				qianDaoRight = 0;
+			}
 		}
 
 		for (var i = 0, ii = qiandaoTimes.length; i < ii; i++) {
@@ -186,7 +205,7 @@ angular.module('workSign.controller', [])
 		        type: 'qiandao_submit',
 		        data: {
 		        	clientId: common.userInfo.clientId,
-		        	qianDaoRight: '1',
+		        	qianDaoRight: qianDaoRight,
 		        	qianDaoPlace: qianDaoPlace,
 		        	qianDaoType: _type,
 		        	shangBanType: $scope.shangBanType

@@ -1,7 +1,7 @@
 angular.module('message.controller', [])
 
 //
-.controller('MessageCtrl', function($scope, $state, messagePush, common) {
+.controller('MessageCtrl', function($scope, $state, $timeout, messagePush, common) {
     $scope.data = {};
 
     $scope.items = messagePush.all();
@@ -11,6 +11,17 @@ angular.module('message.controller', [])
             $scope.$broadcast('scroll.refreshComplete');
         }, 1000)
         return true;
+    }
+
+    $scope.isSearchVal = false;
+    $scope.isSearchTxt = true;
+    $scope.showSearch = function() {
+        $scope.isSearchVal = true;
+        $scope.isSearchTxt = false;
+    }
+    $scope.cancelSearch = function() {
+        $scope.isSearchVal = false;
+        $scope.isSearchTxt = true;
     }
 })
 

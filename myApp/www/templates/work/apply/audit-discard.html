@@ -26,6 +26,16 @@
             </div>
         </div>
 
+        <div class="list_box padding_tb" ng-if="item.imageInfoArray.length">
+            <div class="item_list_box">
+                <div class="details_img_thumbnail clearfix">
+                    <span ng-repeat="fujianImg in item.imageInfoArray">
+                        <img src="{{fujianImg.path}}"/>
+                    </span>
+                </div>
+            </div>
+        </div>
+
         <div class="list">
             <div class="item item-icon-right">
                 审批人
