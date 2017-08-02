@@ -1,4 +1,4 @@
-<ion-view view-title="客户管理">
+<ion-view view-title="客户管理" hide-nav-bar="isSearchVal">
 
     <ion-nav-buttons side="left">  
         <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>
@@ -10,13 +10,23 @@
     </ion-nav-buttons>
 
   	<ion-content>
-        <div class="padding">
-            <div class="bar search_box bar-header item-input-inset">
-                <label class="item-input-wrapper">
-                    <i class="icon ion-ios-search placeholder-icon"></i>
-                    <input type="search" placeholder="搜索" />
-                </label>
-            </div>
+        <div ng-if="isSearchVal" class="padding_btm_small">
+            <form action="javascript:return true;">
+                <ion-header-bar class="item-input-inset">
+                    <label class="item-input-wrapper">
+                        <i class="icon ion-ios-search placeholder-icon"></i>
+                        <input type="search" id="js_search" ng-blur="handleSearch()" placeholder="Search" ng-model="data.keyword"/>
+                    </label>
+                    <button class="button button-light" ng-click="cancelSearch()">取消</button>
+                </ion-header-bar>
+            </form>
+        </div>
+        
+        <div class="bar bar-header item-input-inset" ng-if="isSearchTxt">
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <input ng-focus="showSearch()" ng-model="data.keyword" type="search" placeholder="Search">
+            </label>
         </div>
         
   		<div class="kd_nav_filter">

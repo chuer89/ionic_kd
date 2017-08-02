@@ -114,6 +114,9 @@ angular.module('workNotify.controller', [])
 .controller('WorkNotifyDetailsCtrl', function($scope, $state, $stateParams, $ionicActionSheet, common) {
     $scope.item = {};
 
+    var urlId = $stateParams.id,
+        informId = $stateParams.id;
+
     $scope.showNav = function() {
         $ionicActionSheet.show({
             buttons: [{
@@ -131,7 +134,7 @@ angular.module('workNotify.controller', [])
                     })
                 } else if (index == 0) {
                     $state.go('work_notify_edit', {
-                        id: $stateParams.id
+                        id: informId
                     })
                 }
 
@@ -145,7 +148,7 @@ angular.module('workNotify.controller', [])
         COMMON.post({
             type: 'delete_inform',
             data: {
-                informId: $stateParams.id
+                informId: informId
             },
             success: function(data) {
                 common.loadingHide();
@@ -156,21 +159,32 @@ angular.module('workNotify.controller', [])
         });
     }
 
-    //获取详情
-    common.loadingShow();
-    COMMON.post({
-        type: 'inform_details',
-        data: {
-            id: common.userInfo.clientId,
-            informId: $stateParams.id
-        },
-        success: function(data) {
-            common.loadingHide();
+    if (urlId.indexOf('_push_') > 0) {
+        informId = urlId.split('_push_')[1];
 
+        common.getMessageDetails(urlId, 'INFORM', function(data) {
             var _body = data.body;
             $scope.item = _body;
-        }
-    });
+        });
+    } else {
+        //获取详情
+        common.loadingShow();
+        COMMON.post({
+            type: 'inform_details',
+            data: {
+                id: common.userInfo.clientId,
+                informId: informId
+            },
+            success: function(data) {
+                common.loadingHide();
+
+                var _body = data.body;
+                $scope.item = _body;
+            }
+        });
+    }
+
+    
 })
 
 //新增

@@ -8,7 +8,7 @@ angular.module('me.controller', [])
 		angular.extend(common.userInfo, _data);
 
         _data.nickname = common.nickname(_data.name);
-        _data.avatarPath = _data.avatarPath || 'img/logo.png';
+        _data.avatarPath = _data.avatarPath || 'img/icon.png';
 
         $scope.item = _data;
 	});
@@ -27,7 +27,7 @@ angular.module('me.controller', [])
         success: function(data) {
         	var _data = data.body;
         	_data.nickname = common.nickname(_data.name);
-        	_data.avatarPath = _data.avatarPath || 'img/logo.png';
+        	_data.avatarPath = _data.avatarPath || 'img/icon.png';
         	$scope.item = _data;
         }
     });
@@ -122,7 +122,64 @@ angular.module('me.controller', [])
 })
 
 .controller('MeSetMsgCtrl', function($scope, messageSetList, common) {
-	$scope.items = messageSetList.all();
+	// $scope.items = messageSetList.all();
+
+	$scope.items = []
+
+	var map = {
+		task:'任务信息',
+		inform:'通知信息',
+		apply:'申请信息',
+		paiban:'值班信息',
+		performance:'绩效信息',
+		report:'汇报信息',
+		remind:'日程信息'
+	}
+
+	$scope.back = function() {
+		var _param = {
+			id: common.userInfo.clientId
+		};
+		for (var i = 0, ii = $scope.items.length; i < ii; i++) {
+			_param[$scope.items[i].key] = $scope.items[i].checked ? 1 : 0;
+		}
+		common.loadingShow();
+	    common.post({
+	        type: 'update_notifysetting',
+	        data: _param,
+	        success: function(data) {
+	            var _body = data.body;
+	            common.loadingHide();
+	            
+	            common.toast(data.message, function() {
+	            	common.back();
+	            })
+	        }
+	    });
+	}
+
+	common.loadingShow();
+    common.post({
+        type: 'notifysetting_info',
+        data: {
+        	id: common.userInfo.clientId
+        },
+        success: function(data) {
+            var _body = data.body;
+            common.loadingHide();
+            var _list = [];
+
+            for (var k in _body) {
+            	if (map[k]) {
+            		_list.push({
+	            		name: map[k], checked: (_body[k] == 1 ? true : false), key: k
+	            	})
+            	}
+            }
+
+            $scope.items = _list;
+        }
+    })
 })
 
 .controller('MeAboutCtrl', function($scope) {
@@ -135,6 +192,39 @@ angular.module('me.controller', [])
 		phoneBook: []
 	};
 
+	$scope.data = {
+		name: ''
+	}
+
+	//搜索--start
+    $scope.isSearchVal = false;
+    $scope.isSearchTxt = true;
+    var showSearch = function() {
+        $scope.isSearchVal = true;
+        $scope.isSearchTxt = false;
+
+        $timeout(function() {
+            $('#js_search').focus().on('keypress', function(e) {
+                var _keyCode = e.keyCode;
+                if (_keyCode == 13) {
+                    //搜索
+                    handleSearch();
+                    return false;
+                }
+            })
+        }, 200)
+    }, cancelSearch = function() {
+        $scope.isSearchVal = false;
+        $scope.isSearchTxt = true;
+    }, handleSearch = function() {
+        initData();
+        cancelSearch();
+    }
+    $scope.showSearch = showSearch;
+    $scope.cancelSearch = cancelSearch;
+    $scope.handleSearch = handleSearch;
+    //搜索--end
+
 	$scope.items = [];
 
 	var handleAjax = function (isNotLoading) {
@@ -145,7 +235,7 @@ angular.module('me.controller', [])
 		COMMON.getPhoneBook({
 			currentPage: dataList.currentPage + 1,
         	departmentId: seleDepartmentId,
-        	name: ''
+        	name: $scope.data.name
 		}, function(body) {
 			common.loadingHide();
 

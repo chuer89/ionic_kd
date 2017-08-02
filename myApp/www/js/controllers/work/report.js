@@ -364,32 +364,49 @@ angular.module('workReport.controller', [])
 
     $scope.reportList = [];
 
+    var urlId = $stateParams.id,
+        reportId = $stateParams.id;
+
     var dataList = {
         currentPage: 0,
         reportComment: []
     };
 
-    //详情
-    COMMON.post({
-        type: 'report_details',
-        data: {
-            reportId: $stateParams.id
-        },
-        success: function(data) {
+    if (urlId.indexOf('_push_') > 0) {
+        reportId = urlId.split('_push_')[1];
+
+        common.getMessageDetails(urlId, 'REPORT', function(data) {
             var _body = data.body;
 
             _body.nickname = common.nickname(_body.userName);
 
             $scope.item = _body;
-        }
-    });
+        });
+    } else {
+        //详情
+        common.loadingShow();
+        COMMON.post({
+            type: 'report_details',
+            data: {
+                reportId: reportId
+            },
+            success: function(data) {
+                common.loadingHide();
+                var _body = data.body;
+
+                _body.nickname = common.nickname(_body.userName);
+
+                $scope.item = _body;
+            }
+        });
+    }
 
     //评论列表
     var handleAjax = function() {
         COMMON.post({
             type: 'obtain_report_comment',
             data: {
-                reportId: $stateParams.id,
+                reportId: reportId,
                 currentPage: dataList.currentPage + 1
             },
             success: function(data) {
@@ -442,7 +459,7 @@ angular.module('workReport.controller', [])
         COMMON.post({
             type: 'report_comment',
             data: {
-                reportId: $stateParams.id,
+                reportId: reportId,
                 userId: common.userInfo.clientId,
                 comment: $scope.data.commentReport
             },

@@ -29,27 +29,30 @@ angular.module('workApply.controller', [])
     //搜索--start
     $scope.isSearchVal = false;
     $scope.isSearchTxt = true;
-    $scope.showSearch = function() {
+    var showSearch = function() {
         $scope.isSearchVal = true;
         $scope.isSearchTxt = false;
-    }
-    $scope.cancelSearch = function() {
+
+        $timeout(function() {
+            $('#js_search').focus().on('keypress', function(e) {
+                var _keyCode = e.keyCode;
+                if (_keyCode == 13) {
+                    //搜索
+                    handleSearch();
+                    return false;
+                }
+            })
+        }, 200)
+    }, cancelSearch = function() {
         $scope.isSearchVal = false;
         $scope.isSearchTxt = true;
+    }, handleSearch = function() {
+        initData();
+        cancelSearch();
     }
-    var isSearchAjax = false;
-    $scope.handleSearch = function() {
-        if ($scope.data.keywords && !isSearchAjax) {
-            isSearchAjax = true;
-        }
-
-        if (isSearchAjax) {
-            $timeout(function() {
-                isSearchAjax = true;
-                console.log($scope.data.keywords, e);
-            }, 500);
-        }
-    }
+    $scope.showSearch = showSearch;
+    $scope.cancelSearch = cancelSearch;
+    $scope.handleSearch = handleSearch;
     //搜索--end
 
     var applicationStatus = menus.applicationStatus,
@@ -75,7 +78,6 @@ angular.module('workApply.controller', [])
         'LEAVE': '#/work/apply/auditLeave',//请假
         'PURCHASE': '#/work/apply/auditPurchase',//采购
         'OTHER': '#/work/apply/auditOther',//其他
-        // 'TASK_DELAY': '',
         'DISCOUNT': '#/work/apply/auditprivilege',
         'DISABLED': '#/work/apply/auditDiscount',//报残
         'MAINTAIN': '#/work/apply/auditMaintain'//维修
@@ -130,8 +132,6 @@ angular.module('workApply.controller', [])
             data: $scope.data,
             success: function(data) {
                 common.loadingHide();
-
-                console.log(data)
 
                 var _body = data.body;
 

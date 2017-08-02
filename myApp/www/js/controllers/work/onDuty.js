@@ -5,10 +5,10 @@ angular.module('workOnDuty.controller', [])
     $scope.scheduleID = '';
 
     $scope.data = {
-        // date: common.format(false, 'yyyy-MM-dd'),
-        // userId: common.userInfo.clientId
-        date: '2017-07-29',
-        userId: 27
+        date: common.format(false, 'yyyy-MM-dd'),
+        userId: common.userInfo.clientId
+        // date: '2017-07-29',
+        // userId: 27
     };
 
     $scope.seleDate = function() {
@@ -82,8 +82,13 @@ angular.module('workOnDuty.controller', [])
 })
 
 //值班查询
-.controller('WorkOnDutyQueryCtrl', function($scope, common, seleMenuList) {
+.controller('WorkOnDutyQueryCtrl', function($scope, $timeout, common, seleMenuList) {
     $scope.items = [];
+
+    var dataList = {
+        currentPage: 0,
+        items: []
+    };
 
     var month= common.format(false, 'MM'),
         year= common.format(false, 'yyyy');
@@ -128,33 +133,30 @@ angular.module('workOnDuty.controller', [])
 
                 var _body = data.body;
 
-                if (!_body || (_body && !_body.length)) {
-                     $scope.notTaskListData = common.notTaskListDataTxt;
+                if (!_body || (_body && _body.items && !_body.items.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
                     return;
                 } else {
                     $scope.notTaskListData = false;
                 }
 
-                console.log(data)
+                var list = _body.items;
 
-                // var list = _body.report;
+                dataList = _body;
 
-                // for (var i = 0, ii = list.length; i < ii; i++) {
-                //     list[i].nickname = common.nickname(list[i].userName);
-                //     $scope.items.push(list[i]);
-                // }
+                for (var i = 0, ii = list.length; i < ii; i++) {
+                    $scope.items.push(list[i]);
+                }
 
-                // $timeout(function() {
-                //     $scope.vm.moredata = true;
-                // }, 1000);
-
-                $scope.items = _body;
+                $timeout(function() {
+                    $scope.vm.moredata = true;
+                }, 1000);
             }
         });
     }, initData = function(isNotLoading) {
         dataList = {
             currentPage: 0,
-            report: []
+            items: []
         };
 
         $scope.items = [];
@@ -162,8 +164,23 @@ angular.module('workOnDuty.controller', [])
         searchAjax(isNotLoading);
     }
 
-     //选择部门-start
+    $scope.vm = {
+        moredata: false,
+        loadMore: function() {
+            if (dataList.items.length < common._pageSize || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
+                $scope.vm.moredata = false;
+                return;
+            }
 
+            $timeout(function () {
+                $scope.vm.moredata = false;
+                searchAjax();
+            }, 1500);
+            return true;
+        }
+    }
+
+    //选择部门-start
     var seleDepartmentId = '';
 
     $scope.seleBrank = [];
@@ -269,18 +286,33 @@ angular.module('workOnDuty.controller', [])
 .controller('WorkOnDutyDetailsCtrl', function($scope, $stateParams, common) {
     $scope.data = {};
 
-    //获取
-    COMMON.post({
-        type: 'zhiban_detail',
-        data: {
-            id: $stateParams.id
-        },
-        success: function(data) {
+    var urlId = $stateParams.id,
+        id = $stateParams.id;
+
+    if (urlId.indexOf('_push_') > 0) {
+        id = urlId.split('_push_')[1];
+
+        common.getMessageDetails(urlId, 'PAIBAN', function(data) {
             var _body = data.body;
 
             $scope.data = _body;
-        }
-    });
+        });
+    } else {
+        //获取
+        common.loadingShow();
+        COMMON.post({
+            type: 'zhiban_detail',
+            data: {
+                id: id
+            },
+            success: function(data) {
+                common.loadingHide();
+                var _body = data.body;
+
+                $scope.data = _body;
+            }
+        });
+    }
 })
 
 //检查

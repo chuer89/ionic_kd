@@ -1,5 +1,6 @@
 angular.module('message.services', [])
 
+//模拟消息-克删除
 .factory('messagePush', function() {
     var list = [{
         id: 0,
@@ -36,6 +37,7 @@ angular.module('message.services', [])
     }
 })
 
+//消息提醒设置-可删
 .factory('messageSetList', function () {
     var list = [{
         name: '任务信息', checked: true
@@ -838,6 +840,35 @@ angular.module('message.services', [])
         //返回上级（历史记录）
         back: function() {
             history.back(-1);
+        },
+
+        //获取push消息详情数据-入参相同，返回值不同
+        getMessageDetails: function(urlParam, messageType, cb) {
+            var _param = {
+                messageType: messageType,
+                userId: COMMON.userInfo.clientId
+            }, arr = [];
+
+            if (urlParam.indexOf('_push_') > 0) {
+                arr = urlParam.split('_push_');
+
+                _param.messageId = arr[0];
+                _param.realId = arr[1];
+
+                COMMON.loadingShow();
+                COMMON.post({
+                    type: 'message_details',
+                    data: _param,
+                    success: function(data) {
+                        var _body = data.body;
+                        COMMON.loadingHide();
+
+                        if (typeof cb == 'function') {
+                            cb(data);
+                        }
+                    }
+                })
+            }
         },
 
         //根据id 反查姓名

@@ -149,7 +149,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     //绩效tab
     .state('tab.perfomance', {
         url: '/perfomance',
-        cache: false,
         views: {
             'tab-perfomance': {
                 templateUrl: 'templates/perfomance/index.html',
@@ -758,7 +757,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('me_info', {
         url: '/me/info',
         templateUrl: 'templates/me/info.html',
-        controller: 'MeInfoCtrl'
+        controller: 'MeInfoCtrl',
+        cache: false
     })
     //我－消息设置
     .state('me_set_msg', {

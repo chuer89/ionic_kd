@@ -9916,6 +9916,37 @@ img {
   width: 100%;
   border-radius: 0.26667rem; }
 
+.button.button-light.activated, .button.button-light.active {
+  border-color: transparent; }
+
+ion-tabs.tabs-color-active-royal .tab-item.activated,
+ion-tabs.tabs-color-active-royal .tab-item.active,
+ion-tabs.tabs-color-active-royal .tab-item.tab-item-active {
+  color: #7157a9; }
+
+.tabs-background-dark .tabs, .tabs-background-dark > .tabs {
+  background-color: #6c647e;
+  border-color: #6c647e; }
+
+ion-tabs.tabs-color-active-light .tab-item {
+  color: #e6e6e6; }
+
+.bar.bar-dark {
+  border-color: #6c647e;
+  background-color: #6c647e; }
+
+.bar .button.button-clear .icon:before, .bar .button.button-clear.icon-left:before,
+.bar .button.button-clear.icon-right:before, .bar .button.button-clear.icon:before,
+.bar button.button-clear .icon:before, .bar button.button-clear.icon-left:before,
+.bar button.button-clear.icon-right:before, .bar button.button-clear.icon:before {
+  font-size: 22px; }
+
+.bar .button.button-icon .icon:before, .bar .button.button-icon.icon-left:before,
+.bar .button.button-icon.icon-right:before, .bar .button.button-icon:before,
+.bar button.button-icon .icon:before, .bar button.button-icon.icon-left:before,
+.bar button.button-icon.icon-right:before, .bar button.button-icon:before {
+  font-size: 25px; }
+
 .clearfix {
   overflow: hidden;
   _zoom: 1; }
@@ -10109,7 +10140,7 @@ img {
 /*输入框*/
 .import_box {
   background: white; }
-  .import_box input[type=search], .import_box input[type=text], .import_box input[type=password], .import_box input[type=number] {
+  .import_box input[type=search], .import_box input[type=text], .import_box input[type=password], .import_box input[type=number], .import_box input[type=tel] {
     height: auto;
     line-height: normal; }
   .import_box input {

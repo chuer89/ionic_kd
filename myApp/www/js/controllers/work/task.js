@@ -300,10 +300,10 @@ angular.module('workTask.controller', [])
         endTime: ''
     };
 
-    $scope.seleDatePicker = function() {
+    $scope.seleDate = function() {
         common.datePicker(function(date) {
             $scope.data.endTime = date;
-        })
+        }, true);
     }
 
     $scope.showSeleWarn = function() {
@@ -336,7 +336,7 @@ angular.module('workTask.controller', [])
         var _param = {
             creatorId: common.userInfo.clientId,
             description: _data.description,
-            endTime: "2017-08-30 12:40",
+            endTime: $scope.data.endTime,
             period: "SUGGEST_DEADLLINE",//固定截止时间，建议截止时间，每日任务 'FIXED_DEADLLINE' or 'SUGGEST_DEADLLINE' or 'DAILY_TASK' 
             status: "WORKING",
             title: _data.title,
@@ -512,18 +512,33 @@ angular.module('workTask.controller', [])
     var menus = seleMenuList.menu();
     var taskStatus = menus.taskStatus;
 
-    //任务详情
-    COMMON.post({
-        type: 'task_detail_info',
-        data: {
-            taskId: $stateParams.id
-        },
-        success: function(data) {
+    var urlId = $stateParams.id,
+        taskId = $stateParams.id;
+
+    if (urlId.indexOf('_push_') > 0) {
+        taskId = urlId.split('_push_')[1];
+
+        common.getMessageDetails(urlId, 'TASK', function(data) {
             data.body.taskBasiInfo._status = common.getId(taskStatus, data.body.taskBasiInfo.status, 'key').name;
 
             $scope.data = data.body;
-        }
-    });
+        });
+    } else {
+        //任务详情
+        common.loadingShow();
+        COMMON.post({
+            type: 'task_detail_info',
+            data: {
+                taskId: taskId
+            },
+            success: function(data) {
+                common.loadingHide();
+                data.body.taskBasiInfo._status = common.getId(taskStatus, data.body.taskBasiInfo.status, 'key').name;
+
+                $scope.data = data.body;
+            }
+        });
+    }
 
     var dataList = {};
     $scope.commentArray = [];
@@ -541,7 +556,7 @@ angular.module('workTask.controller', [])
         COMMON.post({
             type: 'specific_task_comments',
             data: {
-                taskId: $stateParams.id,
+                taskId: taskId,
                 currentPage: dataList.currentPage + 1,
             },
             notPretreatment: true,
@@ -608,7 +623,7 @@ angular.module('workTask.controller', [])
             cancelText: '取消',
             buttonClicked: function (index, item) {
                 $state.go(item.link, {
-                    id: $stateParams.id
+                    id: taskId
                 });
                 return true;
             }

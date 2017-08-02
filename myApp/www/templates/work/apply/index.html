@@ -9,13 +9,15 @@
 
 	<ion-content>
         <div ng-if="isSearchVal" class="padding_btm_small">
-            <ion-header-bar class="item-input-inset">
-                <label class="item-input-wrapper">
-                    <i class="icon ion-ios-search placeholder-icon"></i>
-                    <input type="search" ng-change="handleSearch()" placeholder="Search" ng-model="data.keywords">
-                </label>
-                <button class="button button-light" ng-click="cancelSearch()">取消</button>
-            </ion-header-bar>
+            <form action="javascript:return true;">
+                <ion-header-bar class="item-input-inset">
+                    <label class="item-input-wrapper">
+                        <i class="icon ion-ios-search placeholder-icon"></i>
+                        <input type="search" id="js_search" ng-blur="handleSearch()" placeholder="Search" ng-model="data.keywords"/>
+                    </label>
+                    <button class="button button-light" ng-click="cancelSearch()">取消</button>
+                </ion-header-bar>
+            </form>
         </div>
 
         <div class="kd_nav_filter">

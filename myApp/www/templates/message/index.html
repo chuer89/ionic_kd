@@ -1,13 +1,15 @@
 <ion-view view-title="消息" hide-nav-bar="isSearchVal">
 	<ion-content>
 		<div ng-if="isSearchVal" class="padding_btm_small">
-		    <ion-header-bar class="item-input-inset">
-		        <label class="item-input-wrapper">
-		            <i class="icon ion-ios-search placeholder-icon"></i>
-		            <input type="search" placeholder="Search" ng-model="searchContent">
-		        </label>
-		        <button class="button button-light" ng-click="cancelSearch()">取消</button>
-		    </ion-header-bar>
+			<form action="javascript:return true;">
+                <ion-header-bar class="item-input-inset">
+                    <label class="item-input-wrapper">
+                        <i class="icon ion-ios-search placeholder-icon"></i>
+                        <input type="search" id="js_search" ng-blur="handleSearch()" placeholder="Search" ng-model="data.keywords"/>
+                    </label>
+                    <button class="button button-light" ng-click="cancelSearch()">取消</button>
+                </ion-header-bar>
+            </form>
 		</div>
 
 		<div class="padding" ng-if="isSearchTxt">
@@ -20,29 +22,24 @@
 		</div>
 		
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
-        <ion-list class="list_box">
-        	<ion-item class="item_list_box" ng-repeat="item in items">
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
+
+        <div class="list_box">
+        	<a href="{{item._infos.link}}" class="item_list_box" ng-repeat="item in items">
         		<div class="row">
 	        		<div class="col col-10 left_icon_box">
 	        			<span class="list_icon_box">
-	        				<img src="{{item.icon || 'img/logo.png'}}" class="left_icon" />
+	        				<img src="{{item._infos.icon || 'img/logo.png'}}" class="left_icon" />
 	        			</span>
-	        			<span class="red-point"></span>
+	        			<span class="red-point" ng-if="!item.isView"></span>
 	        		</div>
 	        		<div class="col col-67">
-	        			<h2 class="title">{{item.name}}</h2>
-		        		<p class="info">{{item.intro}}</p>
+	        			<h2 class="title">{{item._subTitle}}</h2>
+		        		<p class="info">{{item.title}}</p>
 	        		</div>
-	        		<div class="col col-20 text_align_right">{{item.time}}</div>
+	        		<div class="col col-20 text_align_right">{{item._notifyTime}}</div>
         		</div>
-        		<ion-option-button class="button-assertive">
-		          删除
-		        </ion-option-button>
-        	</ion-item>
-        </ion-list>
-        <div>{{phoneData}}</div>
-        <div>
-        	<img src="" id="myImage">
+        	</a>
         </div>
 	</ion-content>
 </ion-view>

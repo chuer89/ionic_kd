@@ -1,6 +1,6 @@
 <ion-view view-title="消息设置">
     <ion-nav-buttons side="left">  
-        <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+        <a href="javascript:;" ng-click="back()" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
 
     <ion-content>
@@ -8,8 +8,7 @@
             <li class="item item-toggle" ng-repeat="item in items">
                 {{item.name}}
                 <label class="toggle toggle-royal">
-                    <input type="checkbox" checked="" ng-if="item.checked" />
-                    <input type="checkbox" ng-if="!item.checked" />
+                    <input ng-model="item.checked" type="checkbox">
                     <div class="track">
                         <div class="handle"></div>
                     </div>

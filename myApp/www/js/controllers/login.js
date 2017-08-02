@@ -42,10 +42,11 @@ angular.module('login.controller', [])
                 }
 
                 angular.extend(common.userInfo, _body);
+
+                common.setLocalStorage('userInfo', JSON.stringify(_body));
                 common.setLocalStorage('clientId', _body.clientId);
 
                 $state.go('tab.dash');
-                
             }
         });
     }

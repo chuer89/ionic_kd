@@ -239,6 +239,37 @@ angular.module('workSign.controller', [])
 		phoneBook: []
 	};
 
+	$scope.data = {};
+
+	//搜索--start
+    $scope.isSearchVal = false;
+    $scope.isSearchTxt = true;
+    var showSearch = function() {
+        $scope.isSearchVal = true;
+        $scope.isSearchTxt = false;
+
+        $timeout(function() {
+            $('#js_search').focus().on('keypress', function(e) {
+                var _keyCode = e.keyCode;
+                if (_keyCode == 13) {
+                    //搜索
+                    handleSearch();
+                    return false;
+                }
+            })
+        }, 200)
+    }, cancelSearch = function() {
+        $scope.isSearchVal = false;
+        $scope.isSearchTxt = true;
+    }, handleSearch = function() {
+        initData();
+        cancelSearch();
+    }
+    $scope.showSearch = showSearch;
+    $scope.cancelSearch = cancelSearch;
+    $scope.handleSearch = handleSearch;
+    //搜索--end
+
 	$timeout(function() {
 		$('.button_close').click();
 	}, 0)
@@ -253,7 +284,7 @@ angular.module('workSign.controller', [])
 		COMMON.getPhoneBook({
 			currentPage: dataList.currentPage + 1,
         	departmentId: seleDepartmentId,
-        	name: ''
+        	name: $scope.data.name
 		}, function(body) {
 			common.loadingHide();
 

@@ -50,37 +50,57 @@ angular.module('workSchedule.controller', [])
 
     common.setCheckedPerson._targetName = '';
 
+    var urlId = $stateParams.id,
+        riChengId = $stateParams.id;
+
     $scope.relationGuys = '';
-    common.loadingShow();
-    COMMON.post({
-        type: 'richeng_detail_info',
-        data: {
-            "userId": common.userInfo.clientId,
-            "riChengType": "richeng",
-            riChengId: $stateParams.id
-        },
-        success: function(data) {
-            var _body = data.body;
-            common.loadingHide();
 
-            var _relationGuys = '';
+    var handleData = function(data) {
+        var _body = data.body;
 
-            for (var i = 0, ii = _body.jieshourenList.length; i < ii; i++) {
-                _relationGuys += _body.jieshourenList[i].userName + ' ';
-            }
+        var _relationGuys = '';
 
-            common.getUserinfo_simple(_body.riChengbasicInffo.riChengCreatorId, function(_data) {
-                _body.riChengbasicInffo.userName = _data.name;
-
-                _body.riChengbasicInffo._time = common.format(_body.riChengbasicInffo.riChengBegingtime);
-
-                $scope.item = _body.riChengbasicInffo;
-            });
-
-            $scope.relationGuys = _relationGuys;
+        for (var i = 0, ii = _body.jieshourenList.length; i < ii; i++) {
+            _relationGuys += _body.jieshourenList[i].userName + ' ';
         }
 
-    });
+        common.getUserinfo_simple(_body.riChengbasicInffo.riChengCreatorId, function(_data) {
+            _body.riChengbasicInffo.userName = _data.name;
+
+            _body.riChengbasicInffo._time = common.format(_body.riChengbasicInffo.riChengBegingtime);
+
+            $scope.item = _body.riChengbasicInffo;
+        });
+
+        $scope.relationGuys = _relationGuys;
+    }, getDetails = function() {
+        common.loadingShow();
+        COMMON.post({
+            type: 'richeng_detail_info',
+            data: {
+                "userId": common.userInfo.clientId,
+                "riChengType": "richeng",
+                riChengId: riChengId
+            },
+            success: function(data) {
+                common.loadingHide();
+                handleData(data);
+            }
+        });
+    }
+
+    if (urlId.indexOf('_push_') > 0) {
+        riChengId = urlId.split('_push_')[1];
+
+        common.getMessageDetails(urlId, 'REMIND', function(data) {
+            handleData(data);
+        });
+    } else {
+        getDetails();
+    }
+
+    
+    
 
 	var showConfirm = function() {
         common.popup({
@@ -91,7 +111,7 @@ angular.module('workSchedule.controller', [])
                 type: 'delete_richeng',
                 data: {
                     clientId: common.userInfo.clientId,
-                    riChengId: $stateParams.id
+                    riChengId: riChengId
                 },
                 success: function(data) {
                     common.loadingHide();
@@ -117,7 +137,7 @@ angular.module('workSchedule.controller', [])
                 	showConfirm();
                 } else {
                     $state.go('work_schedule_edit', {
-                        id: $stateParams.id
+                        id: riChengId
                     });
                 }
                 return true;
@@ -134,7 +154,7 @@ angular.module('workSchedule.controller', [])
                 type: 'exit_richeng',
                 data: {
                     clientId: common.userInfo.clientId,
-                    riChengId: $stateParams.id
+                    riChengId: riChengId
                 },
                 success: function(data) {
                     common.loadingHide();
