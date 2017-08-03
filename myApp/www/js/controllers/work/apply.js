@@ -308,7 +308,7 @@ angular.module('workApply.controller', [])
 	$scope.doRefresh = function() {
 		setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
-            handleAjax();
+            initData();
         }, 1000)
         return true;
 	}

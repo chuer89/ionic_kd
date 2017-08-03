@@ -22,6 +22,9 @@ angular.module('workTask.controller', [])
         tasks: []
     };
 
+    common._localstorage.typePageName = '';
+    common.setAuditorUserList.id = '';
+
     var menus = seleMenuList.menu();
 
     var taskStatus = menus.taskStatus;
@@ -297,7 +300,8 @@ angular.module('workTask.controller', [])
         typePageName: 'WorkTaskAddCtrl',
         ATTENTION_PEOPLE: {name:'请选择'},//关注人
         inspectorId: {name:'请选择'},//检查人
-        endTime: ''
+        endTime: '',
+        remindtime: ''
     };
 
     $scope.seleDate = function() {
@@ -312,6 +316,7 @@ angular.module('workTask.controller', [])
             cancelText: '取消',
             buttonClicked: function(index, item) {
                 $scope.seleWarn = item.text;
+                $scope.data.remindtime = item.key;
                 return true;
             }
         })
@@ -340,10 +345,11 @@ angular.module('workTask.controller', [])
             period: "SUGGEST_DEADLLINE",//固定截止时间，建议截止时间，每日任务 'FIXED_DEADLLINE' or 'SUGGEST_DEADLLINE' or 'DAILY_TASK' 
             status: "WORKING",
             title: _data.title,
-            inspectorId: _data.inspectorId.id,//检查人
+            remindtime: _data.remindtime,
+            inspectorId: _data.inspectorId.id + '',//检查人
             userlist: [
-                {"userId": common.userInfo.clientId, "userTypeForTask": "RESPONSIBLE_PEOPLE"},
-                {"userId": _data.ATTENTION_PEOPLE.id, "userTypeForTask": "ATTENTION_PEOPLE"}
+                {"userId": common.userInfo.clientId + '', "userTypeForTask": "RESPONSIBLE_PEOPLE"},
+                {"userId": _data.ATTENTION_PEOPLE.id + '', "userTypeForTask": "ATTENTION_PEOPLE"}
             ],
             zhibanTaskHandle: "0",
             zhibanTaskId: "0",
@@ -380,15 +386,150 @@ angular.module('workTask.controller', [])
     }
 })
 
+//编辑任务
 .controller('WorkTaskEditCtrl', function($scope, $stateParams, $ionicActionSheet, common, seleMenuList) {
+    var taskId = $stateParams.id;
 
+    var menus = seleMenuList.menu();
+    var taskStatus = menus.taskStatus;
+
+    $scope.seleWarn = '请选择';
+    
+    $scope.data = {
+        typePageName: 'WorkTaskEditCtrl',
+        ATTENTION_PEOPLE: {name:'请选择'},//关注人
+        inspectorId: {name:'请选择'},//检查人
+        endTime: '',
+        remindtime: ''
+    };
+
+    $scope.seleDate = function() {
+        common.datePicker(function(date) {
+            $scope.data.endTime = date;
+        }, true);
+    }
+
+    $scope.showSeleWarn = function() {
+        $ionicActionSheet.show({
+            buttons: menus.taskWarn,
+            cancelText: '取消',
+            buttonClicked: function(index, item) {
+                $scope.seleWarn = item.text;
+                return true;
+            }
+        })
+    }
+
+    //表单数据
+    var formElement = document.querySelector("form");
+    var formData = new FormData(formElement);
+
+    $scope.showSelePhoto = function() {
+        common.showSelePhoto({
+            appendPhone: function(the_file) {
+                formData.append("fuJians", the_file, "images.jpg");
+            }
+        });
+    }
+
+    var getDetails = function() {
+        //任务详情
+        COMMON.post({
+            type: 'task_detail_info',
+            data: {
+                taskId: taskId
+            },
+            success: function(data) {
+                data.body.taskBasiInfo._status = common.getId(taskStatus, data.body.taskBasiInfo.status, 'key').name;
+
+                var _body = data.body;
+
+                angular.extend($scope.data, {
+                    description: _body.taskBasiInfo.taskDescription,
+                    title: _body.taskBasiInfo.taskTitle,
+                    endTime: _body.taskBasiInfo.endTime,
+                    remindtime: _body.taskBasiInfo.remindtime,
+                    ATTENTION_PEOPLE: {
+                        name: _body.guangzhurenArray[0].userName,
+                        id: _body.guangzhurenArray[0].userId
+                    }
+                });
+
+                common.getUserinfo_simple(_body.taskBasiInfo.inspectorId, function(data) {
+                    $scope.data.inspectorId = {
+                        name: data.name,
+                        id: _body.taskBasiInfo.inspectorI
+                    };
+                });
+
+                $scope.seleWarn = common.getId(menus.taskWarn, _body.taskBasiInfo.remindtime, 'key')
+            }
+        });
+    }
+
+    $scope.update = function() {
+        var _data = $scope.data;
+
+        var _param = {
+            creatorId: common.userInfo.clientId,
+            description: _data.description,
+            endTime: $scope.data.endTime,
+            period: "SUGGEST_DEADLLINE",//固定截止时间，建议截止时间，每日任务 'FIXED_DEADLLINE' or 'SUGGEST_DEADLLINE' or 'DAILY_TASK' 
+            status: "WORKING",
+            title: _data.title,
+            inspectorId: _data.inspectorId.id + '',//检查人
+            userlist: [
+                {"userId": common.userInfo.clientId + '', "userTypeForTask": "RESPONSIBLE_PEOPLE"},
+                {"userId": _data.ATTENTION_PEOPLE.id + '', "userTypeForTask": "ATTENTION_PEOPLE"}
+            ],
+            zhibanTaskHandle: "0",
+            zhibanTaskId: "0",
+            dailyTaskId: '0',
+            taskId: taskId
+        }
+
+        common.formData({
+            type: 'update_task_info',
+            body: _param,
+            setData: function(json) {
+                formData.append("json", json);
+            },
+            data: formData,
+            success: function(data) {
+                common.toast(data.message, function() {
+                    // common.back();
+                });
+            }
+        });
+    };
+
+    if (common.setAuditorUserList.id) {
+        if (common.setAuditorUserList._targetName == 'work_task_add_ATTENTION') {
+            common._localstorage.ATTENTION_PEOPLE = common.setAuditorUserList;
+        } else if (common.setAuditorUserList._targetName == 'work_task_add_inspector') {
+            common._localstorage.inspectorId = common.setAuditorUserList;
+        }
+    }
+
+    if (common._localstorage.typePageName == $scope.data.typePageName) {
+        $scope.data = common._localstorage;
+    } else {
+        getDetails();
+        common._localstorage = $scope.data;
+    }
+
+    
 })
 
+//查看的任务列表
 .controller('WorkTaskListCtrl', function($scope, $stateParams, $timeout, workTaskList, common, seleMenuList) {
 	var dataList = {
         currentPage: 0,
         tasks: []
     };
+
+    common._localstorage.typePageName = '';
+    common.setAuditorUserList.id = '';
 
     //id-》name
     common.getUserinfo_simple($stateParams.id, function(data) {
@@ -512,8 +653,51 @@ angular.module('workTask.controller', [])
     var menus = seleMenuList.menu();
     var taskStatus = menus.taskStatus;
 
+    common._localstorage.typePageName = '';
+    common.setAuditorUserList.id = '';
+
     var urlId = $stateParams.id,
         taskId = $stateParams.id;
+
+    var navMenus = [];
+
+    var getNavMenus = function(data) {
+        var _clientId = common.userInfo.clientId;
+        var _status = data.taskBasiInfo.status;
+        var _zerenren = data.zerenrenArray[0].userId;//责任人
+        var _creatorId = data.taskBasiInfo.creatorId;//创建人
+        var _inspectorId = data.taskBasiInfo.inspectorId;//检查人
+
+        //编辑：责任人和检查人都可以见，任务状态不是QUALIFIED或者UNQUALIFIED
+        if ( (_clientId == _zerenren || _clientId == _inspectorId)
+            && (_status != 'QUALIFIED' || _status != 'UNQUALIFIED')
+            ){
+            navMenus.push({text: '编辑', link: 'work_task_edit'})
+        }
+
+        //提交：责任人可见，任务状态是WORKING
+        if (_clientId == _zerenren && _status == 'WORKING') {
+            navMenus.push({text: '提交', link: 'work_task_list_details_refer'})
+        }
+
+        // 确认：检查人可见，任务状态是DECLARATION
+        if (_clientId == _inspectorId && _status == 'DECLARATION') {
+            navMenus.push({text: '确认', link: 'work_task_list_details_approve'})
+        }
+
+        //审核：检查人可见，任务状态是UNCONFIRMED
+        if (_clientId == _inspectorId && _status == 'UNCONFIRMED') {
+            navMenus.push({text: '审核', link: 'work_task_list_details_audit'})
+        }
+
+        //申请延期：责任人可见，任务状态是WORKING
+        if (_clientId == _inspectorId && _status == 'WORKING') {
+            navMenus.push({text: '申请延期', link: 'work_task_list_details_postpone'})
+        }
+
+        //添加讨论:都可见
+        navMenus.push({text: '添加讨论', link: 'work_task_list_details_Discuss'})
+    }
 
     if (urlId.indexOf('_push_') > 0) {
         taskId = urlId.split('_push_')[1];
@@ -536,6 +720,8 @@ angular.module('workTask.controller', [])
                 data.body.taskBasiInfo._status = common.getId(taskStatus, data.body.taskBasiInfo.status, 'key').name;
 
                 $scope.data = data.body;
+
+                getNavMenus(data.body);
             }
         });
     }
@@ -553,6 +739,7 @@ angular.module('workTask.controller', [])
 
         ajaxComments();
     }, ajaxComments = function() {
+        //评论
         COMMON.post({
             type: 'specific_task_comments',
             data: {
@@ -606,20 +793,15 @@ angular.module('workTask.controller', [])
     
 
 	$scope.showNav = function() {
+        if (navMenus.length) {
+
+        } else {
+            common.toast('暂无菜单权限分配');
+            return false;
+        }
+
         $ionicActionSheet.show({
-            buttons: [{
-                text: '编辑', link: 'work_task_edit'
-            }, {
-                text: '提交', link: 'work_task_list_details_refer'
-            }, {
-                text: '确认', link: 'work_task_list_details_approve'
-            }, {
-            	text: '审核', link: 'work_task_list_details_audit'
-            }, {
-            	text: '添加讨论', link: 'work_task_list_details_Discuss'
-            }, {
-            	text: '申请延期', link: 'work_task_list_details_postpone'
-            }],
+            buttons: navMenus,
             cancelText: '取消',
             buttonClicked: function (index, item) {
                 $state.go(item.link, {

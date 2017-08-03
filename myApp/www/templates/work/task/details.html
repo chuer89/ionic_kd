@@ -25,8 +25,8 @@
             </div>
             <div class="item_list_box info_f_14">
                 <p><span class="info">负责人：</span>{{data.taskBasiInfo.creatorName}}</p>
-                <p><span class="info">检查人：</span>王某</p>
-                <p><span class="info">关注人：</span>李某</p>
+                <p><span class="info">检查人：</span>{{data.zerenrenArray[0].userName}}</p>
+                <p><span class="info">关注人：</span>{{data.guangzhurenArray[0].userName}}</p>
             </div>
             <div class="item_list_box" ng-if="data.taskImageArray.length">
                 <img src="{{taskImg.path}}" ng-repeat="taskImg in data.taskImageArray">

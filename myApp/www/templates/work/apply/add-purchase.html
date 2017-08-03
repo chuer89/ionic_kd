@@ -28,11 +28,11 @@
                 </label>
                 <label class="item item-input">
                     <span class="input-label">数量</span>
-                    <input type="text" ng-model="item.purchaseNumber" placeholder="请输入(必填)" />
+                    <input type="tel" ng-model="item.purchaseNumber" placeholder="请输入(必填)" />
                 </label>
                 <label class="item item-input">
                     <span class="input-label">预算(元)</span>
-                    <input type="text" ng-change="changeInput()" ng-model="item.purchaseBudget" placeholder="请输入(必填)" />
+                    <input type="tel" ng-change="changeInput()" ng-model="item.purchaseBudget" placeholder="请输入(必填)" />
                 </label>
                 <label class="item">
                     <textarea ng-model="item.purchaseDescription" placeholder="请写清用途可快速通过"></textarea>

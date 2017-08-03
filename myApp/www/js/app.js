@@ -259,7 +259,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_task', {
         url: '/work/task',
         templateUrl: 'templates/work/task/index.html',
-        controller: 'WorkTaskCtrl'
+        controller: 'WorkTaskCtrl',
+        cache: false
     })
     //任务查询
     .state('work_task_query', {
@@ -274,9 +275,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkTaskAddCtrl',
         cache: false
     })
-    //任务创建
+    //编辑创建
     .state('work_task_edit', {
-        url: '/work/task_edit',
+        url: '/work/task_edit/:id',
         templateUrl: 'templates/work/task/edit.html',
         controller: 'WorkTaskEditCtrl',
         cache: false

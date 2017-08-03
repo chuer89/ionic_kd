@@ -56,8 +56,12 @@ angular.module('work.controller', [])
         '9': 'work_apply_addother',//其他申请
         '09': 'work_apply_auditOther',//其他申请-审核
 
-        '2': 'work_task_add_ATTENTION',
-        '4': 'work_task_add_inspector',
+        
+
+        '2': 'work_task_add_ATTENTION',//任务-关注人
+        '4': 'work_task_add_inspector',//任务-责任人
+
+
         '5': 'perfomance_add'//绩效开单
     }
 
