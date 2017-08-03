@@ -173,6 +173,8 @@ angular.module('workVisit.controller', [])
 .controller('WorkVisitDetailsCtrl', function($scope, $state, $stateParams, $ionicActionSheet, common, workCrmSele) {
     $scope.item = {};
 
+    common._localstorage.typePageName = '';
+
     var getDetails = function() {
         common.loadingShow();
 
@@ -264,33 +266,46 @@ angular.module('workVisit.controller', [])
 .controller('WorkVisitEditCtrl', function($scope, $ionicActionSheet, $stateParams, common, workCrmSele) {
     $scope.data = {
         createrId: common.userInfo.clientId,
-        customerId: 9
+        customerId: '',
+        clientIdSele: {name: '请选择'},
+        seleVisitType: '请选择',
+        typePageName: 'WorkVisitEditCtrl',
+        visitRecord: ''
     }
 
-    common.loadingShow();
-    common.post({
-        type: 'obtain_visit_record_form',
-        data: {
-            id: $stateParams.id,
-            userId: common.userInfo.clientId
-        },
-        success: function(data) {
-            console.log(data)
-            common.loadingHide();
-            angular.extend($scope.data, data.body);
+    var getDetails = function() {
+        common.loadingShow();
+        common.post({
+            type: 'obtain_visit_record_form',
+            data: {
+                id: $stateParams.id,
+                userId: common.userInfo.clientId
+            },
+            success: function(data) {
+                common.loadingHide();
+                var _body = data.body;
 
-            $scope.seleVisitType = data.body.visitTypeName;
-        }
-    });
+                angular.extend($scope.data, {
+                    seleVisitType: _body.visitTypeName,
+                    clientIdSele: {
+                        name: _body.customerName,
+                        id: _body.customerId
+                    },
+                    visitRecord: _body.visitRecord
+                });
 
-    $scope.seleVisitType = '请选择';
+                $scope.seleVisitType = data.body.visitTypeName;
+            }
+        });
+    }
+
     workCrmSele.visit_types(function(data) {
         $scope.showSeleVisitType = function () {
             $ionicActionSheet.show({
                 buttons: common.setSeleRepeat(data.body.visitTypes),
                 cancelText: '取消',
                 buttonClicked: function(index, item) {
-                    $scope.seleVisitType = item.text;
+                    $scope.data.seleVisitType = item.text;
                     $scope.data.visitTypeId = item.id;
 
                     return true;
@@ -301,6 +316,7 @@ angular.module('workVisit.controller', [])
 
     $scope.submit = function() {
         common.loadingShow();
+        $scope.data.customerId = $scope.data.clientIdSele.id;
 
         common.post({
             type: 'update_visit_record',
@@ -314,22 +330,37 @@ angular.module('workVisit.controller', [])
             }
         });
     }
+
+    if (common.setAuditorUserList.id) {
+        if (common.setAuditorUserList._targetName == 'work_visit_edit') {
+            common._localstorage.clientIdSele = common.setAuditorUserList;
+        }
+    }
+
+    if (common._localstorage.typePageName == $scope.data.typePageName) {
+        $scope.data = common._localstorage;
+    } else {
+        common._localstorage = $scope.data;
+        getDetails();
+    }
 })
 
 .controller('WorkVisitCreateCtrl', function($scope, $state, $ionicActionSheet, common, workCrmSele) {
     $scope.data = {
+        typePageName: 'WorkVisitCreateCtrl',
         createrId: common.userInfo.clientId,
-        customerId: 9
+        customerId: '',
+        clientIdSele: {name: '请选择'},
+        seleVisitType: '请选择'
     }
 
-    $scope.seleVisitType = '请选择';
     workCrmSele.visit_types(function(data) {
         $scope.showSeleVisitType = function () {
             $ionicActionSheet.show({
                 buttons: common.setSeleRepeat(data.body.visitTypes),
                 cancelText: '取消',
                 buttonClicked: function(index, item) {
-                    $scope.seleVisitType = item.text;
+                    $scope.data.seleVisitType = item.text;
                     $scope.data.visitTypeId = item.id;
 
                     return true;
@@ -340,6 +371,7 @@ angular.module('workVisit.controller', [])
 
     $scope.create = function() {
         common.loadingShow();
+        $scope.data.customerId = $scope.data.clientIdSele.id;
 
         common.post({
             type: 'create_visit_record',
@@ -352,6 +384,18 @@ angular.module('workVisit.controller', [])
                 });
             }
         });
+    }
+
+    if (common.setAuditorUserList.id) {
+        if (common.setAuditorUserList._targetName == 'work_visit_create') {
+            common._localstorage.clientIdSele = common.setAuditorUserList;
+        }
+    }
+
+    if (common._localstorage.typePageName == $scope.data.typePageName) {
+        $scope.data = common._localstorage;
+    } else {
+        common._localstorage = $scope.data;
     }
 })
 

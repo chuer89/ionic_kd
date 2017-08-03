@@ -182,7 +182,7 @@ angular.module('workSchedule.controller', [])
     var menus = seleMenuList.menu();
 
     if (common.setCheckedPerson._targetName != 'work_schedule_add') {
-        common.setCheckedPerson = {};
+        common.setCheckedPerson = {list: [], _targetName: ''};
     }
 
     common.getCommonSendName(function(sendName) {

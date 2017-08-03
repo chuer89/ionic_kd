@@ -412,17 +412,19 @@ angular.module('workOpportunity.controller', [])
 .controller('WorkOpportunityCreateCtrl', function($scope, $state, $ionicActionSheet, common, workCrmSele) {
     $scope.data = {
         createrId: common.userInfo.clientId,
-        customerId: 9
+        customerId: '',
+        typePageName: 'WorkOpportunityCreateCtrl',
+        seleMarket: '请选择',
+        clientIdSele: {name: '请选择'}
     }
 
-    $scope.seleMarket = '请选择';
     workCrmSele.salesPhases(function(data) {
         $scope.showSeleMarket = function () {
             $ionicActionSheet.show({
                 buttons: common.setSeleRepeat(data.body.salesPhases),
                 cancelText: '取消',
                 buttonClicked: function(index, item) {
-                    $scope.seleMarket = item.text;
+                    $scope.data.seleMarket = item.text;
                     $scope.data.salesPhaseId = item.id;
 
                     return true;
@@ -433,6 +435,8 @@ angular.module('workOpportunity.controller', [])
 
     $scope.create = function() {
         common.loadingShow();
+
+        $scope.data.customerId = $scope.data.clientIdSele.id;
 
         common.post({
             type: 'create_business_opportunity',
@@ -446,38 +450,69 @@ angular.module('workOpportunity.controller', [])
             }
         });
     }
+
+    if (common.setAuditorUserList.id) {
+        if (common.setAuditorUserList._targetName == 'work_opportunity_create') {
+            common._localstorage.clientIdSele = common.setAuditorUserList;
+        }
+    }
+
+    if (common._localstorage.typePageName == $scope.data.typePageName) {
+        $scope.data = common._localstorage;
+    } else {
+        common._localstorage = $scope.data;
+    }
 })
 
 .controller('WorkOpportunityEditCtrl', function($scope, $ionicActionSheet, $stateParams, common, workCrmSele) {
     $scope.data = {
         createrId: common.userInfo.clientId,
         customerTypeId: '',
-        starId: ''
+        starId: '',
+        customerId: '',
+        clientIdSele: {name: '请选择'},
+        seleMarket: '请选择',
+        salesPhaseId: '',
+        typePageName: 'WorkOpportunityEditCtrl',
+        name: '',
+        content: ''
     }
 
-    common.loadingShow();
-    common.post({
-        type: 'obtain_business_opportunity_form',
-        data: {
-            id: $stateParams.id,
-            userId: common.userInfo.clientId
-        },
-        success: function(data) {
-            common.loadingHide();
-            angular.extend($scope.data, data.body);
+    var getDetails = function() {
+        common.loadingShow();
+        common.post({
+            type: 'obtain_business_opportunity_form',
+            data: {
+                id: $stateParams.id,
+                userId: common.userInfo.clientId
+            },
+            success: function(data) {
+                common.loadingHide();
 
-            $scope.seleType = data.body.customerTypeName;
-        }
-    });
+                var _body = data.body;
 
-    $scope.seleMarket = '请选择';
+                angular.extend($scope.data, {
+                    seleMarket: _body.salesPhaseName,
+                    clientIdSele: {
+                        name: _body.customerName,
+                        id: _body.customerId
+                    },
+                    name: _body.name,
+                    content: _body.content
+                });
+
+                $scope.seleType = data.body.customerTypeName;
+            }
+        });
+    }
+
     workCrmSele.salesPhases(function(data) {
         $scope.showSeleMarket = function () {
             $ionicActionSheet.show({
                 buttons: common.setSeleRepeat(data.body.salesPhases),
                 cancelText: '取消',
                 buttonClicked: function(index, item) {
-                    $scope.seleMarket = item.text;
+                    $scope.data.seleMarket = item.text;
                     $scope.data.salesPhaseId = item.id;
 
                     return true;
@@ -488,6 +523,7 @@ angular.module('workOpportunity.controller', [])
 
     $scope.submit = function() {
         common.loadingShow();
+        $scope.data.customerId = $scope.data.clientIdSele.id;
 
         common.post({
             type: 'update_business_opportunity',
@@ -501,6 +537,19 @@ angular.module('workOpportunity.controller', [])
                 });
             }
         });
+    }
+
+    if (common.setAuditorUserList.id) {
+        if (common.setAuditorUserList._targetName == 'work_opportunity_edit') {
+            common._localstorage.clientIdSele = common.setAuditorUserList;
+        }
+    }
+
+    if (common._localstorage.typePageName == $scope.data.typePageName) {
+        $scope.data = common._localstorage;
+    } else {
+        common._localstorage = $scope.data;
+        getDetails();
     }
 })
 

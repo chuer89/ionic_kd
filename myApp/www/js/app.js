@@ -120,6 +120,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/common/selePerson.html',
         controller: 'CommonSelePersonCtrl'
     })
+    //选择通客户人员（crm模块）
+    .state('common_sele_customer', {
+        url: '/common/seleCustomer/:id',
+        templateUrl: 'templates/common/seleCustomer.html',
+        controller: 'CommonSeleCustomerCtrl'
+    })
 
     .state('common_demo', {
         url: '/common/demo',
@@ -618,13 +624,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_opportunity_create', {
         url: '/work/opportunity/create',
         templateUrl: 'templates/work/opportunity/create.html',
-        controller: 'WorkOpportunityCreateCtrl'
+        controller: 'WorkOpportunityCreateCtrl',
+        cache: false
     })
     //商机-修改
     .state('work_opportunity_edit', {
         url: '/work/opportunity/edit/:id',
         templateUrl: 'templates/work/opportunity/edit.html',
-        controller: 'WorkOpportunityEditCtrl'
+        controller: 'WorkOpportunityEditCtrl',
+        cache: false
     })
 
     //回访
@@ -643,13 +651,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_visit_create', {
         url: '/work/visit/create',
         templateUrl: 'templates/work/visit/create.html',
-        controller: 'WorkVisitCreateCtrl'
+        controller: 'WorkVisitCreateCtrl',
+        cache: false
     })
     //回访-编辑
     .state('work_visit_edit', {
         url: '/work/visit/edit/:id',
         templateUrl: 'templates/work/visit/edit.html',
-        controller: 'WorkVisitEditCtrl'
+        controller: 'WorkVisitEditCtrl',
+        cache: false
     })
 
     //crm-end

@@ -223,4 +223,106 @@ angular.module('work.controller', [])
     handleAjax();
 })
 
+//选择客户人员（crm模块需要）
+// common/seleCustomer/:id
+.controller('CommonSeleCustomerCtrl', function($scope, $state, $stateParams, $timeout, common) {
+    $scope.items = [];
+
+    var dataList = {
+        currentPage: 0,
+        rows: []
+    };
+
+    var urlId = $stateParams.id;
+    var typeId = {
+        '1': 'work_opportunity_create',//商机-新增
+        '3': 'work_visit_edit',//回访-编辑
+        '2': 'work_visit_create',//回访-新增
+        '4': 'work_opportunity_edit'//商机-编辑
+    }
+
+    var handleAjax = function (isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
+        }
+
+        var _param = {
+            page: dataList.currentPage + 1,
+            keyword: ''
+        };
+
+        common.post({
+            type: 'obtain_customers',
+            data: _param,
+            notPretreatment: true,
+            success: function(data) {
+                common.loadingHide();
+                var _body = data.body;
+
+                if (!_body || (_body && !_body.rows) || (_body && _body.rows && !_body.rows.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
+
+                dataList = _body;
+
+                var list = _body.rows;
+                
+                for (var i = 0, ii = list.length; i < ii; i++) {
+                    // list[i]._star = workCrmSele.joinStar(list[i].star);
+                    // list[i]._lastConsumptionTime = common.format(list[i].lastConsumptionTime, 'yyyy-MM-dd', true);
+                    $scope.items.push(list[i]);
+                }
+
+                $timeout(function() {
+                    $scope.vm.moredata = true;
+                }, 1000);
+            }
+        });
+    }, initData = function(isNotLoading) {
+        dataList = {
+            currentPage: 0,
+            rows: []
+        };
+
+        $scope.items = [];
+
+        handleAjax(isNotLoading);
+    }
+
+    $scope.vm = {
+        moredata: false,
+        loadMore: function() {
+            if (dataList.rows.length < common._pageSize || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
+                $scope.vm.moredata = false;
+                return;
+            }
+
+            $timeout(function () {
+                $scope.vm.moredata = false;
+                handleAjax();
+            }, 1500);
+            return true;
+        }
+    }
+
+    $scope.nickname = function(name) {
+        return common.nickname(name);
+    }
+
+    $scope.seleGuyHanle = function(item) {
+        item._targetName = typeId[urlId];
+
+        common.setAuditorUserList = item;
+        common.setQueryUserList = item;
+
+        // $state.go(typeId[guysTypeId]);
+        history.back(-1);
+    }
+
+    initData(true);
+})
+
 

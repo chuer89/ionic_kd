@@ -1,0 +1,22 @@
+<ion-view view-title="选择客服">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:;" ng-click="back()" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>
+    </ion-nav-buttons>
+
+    <ion-content>
+        <div class="list_box">
+            <a href="javascript:;" ng-click="seleGuyHanle(item)" class="item_list_box" ng-repeat="item in items">
+                <div class="row">
+                    <div class="col col-20 text_align_center">
+                        <span class="name_box">{{nickname(item.name)}}</span>
+                    </div>
+                    <div class="col col-70">
+                        <h2 class="title">{{item.name}}</h2>
+                        <p class="info">{{item.customerType.name}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
+	</ion-content>
+</ion-view>

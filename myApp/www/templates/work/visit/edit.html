@@ -10,17 +10,17 @@
 	<ion-content>
 
         <div class="list">
-            <div class="item item-icon-right">
+            <a href="#common/seleCustomer/3" class="item item-icon-right">
                 客户姓名
-                <span class="item-note">{{data.customerName}}</span>
+                <span class="item-note">{{data.clientIdSele.name}}</span>
                 <i class="icon ion-chevron-right icon-accessory"></i>
-            </div>
+            </a>
         </div>
 
         <div class="list">
             <div class="item item-icon-right" ng-click="showSeleVisitType()">
                 回访类型
-                <span class="item-note">{{seleVisitType}}</span>
+                <span class="item-note">{{data.seleVisitType}}</span>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </div>
         </div>
