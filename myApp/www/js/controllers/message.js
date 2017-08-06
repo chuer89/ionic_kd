@@ -76,11 +76,14 @@ angular.module('message.controller', [])
 
                 $scope.items = _body.message;
 
-                console.log(_body)
+                // console.log(_body)
             }
         });
+    }, initData = function() {
+        $scope.items = [];
+        getMessage();
     }
-    getMessage();
+    initData();
 
     //搜索--start
     $scope.isSearchVal = false;
@@ -100,11 +103,15 @@ angular.module('message.controller', [])
             })
         }, 200)
     }, cancelSearch = function() {
+        clearSearchData();
+    }, handleSearch = function() {
         $scope.isSearchVal = false;
         $scope.isSearchTxt = true;
-    }, handleSearch = function() {
-        getMessage();
-        cancelSearch();
+
+        initData();
+    }, clearSearchData = function() {
+        $scope.data.keywords = '';
+        handleSearch();
     }
     $scope.showSearch = showSearch;
     $scope.cancelSearch = cancelSearch;

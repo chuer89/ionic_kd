@@ -294,6 +294,8 @@ angular.module('workNotify.controller', [])
 
                 angular.extend($scope.data, _body);
 
+                console.log($scope.data)
+
                 if (typeof cb == 'function') {
                     cb();
                 }
@@ -326,7 +328,7 @@ angular.module('workNotify.controller', [])
         common.getCommonCheckedPerson(function(opt) {
             angular.extend(_param, opt);
         });
-
+        
         common.loadingShow();
         common.post({
             type: 'update_inform',

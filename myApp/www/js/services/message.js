@@ -156,7 +156,7 @@ angular.module('message.services', [])
         onlineHost: 'http://123.206.95.25:18080',
         // onlineHost: 'http://192.168.201.237:8080',
 
-        isChrome: false,
+        isChrome: true,
 
         notTaskListDataTxt: '-暂无数据-',
 
@@ -416,7 +416,7 @@ angular.module('message.services', [])
                     if (typeof _opt.appendPhone == 'function') {
                         _opt.appendPhone(the_file);
                     }
-                    
+
                 }, function(err) {
                     COMMON.toast('无法启动相机，请检查授权');
                 });  
