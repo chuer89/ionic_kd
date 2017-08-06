@@ -1,4 +1,4 @@
-<ion-view view-title="{{item.courseName}}">
+<ion-view view-title="课程详情">
 
     <ion-nav-buttons side="left">  
         <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>
@@ -7,6 +7,9 @@
 
   	<ion-content>
         <div class="list_box">
+            <div class="list_type_title text_align_center padding_tb">
+                {{item.courseName}}
+            </div>
             <div ng-repeat="item in item.fujian">
                 <img src="{{item.fujianPath}}"/>
             </div>

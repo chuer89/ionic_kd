@@ -7,13 +7,17 @@ angular.module('workOnDuty.controller', [])
     $scope.data = {
         date: common.format(false, 'yyyy-MM-dd'),
         userId: common.userInfo.clientId
-        // date: '2017-07-29',
+        // date: '2017-07-31',
         // userId: 27
     };
 
     $scope.seleDate = function() {
         common.datePicker(function(date) {
             $scope.data.date = date;
+
+            $scope.items = [];
+            $scope.scheduleID = '';
+
             getAjax();
         });
     }

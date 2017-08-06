@@ -22,10 +22,18 @@ angular.module('workCourse.controller', [])
                 "currentPage": dataList.currentPage + 1
             },
             success: function(data) {
-                var _body = data.body,
-                    list = _body.jewelry;
+                var _body = data.body;
+                    
+                if (!_body || (_body && !_body.jewelry) || (_body && _body.jewelry && !_body.jewelry.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
 
                 dataList = _body;
+
+                var list = _body.jewelry;
 
                 for (var i = 0, ii = list.length; i < ii; i++) {
                     $scope.items.push(list[i]);
@@ -175,9 +183,7 @@ angular.module('workCourse.controller', [])
 })
 
 .controller('WorkCourseDetailsCtrl', function($scope, $stateParams, common) {
-	$scope.item = {
-        courseName: '专题详情'
-    };
+	$scope.item = {};
 
 	COMMON.post({
         type: 'topic_course_details',
@@ -185,6 +191,7 @@ angular.module('workCourse.controller', [])
         	topicCourseId: $stateParams.id
         },
         success: function(data) {
+            console.log(data)
         	$scope.item = data.body;
 
         }

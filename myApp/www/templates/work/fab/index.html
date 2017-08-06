@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
         <div class="list_box padding_tb" ng-repeat="item in items">
             <a href="#/work/fab/details/{{item.id}}" class="item_list_box">
                 <div class="row">

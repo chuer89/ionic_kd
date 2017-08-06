@@ -18,6 +18,7 @@
         
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
 
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
         <div class="list_box padding_btm" ng-repeat="item in items">
             <a href="#/work/course/details/{{item.id}}" class="item_list_box">
                 <img src="{{item.coverPath}}" />{{item.courseName}}

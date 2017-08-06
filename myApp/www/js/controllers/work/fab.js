@@ -12,10 +12,12 @@ angular.module('workFab.controller', [])
         };
 
         $scope.items = [];
+
+        ajaxhandle();
     }
-    initData();
 
     var ajaxhandle = function() {
+        common.loadingShow();
         COMMON.post({
             type: 'obtain_fab_case',
             data: {
@@ -25,6 +27,16 @@ angular.module('workFab.controller', [])
             },
             success: function(data) {
                 var _body = data.body;
+                common.loadingHide();
+
+                if (!_body || (_body && !_body.fabCase) || (_body && _body.fabCase && !_body.fabCase.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
+
+                dataList = _body;
 
                 var list = _body.fabCase;
 
@@ -42,8 +54,9 @@ angular.module('workFab.controller', [])
             }
         });
     };
-    ajaxhandle();
 
+    initData();
+    
     $scope.vm = {
         moredata: false,
         loadMore: function() {
@@ -78,10 +91,9 @@ angular.module('workFab.controller', [])
 
     //选择菜单处理
     var toggleSeleHandle = function(type, isToggle) {
-        // if (!isToggle) {
-        //     initData();
-        //     ajaxhandle();
-        // }
+        if (!isToggle) {
+            initData();
+        }
 
         if (type == 'category') {
             $scope.isShowNameSele = false;
@@ -191,6 +203,7 @@ angular.module('workFab.controller', [])
 .controller('WorkFabDetailsCtrl', function($scope, $stateParams, common) {
 	$scope.item = {};
 	
+    common.loadingShow();
 	COMMON.post({
         type: 'fab_case_details',
         data: {
@@ -198,8 +211,7 @@ angular.module('workFab.controller', [])
         },
         success: function(data) {
         	$scope.item = data.body;
-
-        	console.log(data.body)
+            common.loadingHide();
         }
     });
 })
