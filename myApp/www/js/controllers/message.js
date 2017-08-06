@@ -29,6 +29,15 @@ angular.module('message.controller', [])
         REMIND: {tips: '日程', icon: 'img/icon/work/schedule.png', link: '#/work/schedule/{id}'}
     }
 
+    $scope.clickHandle = function(item) {
+        if (item.messageType == 'APPLY') {
+            common.getMessageDetails(item._id, 'APPLY', function(data) {
+
+            });
+        }
+        // return false;
+    }
+
     var getMessage = function() {
         common.loadingShow();
         common.post({
@@ -52,9 +61,10 @@ angular.module('message.controller', [])
 
                 for (var i = 0, ii = _body.message.length; i < ii; i++) {
                     _body.message[i]._notifyTime = common.format(_body.message[i].notifyTime, 'HH:mm');
-                    _body.message[i]._infos = iconMap[_body.message[i].messageType] || {};
+                    _body.message[i]._infos = angular.extend({}, iconMap[_body.message[i].messageType])
                     if (_body.message[i]._infos.link) {
-                        id = _body.message[i].id + '_push_' + _body.message[i].realId;;
+                        id = _body.message[i].id + '_push_' + _body.message[i].realId;
+                        _body.message[i]._id = id;
                         if (_body.message[i]._infos.link.indexOf('{id}')) {
                             _body.message[i]._infos.link = _body.message[i]._infos.link.replace(/\{id\}/, id)
                         }
@@ -100,6 +110,11 @@ angular.module('message.controller', [])
     $scope.cancelSearch = cancelSearch;
     $scope.handleSearch = handleSearch;
     //搜索--end
+
+
+
+
+    //激光消息-start
 
     var _userInfo = JSON.parse( common.getLocalStorage('userInfo') );
 

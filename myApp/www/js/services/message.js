@@ -154,7 +154,7 @@ angular.module('message.services', [])
     var obj = {
 
         onlineHost: 'http://123.206.95.25:18080',
-        debugHost: 'http://192.168.201.237:8080',
+        // onlineHost: 'http://192.168.201.237:8080',
 
         isChrome: false,
 
@@ -202,7 +202,8 @@ angular.module('message.services', [])
                 url: COMMON.onlineHost + '/kuaidao/client/resources.html',
                 params: {
                     json: JSON.stringify(param)
-                }
+                },
+                timeout: 10000
             }).success(function(data) {
                 if (opt.notPretreatment) {
                     success(data);
@@ -307,7 +308,12 @@ angular.module('message.services', [])
                 domId: 'myImage',//显示图片id
                 phone:  '',//相册回调
                 camera: '',//相机
-                appendPhone: ''
+                appendPhone: '',
+                showImg: '',
+                cameraImg: '',
+                width: 600,
+                height: 600,
+                maximumImagesCount: 10
             }
             angular.extend(_opt, opt);
 
@@ -361,9 +367,9 @@ angular.module('message.services', [])
                 return new Blob( [ab] , {type : 'image/jpg'});
             }, phone = function() {
                 var options = {
-                    maximumImagesCount: 10,
-                    width: 800,
-                    height: 800,
+                    maximumImagesCount: _opt.maximumImagesCount,
+                    width: _opt.width,
+                    height: _opt.height,
                     quality: 80,
                     saveToPhotoAlbum: true
                 };
@@ -371,6 +377,10 @@ angular.module('message.services', [])
                 //调起相册
                 $cordovaImagePicker.getPictures(options)
                 .then(function (results) {
+                    if (typeof _opt.showImg == 'function') {
+                        _opt.showImg(results);
+                    }
+
                     for (var i = 0; i < results.length; i++) {
                         _appendPhone(results[i])
                     }
@@ -379,29 +389,34 @@ angular.module('message.services', [])
                 });
             }, camera = function() {
                 var options = {  
-                    quality: 50,  
+                    quality: 80,  
                     destinationType: Camera.DestinationType.DATA_URL,  
                     sourceType: Camera.PictureSourceType.CAMERA,  
                     allowEdit: true,  
                     encodingType: Camera.EncodingType.JPEG,  
-                    targetWidth: 100,  
-                    targetHeight: 100,
+                    targetWidth: _opt.width,  
+                    targetHeight: _opt.height,
                     popoverOptions: CameraPopoverOptions,  
                     saveToPhotoAlbum: true  
                 };  
 
                 $cordovaCamera.getPicture(options).then(function(imageData) {  
-                    var image = document.getElementById(_opt.domId);  
+                    // var image = document.getElementById(_opt.domId);  
                     // image.src = "data:image/jpeg;base64," + imageData;
 
                     var _imageData = "data:image/jpeg;base64," + imageData;
                     var the_file = convertBase64UrlToBlob(_imageData);
 
-                    image.src = _imageData;
+                    // image.src = _imageData;
+
+                    if (typeof _opt.cameraImg == 'function') {
+                        _opt.cameraImg(_imageData);
+                    }
 
                     if (typeof _opt.appendPhone == 'function') {
                         _opt.appendPhone(the_file);
                     }
+                    
                 }, function(err) {
                     COMMON.toast('无法启动相机，请检查授权');
                 });  
@@ -700,6 +715,32 @@ angular.module('message.services', [])
             }
         },
 
+        //获取列表中的name值，回显
+        getCheckedName: function(list, idKey, namekey) {
+            var name = '';
+
+            if (COMMON.setCheckedPerson && !COMMON.setCheckedPerson.list.length) {
+                COMMON.setCheckedPerson = {list: []};
+            }
+
+            for (var i = 0, ii = list.length; i < ii; i++) {
+                name += list[i][namekey] + ' ';
+                if (idKey == 'userId') {
+                    COMMON.setCheckedPerson.list.push({
+                        id: list[i][idKey],
+                        name: list[i][namekey]
+                    })
+                } else if (idKey == 'departmentId') {
+                    COMMON.setCheckedPerson.list.push({
+                        departmentId: list[i][idKey],
+                        name: list[i][namekey]
+                    })
+                }
+            }
+
+            return name;
+        },
+
         //获取选中人
         getCommonCheckedPerson: function(cb) {
             var common = COMMON;
@@ -730,6 +771,14 @@ angular.module('message.services', [])
             if (typeof cb == 'function') {
                 cb(_param);
             }
+        },
+
+        //清除缓存的选中人数据
+        clearSetData: function() {
+            COMMON.setAuditorUserList = {};
+            COMMON.setQueryUserList = {};
+            COMMON.setCheckedPerson = {list: [], _targetName: ''};
+            COMMON._localstorage = {};
         },
         
         setAuditorUserList: {},//选中审核人

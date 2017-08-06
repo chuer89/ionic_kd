@@ -42,8 +42,9 @@
             </div>
         </div>
 
-        <div class="list_box">
-            <div class="item_list_box">
+        <div class="list_box" style="padding-bottom: 60px;">
+            <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
+            <div class="item_list_box" ng-if="reportList.length">
                 <div ng-repeat="item in reportList">
                     <div class="row">
                         <div class="col col-20 text_align_center">
@@ -73,7 +74,7 @@
 
     <div class="bar bar-footer bar-stable">
         <div class="row">
-            <input type="text" ng-model="data.commentReport" name="" class="col col-75" />
+            <input type="text" ng-model="data.commentReport" name="commentReport" class="col col-75" />
             <a href="javascript:;" class="col col-10 col-offset-10 box_align" ng-click="sendReport()">发送</a>
         </div>
     </div>

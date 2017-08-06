@@ -78,7 +78,9 @@ angular.module('login.controller', [])
                     code: $scope.data.code
                 },
                 success: function(data) {
-                    common.back();
+                    common.toast(data.message, function() {
+                        common.back();
+                    });
                 }
             });
         }

@@ -278,10 +278,10 @@ angular.module('me.controller', [])
     			$scope.vm.moredata = false;
     			return;
     		}
-
+            
     		$timeout(function () {
     			$scope.vm.moredata = false;
-	 			handleAjax(true);
+                handleAjax(true);
 	        }, 1500);
 	        return true;
 	 	}

@@ -25,7 +25,7 @@
         <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
 
         <div class="list_box">
-        	<a href="{{item._infos.link}}" class="item_list_box" ng-repeat="item in items">
+        	<a href="{{item._infos.link}}" ng-click="clickHandle(item)" class="item_list_box" ng-repeat="item in items">
         		<div class="row">
 	        		<div class="col col-10 left_icon_box">
 	        			<span class="list_icon_box">

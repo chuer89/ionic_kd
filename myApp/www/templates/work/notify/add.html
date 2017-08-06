@@ -23,10 +23,12 @@
                 <textarea placeholder="请输入内容..." ng-model="data.description"></textarea>
             </div>
             <div class="item">
+                <img src="{{img}}" class="show_img" ng-repeat="img in imgList">
                 <a href="javascript:;" ng-click="showSelePhoto()">
                     <img src="img/icon/plus.png" class="icon_plus" />
                 </a>
             </div>
         </div>
+        
 	</ion-content>
 </ion-view>

@@ -24,7 +24,7 @@
 
                         <div class="item_list_box">
                             <div class="details_img_thumbnail clearfix">
-                                <span ng-repeat="fujianImg in item.fujian">
+                                <span class="fl" ng-repeat="fujianImg in item.fujian">
                                     <img src="{{fujianImg.fujianPath}}"/>
                                 </span>
                             </div>
@@ -37,7 +37,8 @@
                 </div>
             </div>
 
-            <div class="item_list_box">
+            <div class="notData" ng-if="notFollowListData">{{notFollowListData}}</div>
+            <div class="item_list_box" ng-if="reportList.length">
                 <div ng-repeat="item in reportList">
                     <div class="row">
                         <div class="col col-20 text_align_center">

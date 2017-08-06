@@ -1,0 +1,17 @@
+<ion-view view-title="我的工程维修" hide-nav-bar="isSearchVal">
+	<ion-nav-buttons side="left">  
+    	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+	<ion-content>
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
+        <div class="list_box">
+        	<a href="#/work/apply/myTaskDetails/{{item.id}}" ng-repeat="item in items" class="item_list_box apply_status" style="overflow: hidden;">
+                <h2 class="title">{{item.maintainTitle}}</h2>
+                <p class="info">{{item._createTime}}</p>
+                <span class="label_right_top" ng-class="item.applicationStatus">{{item._status}}</span>
+            </a>
+        </div>
+        <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
+	</ion-content>
+</ion-view>

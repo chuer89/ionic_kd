@@ -14,6 +14,7 @@ angular.module('workClient.controller', [])
     }
 
     $scope.items = [];
+    common.clearSetData();
 
     var dataList = {
         currentPage: 0,
@@ -229,6 +230,7 @@ angular.module('workClient.controller', [])
 	$scope.doRefresh = function() {
 		setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
+            initData();
         }, 1000)
         return true;
 	}

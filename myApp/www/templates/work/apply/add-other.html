@@ -8,6 +8,8 @@
     </ion-nav-buttons>
 
 	<ion-content>
+        <form enctype="multipart/form-data" method="post" name="fileinfo"></form>
+        
 		<div class="list list_box padding_tb">
             <label class="item item-input">
                 <span class="input-label">申请项</span>
@@ -16,24 +18,23 @@
         </div>
 
         <div class="list_box padding_tb">
-            <div class="item">
-                <textarea ng-model="data.otherApplication.otherReason" placeholder="请输入事项原由(必填)"></textarea>
-            </div>
-            <div class="item">
-                <a href="javascript:;" ng-click="showSelePhoto()">
-                    <img src="img/icon/plus.png" class="icon_plus" />
-                </a>
-            </div>
-        </div>
-
-        <form enctype="multipart/form-data" method="post" name="fileinfo"></form>
-
-        <div class="list">
             <a href="#/common/seleGuys/9" class="item item-icon-right">
                 审批人
                 <span class="item-note">{{data.clientIdSele.name}}</span>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
+            <div class="item">
+                <textarea ng-model="data.otherApplication.otherReason" placeholder="请输入原由(必填)"></textarea>
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="item">
+                <img src="{{img}}" class="show_img" ng-repeat="img in imgList">
+                <a href="javascript:;" ng-click="showSelePhoto()">
+                    <img src="img/icon/plus.png" class="icon_plus" />
+                </a>
+            </div>
         </div>
 	</ion-content>
 </ion-view>

@@ -15,20 +15,12 @@
             </label>
         </div>
 
-        <div class="list_box padding_tb">
-            <div class="item">
-                <textarea ng-model="data.maintainApplication.maintainReason" placeholder="请输入故障描述(必填)"></textarea>
-            </div>
-            <div class="item">
-                <a href="javascript:;" ng-click="showSelePhoto()">
-                    <img src="img/icon/plus.png" class="icon_plus" />
-                </a>
-            </div>
-        </div>
-
-        <form enctype="multipart/form-data" method="post" name="fileinfo"></form>
-
         <div class="list">
+            <a href="#/common/seleGuys/8" class="item item-icon-right">
+                审批人
+                <span class="item-note">{{data.clientIdSele.name}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
             <a href="#/common/seleGuys/801" class="item item-icon-right">
                 维修人
                 <span class="item-note">{{data.servicemanIdSele.name}}</span>
@@ -36,12 +28,21 @@
             </a>
         </div>
 
+        <div class="list_box padding_tb">
+            <div class="item">
+                <textarea ng-model="data.maintainApplication.maintainReason" placeholder="请输入故障描述(必填)"></textarea>
+            </div>
+        </div>
+
+        <form enctype="multipart/form-data" method="post" name="fileinfo"></form>
+
         <div class="list">
-            <a href="#/common/seleGuys/8" class="item item-icon-right">
-                审批人
-                <span class="item-note">{{data.clientIdSele.name}}</span>
-                <i class="icon ion-chevron-right icon-accessory"></i>
-            </a>
+            <div class="item">
+                <img src="{{img}}" class="show_img" ng-repeat="img in imgList">
+                <a href="javascript:;" ng-click="showSelePhoto()">
+                    <img src="img/icon/plus.png" class="icon_plus" />
+                </a>
+            </div>
         </div>
 
 	</ion-content>

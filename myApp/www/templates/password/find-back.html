@@ -18,7 +18,7 @@
                         <div class="col text_align_right"><a class="input_btn" ng-class="{'disable': isSendCode}" ng-click="sendCode()" href="javascript:;">{{sendCodeText}}</a></div>
                     </div>
                     <div style="margin-top: 3px;">
-                        <input type="number" maxlength="6" name="code" placeholder="请输入短信中的验证码" ng-model="data.code" />
+                        <input type="tel" maxlength="6" name="code" placeholder="请输入短信中的验证码" ng-model="data.code" />
                     </div>
                 </div>
             </div>
@@ -28,10 +28,10 @@
             <div class="import_box">
                 <div class="padding_around">
                     <div class="border_btm row">
-                        <input type="text" class="col" maxlength="16" name="npassword" placeholder="请输入6～10位密码数字、字母字符组成" ng-model="data.npassword" />
+                        <input type="password" class="col" maxlength="16" name="npassword" placeholder="请输入6～10位密码数字、字母字符组成" ng-model="data.npassword" />
                     </div>
                     <div class="row">
-                        <input type="text" class="col" maxlength="16" name="cpassword" placeholder="请再输入密码" ng-model="data.cpassword" />
+                        <input type="password" class="col" maxlength="16" name="cpassword" placeholder="请再输入密码" ng-model="data.cpassword" />
                     </div>
                 </div>
             </div>

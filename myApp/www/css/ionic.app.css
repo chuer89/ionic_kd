@@ -9916,6 +9916,10 @@ img {
   width: 100%;
   border-radius: 0.26667rem; }
 
+.show_img {
+  width: 12%;
+  margin: 0 5px; }
+
 .button.button-light.activated, .button.button-light.active {
   border-color: transparent; }
 
@@ -9947,9 +9951,16 @@ ion-tabs.tabs-color-active-light .tab-item {
 .bar button.button-icon.icon-right:before, .bar button.button-icon:before {
   font-size: 25px; }
 
+.action-sheet-options {
+  max-height: 350px;
+  overflow-y: scroll; }
+
 .clearfix {
   overflow: hidden;
   _zoom: 1; }
+
+.fl {
+  float: left; }
 
 .colorPurple {
   color: #7f6bac; }
@@ -10267,14 +10278,14 @@ ion-tabs.tabs-color-active-light .tab-item {
         [data-dpr='3'] .list_box .item_list_box .big_head .name_box {
           font-size: 66px; }
     .list_box .item_list_box .details_img_thumbnail img {
-      height: 120px;
+      height: 110px;
       float: left;
       padding: 0.26667rem;
       width: auto; }
       [data-dpr='2'] .list_box .item_list_box .details_img_thumbnail img {
-        height: 240px; }
+        height: 220px; }
       [data-dpr='3'] .list_box .item_list_box .details_img_thumbnail img {
-        height: 366px; }
+        height: 336px; }
     .list_box .item_list_box .details_img_block img {
       padding: 0.26667rem;
       width: auto; }

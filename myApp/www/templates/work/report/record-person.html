@@ -1,4 +1,4 @@
-<ion-view view-title="xx">
+<ion-view view-title="日报统计">
 	<ion-nav-buttons side="left">  
     	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
@@ -6,7 +6,7 @@
 	<ion-content>
         <div class="list_box">
         	<div class="purple_bg_title">
-        		2017年3月20日 共{{data.commitCount}}人写了日报	{{data.notCommitCount}}未提交
+        		{{data.date}} 共{{data.commitCount}}人写了日报	{{data.notCommitCount}}未提交
         	</div>
         	<div class="item_list_box" ng-repeat="item in data.report">
         		<a href="javascript:;" class="row">

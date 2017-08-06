@@ -2,6 +2,8 @@ angular.module('workNotify.controller', [])
 //通知列表
 .controller('WorkNotifyCtrl', function ($scope, $state, $ionicActionSheet, $filter, common) {
     $scope.items = [];
+
+    common.clearSetData();
     
     var getList = function(isNotLoading) {
         if (isNotLoading) {
@@ -68,6 +70,8 @@ angular.module('workNotify.controller', [])
 .controller('WorkNotifyMyCtrl', function($scope, $state, $ionicActionSheet, common) {
     $scope.items = [];
 
+    common.clearSetData();
+
     var getList = function(isNotLoading) {
         if (isNotLoading) {
             common.loadingShow();
@@ -116,6 +120,8 @@ angular.module('workNotify.controller', [])
 
     var urlId = $stateParams.id,
         informId = $stateParams.id;
+
+    common.clearSetData();
 
     $scope.showNav = function() {
         $ionicActionSheet.show({
@@ -183,12 +189,10 @@ angular.module('workNotify.controller', [])
             }
         });
     }
-
-    
 })
 
 //新增
-.controller('WorkNotifyAddCtrl', function($scope, $cordovaFileTransfer, common) {
+.controller('WorkNotifyAddCtrl', function($scope, $cordovaFileTransfer, $timeout, common) {
     $scope.seleSendName = '';
     $scope.data = {
         typePageName: 'WorkNotifyAddCtrl',
@@ -214,10 +218,20 @@ angular.module('workNotify.controller', [])
     var formElement = document.querySelector("form");
     var formData = new FormData(formElement);
 
+    $scope.imgList = [];
+
     $scope.showSelePhoto = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
+            },
+            showImg: function(results) {
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
+            },
+            cameraImg: function(imgData) {
+                $scope.imgList.push(imgData);
             }
         });
     }
@@ -272,6 +286,12 @@ angular.module('workNotify.controller', [])
             },
             success: function(data) {
                 var _body = data.body;
+
+                var name = '';
+                name += common.getCheckedName(_body.departmentList, 'departmentId', 'departmentName') 
+                    + common.getCheckedName(_body.userList, 'userId', 'userName');
+                $scope.seleSendName = name;
+
                 angular.extend($scope.data, _body);
 
                 if (typeof cb == 'function') {
@@ -293,18 +313,6 @@ angular.module('workNotify.controller', [])
         $scope.seleSendName = sendName;
     });
 
-    //表单数据
-    var formElement = document.querySelector("form");
-    var formData = new FormData(formElement);
-
-    $scope.showSelePhoto = function() {
-        common.showSelePhoto({
-            appendPhone: function(the_file) {
-                formData.append("fuJians", the_file, "images.jpg");
-            }
-        });
-    }
-
     $scope.submit = function() {
         var _param = {
             departmentList: [],
@@ -320,20 +328,16 @@ angular.module('workNotify.controller', [])
         });
 
         common.loadingShow();
-        common.formData({
+        common.post({
             type: 'update_inform',
-            body: _param,
-            setData: function(json) {
-                formData.append("json", json);
-            },
-            data: formData,
+            data: _param,
             success: function(data) {
                 common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });
             }
-        })
+        });
     }
 })
 

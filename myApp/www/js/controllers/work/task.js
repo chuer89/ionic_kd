@@ -8,6 +8,10 @@ angular.module('workTask.controller', [])
 // 责任人提交后状态：UNCONFIRMED
 // 检查人审批后：QUALIFIED 或者 UNQUALIFIED
 
+//任务状态  //'DECLARATION'or 'WORKING' or 'UNCONFIRMED' or 'QUALIFIED' or 'UNQUALIFIED' 
+//(申报，工作中，未确认，合格，不合格) default 'DECLARATION'
+
+
 // 按钮是否可见
 // 编辑：责任人和检查人都可以见，任务状态不是QUALIFIED或者UNQUALIFIED
 // 提交：责任人可见，任务状态是WORKING
@@ -22,8 +26,7 @@ angular.module('workTask.controller', [])
         tasks: []
     };
 
-    common._localstorage.typePageName = '';
-    common.setAuditorUserList.id = '';
+    common.clearSetData();
 
     var menus = seleMenuList.menu();
 
@@ -34,7 +37,7 @@ angular.module('workTask.controller', [])
         {name:'已完成', type: 'CONFIRMED'},
         {name:'发起', type: 'CREATED'},
         {name:'关注', type: 'GUANZHU'},
-        {name:'检查'}
+        {name:'检查', type: 'TOBECHECK'}
     ];
     $scope.taskList = [];
     $scope.data = {};
@@ -153,6 +156,8 @@ angular.module('workTask.controller', [])
         currentPage: 0,
         phoneBook: []
     };
+
+    common.clearSetData();
 
     $scope.items = [];
 
@@ -301,7 +306,8 @@ angular.module('workTask.controller', [])
         ATTENTION_PEOPLE: {name:'请选择'},//关注人
         inspectorId: {name:'请选择'},//检查人
         endTime: '',
-        remindtime: ''
+        remindtime: '',
+        hasCameraImg: false
     };
 
     $scope.seleDate = function() {
@@ -325,11 +331,20 @@ angular.module('workTask.controller', [])
     //表单数据
     var formElement = document.querySelector("form");
     var formData = new FormData(formElement);
+    $scope.imgList = [];
 
     $scope.showSelePhoto = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
+            },
+            showImg: function(results) {
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
+            },
+            cameraImg: function(imgData) {
+                $scope.imgList.push(imgData);
             }
         });
     }
@@ -343,7 +358,7 @@ angular.module('workTask.controller', [])
             description: _data.description,
             endTime: $scope.data.endTime,
             period: "SUGGEST_DEADLLINE",//固定截止时间，建议截止时间，每日任务 'FIXED_DEADLLINE' or 'SUGGEST_DEADLLINE' or 'DAILY_TASK' 
-            status: "WORKING",
+            status: "DECLARATION",
             title: _data.title,
             remindtime: _data.remindtime,
             inspectorId: _data.inspectorId.id + '',//检查人
@@ -420,21 +435,9 @@ angular.module('workTask.controller', [])
         })
     }
 
-    //表单数据
-    var formElement = document.querySelector("form");
-    var formData = new FormData(formElement);
-
-    $scope.showSelePhoto = function() {
-        common.showSelePhoto({
-            appendPhone: function(the_file) {
-                formData.append("fuJians", the_file, "images.jpg");
-            }
-        });
-    }
-
     var getDetails = function() {
         //任务详情
-        COMMON.post({
+        common.post({
             type: 'task_detail_info',
             data: {
                 taskId: taskId
@@ -452,7 +455,9 @@ angular.module('workTask.controller', [])
                     ATTENTION_PEOPLE: {
                         name: _body.guangzhurenArray[0].userName,
                         id: _body.guangzhurenArray[0].userId
-                    }
+                    },
+                    taskImageArray: _body.taskImageArray,
+                    status: _body.taskBasiInfo.status
                 });
 
                 common.getUserinfo_simple(_body.taskBasiInfo.inspectorId, function(data) {
@@ -462,7 +467,7 @@ angular.module('workTask.controller', [])
                     };
                 });
 
-                $scope.seleWarn = common.getId(menus.taskWarn, _body.taskBasiInfo.remindtime, 'key')
+                $scope.seleWarn = common.getId(menus.taskWarn, _body.taskBasiInfo.remindtime, 'key').text;
             }
         });
     }
@@ -475,7 +480,7 @@ angular.module('workTask.controller', [])
             description: _data.description,
             endTime: $scope.data.endTime,
             period: "SUGGEST_DEADLLINE",//固定截止时间，建议截止时间，每日任务 'FIXED_DEADLLINE' or 'SUGGEST_DEADLLINE' or 'DAILY_TASK' 
-            status: "WORKING",
+            status: $scope.data.status,
             title: _data.title,
             inspectorId: _data.inspectorId.id + '',//检查人
             userlist: [
@@ -488,16 +493,14 @@ angular.module('workTask.controller', [])
             taskId: taskId
         }
 
-        common.formData({
+        common.loadingShow();
+        common.post({
             type: 'update_task_info',
-            body: _param,
-            setData: function(json) {
-                formData.append("json", json);
-            },
-            data: formData,
+            data: _param,
             success: function(data) {
+                common.loadingHide();
                 common.toast(data.message, function() {
-                    // common.back();
+                    common.back();
                 });
             }
         });
@@ -517,8 +520,6 @@ angular.module('workTask.controller', [])
         getDetails();
         common._localstorage = $scope.data;
     }
-
-    
 })
 
 //查看的任务列表
@@ -528,8 +529,7 @@ angular.module('workTask.controller', [])
         tasks: []
     };
 
-    common._localstorage.typePageName = '';
-    common.setAuditorUserList.id = '';
+    common.clearSetData();
 
     //id-》name
     common.getUserinfo_simple($stateParams.id, function(data) {
@@ -653,8 +653,7 @@ angular.module('workTask.controller', [])
     var menus = seleMenuList.menu();
     var taskStatus = menus.taskStatus;
 
-    common._localstorage.typePageName = '';
-    common.setAuditorUserList.id = '';
+    common.clearSetData();
 
     var urlId = $stateParams.id,
         taskId = $stateParams.id;
@@ -717,6 +716,11 @@ angular.module('workTask.controller', [])
             },
             success: function(data) {
                 common.loadingHide();
+
+                common.getUserinfo_simple(data.body.taskBasiInfo.inspectorId, function(data) {
+                    $scope.inspectorIdName = data.name;
+                })
+                
                 data.body.taskBasiInfo._status = common.getId(taskStatus, data.body.taskBasiInfo.status, 'key').name;
 
                 $scope.data = data.body;
@@ -927,7 +931,7 @@ angular.module('workTask.controller', [])
         }
 
         common.formData({
-            type: 'create_task_comment',
+            type: 'task_process',
             body: _param,
             setData: function(json) {
                 formData.append("json", json);
@@ -958,7 +962,7 @@ angular.module('workTask.controller', [])
         });
     }
 
-    $scope.create = function() {
+    $scope.submit = function() {
         var _data = $scope.data;
 
         var _param = {
@@ -969,7 +973,7 @@ angular.module('workTask.controller', [])
         }
 
         common.formData({
-            type: 'create_task_comment',
+            type: 'task_process',
             body: _param,
             setData: function(json) {
                 formData.append("json", json);

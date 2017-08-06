@@ -5,6 +5,8 @@ angular.module('workVisit.controller', [])
 
     };
 
+    common.clearSetData();
+
     $scope.items = [];
 
     var dataList = {
@@ -173,7 +175,7 @@ angular.module('workVisit.controller', [])
 .controller('WorkVisitDetailsCtrl', function($scope, $state, $stateParams, $ionicActionSheet, common, workCrmSele) {
     $scope.item = {};
 
-    common._localstorage.typePageName = '';
+    common.clearSetData();
 
     var getDetails = function() {
         common.loadingShow();

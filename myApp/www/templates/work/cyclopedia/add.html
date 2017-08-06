@@ -26,6 +26,17 @@
         </div>
 
         <div class="list">
+            <div class="item">
+                <textarea placeholder="请输入内容" ng-model="data.content"></textarea>
+            </div>
+        </div>
+
+        <div class="list_box" ng-if="imgListF.length">
+            <div class="item_list_box" style="border: 0">
+                <img src="{{img}}" class="show_img" ng-repeat="img in imgListF">
+            </div>
+        </div>
+        <div class="list">
         	<div class="item">
         		<div class="row">
         			<div class="col col-80">
@@ -40,6 +51,11 @@
             </div>
         </div>
 
+        <div class="list_box" ng-if="imgListC.length">
+            <div class="item_list_box" style="border: 0">
+                <img src="{{img}}" class="show_img" ng-repeat="img in imgListC">
+            </div>
+        </div>
         <div class="list">
         	<div class="item">
         		<div class="row">
@@ -52,12 +68,6 @@
 		                </a>
         			</div>
         		</div>
-            </div>
-        </div>
-
-        <div class="list">
-            <div class="item">
-                <textarea placeholder="请输入内容" ng-model="data.content"></textarea>
             </div>
         </div>
   	</ion-content>

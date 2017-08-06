@@ -39,13 +39,6 @@
             </div>
         </div>
         <div class="list">
-            <div class="item">
-                <a href="javascript:;" ng-click="showSelePhoto()">
-                    <img src="img/icon/plus.png" class="icon_plus" />
-                </a>
-            </div>
-        </div>
-        <div class="list">
             <a href="#/common/seleGuys/4" class="item item-icon-right">
               检查人
               <span class="item-note">{{data.inspectorId.name}}</span>
@@ -58,6 +51,15 @@
               <span class="item-note">{{data.ATTENTION_PEOPLE.name}}</span>
               <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
+        </div>
+        <div class="list_box" ng-if="data.taskImageArray.length">
+            <div class="item_list_box">
+                <div class="details_img_thumbnail clearfix">
+                    <span ng-repeat="taskImg in data.taskImageArray">
+                        <img src="{{taskImg.path}}"/>
+                    </span>
+                </div>
+            </div>
         </div>
 	</ion-content>
 </ion-view>

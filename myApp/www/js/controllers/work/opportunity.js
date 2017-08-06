@@ -9,6 +9,8 @@ angular.module('workOpportunity.controller', [])
         lastConsumptionTimeFilterId: ''
     }
 
+    common.clearSetData();
+
     $scope.items = [];
 
     var dataList = {
@@ -195,6 +197,8 @@ angular.module('workOpportunity.controller', [])
 
     $scope.isShowTab0 = true;
     $scope.isShowTab1 = false;
+
+    common.clearSetData();
 
     $scope.item = {};
 

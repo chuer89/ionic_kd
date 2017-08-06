@@ -149,11 +149,20 @@ angular.module('workFab.controller', [])
     //表单数据
     var formElement = document.querySelector("form");
     var formData = new FormData(formElement);
+    $scope.imgList = [];
 
     $scope.showSelePhoto = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
+            },
+            showImg: function(results) {
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
+            },
+            cameraImg: function(imgData) {
+                $scope.imgList.push(imgData);
             }
         });
     }

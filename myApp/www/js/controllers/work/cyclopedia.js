@@ -97,12 +97,22 @@ angular.module('workCyclopedia.controller', [])
     //表单数据
     var formElement = document.querySelector("form");
     var formData = new FormData(formElement);
+    $scope.imgListC = [];
+    $scope.imgListF = [];
 
     //封面上传
     $scope.showSelePhotoHome = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("cover", the_file, "images.jpg");
+            },
+            showImg: function(results) {
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgListF.push(results[i]);
+                }
+            },
+            cameraImg: function(imgData) {
+                $scope.imgListF.push(imgData);
             }
         });
     }
@@ -111,6 +121,14 @@ angular.module('workCyclopedia.controller', [])
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
+            },
+            showImg: function(results) {
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgListC.push(results[i]);
+                }
+            },
+            cameraImg: function(imgData) {
+                $scope.imgListC.push(imgData);
             }
         });
     }

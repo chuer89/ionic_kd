@@ -8,7 +8,6 @@
     </ion-nav-buttons>
 
 	<ion-content>
-        <form enctype="multipart/form-data" method="post" name="fileinfo">
 		<div class="list">
             <a href="#/common/seleSection/1" class="item item-icon-right">
               发送
@@ -22,11 +21,15 @@
             <div class="item">
                 <textarea placeholder="请输入内容..." ng-model="data.description"></textarea>
             </div>
-            <div><img src="" id="myImage"></div>
-            <div class="item">
-                <a href="javascript:;" ng-click="showSelePhoto()">
-                    <img src="img/icon/plus.png" class="icon_plus" />
-                </a>
+        </div>
+
+        <div class="list_box" ng-if="data.fujian.length">
+            <div class="item_list_box">
+                <div class="details_img_thumbnail clearfix">
+                    <span ng-repeat="fujianImg in data.fujian">
+                        <img src="{{fujianImg.fujianPath}}"/>
+                    </span>
+                </div>
             </div>
         </div>
 	</ion-content>

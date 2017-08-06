@@ -13,7 +13,9 @@ angular.module('workApply.controller', [])
 //{name:'申报',key:'DECLARATION'},
 //     {name:'合格',key:'QUALIFIED'},{name:'不合格',key:'UNQUALIFIED'}];
 
-// 申请维修（PENDING）—（同意申请维修（'APPROVE' or 'REJECT'）-新建维修任务（PENDING））-完成维修任务（UNCONFIRMED）-确认维修任务（QUALIFIED 或者UNQUALIFIED）
+// 申请维修（PENDING）—（同意申请维修（'APPROVE' or 'REJECT'）
+//-新建维修任务（PENDING））-完成维修任务（UNCONFIRMED）
+//-确认维修任务（QUALIFIED 或者UNQUALIFIED）
 
 // 工程维修时这样的，
 // 1，工程维修申请
@@ -25,6 +27,8 @@ angular.module('workApply.controller', [])
 
 .controller('WorkApplyCtrl', function ($scope, $state, $timeout, $ionicActionSheet, workApplyList, common, seleMenuList) {
     var menus = seleMenuList.menu();
+
+    common.clearSetData();
 
     //搜索--start
     $scope.isSearchVal = false;
@@ -54,6 +58,26 @@ angular.module('workApply.controller', [])
     $scope.cancelSearch = cancelSearch;
     $scope.handleSearch = handleSearch;
     //搜索--end
+
+    $scope.showNav = function() {
+        $ionicActionSheet.show({
+            buttons: [{
+                text: '新增申请'
+            }, {
+                text: '我的维修任务'
+            }],
+            cancelText: '取消',
+            buttonClicked: function (index, item) {
+                
+                if (index == 0) {
+                    $state.go('work_apply_addlist');
+                } else {
+                    $state.go('work_apply_my_task');
+                }
+                return true;
+            }
+        });
+    }
 
     var applicationStatus = menus.applicationStatus,
         applicationType = menus.applicationType;
@@ -96,6 +120,7 @@ angular.module('workApply.controller', [])
         COMMON.post({
             type: 'obtain_my_applications',
             data: $scope.data,
+            notPretreatment: true,
             success: function(data) {
                 common.loadingHide();
 
@@ -130,6 +155,7 @@ angular.module('workApply.controller', [])
         COMMON.post({
             type: 'obtain_my_approvals',
             data: $scope.data,
+            notPretreatment: true,
             success: function(data) {
                 common.loadingHide();
 
@@ -340,8 +366,9 @@ angular.module('workApply.controller', [])
     //切换按钮-end
 })
 
-.controller('WorkApplyAddListCtrl', function($scope, $state, workApplyAddList) {
+.controller('WorkApplyAddListCtrl', function($scope, $state, workApplyAddList, common) {
 	$scope.items = workApplyAddList.all();
+    common.clearSetData();
 })
 
 //申请其他
@@ -359,16 +386,28 @@ angular.module('workApply.controller', [])
     //表单数据
     var formElement = document.querySelector("form");
     var formData = new FormData(formElement);
+    $scope.imgList = [];
 
+    //调起相机空间-并照片数据注入formdata
     $scope.showSelePhoto = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
+            },
+            showImg: function(results) {
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
+            },
+            cameraImg: function(imgData) {
+                $scope.imgList.push(imgData);
             }
         });
     }
 
+    //提交
     $scope.submit = function() {
+        $scope.data.clientIdSele.id += '';
         $scope.data.approverList = [{
             approverId: $scope.data.clientIdSele.id
         }];
@@ -502,11 +541,20 @@ angular.module('workApply.controller', [])
     //表单数据
     var formElement = document.querySelector("form");
     var formData = new FormData(formElement);
+    $scope.imgList = [];
 
     $scope.showSelePhoto = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
+            },
+            showImg: function(results) {
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
+            },
+            cameraImg: function(imgData) {
+                $scope.imgList.push(imgData);
             }
         });
     }
@@ -644,11 +692,20 @@ angular.module('workApply.controller', [])
     //表单数据
     var formElement = document.querySelector("form");
     var formData = new FormData(formElement);
+    $scope.imgList = [];
 
     $scope.showSelePhoto = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
+            },
+            showImg: function(results) {
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
+            },
+            cameraImg: function(imgData) {
+                $scope.imgList.push(imgData);
             }
         });
     }
@@ -947,17 +1004,29 @@ angular.module('workApply.controller', [])
         approverList: [],
         clientIdSele: {name: '请选择'},
         servicemanIdSele: {name:'请选择'},
-        maintainApplication: {}
+        maintainApplication: {},
+        hasCameraImg: false
     }
 
     //表单数据
     var formElement = document.querySelector("form");
     var formData = new FormData(formElement);
+    $scope.imgList = [];
 
     $scope.showSelePhoto = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
+            },
+            showImg: function(results) {
+                $scope.imgList = results;
+            },
+            cameraImg: function(imgData) {
+                $scope.data.hasCameraImg = true;
+                $timeout(function() {
+                    var image = document.getElementById('myImage');  
+                    image.src = imgData;
+                }, 500);
             }
         });
     }
@@ -1020,6 +1089,11 @@ angular.module('workApply.controller', [])
         $scope.pageName = '申请详情';
     }
 
+    // ，维修人提交维修结果   WORKING
+    // ，检查人确认维修     UNCONFIRMED
+
+    var NavMenus = []; 
+
     var getData = function(cb) {
         if (!cb) {
             common.loadingShow();
@@ -1037,9 +1111,13 @@ angular.module('workApply.controller', [])
 
                 common.getUserinfo_simple(_body.specificApplicationArray[0].servicemanId, function(data) {
                     _body.servicemanIdName = data.name;
-                })
+                });
 
                 $scope.item = _body;
+
+                if (_body.applicationBaseInfoJson.applicationStatus == 'WORKING') {
+
+                }
 
                 if (typeof cb == 'function') {
                     cb();
@@ -1089,6 +1167,208 @@ angular.module('workApply.controller', [])
     } else {
         getData();
     }
+})
+
+//我的维修任务
+.controller('WorkApplyMyTaskCtrl', function($scope, $state, $timeout, common) {
+    var dataList = {
+        currentPage: 0,
+        myMaintainTasks: []
+    };
+
+    $scope.items = [];
+
+    var handleAjax = function() {
+        common.loadingShow();
+
+        COMMON.post({
+            type: 'obtain_my_maintain_tasks',
+            data: {
+                "userId": common.userInfo.clientId,
+                "currentPage": dataList.currentPage + 1
+            },
+            notPretreatment: true,
+            success: function(data) {
+                var _body = data.body;
+                common.loadingHide();
+
+                // data.body.myMaintainTasks = [
+                //     {"applicantId":9,"applicationId":202,"approverId":10,
+                //     "createTime":"2017-07-11 15:22:24","id":1,"maintainReason":"维修原因",
+                //     "maintainStatus":"WORKING","maintainTitle":"工程维修标题","servicemanId":10}
+                // ]
+                console.log(data.body);
+
+                if (!_body.myMaintainTasks || (typeof _body.myMaintainTasks == 'object' && !_body.myMaintainTasks.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
+
+                var tasks = _body.myMaintainTasks;
+
+                dataList = _body;
+
+                for (var i = 0, ii = tasks.length; i < ii; i++) {
+
+                    tasks[i]._createTime = common.format(tasks[i].createTime);
+
+                    if (tasks[i].maintainStatus == 'WORKING') {
+                        tasks[i]._status = '工作中';
+                    } else if (tasks[i].maintainStatus == 'UNCONFIRMED') {
+                        tasks[i]._status = '未确认';
+                    }
+
+                    if (tasks[i]._status) {
+                        $scope.items.push(tasks[i]);
+                    }
+                }
+
+                $timeout(function() {
+                    $scope.vm.moredata = true;
+                }, 1000);
+            }
+        });
+    }, initAjax = function() {
+        $scope.items = [];
+        dataList = {
+            currentPage: 0,
+            myMaintainTasks: []
+        };
+
+        handleAjax();
+    }
+    initAjax();
+
+    $scope.vm = {
+        moredata: false,
+        loadMore: function() {
+
+            if (dataList.myMaintainTasks.length < common._pageSize || dataList.currentPage == dataList.total || dataList.total <= 1) {
+                $scope.vm.moredata = false;
+                return;
+            }
+
+            $timeout(function () {
+                $scope.vm.moredata = false;
+                handleAjax(true);
+            }, 1500);
+            return true;
+        }
+    }
+})
+.controller('WorkApplyMyTaskDetailsCtrl', function($scope, $state, $stateParams, common) {
+    var maintainTaskId = $stateParams.id;
+    $scope.item = {};
+
+    var navMenus = [];
+
+    var getData = function() {
+        common.loadingShow();
+
+        COMMON.post({
+            type: 'obtain_maintain_task_info',
+            data: {
+                maintainTaskId: maintainTaskId
+            },
+            success: function(data) {
+                common.loadingHide();
+
+                var _body = data.body;
+
+                _body = {
+                    "applicationImageInfoArray":[{"path":"http://localhost:8080/server/upload/application/2017_07_11_7405284288.jpg"}],
+                    "maintainTaskBaseInfoJson":{
+                        "applicantId":9,
+                        "applicationId":202,
+                        "approverId":10,
+                        "maintainReason":"维修原因",
+                        "maintainStatus":"PENDING",
+                        "maintainTitle":"工程维修标题",
+                        "servicemanId":10,
+                        "usedSeconds":-463056
+                    },
+                    "maintainTaskImageInfoArray":[]
+                }
+
+                console.log(data);return;
+
+                common.getUserinfo_simple(_body.specificApplicationArray[0].servicemanId, function(data) {
+                    _body.servicemanIdName = data.name;
+                });
+
+                $scope.item = _body;
+
+                // navMenus = [{text: '维修提交', key: 'submit'}];
+                navMenus = [{text: '合格', key: 'QUALIFIED'},{text:'不合格',key: 'UNQUALIFIED'}];
+
+                if (_body.applicationBaseInfoJson.applicationStatus == 'WORKING') {
+
+                }
+
+                console.log(data.body)
+            }
+        });
+    }
+
+    var submit = function() {
+        common.loadingShow();
+        COMMON.post({
+            type: 'submit_maintain_application',
+            data: {
+                clientId: common.userInfo.clientId,
+                servicemanId: common.userInfo.clientId,
+                maintainTaskId: maintainTaskId
+            },
+            success: function(data) {
+                common.loadingHide();
+
+                console.log(data)
+            }
+        });
+    }, verify = function(maintainStatus) {
+        common.loadingShow();
+        COMMON.post({
+            type: 'verify_maintain_application',
+            data: {
+                clientId: common.userInfo.clientId,
+                approverId: common.userInfo.clientId,
+                maintainTaskId: maintainTaskId,
+                maintainStatus: maintainStatus
+            },
+            success: function(data) {
+                common.loadingHide();
+
+                console.log(data)
+            }
+        });
+    }
+
+    
+    $scope.showNav = function() {
+        if (!navMenus.length) {
+            common.toast('菜单权限未生效');
+            return;
+        }
+
+        $ionicActionSheet.show({
+            buttons: navMenus,
+            cancelText: '取消',
+            buttonClicked: function (index, item) {
+                if (item.key == 'submit') {
+                    submit();
+                } else if (item.key == 'QUALIFIED' || item.key == 'UNQUALIFIED') {
+                    common.popup({}, function() {
+                        verify(item.key);
+                    })
+                }
+                return true;
+            }
+        });
+    }
+
+    getData();
 })
 
 //采购申请

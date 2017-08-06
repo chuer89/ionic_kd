@@ -3,6 +3,8 @@ angular.module('workSchedule.controller', [])
 .controller('WorkScheduleCtrl', function ($scope, $state, $ionicActionSheet, common) {
 	$scope.items = [];
 
+    common.clearSetData();
+
     var handleAjax = function(isNotLoading) {
         if (isNotLoading) {
             common.loadingShow();
@@ -48,10 +50,10 @@ angular.module('workSchedule.controller', [])
 .controller('WorkScheduleDetailsCtrl', function($scope, $state, $stateParams, $ionicPopup, $ionicActionSheet, workScheduleWarn, common) {
 	$scope.item = {};
 
-    common.setCheckedPerson._targetName = '';
-
     var urlId = $stateParams.id,
         riChengId = $stateParams.id;
+
+    common.clearSetData();
 
     $scope.relationGuys = '';
 
@@ -98,9 +100,6 @@ angular.module('workSchedule.controller', [])
     } else {
         getDetails();
     }
-
-    
-    
 
 	var showConfirm = function() {
         common.popup({
@@ -171,12 +170,14 @@ angular.module('workSchedule.controller', [])
 .controller('WorkScheduleAddCtrl', function($scope, $ionicActionSheet, common, seleMenuList) {
     $scope.data = {
         typePageName: 'WorkScheduleAddCtrl',
+        clientId: common.userInfo.clientId,
         beginTime: '',
         title: '',
         content: '',
-        userlist: [],
-        cycletime: {text: '请选择'},
-        remindtime: {text: '请选择'}
+        cycletimeSele: {text: '请选择'},
+        remindtimeSele: {text: '请选择'},
+        cycletime: '',
+        remindtime: ''
     }
 
     var menus = seleMenuList.menu();
@@ -197,11 +198,7 @@ angular.module('workSchedule.controller', [])
 
     $scope.submit = function() {
 
-        var _param = angular.extend({}, $scope.data, {
-            departmentList: [],
-            userList: [],
-            clientId: common.userInfo.clientId
-        })
+        var _param = angular.extend({}, $scope.data);
 
         if (!_param.title) {
             return;
@@ -228,7 +225,8 @@ angular.module('workSchedule.controller', [])
             buttons: common.setSeleRepeat(menus.cycletime),
             cancelText: '取消',
             buttonClicked: function(index, item) {
-                $scope.data.cycletime = item;
+                $scope.data.cycletimeSele = item;
+                $scope.data.cycletime = item.key;
                 return true;
             }
         })
@@ -240,7 +238,8 @@ angular.module('workSchedule.controller', [])
             buttons: common.setSeleRepeat(menus.remindtime),
             cancelText: '取消',
             buttonClicked: function(index, item) {
-                $scope.data.remindtime = item;
+                $scope.data.remindtimeSele = item;
+                $scope.data.remindtime = item.key;
                 return true;
             }
         })
@@ -248,7 +247,7 @@ angular.module('workSchedule.controller', [])
 
     if (common.setAuditorUserList.id) {
         if (common.setAuditorUserList._targetName == 'work_schedule_add') {
-            common._localstorage.userlist = common.setAuditorUserList;
+            common._localstorage.userList = common.setAuditorUserList;
         }
     }
 
@@ -266,9 +265,10 @@ angular.module('workSchedule.controller', [])
         beginTime: '',
         title: '',
         content: '',
-        userlist: [],
-        cycletime: {text: '请选择'},
-        remindtime: {text: '请选择'}
+        cycletimeSele: {text: '请选择'},
+        remindtimeSele: {text: '请选择'},
+        cycletime: '',
+        remindtime: ''
     }
 
     var menus = seleMenuList.menu();
@@ -297,8 +297,8 @@ angular.module('workSchedule.controller', [])
                 var _remindtime = common.getId(menus.remindtime, _body.riChengbasicInffo.remindtime, 'key'),
                     _cycletime = common.getId(menus.cycletime, _body.riChengbasicInffo.cycletime, 'key');
 
-                $scope.data.remindtime = angular.extend(_remindtime, {text: _remindtime.name});
-                $scope.data.cycletime = angular.extend(_cycletime, {text: _cycletime.name});
+                $scope.data.remindtimeSele = angular.extend(_remindtime, {text: _remindtime.name});
+                $scope.data.cycletimeSele = angular.extend(_cycletime, {text: _cycletime.name});
 
                 common.getUserinfo_simple(_body.riChengbasicInffo.riChengCreatorId, function(_data) {
                     _body.riChengbasicInffo.userName = _data.name;
@@ -308,10 +308,10 @@ angular.module('workSchedule.controller', [])
                     angular.extend($scope.data, {
                         title: _body.riChengbasicInffo.riChengTitle,
                         content: _body.riChengbasicInffo.riChengContent,
-                        beginTime: _body.riChengbasicInffo._time
+                        beginTime: _body.riChengbasicInffo._time,
+                        cycletime: _body.riChengbasicInffo.cycletime,
+                        remindtime: _body.riChengbasicInffo.remindtime
                     });
-
-                    console.log(_body.riChengbasicInffo, _relationGuys)
                 });
 
                 $scope.seleSendName = _relationGuys;
@@ -319,7 +319,6 @@ angular.module('workSchedule.controller', [])
 
         });
     }
-    
 
     if (common.setCheckedPerson._targetName != 'work_schedule_add') {
         common.setCheckedPerson = {};

@@ -95,11 +95,11 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     })
 
     //修改密码
-    .state('modifyPsd', {
-        url: '/modifyPsd',
-        templateUrl: 'templates/password/modify.html',
-        controller: 'ModifyPsdCtrl'
-    })
+    // .state('modifyPsd', {
+    //     url: '/modifyPsd',
+    //     templateUrl: 'templates/password/modify.html',
+    //     controller: 'ModifyPsdCtrl'
+    // })
 
     //公共
     .state('common_seleGuys', {
@@ -374,6 +374,18 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         url: '/work/apply/addlist',
         templateUrl: 'templates/work/apply/add-list.html',
         controller: 'WorkApplyAddListCtrl'
+    })
+    //申请－我代办的维修列表
+    .state('work_apply_my_task', {
+        url: '/work/apply/myTask',
+        templateUrl: 'templates/work/apply/my-task.html',
+        controller: 'WorkApplyMyTaskCtrl'
+    })
+    //申请－我的维修详情
+    .state('work_apply_my_task_details', {
+        url: '/work/apply/myTaskDetails/:id',
+        templateUrl: 'templates/work/apply/my-task-details.html',
+        controller: 'WorkApplyMyTaskDetailsCtrl'
     })
     //申请-其他申请
     .state('work_apply_addother', {
@@ -672,13 +684,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_cyclopedia', {
         url: '/work/cyclopedia',
         templateUrl: 'templates/work/cyclopedia/index.html',
-        controller: 'WorkCyclopediaCtrl'
+        controller: 'WorkCyclopediaCtrl',
+        cache: false
     })
     //百科-详情列表
     .state('work_cyclopedia_list', {
         url: '/work/cyclopedia/list/:id',
         templateUrl: 'templates/work/cyclopedia/list.html',
-        controller: 'WorkCyclopediaListCtrl'
+        controller: 'WorkCyclopediaListCtrl',
+        cache: false
     })
     //百科-新建
     .state('work_cyclopedia_add', {
@@ -697,7 +711,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_share', {
         url: '/work/share',
         templateUrl: 'templates/work/share/index.html',
-        controller: 'WorkShareCtrl'
+        controller: 'WorkShareCtrl',
+        cache: false
     })
     //案例分享-新增
     .state('work_share_add', {
@@ -716,7 +731,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_fab', {
         url: '/work/fab',
         templateUrl: 'templates/work/fab/index.html',
-        controller: 'WorkFabCtrl'
+        controller: 'WorkFabCtrl',
+        cache: false
     })
     //百科-新建
     .state('work_fab_add', {
@@ -735,7 +751,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_course', {
         url: '/work/course',
         templateUrl: 'templates/work/course/index.html',
-        controller: 'WorkCourseCtrl'
+        controller: 'WorkCourseCtrl',
+        cache: false
     })
     //案例分享-新增
     .state('work_course_add', {

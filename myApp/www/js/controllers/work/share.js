@@ -2,6 +2,7 @@ angular.module('workShare.controller', [])
 
 .controller('WorkShareCtrl', function ($scope, $state, $timeout, common, workShareSele) {
 	var dataList = {};
+    common.clearSetData();
     $scope.data = {
         departmentId: 1,
         sharingName: '-1',//案例名称
@@ -342,6 +343,7 @@ angular.module('workShare.controller', [])
 
 .controller('WorkShareDetailsCtrl', function($scope, $timeout, $stateParams, common) {
 	$scope.item = {};
+    common.clearSetData();
 
 	COMMON.post({
         type: 'case_sharing_details',
@@ -369,9 +371,18 @@ angular.module('workShare.controller', [])
                 caseSharingId: $stateParams.id,
                 currentPage: dataList.currentPage + 1
             },
+            notPretreatment: true,
             success: function(data) {
-                var _body = data.body || {},
-                    reportComment = _body.caseSharingCommit;
+                var _body = data.body;
+
+                if (!_body || (_body && _body.caseSharingCommit && !_body.caseSharingCommit.length)) {
+                    $scope.notTaskListData = '暂无评论数据';
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
+
+                var reportComment = _body.caseSharingCommit;
 
                 dataList = _body;
 
