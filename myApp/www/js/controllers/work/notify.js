@@ -1,4 +1,5 @@
 angular.module('workNotify.controller', [])
+
 //通知列表
 .controller('WorkNotifyCtrl', function ($scope, $state, $ionicActionSheet, $filter, common) {
     $scope.items = [];
@@ -29,7 +30,7 @@ angular.module('workNotify.controller', [])
         });
     }
 
-    getList();
+    getList(true);
 
 	$scope.doRefresh = function() {
 		setTimeout(function() {
@@ -96,7 +97,7 @@ angular.module('workNotify.controller', [])
         });
     }
 
-    getList();
+    getList(true);
 
     $scope.doRefresh = function() {
         setTimeout(function() {

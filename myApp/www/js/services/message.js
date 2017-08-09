@@ -150,7 +150,7 @@ angular.module('message.services', [])
 
 .factory('common', function($http, $cordovaToast, $ionicActionSheet, $filter, ionicDatePicker, 
     $state, $cordovaCamera, $cordovaImagePicker, $cordovaDatePicker, $cordovaFileTransfer, 
-    $ionicPopup, $ionicLoading, $cordovaGeolocation) {
+    $ionicPopup, $ionicLoading, $cordovaGeolocation, $cordovaLocalNotification, $timeout) {
     var obj = {
 
         onlineHost: 'http://123.206.95.25:18080',
@@ -175,17 +175,20 @@ angular.module('message.services', [])
             //opt.notPretreatment 不预处理 默认false
 
             var fail = function(msg) {
+                COMMON.loadingHide();
                 COMMON.toast(msg);
             }
 
             if (typeof success != 'function') {
                 success = function(){
+                    COMMON.loadingHide();
                     COMMON.toast('成功');
                 };
             }
 
             if (typeof error != 'function') {
                 error = function() {
+                    COMMON.loadingHide();
                     COMMON.toast('请稍后再试');
                 }
             }
@@ -211,7 +214,6 @@ angular.module('message.services', [])
                 }
 
                 if (data.status != '1000' && !opt.noFail) {
-                    COMMON.loadingHide();
                     fail(data.message || '数据有误');
                 } else {
                     success(data);
@@ -823,6 +825,126 @@ angular.module('message.services', [])
 
         delEmptyObj: function(obj) {
 
+        },
+
+        //设置签到提醒
+        handleLocationPushSignIn: function(pushCb) {
+            var common = COMMON;
+
+            var qianDaoRight = 1;//是否正常签到 1 正常； 0 迟到
+
+            var hasHistory = true,
+                historiesList = [],
+                hasSignIn = false;
+
+            var ajaxUserData = function(cb) {
+                //查询已签到
+                COMMON.post({
+                    type: 'qiandao_user_date_info',
+                    data: {
+                        clientId: common.userInfo.clientId,
+                        searchDate: common.format( false, 'yyyy-MM-dd')
+                    },
+                    success: function(data) {
+                        var _body = data.body;
+
+                        if (_body.histories && _body.histories.length) {
+                            hasHistory = true;
+                            historiesList = _body.histories;
+                        } else {
+                            hasHistory = false;
+                            historiesList = [];
+                        }
+
+                        if (typeof cb == 'function') {
+                            cb();
+                        }
+                    }
+                });
+            }, getHasSignIn = function() {
+                var nowTime = common.format(false, 'HH:mm');
+
+                // nowTime = '11:31';
+
+                var qiandaoTimes = common.getLocalStorage('qiandaoTimes') && JSON.parse( common.getLocalStorage('qiandaoTimes') );
+                
+                if (!qiandaoTimes || (qiandaoTimes && !qiandaoTimes.length)) {
+                    return false;
+                }
+
+                var _shangBanNum = 0,
+                    _xiaBanNum = 0;
+
+                for (var i = 0, ii = qiandaoTimes.length; i < ii; i++) {
+                    qiandaoTimes[i]._qianDaoShangBan = common.timeNumber(qiandaoTimes[i].qianDaoShangBan);
+                    qiandaoTimes[i]._qianDaoXiaBan = common.timeNumber(qiandaoTimes[i].qianDaoXiaBan);
+
+                    _shangBanNum = common.minusTime(qiandaoTimes[i]._qianDaoShangBan, common.timeNumber(nowTime));
+                    qiandaoTimes[i].canShangBan = _shangBanNum > 0 ? _shangBanNum < common.getLocalStorage('qiandaoBeforeTime') : false;
+
+                    _xiaBanNum = common.minusTime(qiandaoTimes[i]._qianDaoXiaBan, common.timeNumber(nowTime));
+                    qiandaoTimes[i].canXiaBan = _xiaBanNum > 0 ? _xiaBanNum < common.getLocalStorage('qiandaoBeforeTime') : false;
+
+                    if (_shangBanNum < 0 && !hasHistory)  {
+                        qiandaoTimes[i].canShangBan = true;
+                        qianDaoRight = 0;
+                    }
+                }
+
+                for (var i = 0, ii = qiandaoTimes.length; i < ii; i++) {
+                    if (hasHistory && qiandaoTimes[i].canXiaBan) {
+                        return  true;
+                    } else if (qiandaoTimes[i].canShangBan && !hasHistory) {
+                        return true;
+                    }
+                }
+            }
+
+            ajaxUserData(function(data) {
+                hasSignIn = getHasSignIn();
+                if (typeof pushCb == 'function') {
+                    pushCb(hasSignIn);
+                }
+            })
+        },
+
+        //本地推送消息处理集结
+        handleLocationPush: function() {
+            var _signIn = COMMON.getLocalStorage('signIn') && JSON.parse( COMMON.getLocalStorage('signIn') );
+
+            if (_signIn) {
+                if (_signIn.seleWarnType && _signIn.seleWarnType.key - 0) {
+                    COMMON.handleLocationPushSignIn(function(canPush) {
+                        if (canPush) {
+                            $timeout(function() {
+                                COMMON.scheduleSingleNotification('该签到了', '距离下一次提醒还有'+(_signIn.seleWarnType.key/60)+'分钟');
+                                COMMON.handleLocationPush();
+                            }, _signIn.seleWarnType.key * 1000);
+                        }
+                    });
+                }
+            }
+        },
+
+        //本地消息推送
+        scheduleSingleNotification: function(title, text) {
+            try {
+                if (device.platform == "Android") {
+                    $cordovaLocalNotification.schedule({
+                        title: title,
+                        text: text
+                    }).then(function (result) {
+                        $cordovaVibration.vibrate(1000); 
+                    });
+                } else {
+                    cordova.plugins.notification.local.schedule({
+                        title: title,
+                        text: text
+                    });
+                }
+            } catch (exception) {
+
+            }
         },
 
         //气泡提醒

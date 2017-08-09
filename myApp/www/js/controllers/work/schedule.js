@@ -5,10 +5,8 @@ angular.module('workSchedule.controller', [])
 
     common.clearSetData();
 
-    var handleAjax = function(isNotLoading) {
-        if (isNotLoading) {
-            common.loadingShow();
-        }
+    var handleAjax = function() {
+        common.loadingShow();
 
         COMMON.post({
             type: 'user_richeng_list',
@@ -19,6 +17,8 @@ angular.module('workSchedule.controller', [])
             success: function(data) {
                 var _body = data.body;
                 common.loadingHide();
+
+                console.log(data)
 
                 if (!_body || (_body && !_body.riChengList) || (_body && _body.riChengList && !_body.riChengList.length)) {
                     $scope.notTaskListData = common.notTaskListDataTxt;
@@ -40,7 +40,7 @@ angular.module('workSchedule.controller', [])
 	$scope.doRefresh = function() {
 		setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
-            handleAjax(true);
+            handleAjax();
         }, 1000)
         return true;
 	}

@@ -41,6 +41,9 @@ angular.module('login.controller', [])
                     common.clearLocalStorage();
                 }
 
+                common.scheduleSingleNotification('欢迎来到掌上快道', '只快一点的 结果大不同');
+                common.handleLocationPush();
+
                 angular.extend(common.userInfo, _body);
 
                 common.setLocalStorage('userInfo', JSON.stringify(_body));

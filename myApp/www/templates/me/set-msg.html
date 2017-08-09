@@ -1,6 +1,10 @@
 <ion-view view-title="消息设置">
     <ion-nav-buttons side="left">  
-        <a href="javascript:;" ng-click="back()" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+        <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" ng-click="set()" class="button button-clear button-light">保存</a>
     </ion-nav-buttons>
 
     <ion-content>

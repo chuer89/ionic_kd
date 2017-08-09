@@ -136,7 +136,7 @@ angular.module('me.controller', [])
 		remind:'日程信息'
 	}
 
-	$scope.back = function() {
+	$scope.set = function() {
 		var _param = {
 			id: common.userInfo.clientId
 		};

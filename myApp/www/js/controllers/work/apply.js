@@ -1192,13 +1192,6 @@ angular.module('workApply.controller', [])
                 var _body = data.body;
                 common.loadingHide();
 
-                // data.body.myMaintainTasks = [
-                //     {"applicantId":9,"applicationId":202,"approverId":10,
-                //     "createTime":"2017-07-11 15:22:24","id":1,"maintainReason":"维修原因",
-                //     "maintainStatus":"WORKING","maintainTitle":"工程维修标题","servicemanId":10}
-                // ]
-                console.log(data.body);
-
                 if (!_body.myMaintainTasks || (typeof _body.myMaintainTasks == 'object' && !_body.myMaintainTasks.length)) {
                     $scope.notTaskListData = common.notTaskListDataTxt;
                     return;
@@ -1252,13 +1245,13 @@ angular.module('workApply.controller', [])
 
             $timeout(function () {
                 $scope.vm.moredata = false;
-                handleAjax(true);
+                handleAjax();
             }, 1500);
             return true;
         }
     }
 })
-.controller('WorkApplyMyTaskDetailsCtrl', function($scope, $state, $stateParams, common) {
+.controller('WorkApplyMyTaskDetailsCtrl', function($scope, $ionicActionSheet, $state, $stateParams, common) {
     var maintainTaskId = $stateParams.id;
     $scope.item = {};
 
@@ -1276,38 +1269,29 @@ angular.module('workApply.controller', [])
                 common.loadingHide();
 
                 var _body = data.body;
+                var baseData = _body.maintainTaskBaseInfoJson;
 
-                _body = {
-                    "applicationImageInfoArray":[{"path":"http://localhost:8080/server/upload/application/2017_07_11_7405284288.jpg"}],
-                    "maintainTaskBaseInfoJson":{
-                        "applicantId":9,
-                        "applicationId":202,
-                        "approverId":10,
-                        "maintainReason":"维修原因",
-                        "maintainStatus":"PENDING",
-                        "maintainTitle":"工程维修标题",
-                        "servicemanId":10,
-                        "usedSeconds":-463056
-                    },
-                    "maintainTaskImageInfoArray":[]
-                }
-
-                console.log(data);return;
-
-                common.getUserinfo_simple(_body.specificApplicationArray[0].servicemanId, function(data) {
+                common.getUserinfo_simple(baseData.servicemanId, function(data) {
                     _body.servicemanIdName = data.name;
                 });
+                common.getUserinfo_simple(baseData.applicantId, function(data) {
+                    _body.applicantName = data.name;
+                })
+                common.getUserinfo_simple(baseData.approverId, function(data) {
+                    _body.approvalName = data.name;
+                })
 
                 $scope.item = _body;
 
-                // navMenus = [{text: '维修提交', key: 'submit'}];
-                navMenus = [{text: '合格', key: 'QUALIFIED'},{text:'不合格',key: 'UNQUALIFIED'}];
+                // 4，维修人提交维修结果   WORKING
+                // 5，检查人确认维修     UNCONFIRMED
 
-                if (_body.applicationBaseInfoJson.applicationStatus == 'WORKING') {
-
+                if (baseData.maintainStatus == 'WORKING') {
+                    navMenus = [{text: '维修提交', key: 'submit'}];
+                } else if (baseData.maintainStatus == 'UNCONFIRMED') {
+                    navMenus = [{text: '合格', key: 'QUALIFIED'},{text:'不合格',key: 'UNQUALIFIED'}];
                 }
 
-                console.log(data.body)
             }
         });
     }
@@ -1324,7 +1308,9 @@ angular.module('workApply.controller', [])
             success: function(data) {
                 common.loadingHide();
 
-                console.log(data)
+                common.toast(data.message, function() {
+                    common.back();
+                })
             }
         });
     }, verify = function(maintainStatus) {
@@ -1340,7 +1326,9 @@ angular.module('workApply.controller', [])
             success: function(data) {
                 common.loadingHide();
 
-                console.log(data)
+                common.toast(data.message, function() {
+                    common.back();
+                })
             }
         });
     }

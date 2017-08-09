@@ -3,12 +3,16 @@
     	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
 
+    <ion-nav-buttons side="right">
+        <a href="javascript:;" ng-click="set()" class="button button-clear button-light">保存</a>
+    </ion-nav-buttons>
+
 	<ion-content>
 		<ul class="list">
             <li class="item item-toggle">
                 自动签到
                 <label class="toggle toggle-royal">
-                    <input type="checkbox">
+                    <input type="checkbox" ng-model="data.checked">
                     <div class="track">
                         <div class="handle"></div>
                     </div>
@@ -18,7 +22,7 @@
             <li class="list">
                 <a href="javascript:;" class="item item-icon-right" ng-click="showWarnType()">
                   签到提醒
-                  <span class="item-note">{{data.seleWarnType}}</span>
+                  <span class="item-note">{{data.seleWarnType.text}}</span>
                   <i class="icon ion-chevron-right icon-accessory"></i>
                 </a>
             </li>      

@@ -78,6 +78,7 @@ angular.module('workSign.controller', [])
 				{ text: '申请' },
 				{ text: '设置' }
 			],
+			cancelText: '取消',
 			buttonClicked: function(index, item) {
 				var _go = 'work_sign_in_query';
 
@@ -130,7 +131,7 @@ angular.module('workSign.controller', [])
 
 		// nowTime = '11:31';
 
-		var qiandaoTimes = JSON.parse( common.getLocalStorage('qiandaoTimes') );
+		var qiandaoTimes = common.getLocalStorage('qiandaoTimes') && JSON.parse( common.getLocalStorage('qiandaoTimes') );
 
 		if (!qiandaoTimes.length || !qianDaoData.qiandaoCanQianDaoSite) {
 			return false;
@@ -555,23 +556,39 @@ angular.module('workSign.controller', [])
     };
 })
 
-.controller('WorkSigInSetCtrl', function($scope, $ionicActionSheet) {
+.controller('WorkSigInSetCtrl', function($scope, $ionicActionSheet, common) {
 	$scope.data = {
-		seleWarnType : '请选择'
+		seleWarnType: {text: '请选择', key: '0'}
+	}
+
+	var _signIn = common.getLocalStorage('signIn') && JSON.parse( common.getLocalStorage('signIn') );
+
+	if (_signIn) {
+		angular.extend($scope.data, _signIn);
+	}
+
+	$scope.set = function() {
+		common.toast('设置成功', function() {
+			common.setLocalStorage('signIn', JSON.stringify($scope.data));
+			common.handleLocationPush();
+
+			common.back();
+		})
 	}
 
 	$scope.showWarnType = function() {
 		$ionicActionSheet.show({
 			buttons: [
-				{ text: '5分钟' },
-				{ text: '10分钟' },
-				{ text: '15分钟' }
+				{ text: '5分钟', key: 5 * 60},
+				{ text: '10分钟', key: 10 * 60 },
+				{ text: '15分钟', key: 15 * 60 }
 			],
 			cancelText: '取消',
 			buttonClicked: function(index, item) {
-				$scope.data.seleWarnType = item.text;
+				$scope.data.seleWarnType = item;
 				return true;
 			}
-		})
+		});
 	}
 })
+

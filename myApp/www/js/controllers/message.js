@@ -10,7 +10,7 @@ angular.module('message.controller', [])
     // $scope.items = messagePush.all();
 
     $scope.items = [];
-
+    
     $scope.doRefresh = function() {
         setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
@@ -123,6 +123,8 @@ angular.module('message.controller', [])
 
     //激光消息-start
 
+    
+
     var _userInfo = JSON.parse( common.getLocalStorage('userInfo') );
 
     //tag_department_ID   (ID为部门ID)
@@ -143,9 +145,10 @@ angular.module('message.controller', [])
 
     // 当设备就绪时
     var onDeviceReady = function () {
-      $scope.message += "JPushPlugin:Device ready!";
+      // $scope.message += "JPushPlugin:Device ready!";
       initiateUI();
     };
+
     // 设置标签和别名
     var onTagsWithAlias = function (event) {
       try {
@@ -160,6 +163,7 @@ angular.module('message.controller', [])
         console.log(exception)
       }
     };
+
     // 打开通知的回调函数
     var onOpenNotification = function (event) {
       try {
@@ -172,9 +176,9 @@ angular.module('message.controller', [])
         $scope.message += alertContent;
       } catch (exception) {
         $scope.errorMsg += 'onOpenNotification:' + exception;
-        console.log("JPushPlugin:onOpenNotification" + exception);
       }
     };
+
     // 接收到通知时的回调函数
     var onReceiveNotification = function (event) {
       try {
@@ -193,6 +197,7 @@ angular.module('message.controller', [])
     };
 
     // 接收到消息时的回调函数
+    //收到自定义消息时获取消息的内容
     var onReceiveMessage = function (event) {
       try {
         var message;
@@ -209,7 +214,6 @@ angular.module('message.controller', [])
       }
     };
 
-
     // 获取RegistrationID
     var getRegistrationID = function () {
       window.plugins.jPushPlugin.getRegistrationID(function (data) {
@@ -219,10 +223,9 @@ angular.module('message.controller', [])
             var t1 = window.setTimeout(getRegistrationID, 1000);
           }
           $scope.message += "JPushPlugin:registrationID is " + data;
-          $scope.registrationID = data;
+          // $scope.registrationID = data;
         } catch (exception) {
           $scope.errorMsg += 'getRegistrationID:' + exception;
-          console.log(exception);
         }
       });
 
@@ -242,7 +245,6 @@ angular.module('message.controller', [])
         $scope.message += '初始化成功! \r\n';
       } catch (exception) {
         $scope.errorMsg += 'initiateUI:' + exception;
-        console.log(exception);
       }
     }
 
@@ -263,28 +265,76 @@ angular.module('message.controller', [])
     }
     
     // 添加对回调函数的监听
-    document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
+    // document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
     document.addEventListener("deviceready", onDeviceReady, false);
-    document.addEventListener("jpush.openNotification", onOpenNotification, false);
-    document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
-    document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
+    // document.addEventListener("jpush.openNotification", onOpenNotification, false);
+    // document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
+    // document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
 })
 
-.controller('CommonDemoCtrl', function($scope, $state, $filter, ionicTimePicker,
-	$cordovaVibration, $cordovaToast, $cordovaDatePicker, $cordovaCamera, 
+.controller('CommonDemoCtrl', function($scope, $state, $filter, ionicTimePicker, $cordovaLocalNotification,
+	$cordovaVibration, $cordovaToast, $cordovaDatePicker, $cordovaCamera, $cordovaPinDialog, $rootScope,
 	$cordovaImagePicker, $timeout, messagePush, ionicDatePicker, common) {
 
+    // cordova.plugins.notification.local.schedule({  
+    //     // id: 1,  
+    //     title: '应用提醒001',  
+    //     text: '应用新消息，款来看吧001',  
+    //     // at: new Date().getTime(),  
+    //     badge: 2  
+    // });
+
+    // alert(cordova)
+
+    $rootScope.$on('$cordovaLocalNotification:schedule',
+    function (event, notification, state) {
+        common.toast('消息成功');
+    });
+
 	$scope.startVib=function(){ 
-	  // 震动 1000ms 
-	  	$cordovaVibration.vibrate(1000); 
+        // 震动 1000ms 
+        //$cordovaVibration.vibrate(1000); 
 
-	  	$cordovaToast.show('这里是气泡测试', 'long', 'bottom')
-	  				.then(function(success) {
-
-	  				}, function(error) {
-
-	  				})
+        $cordovaPinDialog.prompt('Some message here').then(
+        function(result) {
+            common.toast('成功');
+            // result
+        },
+        function (error) {
+            common.toast('失败');
+            // error
+        })
 	};
+
+    $scope.addNotification = function(tit, msg) {
+        // if (window.plugins && window.plugins.jPushPlugin) {
+        //     window.plugins.jPushPlugin.addLocalNotification(1, 'content', 'title', 0, 1 )
+        // }
+
+        $cordovaLocalNotification.schedule({
+            id: 2,
+            title: 'Title here',
+            text: 'Text here',
+            data: {
+              customProperty: 'custom value'
+            }
+          }).then(function (result) {
+            $cordovaVibration.vibrate(1000); 
+            common.toast('消息成功')
+          });
+    }
+
+    $scope.scheduleSingleNotification = function () {
+        // $cordovaLocalNotification.add({ message: 'Great app!' });
+
+        cordova.plugins.notification.local.schedule({
+            id: 1,
+            title: '应用提醒',
+            text: '应用有新消息，快来查看吧'
+        });
+    };
+
+    
 
 	var dp = function() {
 		var options = {

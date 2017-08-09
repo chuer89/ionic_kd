@@ -667,6 +667,8 @@ angular.module('workTask.controller', [])
         var _creatorId = data.taskBasiInfo.creatorId;//创建人
         var _inspectorId = data.taskBasiInfo.inspectorId;//检查人
 
+        console.log(data)
+
         //编辑：责任人和检查人都可以见，任务状态不是QUALIFIED或者UNQUALIFIED
         if ( (_clientId == _zerenren || _clientId == _inspectorId)
             && (_status != 'QUALIFIED' || _status != 'UNQUALIFIED')
@@ -826,11 +828,20 @@ angular.module('workTask.controller', [])
     //表单数据
     var formElement = document.querySelector("form");
     var formData = new FormData(formElement);
+    $scope.imgList = [];
 
     $scope.showSelePhoto = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
+            },
+            showImg: function(results) {
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
+            },
+            cameraImg: function(imgData) {
+                $scope.imgList.push(imgData);
             }
         });
     }
@@ -911,11 +922,20 @@ angular.module('workTask.controller', [])
     //表单数据
     var formElement = document.querySelector("form");
     var formData = new FormData(formElement);
+    $scope.imgList = [];
 
     $scope.showSelePhoto = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
+            },
+            showImg: function(results) {
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
+            },
+            cameraImg: function(imgData) {
+                $scope.imgList.push(imgData);
             }
         });
     }
@@ -953,11 +973,20 @@ angular.module('workTask.controller', [])
     //表单数据
     var formElement = document.querySelector("form");
     var formData = new FormData(formElement);
+    $scope.imgList = [];
 
     $scope.showSelePhoto = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
+            },
+            showImg: function(results) {
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
+            },
+            cameraImg: function(imgData) {
+                $scope.imgList.push(imgData);
             }
         });
     }
@@ -995,11 +1024,20 @@ angular.module('workTask.controller', [])
     //表单数据
     var formElement = document.querySelector("form");
     var formData = new FormData(formElement);
+    $scope.imgList = [];
 
     $scope.showSelePhoto = function() {
         common.showSelePhoto({
             appendPhone: function(the_file) {
                 formData.append("fuJians", the_file, "images.jpg");
+            },
+            showImg: function(results) {
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
+            },
+            cameraImg: function(imgData) {
+                $scope.imgList.push(imgData);
             }
         });
     }
