@@ -42,9 +42,7 @@ angular.module('perfomance.controller', [])
     }
 
     var handleAjax = function (isNotLoading) {
-        if (isNotLoading) {
-            common.loadingShow();
-        }
+        common.loadingShow();
 
         var _param = angular.extend({}, $scope.data, {
             currentPage: dataList.currentPage + 1,
@@ -107,9 +105,23 @@ angular.module('perfomance.controller', [])
         }
     }
 
+    $scope.doRefresh = function() {
+        setTimeout(function() {
+            $scope.$broadcast('scroll.refreshComplete');
+            initData();
+        }, 1000)
+        return true;
+    }
+
     //选择部门-start
 
     var seleDepartmentId = '';
+
+    $scope.isShowBrankSele = false;
+    $scope.isShowDepartmentSele = false;
+    $scope.isShowDateSele = false;
+    $scope.isShowTypeSele = false;
+    
 
     $scope.seleBrank = [];
     $scope.seleDepartment = [];
@@ -121,10 +133,7 @@ angular.module('perfomance.controller', [])
     $scope.seleDateInfo = common.format(false, 'yyyy-MM');
     $scope.seleTypeInfo = '类别';
 
-    $scope.isShowBrankSele = false;
-    $scope.isShowDepartmentSele = false;
-    $scope.isShowDateSele = false;
-    $scope.isShowTypeSele = false;
+    
 
     //选择菜单处理
     var toggleSeleHandle = function(type, isAjax) {
@@ -258,12 +267,17 @@ angular.module('perfomance.controller', [])
             })
         }, 200)
     }, cancelSearch = function() {
+        clearSearchData();
+    }, handleSearch = function() {
         $scope.isSearchVal = false;
         $scope.isSearchTxt = true;
-    }, handleSearch = function() {
+
         initData();
-        cancelSearch();
+    }, clearSearchData = function() {
+        $scope.data.keywords = '';
+        handleSearch();
     }
+
     $scope.showSearch = showSearch;
     $scope.cancelSearch = cancelSearch;
     $scope.handleSearch = handleSearch;
@@ -276,14 +290,13 @@ angular.module('perfomance.controller', [])
     $scope.doRefresh = function() {
         setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
+            initData();
         }, 1000)
         return true;
     }
 
     var handleAjax = function (isNotLoading) {
-        if (isNotLoading) {
-            common.loadingShow();
-        }
+        common.loadingShow();
 
         var _param = angular.extend({}, $scope.data, {
             departmentId: seleDepartmentId

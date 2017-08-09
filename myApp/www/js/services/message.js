@@ -149,14 +149,19 @@ angular.module('message.services', [])
 })
 
 .factory('common', function($http, $cordovaToast, $ionicActionSheet, $filter, ionicDatePicker, 
-    $state, $cordovaCamera, $cordovaImagePicker, $cordovaDatePicker, $cordovaFileTransfer, 
-    $ionicPopup, $ionicLoading, $cordovaGeolocation, $cordovaLocalNotification, $timeout) {
+    $state, $cordovaCamera, $cordovaImagePicker, $cordovaDatePicker, $cordovaFileTransfer,
+    $ionicPopup, $ionicLoading, $cordovaGeolocation, $cordovaLocalNotification, $timeout,
+    $rootScope, $ionicPlatform) {
     var obj = {
 
         onlineHost: 'http://123.206.95.25:18080',
         // onlineHost: 'http://192.168.201.237:8080',
 
         isChrome: false,
+        debugUser: {
+            mobile: 15608203716,
+            password: 123456
+        },
 
         notTaskListDataTxt: '-暂无数据-',
 
@@ -430,6 +435,7 @@ angular.module('message.services', [])
             return name.substr(-2);
         },
 
+        //遍历数组中的id值，
         getId: function(list, id, key) {
             key = key || 'id';
             list = list || [];
@@ -721,7 +727,7 @@ angular.module('message.services', [])
         getCheckedName: function(list, idKey, namekey) {
             var name = '';
 
-            if (COMMON.setCheckedPerson && !COMMON.setCheckedPerson.list.length) {
+            if (COMMON.setCheckedPerson && ( !COMMON.setCheckedPerson.list || !COMMON.setCheckedPerson.list.length) ) {
                 COMMON.setCheckedPerson = {list: []};
             }
 
@@ -928,23 +934,42 @@ angular.module('message.services', [])
 
         //本地消息推送
         scheduleSingleNotification: function(title, text) {
-            try {
-                if (device.platform == "Android") {
-                    $cordovaLocalNotification.schedule({
-                        title: title,
-                        text: text
-                    }).then(function (result) {
-                        $cordovaVibration.vibrate(1000); 
-                    });
-                } else {
-                    cordova.plugins.notification.local.schedule({
-                        title: title,
-                        text: text
-                    });
-                }
-            } catch (exception) {
+            $ionicPlatform.ready(function () {
+                try {
+                    if (device.platform == "Android") {
+                        $cordovaLocalNotification.schedule({
+                            title: title,
+                            text: text
+                        }).then(function (result) {
+                            $cordovaVibration.vibrate(1000); 
+                        });
+                    } else {
+                        cordova.plugins.notification.local.schedule({
+                            title: title,
+                            text: text
+                        });
+                    }
 
-            }
+                    $rootScope.$on('$cordovaLocalNotification:schedule',
+                    function (event, notification, state) {
+                        common.toast('这里是事件：schedule')
+                    });
+
+                    $rootScope.$on('$cordovaLocalNotification:trigger',
+                    function (event, notification, state) {
+                        common.toast('这里是事件：trigger')
+                      // ...
+                    });
+                    $rootScope.$on('$cordovaLocalNotification:click',
+                    function (event, notification, state) {
+                        common.toast('这里是事件：click')
+                      // ...
+                    });
+
+                } catch (exception) {
+
+                }
+            });
         },
 
         //气泡提醒

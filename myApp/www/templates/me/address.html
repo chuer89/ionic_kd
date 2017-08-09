@@ -9,7 +9,7 @@
                 <ion-header-bar class="item-input-inset">
                     <label class="item-input-wrapper">
                         <i class="icon ion-ios-search placeholder-icon"></i>
-                        <input type="search" id="js_search" ng-blur="handleSearch()" placeholder="Search" ng-model="data.name"/>
+                        <input type="search" id="js_search" ng-blur="handleSearch()" placeholder="搜索" ng-model="data.name"/>
                     </label>
                     <button class="button button-light" ng-click="cancelSearch()">取消</button>
                 </ion-header-bar>
@@ -33,7 +33,7 @@
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
 
                         <div class="kd_sele_item">
-                            <ion-scroll zooming="true" direction="y" style="max-height: 200px">
+                            <ion-scroll zooming="true" direction="y" style="max-height: 300px">
                                 <a href="javascript:;" ng-click="seleDepartmentHandle(item)" ng-repeat="item in seleDepartment">{{item.name}}</a>
                             </ion-scroll>
                         </div>
@@ -45,7 +45,7 @@
 		<div class="bar bar-header item-input-inset" ng-if="isSearchTxt">
             <label class="item-input-wrapper">
                 <i class="icon ion-ios-search placeholder-icon"></i>
-                <input ng-focus="showSearch()" ng-model="data.name" type="search" placeholder="Search">
+                <input ng-focus="showSearch()" ng-model="data.name" type="search" placeholder="搜索">
             </label>
         </div>
 

@@ -295,8 +295,6 @@ angular.module('workNotify.controller', [])
 
                 angular.extend($scope.data, _body);
 
-                console.log($scope.data)
-
                 if (typeof cb == 'function') {
                     cb();
                 }

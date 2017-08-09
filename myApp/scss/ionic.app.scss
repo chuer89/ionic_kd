@@ -284,6 +284,25 @@ ion-tabs.tabs-color-active-light .tab-item{
 	height: 40px;
 }
 
+.box_center{
+	/* W3C */
+    display:box;
+    box-pack:center;
+    box-align:center;
+
+	/* Firefox */
+    display:-moz-box;
+    -moz-box-pack:center;
+    -moz-box-align:center;
+
+    /* Safari、Opera 以及 Chrome */
+    display: -webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
+
+    
+}
+
 /*下拉菜单筛选*/
 .kd_nav_filter{
 	@include height-dpr(45);
@@ -372,9 +391,9 @@ ion-tabs.tabs-color-active-light .tab-item{
 		padding: pxRem(80) 0;
 	}
 	.input_btn{
-		display: -webkit-box;
-        -webkit-box-align: center;
+		@extend .box_center;
         height: 100%;
+        padding: pxRem(80) 0;
 	}
 	.row+.row{
 		margin: 0;
@@ -654,7 +673,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 .login_box{
 	.logo_box{
 		text-align: center;
-		padding-top: pxRem(200);
+		padding-top: pxRem(500);
 		padding-bottom: pxRem(100);
 		img{
 			width: pxRem(300);

@@ -391,21 +391,25 @@ angular.module('work.services', [])
         blockData[i].id = i;
     }
 
-    COMMON.post({
-        type: 'jewelry_category',
-        data: {},
-        success: function(data) {
-            _blockData = data.body.jewelryCategory;
-
-            for (var i = 0, ii = _blockData.length; i < ii; i++) {
-                _blockData[i].id = _blockData[i].sequence;
-                _blockData[i].text = _blockData[i].name;
-            }
-        }
-    });
 
     return {
-        all: function() {
+        all: function(cb) {
+            COMMON.post({
+                type: 'jewelry_category',
+                data: {},
+                success: function(data) {
+                    _blockData = data.body.jewelryCategory;
+
+                    for (var i = 0, ii = _blockData.length; i < ii; i++) {
+                        _blockData[i].id = _blockData[i].sequence;
+                        _blockData[i].text = _blockData[i].name;
+                    }
+
+                    if (typeof cb == 'function') {
+                        cb(_blockData);
+                    }
+                }
+            });
             return _blockData;
         },
         get: function(id) {

@@ -1,12 +1,8 @@
 angular.module('workCyclopedia.controller', [])
 
-.controller('WorkCyclopediaCtrl', function ($scope, $state, common) {
-	COMMON.post({
-        type: 'jewelry_category',
-        data: {},
-        success: function(data) {
-            console.log(data)
-        }
+.controller('WorkCyclopediaCtrl', function ($scope, $state, common, workCyclopediaType) {
+    workCyclopediaType.all(function(list) {
+        common.setLocalStorage('baike', JSON.stringify(list));
     });
 })
 
@@ -17,12 +13,15 @@ angular.module('workCyclopedia.controller', [])
 		phoneBook: []
 	};
 
+    var _baike = common.getLocalStorage('baike') && JSON.parse(common.getLocalStorage('baike'));
+    if (_baike) {
+        $scope.pageName = common.getId(_baike, $stateParams.id).name;
+    }
+
 	$scope.items = [];
 
 	var handleAjax = function(isNotLoading) {
-        if (isNotLoading) {
-            common.loadingShow();
-        }
+        common.loadingShow();
 
 		COMMON.post({
 	        type: 'obtain_jewelries',
@@ -81,16 +80,17 @@ angular.module('workCyclopedia.controller', [])
 	$scope.data = {};
 
 	$scope.seleCategoryId = function () {
-		var seleType = workCyclopediaType.all();
-        $ionicActionSheet.show({
-            buttons: seleType,
-            cancelText: '取消',
-            buttonClicked: function (index, item) {
-                $scope.data.seleTypeName = item.name;
-                $scope.data.categoryId = item.id;
-                
-                return true;
-            }
+		workCyclopediaType.all(function(seleType) {
+            $ionicActionSheet.show({
+                buttons: seleType,
+                cancelText: '取消',
+                buttonClicked: function (index, item) {
+                    $scope.data.seleTypeName = item.name;
+                    $scope.data.categoryId = item.id;
+                    
+                    return true;
+                }
+            });
         });
     }
 
@@ -135,7 +135,7 @@ angular.module('workCyclopedia.controller', [])
 
 	$scope.submit = function() {
 		var _param = $scope.data;
-
+        common.loadingShow();
 		common.formData({
             type: 'create_jewelry',
             body: _param,
@@ -144,6 +144,7 @@ angular.module('workCyclopedia.controller', [])
             },
             data: formData,
             success: function(data) {
+                common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });
@@ -154,12 +155,15 @@ angular.module('workCyclopedia.controller', [])
 
 .controller('WorkCyclopediaDetailsCtrl', function($scope, $stateParams, common) {
 	$scope.item = {};
+
+    common.loadingShow();
 	COMMON.post({
         type: 'jewelry_details',
         data: {
         	jewelryId: $stateParams.id
         },
         success: function(data) {
+            common.loadingHide();
         	$scope.item = data.body;
         }
     });

@@ -39,12 +39,17 @@ angular.module('workClient.controller', [])
             })
         }, 200)
     }, cancelSearch = function() {
+        clearSearchData();
+    }, handleSearch = function() {
         $scope.isSearchVal = false;
         $scope.isSearchTxt = true;
-    }, handleSearch = function() {
+
         initData();
-        cancelSearch();
+    }, clearSearchData = function() {
+        $scope.data.keyword = '';
+        handleSearch();
     }
+    
     $scope.showSearch = showSearch;
     $scope.cancelSearch = cancelSearch;
     $scope.handleSearch = handleSearch;

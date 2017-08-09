@@ -5,21 +5,19 @@
                 <ion-header-bar class="item-input-inset">
                     <label class="item-input-wrapper">
                         <i class="icon ion-ios-search placeholder-icon"></i>
-                        <input type="search" id="js_search" ng-blur="handleSearch()" placeholder="Search" ng-model="data.keywords"/>
+                        <input type="search" id="js_search" ng-blur="handleSearch()" placeholder="搜索" ng-model="data.keywords"/>
                     </label>
                     <button class="button button-light" ng-click="cancelSearch()">取消</button>
                 </ion-header-bar>
             </form>
 		</div>
 
-		<div class="padding" ng-if="isSearchTxt">
-			<div class="bar search_box bar-header item-input-inset">
-				<label class="item-input-wrapper">
-					<i class="icon ion-ios-search placeholder-icon"></i>
-					<input ng-focus="showSearch()" ng-model="data.keywords" type="search" placeholder="搜索" />
-				</label>
-	        </div>
-		</div>
+		<div class="bar bar-header item-input-inset" ng-if="isSearchTxt">
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <input ng-focus="showSearch()" ng-model="data.keywords" type="search" placeholder="搜索">
+            </label>
+        </div>
 		
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>

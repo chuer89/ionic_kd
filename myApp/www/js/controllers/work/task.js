@@ -157,19 +157,54 @@ angular.module('workTask.controller', [])
         phoneBook: []
     };
 
+    $scope.data = {
+        keywords: ''
+    }
+
     common.clearSetData();
 
     $scope.items = [];
 
-    var handleAjax = function (isNotLoading) {
-        if (isNotLoading) {
-            common.loadingShow();
-        }
+    //搜索--start
+    $scope.isSearchVal = false;
+    $scope.isSearchTxt = true;
+    var showSearch = function() {
+        $scope.isSearchVal = true;
+        $scope.isSearchTxt = false;
+
+        $timeout(function() {
+            $('#js_search').focus().on('keypress', function(e) {
+                var _keyCode = e.keyCode;
+                if (_keyCode == 13) {
+                    //搜索
+                    handleSearch();
+                    return false;
+                }
+            })
+        }, 200)
+    }, cancelSearch = function() {
+        clearSearchData();
+    }, handleSearch = function() {
+        $scope.isSearchVal = false;
+        $scope.isSearchTxt = true;
+
+        initData();
+    }, clearSearchData = function() {
+        $scope.data.keywords = '';
+        handleSearch();
+    }
+    $scope.showSearch = showSearch;
+    $scope.cancelSearch = cancelSearch;
+    $scope.handleSearch = handleSearch;
+    //搜索--end
+
+    var handleAjax = function () {
+        common.loadingShow();
 
         COMMON.getPhoneBook({
             currentPage: dataList.currentPage + 1,
             departmentId: seleDepartmentId,
-            name: ''
+            name: $scope.data.keywords
         }, function(body) {
             common.loadingHide();
 
@@ -215,7 +250,7 @@ angular.module('workTask.controller', [])
 
             $timeout(function () {
                 $scope.vm.moredata = false;
-                handleAjax(true);
+                handleAjax();
             }, 1500);
             return true;
         }
@@ -666,8 +701,6 @@ angular.module('workTask.controller', [])
         var _zerenren = data.zerenrenArray[0].userId;//责任人
         var _creatorId = data.taskBasiInfo.creatorId;//创建人
         var _inspectorId = data.taskBasiInfo.inspectorId;//检查人
-
-        console.log(data)
 
         //编辑：责任人和检查人都可以见，任务状态不是QUALIFIED或者UNQUALIFIED
         if ( (_clientId == _zerenren || _clientId == _inspectorId)

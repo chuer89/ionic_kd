@@ -14,11 +14,12 @@ angular.module('workSchedule.controller', [])
                 "userId": common.userInfo.clientId,
                 "isNotification": false
             },
+            notPretreatment: true,
             success: function(data) {
                 var _body = data.body;
                 common.loadingHide();
 
-                console.log(data)
+                console.log(data);
 
                 if (!_body || (_body && !_body.riChengList) || (_body && _body.riChengList && !_body.riChengList.length)) {
                     $scope.notTaskListData = common.notTaskListDataTxt;
@@ -289,10 +290,7 @@ angular.module('workSchedule.controller', [])
                 common.loadingHide();
 
                 var _relationGuys = '';
-
-                for (var i = 0, ii = _body.jieshourenList.length; i < ii; i++) {
-                    _relationGuys += _body.jieshourenList[i].userName + ' ';
-                }
+                _relationGuys += common.getCheckedName(_body.jieshourenList, 'userId', 'userName');
 
                 var _remindtime = common.getId(menus.remindtime, _body.riChengbasicInffo.remindtime, 'key'),
                     _cycletime = common.getId(menus.cycletime, _body.riChengbasicInffo.cycletime, 'key');
@@ -345,6 +343,8 @@ angular.module('workSchedule.controller', [])
             return;
         }
 
+        common.loadingShow();
+
         common.getCommonCheckedPerson(function(opt) {
             angular.extend(_param, opt);
         });
@@ -353,8 +353,9 @@ angular.module('workSchedule.controller', [])
             type: 'update_richeng',
             data: _param,
             success: function(data) {
-               common.toast(data.message, function() {
-                    history.back(-1);
+                common.loadingHide();
+                common.toast(data.message, function() {
+                    common.back();
                 });
             }
         });

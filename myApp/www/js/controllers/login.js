@@ -16,23 +16,26 @@ angular.module('login.controller', [])
     }
 
     $scope.login = function() {
-        if ($scope.data.mobile && $scope.data.password) {
+        if (($scope.data.mobile && $scope.data.password) || (common.isChrome && common.debugUser.mobile) ) {
 
         } else {
             common.toast('请输入手机号和密码');
             return;
         }
 
+        var _param = {
+            mobile: $scope.data.mobile,
+            password: $scope.data.password
+        }
+
+        if (common.isChrome && common.debugUser && common.debugUser.mobile) {
+            _param = common.debugUser;
+        }
+
         common.loadingShow();
         common.post({
             type: 'client_login',
-            data: {
-                mobile: $scope.data.mobile,
-                password: $scope.data.password
-
-                // mobile: 15608203716,
-                // password: 111111
-            },
+            data: _param,
             success: function(data) {
                 var _body = data.body;
                 common.loadingHide();

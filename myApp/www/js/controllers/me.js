@@ -214,11 +214,15 @@ angular.module('me.controller', [])
             })
         }, 200)
     }, cancelSearch = function() {
+        clearSearchData();
+    }, handleSearch = function() {
         $scope.isSearchVal = false;
         $scope.isSearchTxt = true;
-    }, handleSearch = function() {
+
         initData();
-        cancelSearch();
+    }, clearSearchData = function() {
+        $scope.data.name = '';
+        handleSearch();
     }
     $scope.showSearch = showSearch;
     $scope.cancelSearch = cancelSearch;

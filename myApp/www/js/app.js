@@ -15,31 +15,35 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-
     }
 
 
-    // if (window.cordova && window.cordova.plugins) {
-    //     //shedule事件在每次调用时触发  
-    //     cordova.plugins.notification.local.on('schedule', function (notification) {  
-    //         alert('scheduled:' + notification.id);  
-    //     });  
-    //     //通知触发事件  
-    //     cordova.plugins.notification.local.on('trigger', function (notification) {  
-    //         //alert('triggered:' + notification.id);  
-    //         alert(JSON.stringify(notification));  
-    //     });  
-    //     //监听点击事件  
-    //     cordova.plugins.notification.local.on('click', function (notification) {  
-    //         alert(JSON.stringify(notification));  
-    //         // document.getElementById('title').innerHTML = JSON.stringify(notification.data);  
-    //     });  
-    // }
+    if (window.cordova && window.cordova.plugins) {
+        // //shedule事件在每次调用时触发  
+        // cordova.plugins.notification.local.on('schedule', function (notification) {  
+        //     alert('scheduled:' + notification.id);  
+        // });  
+        // //通知触发事件  
+        // cordova.plugins.notification.local.on('trigger', function (notification) {  
+        //     //alert('triggered:' + notification.id);  
+        //     alert(JSON.stringify(notification));  
+        // });  
+        // //监听点击事件  
+        // cordova.plugins.notification.local.on('click', function (notification) {  
+        //     alert(JSON.stringify(notification));  
+        //     // document.getElementById('title').innerHTML = JSON.stringify(notification.data);  
+        // });  
+    }
 
-    // window.plugin.notification.local.onadd = app.onReminderAdd;
-    // window.plugin.notification.local.onclick = app.onReminderClick;
-    // window.plugin.notification.local.oncancel = app.onReminderCancel;
-    // window.plugin.notification.local.ontrigger = app.onReminderTrigger;
+    if (window.plugins && window.plugin.notification) {
+        // window.plugin.notification.local.onadd = app.onReminderAdd;
+        // window.plugin.notification.local.onclick = function() {
+        //     alert(22)
+        // };
+        // window.plugin.notification.local.oncancel = app.onReminderCancel;
+        // window.plugin.notification.local.ontrigger = app.onReminderTrigger;
+    }
+
 
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
@@ -95,8 +99,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
           closeLabel: '关闭'
         };
         ionicTimePickerProvider.configTimePicker(timePickerObj);
-
-  // $ionicConfigProvider.views.swipeBackEnabled(false);
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
