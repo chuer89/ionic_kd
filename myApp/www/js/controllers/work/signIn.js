@@ -11,6 +11,7 @@ angular.module('workSign.controller', [])
 	var qianDaoData = {
 		qiandaoCanQianDaoSite: true
 	}
+	
 
 	var qianDaoRight = 1;//是否正常签到 1 正常； 0 迟到
 
@@ -40,7 +41,7 @@ angular.module('workSign.controller', [])
 	            }
 
 	            if (typeof cb == 'function') {
-	            	cb();
+	            	cb(data);
 	            }
 	        }
 	    });
@@ -101,9 +102,7 @@ angular.module('workSign.controller', [])
 	    common.getLocation(function(position) {
 	    	var _coords = position.coords;
 
-	    	//localStorage.clear();localStorage.clientId = 152;
-
-	    	console.log(position, '位置')
+	    	console.log(_coords, '位置')
 
 			COMMON.post({
 		        type: 'qiandao_distance',
@@ -129,7 +128,7 @@ angular.module('workSign.controller', [])
 	var hasSignIn = function() {
 		var nowTime = common.format(false, 'HH:mm');
 
-		// nowTime = '11:31';
+		// nowTime = '19:31';
 
 		var qiandaoTimes = common.getLocalStorage('qiandaoTimes') && JSON.parse( common.getLocalStorage('qiandaoTimes') );
 
@@ -180,11 +179,16 @@ angular.module('workSign.controller', [])
 		}
 	}
 
-	ajaxUserData(function() {
+	ajaxUserData(function(data) {
+
+		getSignInData(function(_data) {
+			$scope.hasSignIn = hasSignIn();
+			console.log(data, _data, $scope.hasSignIn)
+		});
+		return;
+
 		if (common.format(false, 'yyyy-MM-dd') != common.getLocalStorage('qiandaoApiDate')){
-			getSignInData(function(data) {
-				$scope.hasSignIn = hasSignIn();
-			});
+			
 		} else {
 			$scope.hasSignIn = hasSignIn();
 		}
@@ -200,6 +204,7 @@ angular.module('workSign.controller', [])
 		if (!$scope.shangBanType) {
 			common.toast('请选择签到类型');return;
 		}
+
 
 		var ajax = function(qianDaoPlace) {
 			COMMON.post({

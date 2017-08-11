@@ -21,3 +21,7 @@ Master Secret: 4da92a574b3089b5a7522578
 cordova-plugin-device
 cordova-plugin-jcore
 jpush-phonegap-plugin
+
+
+账号：
+18280092852

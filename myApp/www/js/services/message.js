@@ -159,11 +159,12 @@ angular.module('message.services', [])
 
         isChrome: false,
         debugUser: {
-            mobile: 15608203716,
+            // mobile: 18280092852,
             password: 123456
         },
 
         notTaskListDataTxt: '-暂无数据-',
+        noAuthLimitsTxt : '暂无权限操作',
 
         post: function(opt) {
             var data = opt.data || {};
@@ -433,6 +434,15 @@ angular.module('message.services', [])
         nickname: function(name) {
             name = name || '';
             return name.substr(-2);
+        },
+
+        //替换正文里面回车
+        replaceNext: function(text) {
+            if (!text) {
+                return '';
+            }
+
+            return text.replace(/\n/g, '<br/>');
         },
 
         //遍历数组中的id值，
@@ -1162,7 +1172,7 @@ angular.module('message.services', [])
 
         //获取经纬度
         getLocation: function(cb) {
-            // //定位
+            //定位
             // var posOptions = {timeout: 10000, enableHighAccuracy: false};
             // $cordovaGeolocation
             // .getCurrentPosition(posOptions)
@@ -1176,6 +1186,17 @@ angular.module('message.services', [])
             //     // error
             // });
             // return;
+
+            // var data = {
+            //     coords: {
+            //         longitude: 30.541253800000003,
+            //         latitude: 104.06534119999999    
+            //     }
+            // };
+
+            // cb(data);
+            // return;
+
 
             var showPosition = function (position) {
                 //accuracy 位置精度;  latitude 十进制伟度；longitude 十进制经度

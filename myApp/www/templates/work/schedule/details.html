@@ -4,7 +4,7 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a href="javascript:;" ng-click="showNav()" class="ion-more button button-clear button-light"></a>
+        <a href="javascript:;" ng-click="showNav()" class="ion-more button button-clear button-dark"></a>
     </ion-nav-buttons>
 
 	<ion-content>
@@ -14,9 +14,7 @@
                 <p class="f14">{{item.userName}} 安排的日程</p>
             </div>
             <div class="schedele_details item_list_box">
-                <div class="schedule_content">
-                    {{item.riChengContent}}
-                </div>
+                <div class="schedule_content" ng-bind-html="item.riChengContent"></div>
             </div>
             
             <div class="padding_tb padding_around">

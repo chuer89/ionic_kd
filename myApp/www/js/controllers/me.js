@@ -1,7 +1,7 @@
 angular.module('me.controller', [])
 
 //我
-.controller('AccountCtrl', function($scope, common) {
+.controller('AccountCtrl', function($scope, $state, common) {
 	$scope.item = {};
 
 	common.getUserinfo_simple(common.userInfo.clientId, function(_data) {
@@ -12,6 +12,11 @@ angular.module('me.controller', [])
 
         $scope.item = _data;
 	});
+
+    $scope.out = function() {
+        common.clearLocalStorage();
+        $state.go('login');
+    }
 })
 
 //个人信息
@@ -381,9 +386,7 @@ angular.module('me.controller', [])
         	common.loadingHide();
         	var _data = data.body;
         	_data.nickname = common.nickname(_data.name);
-        	console.log(data)
         	$scope.item = _data;
-
         }
     });
 })

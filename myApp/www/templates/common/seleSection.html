@@ -4,14 +4,14 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a href="javascript:;" ng-click="sub()" class="button button-clear button-light">确定</a>
+        <a href="javascript:;" ng-click="sub()" class="button button-clear button-royal">确定</a>
     </ion-nav-buttons>
 
     <ion-content>
 
         <div class="kd_nav_filter">
             <div class="padding_around row">
-                <div class="kd_sele_box col col-40">
+                <div class="kd_sele_box col col-25">
                     <div ng-click="toggleSele('brank')" class="kd_sele_val">{{seleBrankInfo}}<i class="ion-arrow-down-b"></i></div>
                     <div class="kd_sele_content" ng-show="isShowBrankSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
@@ -22,7 +22,8 @@
                 </div>
             </div>
         </div>
-        <div class="list_box">
+
+        <div class="list">
             <ion-list>
         		<div ng-repeat="item in items" class="item_list_box">
                     <div class="row">

@@ -56,9 +56,7 @@ angular.module('workClient.controller', [])
     //搜索--end
 
     var ajaxHandle = function(isNotLoading) {
-        if (isNotLoading) {
-            common.loadingShow();
-        }
+        common.loadingShow();
 
         var _param = angular.extend({}, $scope.data, {
             page: dataList.currentPage + 1

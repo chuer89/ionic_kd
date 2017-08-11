@@ -1,7 +1,7 @@
 <ion-view view-title="login" name="login-view" hide-back-button="true" hide-nav-bar="true">
     <ion-content>
-        <div style="position: relative;height: 100%;">
-            <div style="position: absolute;top: 20%;left: 0;right: 0;">
+        <div >
+            <div >
                 <div class="login_box">
                     <div class="logo_box">
                         <img src="img/logo.png" />
@@ -10,11 +10,11 @@
                         <div class="padding_around">
                             <div class="border_btm">
                                 <span class="icon_box"><img src="img/user_name_icon.png" /></span>
-                                <input type="tel" maxlength="11" name="mobile" placeholder="手机号" ng-model="data.mobile" />
+                                <input type="tel" maxlength="11" name="mobile" placeholder="手机号" ng-model="data.mobile" style="width: 65%" />
                             </div>
                             <div class="row">
                                 <div class="col col-75">
-                                    <span class="icon_box"><img src="img/password_icon.png" /></span>
+                                    <span class="icon_box"><img class="password_icon" src="img/password_icon.png" /></span>
                                     <input type="password" maxlength="16" name="password" placeholder="密码" ng-model="data.password" />
                                 </div>
                                 <div class="col text_align_right"><a class="input_btn" ng-click="forgotPassword()" href="javascript:;">忘记了？</a></div>

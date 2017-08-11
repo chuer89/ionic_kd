@@ -13,8 +13,11 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        cordova.plugins.Keyboard.disableScroll(true);
+        window.addEventListener("native.keyboardshow", function(e){
+            viewScroll.scrollBottom();
+        });
     }
 
 
@@ -110,7 +113,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('login', {
         url: '/login',
         templateUrl: 'templates/login.html',
-        controller: 'LoginCtrl'
+        controller: 'LoginCtrl',
+        cache: false
     })
 
     //找回密码
@@ -217,7 +221,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     //消息
     .state('tab.message', {
         url: '/message',
-        cache: false,
         views: {
             'tab-message': {
                 templateUrl: 'templates/message/index.html',

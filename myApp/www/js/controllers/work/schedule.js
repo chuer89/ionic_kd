@@ -67,6 +67,9 @@ angular.module('workSchedule.controller', [])
             _relationGuys += _body.jieshourenList[i].userName + ' ';
         }
 
+        _body.riChengbasicInffo.riChengContent = common.replaceNext(_body.riChengbasicInffo.riChengContent);
+
+
         common.getUserinfo_simple(_body.riChengbasicInffo.riChengCreatorId, function(_data) {
             _body.riChengbasicInffo.userName = _data.name;
 
@@ -175,9 +178,9 @@ angular.module('workSchedule.controller', [])
         beginTime: '',
         title: '',
         content: '',
-        cycletimeSele: {text: '请选择'},
+        cycletimeSele: {text: '不重复'},
         remindtimeSele: {text: '请选择'},
-        cycletime: '',
+        cycletime: 'NO_CYCLE',
         remindtime: ''
     }
 
@@ -414,6 +417,7 @@ angular.module('workSchedule.controller', [])
                 "userId": common.userInfo.clientId,
                 "isNotification": false
             },
+            notPretreatment: true,
             success: function(data) {
                 var _body = data.body;
 

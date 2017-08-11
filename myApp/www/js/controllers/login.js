@@ -1,6 +1,7 @@
 angular.module('login.controller', [])
 
-.controller('LoginCtrl', function($scope, $ionicPopup, $state, $ionicHistory, $cordovaToast, common) {
+.controller('LoginCtrl', function($scope, $ionicPopup, $state,
+    $ionicPlatform, $ionicHistory, $cordovaToast, common) {
     $scope.data = {};
 
     $ionicHistory.clearCache();
@@ -16,7 +17,7 @@ angular.module('login.controller', [])
     }
 
     $scope.login = function() {
-        if (($scope.data.mobile && $scope.data.password) || (common.isChrome && common.debugUser.mobile) ) {
+        if (($scope.data.mobile && $scope.data.password) || (common.debugUser.mobile) ) {
 
         } else {
             common.toast('请输入手机号和密码');
@@ -28,7 +29,7 @@ angular.module('login.controller', [])
             password: $scope.data.password
         }
 
-        if (common.isChrome && common.debugUser && common.debugUser.mobile) {
+        if (common.debugUser && common.debugUser.mobile) {
             _param = common.debugUser;
         }
 
@@ -44,7 +45,6 @@ angular.module('login.controller', [])
                     common.clearLocalStorage();
                 }
 
-                common.scheduleSingleNotification('欢迎来到掌上快道', '只快一点的 结果大不同');
                 common.handleLocationPush();
 
                 angular.extend(common.userInfo, _body);
@@ -52,7 +52,7 @@ angular.module('login.controller', [])
                 common.setLocalStorage('userInfo', JSON.stringify(_body));
                 common.setLocalStorage('clientId', _body.clientId);
 
-                $state.go('tab.dash');
+                $state.go('tab.message');
             }
         });
     }

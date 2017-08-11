@@ -24,6 +24,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 @import "_baseFunction";
 
+.f16{
+	@include font-dpr(16);
+}
+
+*{
+	@extend .f16;
+}
+
 /*重置ionic样式*/
 .pane, .view{
 	background: $colorBody;
@@ -148,11 +156,33 @@ ion-tabs.tabs-color-active-light .tab-item{
 .bar button.button-icon.icon-right:before, .bar button.button-icon:before{
 	font-size: 25px;
 }
-
+.item-input-inset{
+	padding: pxRem(20);
+}
+.tabs{
+	height: 47px;
+}
+.tab-item .icon{
+	height: 28px;
+	font-size: 28px;
+}
 .action-sheet-options{
 	max-height: 350px;
     overflow-y: scroll;
 }
+.button.button-dark.button-clear{font-size: 24px;}
+.input-label{max-width: 80px;}
+
+.col-15{
+	-webkit-box-flex: 0;
+    -webkit-flex: 0 0 15%;
+    -moz-box-flex: 0;
+    -moz-flex: 0 0 15%;
+    -ms-flex: 0 0 15%;
+    flex: 0 0 15%;
+    max-width: 15%;
+}
+
 
 .clearfix{overflow:hidden;_zoom:1;}
 .fl{
@@ -169,10 +199,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 	color: $colorGrey;
 }
 
-.box_align{
-	display: -webkit-box;
-    -webkit-box-align: center;
-}
+
 
 .height_100{
 	height: 100%;
@@ -183,12 +210,16 @@ ion-tabs.tabs-color-active-light .tab-item{
 
 /*上下－左右 间距*/
 .padding_around{
-	padding-left: pxRem(50);
-	padding-right: pxRem(50);
+	padding-left: pxRem(60);
+	padding-right: pxRem(60);
 }
 .padding_tb{
 	padding-top: pxRem(50);
 	padding-bottom: pxRem(50);
+}
+.padding_small_tb{
+	padding-top: pxRem(30);
+	padding-bottom: pxRem(30);
 }
 .padding_btm{
 	padding-bottom: pxRem(100);
@@ -203,6 +234,9 @@ ion-tabs.tabs-color-active-light .tab-item{
 
 .border_btm{
 	border-bottom: 1px solid $colorSimpleGrey;
+}
+.text_align_left{
+	text-align: left;
 }
 .text_align_right{
 	text-align: right;
@@ -284,7 +318,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 	height: 40px;
 }
 
-.box_center{
+.box_center, .box_align{
 	/* W3C */
     display:box;
     box-pack:center;
@@ -299,8 +333,6 @@ ion-tabs.tabs-color-active-light .tab-item{
     display: -webkit-box;
     -webkit-box-pack:center;
     -webkit-box-align:center;
-
-    
 }
 
 /*下拉菜单筛选*/
@@ -385,6 +417,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 	input[type=search], input[type=text], input[type=password], input[type=number], input[type=tel]{
 		height: auto;
 		line-height: normal;
+		@extend .f16;
 	}
 	input {
 		display: inline-block;
@@ -440,7 +473,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 }
 
 /*列表*/
-.list_box{
+.list_box, .list{
 	display: block;
 	.colorPurple{
 		color: $colorPurple;
@@ -472,7 +505,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 		border-bottom: 1px solid $colorSimpleGrey;
 		display: block;
 		background: white;
-		padding: pxRem(80) pxRem(80);
+		padding: pxRem(50) pxRem(60);
 		color: $colorBlack;
 		position: relative;
 		h2, p{
@@ -486,9 +519,9 @@ ion-tabs.tabs-color-active-light .tab-item{
 		}
 		.name_box{
 			background: $colorPurple;
-			padding: pxRem(35) pxRem(30);
+			padding: pxRem(35) pxRem(26);
 			color: white;
-			border-radius: pxRem(80);
+			border-radius: pxRem(100);
 			display: inline-block;
 			font-size: 12px;
 		}
@@ -556,11 +589,11 @@ ion-tabs.tabs-color-active-light .tab-item{
 
 	.left_icon_box{
 		/*@include width-dpr(50);*/
-		text-align: center;
+		text-align: left;
 		.red-point{
 			position: relative;
 			top: pxRem(-60);
-			left: 0;
+			left: pxRem(15);
 		}
 	}
 	.left_icon{
@@ -573,16 +606,17 @@ ion-tabs.tabs-color-active-light .tab-item{
 	.title{
 		@include font-dpr(16);
 		color: $colorBlack;
+		padding-bottom: pxRem(20);
 	}
 	.ellipsis_info{
 		@extend %textOverflow;
 
 		color: $colorGrey;
-		@include font-dpr(12);
+		@include font-dpr(14);
 	}
 	.info{
 		color: $colorGrey;
-		@include font-dpr(12);
+		@include font-dpr(14);
 	}
 	.info_f_14{
 		.info{
@@ -613,6 +647,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 		    justify-content: center;
 		    height: 100%;
 		    color: $colorGrey;
+		    @extend .box_center;
 		    .time{
 		    	@include font-dpr(12);
 		    	color: $colorRed;
@@ -674,14 +709,14 @@ ion-tabs.tabs-color-active-light .tab-item{
 	.logo_box{
 		text-align: center;
 		padding-top: pxRem(500);
-		padding-bottom: pxRem(100);
+		padding-bottom: pxRem(150);
 		img{
 			width: pxRem(300);
 		}
 	}
 	.import_box{
 		.icon_box{
-			@include width-dpr(50);
+			width: pxRem(200);
 			display: inline-block;
 			text-align: center;
 		}
@@ -689,6 +724,9 @@ ion-tabs.tabs-color-active-light .tab-item{
 			height: pxRem(80);
 			vertical-align: middle;
 			width: auto;
+		}
+		.password_icon{
+			height: pxRem(110);
 		}
 	}
 }

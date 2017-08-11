@@ -5,7 +5,10 @@ angular.module('workNotify.controller', [])
     $scope.items = [];
 
     common.clearSetData();
-    
+
+    //菜单权限
+    var navMenus = [];
+
     var getList = function(isNotLoading) {
         if (isNotLoading) {
             common.loadingShow();
@@ -25,6 +28,13 @@ angular.module('workNotify.controller', [])
                     $scope.items = _body.inform;
                 } else {
                     $scope.notTaskListData = common.notTaskListDataTxt;
+                }
+
+                //是否有权限新增&编辑&删除
+                if (!_body.createAuthority) {
+                    common.setLocalStorage('notCreateAuthority', true);
+                } else {
+                    navMenus = [{text: '查看通知'}, {text: '新建通知'}];
                 }
             }
         });
@@ -48,12 +58,13 @@ angular.module('workNotify.controller', [])
     }
 
     $scope.showNav = function() {
+        if (!navMenus.length) {
+            common.toast(common.noAuthLimitsTxt);
+            return;
+        }
+
         $ionicActionSheet.show({
-            buttons: [{
-                text: '查看通知'
-            }, {
-                text: '新建通知'
-            }],
+            buttons: navMenus,
             cancelText: '取消',
             buttonClicked: function (index, item) {
                 
@@ -124,7 +135,13 @@ angular.module('workNotify.controller', [])
 
     common.clearSetData();
 
+    $scope.notAuth = common.getLocalStorage('notCreateAuthority');
+
     $scope.showNav = function() {
+        if ($scope.notAuth) {
+            return;
+        }
+
         $ionicActionSheet.show({
             buttons: [{
                 text: '编辑'
@@ -186,6 +203,8 @@ angular.module('workNotify.controller', [])
                 common.loadingHide();
 
                 var _body = data.body;
+
+                _body.description = common.replaceNext(_body.description);
                 $scope.item = _body;
             }
         });
@@ -249,6 +268,8 @@ angular.module('workNotify.controller', [])
         common.getCommonCheckedPerson(function(opt) {
             angular.extend(_param, opt);
         });
+
+        // console.log(_param);return
 
         common.loadingShow();
         common.formData({
