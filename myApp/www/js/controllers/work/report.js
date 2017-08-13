@@ -418,6 +418,7 @@ angular.module('workReport.controller', [])
             var _body = data.body;
 
             _body.nickname = common.nickname(_body.userName);
+            _body.content = common.replaceNext(_body.content);
 
             $scope.item = _body;
         });
@@ -434,6 +435,7 @@ angular.module('workReport.controller', [])
                 var _body = data.body;
 
                 _body.nickname = common.nickname(_body.userName);
+                _body.content = common.replaceNext(_body.content);
 
                 $scope.item = _body;
             }

@@ -8,7 +8,7 @@ angular.module('me.controller', [])
 		angular.extend(common.userInfo, _data);
 
         _data.nickname = common.nickname(_data.name);
-        _data.avatarPath = _data.avatarPath || 'img/icon.png';
+        _data.avatarPath = _data.avatarPath || 'img/logo.png';
 
         $scope.item = _data;
 	});
@@ -32,7 +32,7 @@ angular.module('me.controller', [])
         success: function(data) {
         	var _data = data.body;
         	_data.nickname = common.nickname(_data.name);
-        	_data.avatarPath = _data.avatarPath || 'img/icon.png';
+        	_data.avatarPath = _data.avatarPath || 'img/logo.png';
         	$scope.item = _data;
         }
     });

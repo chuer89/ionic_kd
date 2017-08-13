@@ -291,6 +291,9 @@ angular.module('message.controller', [])
         common.toast('消息成功');
     });
 
+    $scope.slideImg = 1;
+
+
 	$scope.startVib=function(){ 
         // 震动 1000ms 
         //$cordovaVibration.vibrate(1000); 

@@ -157,9 +157,9 @@ angular.module('message.services', [])
         onlineHost: 'http://123.206.95.25:18080',
         // onlineHost: 'http://192.168.201.237:8080',
 
-        isChrome: false,
+        isChrome: true,
         debugUser: {
-            // mobile: 18280092852,
+            mobile: 18280092852,
             password: 123456
         },
 

@@ -139,6 +139,7 @@ angular.module('workNotify.controller', [])
 
     $scope.showNav = function() {
         if ($scope.notAuth) {
+            common.toast(common.noAuthLimitsTxt);
             return;
         }
 
@@ -188,6 +189,8 @@ angular.module('workNotify.controller', [])
 
         common.getMessageDetails(urlId, 'INFORM', function(data) {
             var _body = data.body;
+            _body.description = common.replaceNext(_body.description);
+            
             $scope.item = _body;
         });
     } else {

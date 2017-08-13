@@ -287,17 +287,26 @@ angular.module('workOnDuty.controller', [])
     });
 })
 
+//指标详情
 .controller('WorkOnDutyDetailsCtrl', function($scope, $stateParams, common) {
     $scope.data = {};
 
     var urlId = $stateParams.id,
         id = $stateParams.id;
 
+    var handleNext = function(obj) {
+        for (var k in obj) {
+            obj[k] = common.replaceNext(obj[k]);
+        }
+        return obj;
+    }
+
     if (urlId.indexOf('_push_') > 0) {
         id = urlId.split('_push_')[1];
 
         common.getMessageDetails(urlId, 'PAIBAN', function(data) {
             var _body = data.body;
+            _body = handleNext(_body);
 
             $scope.data = _body;
         });
@@ -312,7 +321,8 @@ angular.module('workOnDuty.controller', [])
             success: function(data) {
                 common.loadingHide();
                 var _body = data.body;
-
+                _body = handleNext(_body);
+                
                 $scope.data = _body;
             }
         });

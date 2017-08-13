@@ -7,39 +7,39 @@
         <div class="list_box">
             <div class="padding_around padding_tb list_type_title">销售</div>
             <div class="item">
-                <p>{{data.sellTaget}}</p>
-                <p class="colorPurple padding_tb">{{data.sellResult}}</p>
+                <p ng-bind-html="data.sellTaget"></p>
+                <p class="colorPurple padding_tb" ng-bind-html="data.sellResult"></p>
             </div>
         </div>
 
         <div class="list_box">
             <div class="padding_around padding_tb list_type_title">服务</div>
             <div class="item">
-                <p>{{data.serviceTaget}}</p>
-                <p class="colorPurple padding_tb">{{data.serviceResult}}</p>
+                <p ng-bind-html="data.serviceTaget"></p>
+                <p class="colorPurple padding_tb" ng-bind-html="data.serviceResult"></p>
             </div>
         </div>
 
         <div class="list_box">
             <div class="padding_around padding_tb list_type_title">运营</div>
             <div class="item">
-                <p>{{data.manageTaget}}</p>
-                <p class="colorPurple padding_tb">{{data.manageResult}}</p>
+                <p ng-bind-html="data.manageTaget"></p>
+                <p class="colorPurple padding_tb" ng-bind-html="data.manageResult"></p>
             </div>
         </div>
 
         <div class="list_box">
             <div class="padding_around padding_tb list_type_title">其他</div>
             <div class="item">
-                <p>{{data.otherTaget}}</p>
-                <p class="colorPurple padding_tb">{{data.otherResult}}</p>
+                <p ng-bind-html="data.otherTaget"></p>
+                <p class="colorPurple padding_tb" ng-bind-html="data.otherResult"></p>
             </div>
         </div>
 
         <div class="list_box">
             <div class="padding_around padding_tb list_type_title">检查</div>
             <div class="item">
-                <p class="colorPurple padding_tb">{{data.checkResult}}</p>
+                <p class="colorPurple padding_tb" ng-bind-html="data.checkResult">{{}}</p>
             </div>
         </div>
 	</ion-content>

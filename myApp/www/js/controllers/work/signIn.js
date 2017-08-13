@@ -132,7 +132,7 @@ angular.module('workSign.controller', [])
 
 		var qiandaoTimes = common.getLocalStorage('qiandaoTimes') && JSON.parse( common.getLocalStorage('qiandaoTimes') );
 
-		if (!qiandaoTimes.length || !qianDaoData.qiandaoCanQianDaoSite) {
+		if (!qiandaoTimes || !qiandaoTimes.length || !qianDaoData.qiandaoCanQianDaoSite) {
 			return false;
 		}
 

@@ -22,6 +22,18 @@
     </ion-nav-buttons>
 
     <ion-content>
+        <ion-slide-box ng-if="slideImg" active-slide="1">
+            <ion-slide>
+              <div class="box blue"><h1>BLUE</h1></div>
+            </ion-slide>
+            <ion-slide>
+              <div class="box yellow"><h1>YELLOW</h1></div>
+            </ion-slide>
+            <ion-slide>
+              <div class="box pink"><h1>PINK</h1></div>
+            </ion-slide>
+        </ion-slide-box>
+
         <div class="">
             <button ng-click="addNotification()">本地消息</button>
         </div>

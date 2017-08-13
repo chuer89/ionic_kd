@@ -406,6 +406,7 @@ angular.module('workTask.controller', [])
             dailyTaskId: '0'
         }
 
+        common.loadingShow();
         common.formData({
             type: 'create_task',
             body: _param,
@@ -414,6 +415,7 @@ angular.module('workTask.controller', [])
             },
             data: formData,
             success: function(data) {
+                common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });
@@ -479,7 +481,7 @@ angular.module('workTask.controller', [])
             },
             success: function(data) {
                 data.body.taskBasiInfo._status = common.getId(taskStatus, data.body.taskBasiInfo.status, 'key').name;
-
+                
                 var _body = data.body;
 
                 angular.extend($scope.data, {
@@ -755,6 +757,9 @@ angular.module('workTask.controller', [])
                 common.getUserinfo_simple(data.body.taskBasiInfo.inspectorId, function(data) {
                     $scope.inspectorIdName = data.name;
                 })
+
+
+                // data.body.taskBasiInfo.taskDescription = common.replaceNext(data.body.taskBasiInfo.taskDescription);
                 
                 data.body.taskBasiInfo._status = common.getId(taskStatus, data.body.taskBasiInfo.status, 'key').name;
 

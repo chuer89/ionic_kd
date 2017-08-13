@@ -18,9 +18,7 @@
                             <p class="info">{{item.createTime}}</p>
                         </div>
                         
-                        <div class="item_list_box">
-                            {{item.content}}
-                        </div>
+                        <div class="item_list_box" ng-bind-html="item.content"></div>
 
                         <div class="item_list_box">
                             <div class="details_img_thumbnail clearfix">
