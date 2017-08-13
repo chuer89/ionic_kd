@@ -51,7 +51,7 @@
             </div>
   		</div>
         <div class="list_box">
-            <div class="list_type_title padding_around">考核时间：{{data.year}}年{{data.month}}月</div>
+            <div class="list_type_title padding_around padding_small_tb">考核时间：{{data.year}}年{{data.month}}月</div>
             <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
             <div class="item_list_box" ng-repeat="item in items">
                 <a href="#/perfomance/details/{{item.jiXiaoId}}" class="row">

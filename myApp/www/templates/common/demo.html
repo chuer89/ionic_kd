@@ -22,7 +22,7 @@
     </ion-nav-buttons>
 
     <ion-content>
-        <ion-slide-box ng-if="slideImg" active-slide="1">
+        <ion-slide-box ng-if="slideImg" does-continue="true" active-slide="1">
             <ion-slide>
               <div class="box blue"><h1>BLUE</h1></div>
             </ion-slide>
@@ -34,22 +34,32 @@
             </ion-slide>
         </ion-slide-box>
 
-        <div class="">
-            <button ng-click="addNotification()">本地消息</button>
+        <div class="list_box">
+            <div class="item_list_box">
+                <div class="details_img_thumbnail">
+                    <img src="{{img.imgsrc}}" ng-click="onDoubleTap($index)" ng-repeat="img in imgs">
+                </div>
+            </div>
         </div>
 
         <div>
-            <button ng-click="scheduleSingleNotification()">消息</button>
-        </div>
+            <div class="">
+                <button ng-click="addNotification()">本地消息</button>
+            </div>
 
-        <button class="button" ng-click="startVib()">整栋</button>
-        <button class="button" ng-click="date()">日期</button>
-        <button class="button" ng-click="camera()">相机</button>
-        <button class="button" ng-click="phone()">相册</button>
-        <input type="date">
-        <input type="time" >
-        <div>
-            <a href="#/demo/notify">激光push</a>
+            <div>
+                <button ng-click="scheduleSingleNotification()">消息</button>
+            </div>
+
+            <button class="button" ng-click="startVib()">整栋</button>
+            <button class="button" ng-click="date()">日期</button>
+            <button class="button" ng-click="camera()">相机</button>
+            <button class="button" ng-click="phone()">相册</button>
+            <input type="date">
+            <input type="time" >
+            <div>
+                <a href="#/demo/notify">激光push</a>
+            </div>
         </div>
 	</ion-content>
 </ion-view>

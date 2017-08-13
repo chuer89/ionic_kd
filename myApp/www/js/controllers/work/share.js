@@ -27,9 +27,7 @@ angular.module('workShare.controller', [])
     initData();
 
     var ajaxhandle = function(isNotLoading) {
-        if (isNotLoading) {
-            common.loadingShow();
-        }
+        common.loadingShow();
 
         var _param = angular.extend({}, $scope.data, {
             currentPage: dataList.currentPage + 1,

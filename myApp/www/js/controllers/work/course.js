@@ -15,14 +15,17 @@ angular.module('workCourse.controller', [])
 
 	var handleAjax = function(type) {
         type = type || 'DAIBAN';
+        common.loadingShow();
         COMMON.post({
             type: 'obtain_topic_course',
             data: {
                 "courseCategoryId": $scope.data.courseCategoryId,
                 "currentPage": dataList.currentPage + 1
             },
+            notPretreatment: true,
             success: function(data) {
                 var _body = data.body;
+                common.loadingHide();
                     
                 if (!_body || (_body && !_body.jewelry) || (_body && _body.jewelry && !_body.jewelry.length)) {
                     $scope.notTaskListData = common.notTaskListDataTxt;
@@ -165,7 +168,7 @@ angular.module('workCourse.controller', [])
 
 	$scope.submit = function() {
 		var _param = $scope.data;
-
+        common.loadingShow();
 		common.formData({
             type: 'create_topic_course',
             body: _param,
@@ -174,6 +177,7 @@ angular.module('workCourse.controller', [])
             },
             data: formData,
             success: function(data) {
+                common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });
@@ -193,8 +197,15 @@ angular.module('workCourse.controller', [])
         success: function(data) {
             console.log(data)
         	$scope.item = data.body;
-
         }
     });
+
+    //图片预览
+    $scope.previewImg = function($index) {
+        common.previewImg({
+            allimgs: $scope.item.fujian,
+            $index: $index
+        })
+    }
 })
 

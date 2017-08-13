@@ -12,7 +12,7 @@
 
         <div class="list_box">
             <div ng-repeat="item in item.fujian">
-                <img src="{{item.fujianPath}}"/>
+                <img ng-click="previewImg($index)" src="{{item.fujianPath}}"/>
             </div>
         </div>
   	</ion-content>

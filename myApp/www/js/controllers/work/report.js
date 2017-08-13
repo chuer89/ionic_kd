@@ -442,6 +442,15 @@ angular.module('workReport.controller', [])
         });
     }
 
+    //图片预览
+    $scope.previewImg = function($index) {
+        common.previewImg({
+            allimgs: $scope.item.fujian,
+            $index: $index,
+            imgSrcKey: 'fujianPath'
+        })
+    }
+
     //评论列表
     var handleAjax = function() {
         COMMON.post({

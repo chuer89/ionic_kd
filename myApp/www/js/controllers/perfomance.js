@@ -576,6 +576,16 @@ angular.module('perfomance.controller', [])
             }
         });
     }
+
+    //图片预览
+    $scope.previewImg = function($index) {
+        common.previewImg({
+            allimgs: $scope.item.pics,
+            $index: $index,
+            imgSrcKey: 'path'
+        })
+    }
+
     ajax(true);
 })
 

@@ -11,10 +11,15 @@ angular.module('login.controller', [])
         $state.go('forgotPsd')
     }
 
-    if (common.getLocalStorage('clientId')) {
-        // common.toast('自动登录中...');
-        // $state.go('tab.message');
-    }
+    $ionicPlatform.ready(function() {
+        //自动登录
+        if (common.getLocalStorage('clientId') && common.getLocalStorage('userInfo')) {
+            common.handleLocationPush();
+            angular.extend(common.userInfo, JSON.parse(common.getLocalStorage('userInfo')));
+
+            $state.go('tab.message');
+        }
+    })
 
     $scope.login = function() {
         if (($scope.data.mobile && $scope.data.password) || (common.debugUser.mobile) ) {
@@ -46,7 +51,6 @@ angular.module('login.controller', [])
                 }
 
                 common.handleLocationPush();
-
                 angular.extend(common.userInfo, _body);
 
                 common.setLocalStorage('userInfo', JSON.stringify(_body));

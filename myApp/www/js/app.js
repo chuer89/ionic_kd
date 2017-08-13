@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 
-    'route', 'ionic-datepicker', 'ionic-timepicker'])
+    'route', 'ionic-datepicker', 'ionic-timepicker', 'ng-img', 'starter.imgservices'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

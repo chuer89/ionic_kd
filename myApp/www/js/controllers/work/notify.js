@@ -212,6 +212,14 @@ angular.module('workNotify.controller', [])
             }
         });
     }
+
+    //图片预览
+    $scope.previewImg = function($index) {
+        common.previewImg({
+            allimgs: $scope.item.fujian,
+            $index: $index
+        })
+    }
 })
 
 //新增

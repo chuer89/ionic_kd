@@ -151,15 +151,15 @@ angular.module('message.services', [])
 .factory('common', function($http, $cordovaToast, $ionicActionSheet, $filter, ionicDatePicker, 
     $state, $cordovaCamera, $cordovaImagePicker, $cordovaDatePicker, $cordovaFileTransfer,
     $ionicPopup, $ionicLoading, $cordovaGeolocation, $cordovaLocalNotification, $timeout,
-    $rootScope, $ionicPlatform) {
+    $rootScope, $ionicPlatform, actionImgShow) {
     var obj = {
 
         onlineHost: 'http://123.206.95.25:18080',
         // onlineHost: 'http://192.168.201.237:8080',
 
-        isChrome: true,
+        isChrome: false,
         debugUser: {
-            mobile: 18280092852,
+            // mobile: 18280092852,
             password: 123456
         },
 
@@ -429,6 +429,41 @@ angular.module('message.services', [])
                     COMMON.toast('无法启动相机，请检查授权');
                 });  
             }
+        },
+
+        //预览图片
+        previewImg: function(opt) {
+            //https://github.com/bingcool/ionic-img-enable-show
+            var allimgs = opt.allimgs || [];
+            var imgSrcKey = opt.imgSrcKey || 'fujianPath';
+            var $index = opt.$index || 0;
+
+            /**
+            *图片预加载
+            */
+            var arrImgs = new Array();
+            for(var i=0; i<allimgs.length; i++) {
+                var img = new Image();
+
+                img.src = allimgs[i][imgSrcKey];
+
+                img.onload = function(i) {
+                arrImgs[i] = img;
+                }(i);
+            }
+
+            /**
+            *双击触发事件
+            *$index表示是第几张图片的索引，直接从该图片放大显示。
+            */
+            actionImgShow.show({
+                "larImgs": arrImgs,
+                //"larImgs": allimgs,//配置成这个也是可以的，只是图片没有预加载，每次放大预览都需要重新加载图片 
+                "currentImg": $index,
+                imgClose : function() {
+                    actionImgShow.close();
+                }
+            });
         },
 
         nickname: function(name) {

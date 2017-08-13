@@ -770,6 +770,15 @@ angular.module('workTask.controller', [])
         });
     }
 
+    //图片预览
+    $scope.previewImg = function($index) {
+        common.previewImg({
+            allimgs: $scope.data.taskImageArray,
+            $index: $index,
+            imgSrcKey: 'path'
+        })
+    }
+
     var dataList = {};
     $scope.commentArray = [];
 

@@ -25,6 +25,7 @@ angular.module('workFab.controller', [])
                 goodsCategoryId: '-1',
                 goodsNameId: '-1'
             },
+            notPretreatment: true,
             success: function(data) {
                 var _body = data.body;
                 common.loadingHide();
@@ -214,6 +215,14 @@ angular.module('workFab.controller', [])
             common.loadingHide();
         }
     });
+
+    //图片预览
+    $scope.previewImg = function($index) {
+        common.previewImg({
+            allimgs: $scope.item.fujian,
+            $index: $index
+        })
+    }
 })
 
 
