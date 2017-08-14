@@ -43,8 +43,8 @@
   		</div>
         <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
         <div class="list_box padding_btm_small" ng-repeat="item in items">
-            <a href="#/work/visit/details/{{item.id}}" class="item_list_box">
-                <div class="border_btm">
+            <div class="item_list_box">
+                <a href="#/work/visit/details/{{item.id}}" style="display: block;" class="border_btm">
                     <div class="row padding_btm_small">
                         <div class="col">
                             <p class="title">{{item.customer.name}}</p>
@@ -77,15 +77,15 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="padding_tb" ng-if="item.visitRecord">
+                </a>
+                <a href="#/work/visit/details/{{item.id}}" style="display: block;" class="padding_tb" ng-if="item.visitRecord">
                     <p>回访记录：<span class="colorPurple">{{item.visitRecord}}</span></p>
                     <div class="row info f14">
                         <div class="col">访问时间：{{item._visitTime}}</div>
                         <div class="col">跟进人：{{item.creater.name}}</div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
         <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
   	</ion-content>

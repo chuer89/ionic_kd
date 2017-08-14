@@ -1,13 +1,11 @@
 angular.module('message.controller', [])
 
 //消息
-.controller('MessageCtrl', function($scope, $state, $timeout, messagePush, common) {
+.controller('MessageCtrl', function($scope, $state, $timeout, common) {
     $scope.data = {
         userId: common.userInfo.clientId,
         keywords: ''
     };
-
-    // $scope.items = messagePush.all();
 
     $scope.items = [];
     
@@ -20,13 +18,13 @@ angular.module('message.controller', [])
     };
 
     var iconMap = {
-        INFORM: {tips: '通知', icon: 'img/icon/work/notify.png', link: '#/work/notify/details/{id}'},
-        TASK: {tips: '任务', icon: 'img/icon/work/task.png',link:'#/work/task_list/{id}/details'},
-        APPLY: {tips:'申请', icon: 'img/icon/work/apply.png', link: '#/work/apply'},
-        PAIBAN: {tips: '值班', icon: 'img/icon/work/onDuty.png', link: '#/work/onDuty/query/details/{id}'},
+        INFORM: {tips: '通知', icon: 'img/icon/message/notify.png', link: '#/work/notify/details/{id}'},
+        TASK: {tips: '任务', icon: 'img/icon/message/task.png',link:'#/work/task_list/{id}/details'},
+        APPLY: {tips:'申请', icon: 'img/icon/message/apply.png', link: '#/work/apply'},
+        PAIBAN: {tips: '值班', icon: 'img/icon/message/onDuty.png', link: '#/work/onDuty/query/details/{id}'},
         // PERFORMANCE: {tips: '绩效'},
-        REPORT: {tips: '汇报', icon: 'img/icon/work/report.png', link: '#/work/report/detail/{id}'},
-        REMIND: {tips: '日程', icon: 'img/icon/work/schedule.png', link: '#/work/schedule/{id}'}
+        REPORT: {tips: '汇报', icon: 'img/icon/message/report.png', link: '#/work/report/detail/{id}'},
+        REMIND: {tips: '日程', icon: 'img/icon/message/schedule.png', link: '#/work/schedule/{id}'}
     }
 
     $scope.clickHandle = function(item) {
@@ -71,7 +69,7 @@ angular.module('message.controller', [])
                     } else {
                         _body.message[i]._infos.link = 'javascript:;';
                     }
-                    _body.message[i]._subTitle = ( _body.message[i]._infos.tips ? '[' + _body.message[i]._infos.tips + ']' : _body.message[i]._infos.tips ) + _body.message[i].subTitle;
+                    _body.message[i]._subTitle = ( _body.message[i]._infos.tips ? '' + _body.message[i]._infos.tips + '：' : _body.message[i]._infos.tips ) + _body.message[i].subTitle;
                 }
 
                 $scope.items = _body.message;
@@ -123,7 +121,6 @@ angular.module('message.controller', [])
 
     //激光消息-start
 
-    
 
     var _userInfo = JSON.parse( common.getLocalStorage('userInfo') );
 
@@ -140,79 +137,23 @@ angular.module('message.controller', [])
         }, 0);
     }
 
+    // 设置别名和标签
+    var setTagsAndAlias = function (tags, alias) {
+      try {
+        $scope.message += "准备设置tag/alias...";
+        
+        window.plugins.jPushPlugin.setTagsWithAlias(tags, alias);
+
+        $scope.message += 'tag获取：' + tags;
+        $scope.message += '设置tags和alias成功！ \r\n';
+      } catch (exception) {
+        $scope.errorMsg += 'setTagsAndAlias:' + exception;
+        console.log(exception);
+      }
+    }
+
     $scope.message = "on load view success!";
     $scope.errorMsg = '';
-
-    // 当设备就绪时
-    var onDeviceReady = function () {
-      // $scope.message += "JPushPlugin:Device ready!";
-      initiateUI();
-    };
-
-    // 设置标签和别名
-    var onTagsWithAlias = function (event) {
-      try {
-        $scope.message += "onTagsWithAlias";
-        var result = "result code:" + event.resultCode + " ";
-        result += "tags:" + event.tags + " ";
-        result += "alias:" + event.alias + " ";
-        $scope.message += result
-        $scope.tagAliasResult = result;
-      } catch (exception) {
-        $scope.errorMsg += 'onTagsWithAlias:' + exception;
-        console.log(exception)
-      }
-    };
-
-    // 打开通知的回调函数
-    var onOpenNotification = function (event) {
-      try {
-        var alertContent;
-        if (device.platform == "Android") {
-          alertContent = window.plugins.jPushPlugin.openNotification.alert;
-        } else {
-          alertContent = event.aps.alert;
-        }
-        $scope.message += alertContent;
-      } catch (exception) {
-        $scope.errorMsg += 'onOpenNotification:' + exception;
-      }
-    };
-
-    // 接收到通知时的回调函数
-    var onReceiveNotification = function (event) {
-      try {
-        var alertContent;
-        if (device.platform == "Android") {
-          alertContent = window.plugins.jPushPlugin.receiveNotification.alert;
-        } else {
-          alertContent = event.aps.alert;
-        }
-        $scope.message += alertContent;
-        $scope.notificationResult = alertContent;
-      } catch (exception) {
-        $scope.errorMsg += 'onReceiveNotification:' + exception;
-        console.log(exception)
-      }
-    };
-
-    // 接收到消息时的回调函数
-    //收到自定义消息时获取消息的内容
-    var onReceiveMessage = function (event) {
-      try {
-        var message;
-        if (device.platform == "Android") {
-          message = window.plugins.jPushPlugin.receiveMessage.message;
-        } else {
-          message = event.content;
-        }
-        $scope.message += message;
-        $scope.messageResult = message;
-      } catch (exception) {
-        $scope.errorMsg += 'onReceiveMessage:' + exception;
-        console.log("JPushPlugin:onReceiveMessage-->" + exception);
-      }
-    };
 
     // 获取RegistrationID
     var getRegistrationID = function () {
@@ -230,6 +171,10 @@ angular.module('message.controller', [])
       });
 
     };
+    
+
+    $scope.formData = {}
+
     //初始化jpush
     var initiateUI = function () {
       try {
@@ -248,28 +193,14 @@ angular.module('message.controller', [])
       }
     }
 
-    $scope.formData = {}
-    // 设置别名和标签
-    var setTagsAndAlias = function (tags, alias) {
-      try {
-        $scope.message += "准备设置tag/alias...";
-        
-        window.plugins.jPushPlugin.setTagsWithAlias(tags, alias);
-
-        $scope.message += 'tag获取：' + tags;
-        $scope.message += '设置tags和alias成功！ \r\n';
-      } catch (exception) {
-        $scope.errorMsg += 'setTagsAndAlias:' + exception;
-        console.log(exception);
-      }
-    }
+    // 当设备就绪时
+    var onDeviceReady = function () {
+      // $scope.message += "JPushPlugin:Device ready!";
+      initiateUI();
+    };
     
     // 添加对回调函数的监听
-    // document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
     document.addEventListener("deviceready", onDeviceReady, false);
-    // document.addEventListener("jpush.openNotification", onOpenNotification, false);
-    // document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
-    // document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
 })
 
 .controller('CommonDemoCtrl', function($scope, $state, $filter, ionicTimePicker, $cordovaLocalNotification,

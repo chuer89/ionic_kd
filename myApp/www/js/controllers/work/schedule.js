@@ -208,6 +208,8 @@ angular.module('workSchedule.controller', [])
             return;
         }
 
+        common.loadingShow();
+
         common.getCommonCheckedPerson(function(opt) {
             angular.extend(_param, opt);
         });
@@ -216,8 +218,9 @@ angular.module('workSchedule.controller', [])
             type: 'create_richeng',
             data: _param,
             success: function(data) {
+                common.loadingHide();
                common.toast(data.message, function() {
-                    history.back(-1);
+                    common.back();
                 });
             }
         });
@@ -422,8 +425,6 @@ angular.module('workSchedule.controller', [])
                 var _body = data.body;
 
                 common.loadingHide();
-
-                console.log(data)
 
                 if (!_body || (_body && _body.riChengList && !_body.riChengList.length)) {
                     $scope.notTaskListData = common.notTaskListDataTxt;

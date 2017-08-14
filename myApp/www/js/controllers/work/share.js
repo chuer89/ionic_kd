@@ -326,11 +326,12 @@ angular.module('workShare.controller', [])
 
 
     $scope.submit = function() {
+        common.loadingShow();
     	COMMON.post({
             type: 'create_case_haring',
             data: $scope.data,
             success: function(data) {
-
+                common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });

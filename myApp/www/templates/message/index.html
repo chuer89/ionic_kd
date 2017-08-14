@@ -25,9 +25,9 @@
         <div class="list_box">
         	<a href="{{item._infos.link}}" ng-click="clickHandle(item)" class="item_list_box" ng-repeat="item in items">
         		<div class="row">
-	        		<div class="col col-10 left_icon_box">
+	        		<div class="col col-15 list_icon_big_box">
 	        			<span class="list_icon_box">
-	        				<img src="{{item._infos.icon || 'img/logo.png'}}" class="left_icon" />
+	        				<img src="{{item._infos.icon}}" class="left_icon" />
 	        			</span>
 	        			<span class="red-point" ng-if="!item.isView"></span>
 	        		</div>

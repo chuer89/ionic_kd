@@ -193,6 +193,7 @@ ion-tabs.tabs-color-active-light .tab-item{
     -ms-flex: 0 0 15%;
     flex: 0 0 15%;
     max-width: 15%;
+    position: relative;
 }
 
 
@@ -548,6 +549,18 @@ ion-tabs.tabs-color-active-light .tab-item{
 			padding-top: pxRem(25);
 			display: inline-block;
 		}
+		.list_icon_big_box{
+			display: inline-block;
+			.left_icon{
+				@include height-dpr(34);
+			}
+		}
+		.list_icon_mid_box{
+			display: inline-block;
+			.left_icon{
+				@include height-dpr(28);
+			}
+		}
 		.big_head{
 			padding-top: pxRem(60);
 			.head_name{
@@ -657,7 +670,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 			display: -webkit-flex;
 		    align-items: center;
 		    justify-content: center;
-		    height: 100%;
+		    height: 80px;
 		    color: $colorGrey;
 		    @extend .box_center;
 		    .time{
@@ -672,11 +685,11 @@ ion-tabs.tabs-color-active-light .tab-item{
 		    }
 			.left_icon{
 				border: 1px solid $colorGrey;
-				padding: pxRem(30) 0;
+				padding: pxRem(45) 0;
 				border-radius: pxRem(100);
 				text-align: center;
 				display: inline-block;
-				width: pxRem(160);
+				width: pxRem(200);
 			}
 		}
 		p{
@@ -758,7 +771,7 @@ ion-tabs.tabs-color-active-light .tab-item{
   right: 24%;
 }
 .red-point:after{
-  top: 10px;
+  top: 7px;
   right: 35%;
 }
 

@@ -32,6 +32,19 @@ angular.module('workSign.controller', [])
 	        success: function(data) {
 	            var _body = data.body;
 
+	            // _body.histories = [{
+	            // 	"historyId":1,
+	            // 	"qianDaoApply":false,
+	            // 	"qianDaoApprove":false,
+	            // 	"qianDaoApproveResult":false,
+	            // 	"qianDaoDate":"2016-04-19",
+	            // 	"qianDaoPlace":"成都市武侯区携程信息技术大楼",
+	            // 	"qianDaoRight":false,
+	            // 	"qianDaoTime":"21:18",
+	            // 	"qianDaoType":"SHANG_BAN",
+	            // 	"shangBanType":"ZAO_BAN"
+	            // }]
+
 	            if (_body.histories && _body.histories.length) {
 	            	$scope.hasHistory = true;
 	            	$scope.historiesList = _body.histories;
@@ -183,7 +196,7 @@ angular.module('workSign.controller', [])
 
 		getSignInData(function(_data) {
 			$scope.hasSignIn = hasSignIn();
-			console.log(data, _data, $scope.hasSignIn)
+			// console.log(data, _data, $scope.hasSignIn)
 		});
 		return;
 

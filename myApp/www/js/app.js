@@ -12,13 +12,24 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
+
+    //键盘-start
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
-        window.addEventListener("native.keyboardshow", function(e){
-            viewScroll.scrollBottom();
-        });
     }
+
+    window.addEventListener("native.keyboardshow", function(e){
+        $('#js_comment_box').css({
+            'bottom':(e.keyboardHeight) + 'px'
+        });
+    });
+    window.addEventListener("native.keyboardhide", function(e){
+        $('#js_comment_box').css({
+            'bottom':0
+        });
+    });
+    //键盘-end
 
 
     if (window.cordova && window.cordova.plugins) {
@@ -254,7 +265,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_sign_in', {
         url: '/work/sign_in',
         templateUrl: 'templates/work/signIn/sign_in.html',
-        controller: 'WorkSigInCtrl'
+        controller: 'WorkSigInCtrl',
+        cache: false
     })
     //签到查询
     .state('work_sign_in_query', {

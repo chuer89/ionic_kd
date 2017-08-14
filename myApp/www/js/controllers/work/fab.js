@@ -8,7 +8,7 @@ angular.module('workFab.controller', [])
     var initData = function() {
         dataList = {
             currentPage: 0,
-            fab: []
+            fabCase: []
         };
 
         $scope.items = [];
@@ -61,7 +61,7 @@ angular.module('workFab.controller', [])
     $scope.vm = {
         moredata: false,
         loadMore: function() {
-            if (dataList.fab.length < common._pageSize || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
+            if (dataList.fabCase.length < common._pageSize || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
                 $scope.vm.moredata = false;
                 return;
             }
@@ -180,8 +180,9 @@ angular.module('workFab.controller', [])
         });
     }
 
-    var ajaxhandle = function() {
-        common.formData({
+    $scope.submit = function() {
+        common.loadingShow();
+    	common.formData({
             type: 'create_fab_case',
             body: $scope.data,
             setData: function(json) {
@@ -189,15 +190,12 @@ angular.module('workFab.controller', [])
             },
             data: formData,
             success: function(data) {
+                common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });
             }
         });
-    }
-
-    $scope.submit = function() {
-    	ajaxhandle();
     }
 })
 
@@ -211,8 +209,8 @@ angular.module('workFab.controller', [])
         	fabCaseId: $stateParams.id
         },
         success: function(data) {
-        	$scope.item = data.body;
             common.loadingHide();
+        	$scope.item = data.body;
         }
     });
 

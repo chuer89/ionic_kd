@@ -849,7 +849,7 @@ angular.module('workTask.controller', [])
         if (navMenus.length) {
 
         } else {
-            common.toast('暂无菜单权限分配');
+            common.toast(common.noAuthLimitsTxt);
             return false;
         }
 

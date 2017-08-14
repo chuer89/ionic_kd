@@ -53,37 +53,37 @@
         </div>
 
         <div class="list_box padding_tb" ng-repeat="item in items">
-            <a href="#/work/report/detail/{{item.id}}" class="item_list_box">
+            <div class="item_list_box">
                 <div class="row">
-                    <div class="col col-20 text_align_center">
+                    <a href="#/work/report/detail/{{item.id}}" class="col col-20 text_align_center">
                         <span class="list_icon_box">
                             <span class="name_box">{{item.nickname}}</span>
                         </span>
-                    </div>
+                    </a>
                     <div class="col">
-                        <div class="item_list_box" style="padding-top: 0;">
+                        <a href="#/work/report/detail/{{item.id}}" class="item_list_box" style="padding-top: 0;">
                             <h2 class="title">{{item.userName}}</h2>
                             <p class="info">{{item.createTime}}</p>
-                        </div>
+                        </a>
                         
-                        <div class="item_list_box">
+                        <a href="#/work/report/detail/{{item.id}}" class="item_list_box">
                             {{item.content}}
-                        </div>
+                        </a>
 
-                        <div class="item_list_box">
+                        <a href="#/work/report/detail/{{item.id}}" class="item_list_box">
                             <div class="details_img_thumbnail clearfix">
                                 <span ng-repeat="fujianImg in item.fujian">
                                     <img src="{{fujianImg.fujianPath}}"/>
                                 </span>
                             </div>
-                        </div>
+                        </a>
 
-                        <div class="item_list_box" style="border-bottom: 0;">
+                        <a href="#/work/report/detail/{{item.id}}" class="item_list_box" style="border-bottom: 0;">
                             评论（{{item.commentCount}}）
-                        </div>
+                        </a>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
 
         <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
