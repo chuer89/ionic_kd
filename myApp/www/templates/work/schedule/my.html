@@ -6,7 +6,7 @@
 	<ion-content>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <div class="list_box">
-            <a href="#/work/schedule/{{item.id}}" class="item_list_box" ng-repeat="item in items">
+            <a href="#/work/schedule/{{item.riChengId}}" class="item_list_box" ng-repeat="item in items">
                 <p class="colorRed info">{{item._beginTime}}</p>
                 <p class="title">{{item.title}}</p>
             </a>

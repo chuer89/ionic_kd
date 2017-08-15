@@ -35,7 +35,7 @@
             <div class="item_list_box">
                 <div class="details_img_thumbnail clearfix">
                     <span ng-repeat="fujianImg in item.imageInfoArray">
-                        <img src="{{fujianImg.path}}"/>
+                        <img ng-click="previewImg($index)" src="{{fujianImg.path}}"/>
                     </span>
                 </div>
             </div>

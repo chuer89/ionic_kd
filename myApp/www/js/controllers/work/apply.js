@@ -490,6 +490,15 @@ angular.module('workApply.controller', [])
         });
     }
 
+    //图片预览
+    $scope.previewImg = function($index) {
+        common.previewImg({
+            allimgs: $scope.item.imageInfoArray,
+            $index: $index,
+            imgSrcKey: 'path'
+        })
+    }
+
     $scope.showNav = function() {
         $ionicActionSheet.show({
             buttons: [{
@@ -635,10 +644,17 @@ angular.module('workApply.controller', [])
                 if (typeof cb == 'function') {
                     cb();
                 }
-
-                console.log(data.body)
             }
         });
+    }
+
+    //图片预览
+    $scope.previewImg = function($index) {
+        common.previewImg({
+            allimgs: $scope.item.imageInfoArray,
+            $index: $index,
+            imgSrcKey: 'path'
+        })
     }
 
     $scope.showNav = function() {
@@ -790,6 +806,15 @@ angular.module('workApply.controller', [])
                 console.log(data.body)
             }
         });
+    }
+
+    //图片预览
+    $scope.previewImg = function($index) {
+        common.previewImg({
+            allimgs: $scope.item.imageInfoArray,
+            $index: $index,
+            imgSrcKey: 'path'
+        })
     }
 
     $scope.showNav = function() {
@@ -1131,6 +1156,15 @@ angular.module('workApply.controller', [])
                 console.log(data.body)
             }
         });
+    }
+
+    //图片预览
+    $scope.previewImg = function($index) {
+        common.previewImg({
+            allimgs: $scope.item.imageInfoArray,
+            $index: $index,
+            imgSrcKey: 'path'
+        })
     }
 
     $scope.showNav = function() {
