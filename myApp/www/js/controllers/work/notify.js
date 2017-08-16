@@ -276,11 +276,17 @@ angular.module('workNotify.controller', [])
             id: common.userInfo.clientId
         }
 
+        
+
         common.getCommonCheckedPerson(function(opt) {
             angular.extend(_param, opt);
         });
 
-        // console.log(_param);return
+        if (!_param.title || !_param.description || (!_param.userList.length && !_param.departmentList.length)){
+            common.toast('请输入内容');
+            return;
+        }
+        
 
         common.loadingShow();
         common.formData({

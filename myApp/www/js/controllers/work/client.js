@@ -518,6 +518,11 @@ angular.module('workClient.controller', [])
     });
 
     $scope.create = function() {
+        if (!$scope.data.name || !$scope.data.telephone) {
+            common.toast('请输入必填信息');
+            return;
+        }
+
         common.loadingShow();
 
         common.post({

@@ -652,6 +652,11 @@ angular.module('perfomance.controller', [])
             clientId: _data.clientIdSele.id
         });
 
+        if (!_param.fenZhi) {
+            common.toast('请输入必填信息');
+            return;
+        }
+
         common.loadingShow();
 
         common.formData({

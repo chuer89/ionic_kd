@@ -326,6 +326,11 @@ angular.module('workShare.controller', [])
 
 
     $scope.submit = function() {
+        if (!$scope.data.sharingName) {
+            common.toast('请输入必填信息');
+            return;
+        }
+        
         common.loadingShow();
     	COMMON.post({
             type: 'create_case_haring',

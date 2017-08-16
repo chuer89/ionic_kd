@@ -168,6 +168,12 @@ angular.module('workCourse.controller', [])
 
 	$scope.submit = function() {
 		var _param = $scope.data;
+
+        if (!_param.courseName) {
+            common.toast('请输入必填信息');
+            return;
+        }
+
         common.loadingShow();
 		common.formData({
             type: 'create_topic_course',

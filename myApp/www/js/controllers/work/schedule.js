@@ -204,7 +204,8 @@ angular.module('workSchedule.controller', [])
 
         var _param = angular.extend({}, $scope.data);
 
-        if (!_param.title) {
+        if (!_param.title || !_param.content || !_param.beginTime) {
+            common.toast('请输入必填信息');
             return;
         }
 

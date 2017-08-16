@@ -135,6 +135,12 @@ angular.module('workCyclopedia.controller', [])
 
 	$scope.submit = function() {
 		var _param = $scope.data;
+
+        if (!_param.title || !_param.content) {
+            common.toast('请输入必填信息');
+            return;
+        }
+
         common.loadingShow();
 		common.formData({
             type: 'create_jewelry',

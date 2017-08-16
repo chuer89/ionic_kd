@@ -10036,6 +10036,9 @@ ion-tabs.tabs-color-active-light .tab-item {
 .padding_btm_small {
   padding-bottom: 0.66667rem; }
 
+.margin_btm_small {
+  margin-bottom: 0.66667rem; }
+
 .icon_plus {
   width: 40px; }
   [data-dpr='2'] .icon_plus {
@@ -10341,7 +10344,7 @@ ion-tabs.tabs-color-active-light .tab-item {
         [data-dpr='3'] .list_box .item_list_box .big_head .head_name, [data-dpr='3'] .list .item_list_box .big_head .head_name {
           height: 156px; }
       .list_box .item_list_box .big_head .name_box, .list .item_list_box .big_head .name_box {
-        padding: 1rem 0.49333rem;
+        padding: 1rem 0.4rem;
         border-radius: 1.6rem;
         font-size: 20px;
         font-weight: bold; }

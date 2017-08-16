@@ -438,8 +438,13 @@ angular.module('workOpportunity.controller', [])
     });
 
     $scope.create = function() {
-        common.loadingShow();
 
+        if (!$scope.data.name) {
+            common.toast('请输入必填信息');
+            return;
+        }
+
+        common.loadingShow();
         $scope.data.customerId = $scope.data.clientIdSele.id;
 
         common.post({

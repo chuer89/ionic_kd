@@ -181,6 +181,11 @@ angular.module('workFab.controller', [])
     }
 
     $scope.submit = function() {
+        if (!$scope.data.sharingName) {
+            common.toast('请输入必填信息');
+            return;
+        }
+        
         common.loadingShow();
     	common.formData({
             type: 'create_fab_case',

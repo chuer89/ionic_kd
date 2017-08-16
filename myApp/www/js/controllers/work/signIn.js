@@ -9,7 +9,8 @@ angular.module('workSign.controller', [])
 	$scope.hasSignIn = false;
 
 	var qianDaoData = {
-		qiandaoCanQianDaoSite: true
+		qiandaoCanQianDaoSite: true,
+		place: {}
 	}
 	
 
@@ -76,8 +77,8 @@ angular.module('workSign.controller', [])
 				if (!_qiandaoObj) {
 					$scope.hasSignIn = false;
 				} else {
-					$scope.hasSignIn = hasSignIn(item.key);
 					$scope.qianDaoShangBan = _qiandaoObj.qianDaoShangBan;
+					$scope.hasSignIn = hasSignIn(item.key);
 				}
 
 				return true;
@@ -109,7 +110,7 @@ angular.module('workSign.controller', [])
 	}
 
 	var getSignInData = function(cb) {
-		common.toast('位置获取中，请稍等...');
+		common.toast('正在定位...');
 
 		//地理位置
 	    common.getLocation(function(position) {
@@ -164,11 +165,13 @@ angular.module('workSign.controller', [])
 			qiandaoTimes[i].canShangBan = _shangBanNum > 0 ? _shangBanNum < common.getLocalStorage('qiandaoBeforeTime') : false;
 
 			_xiaBanNum = common.minusTime(qiandaoTimes[i]._qianDaoXiaBan, common.timeNumber(nowTime));
-			qiandaoTimes[i].canXiaBan = _xiaBanNum > 0 ? _xiaBanNum < common.getLocalStorage('qiandaoBeforeTime') : false;
+			qiandaoTimes[i].canXiaBan = $scope.hasHistory ? true: false;
 
 
 			if (_shangBanNum < 0 && !$scope.hasHistory)  {
 				qiandaoTimes[i].canShangBan = true;
+				qianDaoRight = 0;
+			} else if (_xiaBanNum > 0 && $scope.hasHistory) {
 				qianDaoRight = 0;
 			}
 		}
@@ -196,7 +199,8 @@ angular.module('workSign.controller', [])
 
 		getSignInData(function(_data) {
 			$scope.hasSignIn = hasSignIn();
-			// console.log(data, _data, $scope.hasSignIn)
+			qianDaoData.place = _data.body.place;
+			// console.log(data, _data, qianDaoData)
 		});
 		return;
 
@@ -240,14 +244,13 @@ angular.module('workSign.controller', [])
 
 		common.loadingShow();
 
-		getSignInData(function(data) {
-			if (hasSignIn()) {
-				ajax(data.body.place.qianDaoPlace);
-			} else {
-				common.toast('当前位置或时间不支持签到');
-				common.loadingHide();
-			}
-		})
+		if (hasSignIn()) {
+			// console.log(qianDaoData)
+			ajax(qianDaoData.place.qianDaoPlace);
+		} else {
+			common.toast('当前位置或时间不支持签到');
+			common.loadingHide();
+		}
 	}
 })
 
@@ -467,9 +470,7 @@ angular.module('workSign.controller', [])
     })
 
     var ajaxUserData = function(isNotLoading) {
-    	if (isNotLoading) {
-            common.loadingShow();
-        }
+    	common.loadingShow();
 
 		//查询已签到
 		COMMON.post({
@@ -492,6 +493,8 @@ angular.module('workSign.controller', [])
 	            	'XIA_BAN': '签退',
 	            	'SHANG_BAN': '签到'
 	            }
+
+	            console.log(data)
 
 	            if (_list.length) {
 	            	$scope.notTaskListData = false;
@@ -562,10 +565,19 @@ angular.module('workSign.controller', [])
             reason: _data.reason
         }
 
+        for (var k in _param) {
+        	if (!_param[k]) {
+        		common.toast('请填写必填信息');
+        		return;
+        	}
+        }
+
+        common.loadingShow();
         common.post({
             type: 'qiandao_apply',
             data: _param,
             success: function(data) {
+            	common.loadingHide();
                 common.toast(data.message, function() {
                     common.back();
                 });

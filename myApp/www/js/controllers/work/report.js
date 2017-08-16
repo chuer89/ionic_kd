@@ -30,6 +30,10 @@ angular.module('workReport.controller', [])
     }
 
     var ajaxhandle = function() {
+        if (!$scope.data.content) {
+            common.toast('请填写内容');
+            return;
+        }
         common.loadingShow();
         common.formData({
             type: 'create_report',
@@ -86,6 +90,10 @@ angular.module('workReport.controller', [])
     }
 
     var ajaxhandle = function() {
+        if (!$scope.data.content) {
+            common.toast('请填写内容');
+            return;
+        }
         common.loadingShow();
         common.formData({
             type: 'create_report',
@@ -143,6 +151,10 @@ angular.module('workReport.controller', [])
     }
 
     var ajaxhandle = function() {
+        if (!$scope.data.content) {
+            common.toast('请填写内容');
+            return;
+        }
         common.loadingShow();
         common.formData({
             type: 'create_report',
@@ -514,6 +526,11 @@ angular.module('workReport.controller', [])
 
     //添加评论
     $scope.sendReport = function() {
+        if ($scope.data.commentReport = '') {
+            common.toast('请填写评论');
+            return;
+        }
+        common.loadingShow();
         COMMON.post({
             type: 'report_comment',
             data: {
@@ -522,6 +539,7 @@ angular.module('workReport.controller', [])
                 comment: $scope.data.commentReport
             },
             success: function(data) {
+                common.loadingHide();
                 var _body = data.body;
 
                 $scope.data.commentReport = '';

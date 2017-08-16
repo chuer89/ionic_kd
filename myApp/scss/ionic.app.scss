@@ -238,6 +238,10 @@ ion-tabs.tabs-color-active-light .tab-item{
 .padding_btm_small{
 	padding-bottom: pxRem(50);
 }
+.margin_btm_small{
+	margin-bottom: pxRem(50);
+}
+
 
 .icon_plus{
 	@include width-dpr(40);
@@ -566,7 +570,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 				border-radius: pxRem(120);
 			}
 			.name_box{
-				padding: pxRem(75) pxRem(37);
+				padding: pxRem(75) pxRem(30);
 				border-radius: pxRem(120);
 				@include font-dpr(20);
 				font-weight: bold;

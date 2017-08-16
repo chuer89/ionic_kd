@@ -227,18 +227,11 @@ angular.module('message.controller', [])
     // 现在定义一些图片数组
     var allimgs = [
       {
-        imgsrc: 'img/mike.png'
-      },
-      {
-        imgsrc: 'img/ben.png'
+        imgsrc: 'img/max.png'
       },
       {
         imgsrc: 'img/adam.jpg'
-      },
-      {
-        imgsrc: 'img/perry.png'
       }
-
     ];
 
     //绑定至前端的初始显示，点击之后将会触发下面的onDoubleTap事件。

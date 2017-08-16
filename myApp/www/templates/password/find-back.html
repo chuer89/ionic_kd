@@ -4,7 +4,7 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a href="javascript:;" class="button button-clear button-light" ng-click="handleModify()">确定</a>
+        <a href="javascript:;" class="button button-clear button-royal" ng-click="handleModify()">确定</a>
     </ion-nav-buttons>
 
     <ion-content>
@@ -13,7 +13,7 @@
                 <div class="padding_around">
                     <div class="border_btm row">
                         <div class="col col-67">
-                            <input type="search" maxlength="11" name="mobile" placeholder="请输入手机号" ng-model="data.mobile" />
+                            <input type="tel" maxlength="11" name="mobile" placeholder="请输入手机号" ng-model="data.mobile" />
                         </div>
                         <div class="col text_align_right"><a class="input_btn" ng-class="{'disable': isSendCode}" ng-click="sendCode()" href="javascript:;">{{sendCodeText}}</a></div>
                     </div>

@@ -406,6 +406,11 @@ angular.module('workTask.controller', [])
             dailyTaskId: '0'
         }
 
+        if (!_param.endTime || !_param.title || !_param.description) {
+            common.toast('请填写必填信息');
+            return;
+        }
+
         common.loadingShow();
         common.formData({
             type: 'create_task',

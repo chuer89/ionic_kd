@@ -5,11 +5,11 @@
   	</ion-nav-buttons>
 
 	<ion-content>
-		<div class="list_box">
+		<div class="list_box padding_tb">
 			<div class="item_list_box">
 				<div class="row">
-					<div class="col col-25 text_align_center">
-                        <div class="big_head">
+					<div class="col col-20">
+                        <div class="box_center" style="height: 70px;">
                         	<span class="name_box">{{item.nickname}}</span>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		
-		<div class="list_box padding_tb">
+		<div class="list_box">
 			<div class="item_list_box">
 				<div class="row">
 					<div class="col col-20 text_align_center">
@@ -94,7 +94,7 @@
 			</div>
 		</div>
 
-		<div class="list_box">
+		<div class="list_box padding_tb">
 			<div class="item_list_box" ng-if="item.pics.length">
 				<div class="details_img_thumbnail clearfix">
 					<img ng-click="previewImg($index)" src="{{img.path}}" ng-repeat="img in item.pics"/>
