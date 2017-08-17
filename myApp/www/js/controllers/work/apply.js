@@ -1335,6 +1335,15 @@ angular.module('workApply.controller', [])
         });
     }
 
+    //图片预览
+    $scope.previewImg = function($index) {
+        common.previewImg({
+            allimgs: $scope.item.applicationImageInfoArray,
+            $index: $index,
+            imgSrcKey: 'path'
+        })
+    }
+
     var submit = function() {
         common.loadingShow();
         COMMON.post({

@@ -10,15 +10,20 @@
 	<ion-content>
         <div class="list">
             <a href="javascript:;" class="item item-icon-right" ng-click="showOfficeType()">
-              上班类型
+              申请类型
               <span class="item-note">{{data.seleOfficeType}}</span>
               <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
+            <div class="item item-icon-right" ng-click="seleDate()">
+                时间
+                <span class="item-note">{{data.applyDate}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
         </div>
 
         <div class="list">
             <a href="javascript:;" class="item item-icon-right" ng-click="showApplyType()">
-              申请类型
+              上班类型
               <span class="item-note">{{data.seleApplyType}}</span>
               <i class="icon ion-chevron-right icon-accessory"></i>
             </a>

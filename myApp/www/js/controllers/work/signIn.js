@@ -434,7 +434,8 @@ angular.module('workSign.controller', [])
     //选择部门-end
 })
 
-.controller('WorkSigInHistoryCtrl', function($scope, $stateParams, $timeout, common) {
+//签到历史
+.controller('WorkSigInHistoryCtrl', function($scope, $stateParams, $timeout, $ionicActionSheet, common) {
     $scope.items = [];
 
     $scope.data = {
@@ -460,6 +461,12 @@ angular.module('workSign.controller', [])
 
     			ajaxUserData(true);
 			}
+
+			$('.prev_btn_section,.next_btn_section').on('click', function() {
+				$('.date_selection .date_col').css({
+					'background': '#fff'
+				});
+			})
 		}, 0);
 	}, 0)
 
@@ -467,7 +474,7 @@ angular.module('workSign.controller', [])
     common.getUserinfo_simple($stateParams.id, function(data) {
     	$scope.name = data.name;
     	$scope.nickname = common.nickname(data.name);
-    })
+    });
 
     var ajaxUserData = function(isNotLoading) {
     	common.loadingShow();
@@ -494,13 +501,18 @@ angular.module('workSign.controller', [])
 	            	'SHANG_BAN': '签到'
 	            }
 
-	            console.log(data)
+	            setDateColor(_body.histories);
 
 	            if (_list.length) {
 	            	$scope.notTaskListData = false;
 	            	for (var i = 0, ii = _list.length; i < ii; i++) {
 	            		_list[i]._qianDaoType = _qianDaoType[_list[i].qianDaoType];
 	            		_list[i]._qianDaoRight = _list[i].qianDaoRight != '1' ? true : false;
+	            		if (_body.managerId == common.userInfo.clientId && 
+	            			_list[i].qianDaoApply == '1' &&
+	            			_list[i].qianDaoApprove == '0') {
+	            			_list[i].isApply = true;
+	            		}
 	            	}
 	            	$scope.items = _list;
 	            } else {
@@ -508,8 +520,64 @@ angular.module('workSign.controller', [])
 	            }
 	        }
 	    });
+	}, setDateColor = function (histories) {
+		var _obj = {};
+		for (var i = 0, ii = histories.length; i < ii; i++) {
+			histories[i].qianDaoColor = '#' + histories[i].qianDaoColor.slice(2);
+			_obj[histories[i].qianDaoDate] = histories[i];
+		}
+
+		$timeout(function() {
+			$('.date_selection .date_col').each(function() {
+				var $this = $(this),
+					val = $this.find('.date_cell').html();
+
+				var _val = val - 0 < 10 ? '0' + val : val;
+				var _date = $scope.data.year + '-' + $scope.data.month + '-' + _val;
+
+				if (val) {
+					$this.css({
+						'background': _obj[_date].qianDaoColor
+					})
+				}
+			})
+		}, 500)
 	}
 	ajaxUserData();
+
+	//领导-审批
+    $scope.apply = function(item) {
+    	console.log(item);
+
+    	var ajax = function(agree) {
+    		common.loadingShow();
+    		COMMON.post({
+		        type: 'qiandao_approve',
+		        data: {
+		        	historyId: item.historyId,
+		        	agree: agree
+		        },
+		        success: function(data) {
+		        	common.toast(data.message, function() {
+		        		ajaxUserData();
+		        	})
+		        }
+		    })
+    	}
+
+    	$ionicActionSheet.show({
+            buttons: [{
+                text: '通过', agree: 1
+            }, {
+                text: '拒绝', agree: 0
+            }],
+            cancelText: '取消',
+            buttonClicked: function (index, item) {
+            	ajax(item.agree);
+                return true;
+            }
+        });
+    }
 })
 
 //签到申请
@@ -521,6 +589,7 @@ angular.module('workSign.controller', [])
 
 		qianDaoType: '',
 		shangBanType: '',
+		applyDate: common.format(false, 'yyyy-MM-dd'),
 		reason: ''
 	}
 
@@ -529,7 +598,10 @@ angular.module('workSign.controller', [])
 
 	$scope.showOfficeType = function() {
 		$ionicActionSheet.show({
-			buttons: qianDaoType,
+			buttons: [
+				{ text: '签到申请', key: 'SHANG_BAN' },
+				{ text: '签退申请', key: 'XIA_BAN' }
+			],
 			cancelText: '取消',
 			buttonClicked: function(index, item) {
 				$scope.data.seleOfficeType = item.text;
@@ -541,10 +613,7 @@ angular.module('workSign.controller', [])
 	}
 	$scope.showApplyType = function() {
 		$ionicActionSheet.show({
-			buttons: [
-				{ text: '签到申请', key: 'SHANG_BAN' },
-				{ text: '签退申请', key: 'XIA_BAN' }
-			],
+			buttons: qianDaoType,
 			cancelText: '取消',
 			buttonClicked: function(index, item) {
 				$scope.data.seleApplyType = item.text;
@@ -555,6 +624,12 @@ angular.module('workSign.controller', [])
 		})
 	}
 
+	$scope.seleDate = function() {
+        common.datePicker(function(date) {
+            $scope.data.applyDate = date;
+        });
+    }
+
 	$scope.create = function() {
         var _data = $scope.data;
 
@@ -562,7 +637,8 @@ angular.module('workSign.controller', [])
             clientId: common.userInfo.clientId,
             qianDaoType: _data.qianDaoType,
             shangBanType: _data.shangBanType,
-            reason: _data.reason
+            reason: _data.reason,
+            applyDate: _data.applyDate
         }
 
         for (var k in _param) {

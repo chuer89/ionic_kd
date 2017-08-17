@@ -13,8 +13,11 @@
         .ionic_datepicker_popup .popup-buttons{
             display: none;
         }
-        .ionic_datepicker_popup .calendar_grid{
-            /*height: 120px;*/
+        .popup-open, .popup-open.modal-open .modal{
+            pointer-events: auto;
+        }
+        .action-sheet-backdrop{
+            z-index: 15;
         }
     </style>
 
@@ -27,7 +30,7 @@
         <div class="padding colorGrey">{{data.searchDate}}&nbsp;&nbsp;&nbsp;&nbsp;{{name}}</div>
         <div class="list_box">
             <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
-            <a href="javascript:;" class="item_list_box" ng-repeat="item in items">
+            <div class="item_list_box" ng-repeat="item in items">
                 <div class="row">
                     <div class="col col-20 text_align_center">
                         <span class="name_box">{{nickname}}</span>
@@ -42,10 +45,19 @@
                             </div>
                         </div>
                         
-                        <p class="info">{{item.qianDaoPlace}}</p>
+                        <p class="info" ng-if="item.qianDaoPlace">地址：{{item.qianDaoPlace}}</p>
+
+                        <div class="row" ng-if="item.qianDaoReason">
+                            <div class="col col-67">
+                                <p class="info">备注：{{item.qianDaoReason}}</p>
+                            </div>
+                            <div class="col text_align_right" ng-if="item.isApply">
+                                <a href="javascript:;" class="colorPurple" ng-click="apply(item)">审批</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
 	</ion-content>
 </ion-view>
