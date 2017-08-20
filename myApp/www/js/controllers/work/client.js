@@ -142,13 +142,13 @@ angular.module('workClient.controller', [])
         })
         $scope.seleFrequency = _list;
     });
-    workCrmSele.last_consumption_time_filters(function(data) {
-        var _list = data.body.lastConsumptionTimeFilters;
+    workCrmSele.last_follow_time_filters(function(data) {
+        var _list = data.body.lastFollowUpTimeFilters;
         _list.push({
             name: '全部', id: ''
         })
 
-        $scope.selePeriod = data.body.lastConsumptionTimeFilters;
+        $scope.selePeriod = _list;
     });
     workCrmSele.total_consumption_money(function(data) {
         var _list = data.body.totalConsumptionMoneyFilters;
@@ -156,7 +156,7 @@ angular.module('workClient.controller', [])
             name: '全部', id: ''
         })
 
-        $scope.seleAmount = data.body.totalConsumptionMoneyFilters;
+        $scope.seleAmount = _list;
     })
 
     $scope.isShowStarSele = false;
@@ -247,6 +247,8 @@ angular.module('workClient.controller', [])
 
     $scope.item = {};
 
+    var navMenus = [];
+
     $scope.checkTab = function(index) {
         $scope.activeTab = index;
         if (index == '0') {
@@ -279,6 +281,15 @@ angular.module('workClient.controller', [])
                 } else {
                     $scope.notTaskListData = false;
                 }
+
+                if (_body.creater.id == common.userInfo.clientId || true) {
+                    navMenus = [
+                        { text: '编辑' },
+                        { text: '删除' }
+                    ]
+                }
+
+                console.log(data)
 
                 getFollowList();
                 getConsumptionList();
@@ -314,6 +325,8 @@ angular.module('workClient.controller', [])
                 for (var i = 0, ii = list.length; i < ii; i++) {
                     list[i].nickname = common.nickname(list[i].creater.name);
                     list[i]._followUpTime = common.format(list[i].followUpTime, 'yyyy-MM-dd HH:ss', true);
+
+                    list[i]._content = common.replaceNext(list[i].content);
                 }
 
                 $scope.followItems = list;
@@ -404,17 +417,21 @@ angular.module('workClient.controller', [])
             success: function(data) {
                 common.loadingHide();
 
+                item._content = common.replaceNext(item.content);
+
                 item.isEdit = false;
             }
         });
     }
 
+    
     $scope.showNav = function() {
+        if (!navMenus.length) {
+            common.toast(common.noAuthLimitsTxt);
+            return;
+        }
         $ionicActionSheet.show({
-            buttons: [
-                { text: '编辑' },
-                { text: '删除' }
-            ],
+            buttons: navMenus,
             cancelText: '取消',
             buttonClicked: function(index, item) {
 
@@ -481,8 +498,8 @@ angular.module('workClient.controller', [])
 .controller('WorkClientCreateCtrl', function($scope, $ionicActionSheet, common, workCrmSele) {
     $scope.data = {
         createrId: common.userInfo.clientId,
-        customerTypeId: '',
-        starId: ''
+        customerTypeId: ''
+        // starId: ''
     }
 
     $scope.seleType = '请选择';
@@ -494,22 +511,6 @@ angular.module('workClient.controller', [])
                 buttonClicked: function(index, item) {
                     $scope.seleType = item.text;
                     $scope.data.customerTypeId = item.id;
-
-                    return true;
-                }
-            })
-        }
-    });
-
-    $scope.seleStar = '请选择';
-    workCrmSele.star(function(data) {
-        $scope.showSeleStar = function () {
-            $ionicActionSheet.show({
-                buttons: common.setSeleRepeat(data),
-                cancelText: '取消',
-                buttonClicked: function(index, item) {
-                    $scope.seleStar = item.text;
-                    $scope.data.starId = item.id;
 
                     return true;
                 }

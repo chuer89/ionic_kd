@@ -5,10 +5,11 @@ angular.module('workOnDuty.controller', [])
     $scope.scheduleID = '';
 
     $scope.data = {
-        date: common.format(false, 'yyyy-MM-dd'),
-        userId: common.userInfo.clientId
+        // date: common.format(false, 'yyyy-MM-dd'),
+        // userId: common.userInfo.clientId,
         // date: '2017-07-31',
-        // userId: 27
+        date: '2017-08-24',
+        userId: 27
     };
 
     $scope.seleDate = function() {

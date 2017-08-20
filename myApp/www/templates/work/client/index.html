@@ -74,14 +74,16 @@
             <a href="#/work/client/details/{{item.id}}" class="item_list_box" ng-repeat="item in items">
                 <div class="row">
                     <div class="col">
-                        <p>{{item.name}}</p>
-                        <P>{{item.telephone}}</P>
+                        <p class="title">{{item.name}}</p>
+                        <P class="info">{{item.telephone}}</P>
                     </div>
                     <div class="col">
-                        <p class="colorPurple">{{item._lastConsumptionTime}}</p>
+                        <p class="title">&nbsp;</p>
+                        <p class="colorPurple f14">{{item._lastConsumptionTime}}</p>
                     </div>
                     <div class="col">
-                        <p class="colorPurple">{{item._star}}</p>
+                        <p class="title">&nbsp;</p>
+                        <p class="colorPurple f14">{{item._star}}</p>
                     </div>
                 </div>
             </a>

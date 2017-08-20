@@ -490,11 +490,17 @@ angular.module('workSign.controller', [])
 	        },
 	        notPretreatment: true,
 	        success: function(data) {
-	            var _body = data.body,
-	            	_list = _body.qianDaoInfos;
+	            var _body = data.body;
 
 	            $scope.items = [];
 	            common.loadingHide();
+
+	            if (!_body || _body && !_body.qianDaoInfos || _body && _body.qianDaoInfos && !_body.qianDaoInfos.length) {
+	            	$scope.notTaskListData = common.notTaskListDataTxt;
+	            	return;
+	            }
+
+	            var _list = _body.qianDaoInfos;
 
 	            var _qianDaoType = {
 	            	'XIA_BAN': '签退',
@@ -515,8 +521,6 @@ angular.module('workSign.controller', [])
 	            		}
 	            	}
 	            	$scope.items = _list;
-	            } else {
-	            	$scope.notTaskListData = common.notTaskListDataTxt;
 	            }
 	        }
 	    });
