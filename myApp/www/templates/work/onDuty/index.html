@@ -8,7 +8,7 @@
     </ion-nav-buttons>
 
 	<ion-content>
-        <div class="list padding_tb">
+        <div class="list margin_btm_small">
             <div class="item item-icon-right" ng-click="seleDate()">
                 日期
                 <span class="item-note">{{data.date}}</span>
@@ -21,9 +21,9 @@
         <div class="list_box">
             <div class="item_list_box" ng-repeat="item in items">
                 <div class="row">
-                    <div class="col col-20 text_align_center">
+                    <div class="col col-15">
                         <span class="list_icon_box">
-                            <span class="name_box" style="background: #a4a4a4;">{{item.startTime}}</span>
+                            <span class="name_box" style="background: #a4a4a4;padding: 10px 5px;">{{item.startTime}}</span>
                         </span>
                     </div>
                     <div class="col">

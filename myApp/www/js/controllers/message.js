@@ -285,21 +285,22 @@ angular.module('message.controller', [])
 	};
 
     $scope.addNotification = function(tit, msg) {
-        // if (window.plugins && window.plugins.jPushPlugin) {
-        //     window.plugins.jPushPlugin.addLocalNotification(1, 'content', 'title', 0, 1 )
-        // }
+        if (window.plugins && window.plugins.jPushPlugin) {
+            alert(1)
+            window.plugins.jPushPlugin.addLocalNotification(0, 'content', 'title', 0, 1)
+        }
 
-        $cordovaLocalNotification.schedule({
-            id: 2,
-            title: 'Title here',
-            text: 'Text here',
-            data: {
-              customProperty: 'custom value'
-            }
-          }).then(function (result) {
-            $cordovaVibration.vibrate(1000); 
-            common.toast('消息成功')
-          });
+        // $cordovaLocalNotification.schedule({
+        //     id: 2,
+        //     title: 'Title here',
+        //     text: 'Text here',
+        //     data: {
+        //       customProperty: 'custom value'
+        //     }
+        //   }).then(function (result) {
+        //     $cordovaVibration.vibrate(1000); 
+        //     common.toast('消息成功')
+        //   });
     }
 
     $scope.scheduleSingleNotification = function () {

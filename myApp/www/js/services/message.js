@@ -477,7 +477,14 @@ angular.module('message.services', [])
                 return '';
             }
 
-            return text.replace(/\n/g, '<br/>');
+            var t = text || '';
+            try{
+                t = text.replace(/\n/g, '<br/>');
+            }catch(error) {
+
+            }
+
+            return t;
         },
 
         //遍历数组中的id值，
@@ -952,9 +959,9 @@ angular.module('message.services', [])
             }
 
             ajaxUserData(function(data) {
-                hasSignIn = getHasSignIn();
+                // hasSignIn = getHasSignIn();
                 if (typeof pushCb == 'function') {
-                    pushCb(hasSignIn);
+                    pushCb(!hasHistory);
                 }
             })
         },

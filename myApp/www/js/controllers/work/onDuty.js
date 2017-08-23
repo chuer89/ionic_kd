@@ -5,11 +5,10 @@ angular.module('workOnDuty.controller', [])
     $scope.scheduleID = '';
 
     $scope.data = {
-        // date: common.format(false, 'yyyy-MM-dd'),
-        // userId: common.userInfo.clientId,
-        // date: '2017-07-31',
-        date: '2017-08-24',
-        userId: 27
+        date: common.format(false, 'yyyy-MM-dd'),
+        userId: common.userInfo.clientId
+        // date: '2017-08-24',
+        // userId: 27
     };
 
     $scope.seleDate = function() {
@@ -323,7 +322,7 @@ angular.module('workOnDuty.controller', [])
                 common.loadingHide();
                 var _body = data.body;
                 _body = handleNext(_body);
-                
+
                 $scope.data = _body;
             }
         });
@@ -354,6 +353,8 @@ angular.module('workOnDuty.controller', [])
                     _body[i].checked2 = true;
                 }
             }
+
+            console.log(_body);
 
             $scope.items = _body;
         }

@@ -11,14 +11,14 @@
 		<div class="list_box">
             <div class="item_list_box" ng-repeat="item in items">
                 <div class="row">
-                    <div class="col col-20 text_align_center">
-                        <span class="name_box">{{item.startTime}}</span>
+                    <div class="col col-15">
+                        <span class="name_box" style="padding: 10px 5px;">{{item.startTime}}</span>
                     </div>
-                    <div class="col col-67">
+                    <div class="col">
                         <h2 class="title f14">{{item.name}}</h2>
                         <p class="info">负责人：{{item.userName}}</p>
                     </div>
-                    <div class="col text_align_right col-10">
+                    <div class="col text_align_right col-20">
                         <input ng-click="clickRadio(item, 1)" ng-checked="{{item.checked1}}" type="radio" name="radio_{{item.id}}" class="padding_around" />
                         <input ng-click="clickRadio(item, 2)" ng-checked="{{item.checked2}}" type="radio" name="radio_{{item.id}}"/>
                     </div>
