@@ -70,7 +70,7 @@
                             {{item.content}}
                         </a>
 
-                        <a href="#/work/report/detail/{{item.id}}" class="item_list_box">
+                        <a href="#/work/report/detail/{{item.id}}" ng-if="item.fujian.length" class="item_list_box">
                             <div class="details_img_thumbnail clearfix">
                                 <span ng-repeat="fujianImg in item.fujian">
                                     <img src="{{fujianImg.fujianPath}}"/>

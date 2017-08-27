@@ -1,4 +1,4 @@
-<ion-view view-title="日报申请">
+<ion-view view-title="写日报">
 	<ion-nav-buttons side="left">  
     	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
@@ -16,7 +16,6 @@
         <form enctype="multipart/form-data" method="post" name="fileinfo"></form>
         <div class="list">
             <div class="item">
-                <img ng-if="data.hasCameraImg" class="show_img" id="myImage"/>
                 <img src="{{img}}" class="show_img" ng-repeat="img in imgList">
                 <a href="javascript:;" ng-click="showSelePhoto()">
                     <img src="img/icon/plus.png" class="icon_plus" />

@@ -56,27 +56,6 @@ angular.module('workNotify.controller', [])
     $scope.formatDate = function(date) {
         return common.format(date, 'MM-dd');
     }
-
-    $scope.showNav = function() {
-        if (!navMenus.length) {
-            common.toast(common.noAuthLimitsTxt);
-            return;
-        }
-
-        $ionicActionSheet.show({
-            buttons: navMenus,
-            cancelText: '取消',
-            buttonClicked: function (index, item) {
-                
-                if (index == 1) {
-                    $state.go('work_notify_add');
-                } else {
-                    $state.go('work_notify_my');
-                }
-                return true;
-            }
-        });
-    }
 })
 
 .controller('WorkNotifyMyCtrl', function($scope, $state, $ionicActionSheet, common) {

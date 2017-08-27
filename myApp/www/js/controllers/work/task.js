@@ -334,21 +334,20 @@ angular.module('workTask.controller', [])
 .controller('WorkTaskAddCtrl', function($scope, $ionicActionSheet, common, seleMenuList) {
     var menus = seleMenuList.menu();
 
-    $scope.seleWarn = '请选择';
-
     $scope.data = {
         typePageName: 'WorkTaskAddCtrl',
         ATTENTION_PEOPLE: {name:'请选择'},//关注人
         inspectorId: {name:'请选择'},//检查人
         endTime: '',
         remindtime: '',
+        seleWarn: '请选择',
         hasCameraImg: false
     };
 
     $scope.seleDate = function() {
         common.datePicker(function(date) {
             $scope.data.endTime = date;
-        }, true);
+        });
     }
 
     $scope.showSeleWarn = function() {
@@ -356,7 +355,7 @@ angular.module('workTask.controller', [])
             buttons: menus.taskWarn,
             cancelText: '取消',
             buttonClicked: function(index, item) {
-                $scope.seleWarn = item.text;
+                $scope.data.seleWarn = item.text;
                 $scope.data.remindtime = item.key;
                 return true;
             }
@@ -450,13 +449,12 @@ angular.module('workTask.controller', [])
     var menus = seleMenuList.menu();
     var taskStatus = menus.taskStatus;
 
-    $scope.seleWarn = '请选择';
-    
     $scope.data = {
         typePageName: 'WorkTaskEditCtrl',
         ATTENTION_PEOPLE: {name:'请选择'},//关注人
         inspectorId: {name:'请选择'},//检查人
         endTime: '',
+        seleWarn: '请选择',
         remindtime: ''
     };
 
@@ -471,7 +469,7 @@ angular.module('workTask.controller', [])
             buttons: menus.taskWarn,
             cancelText: '取消',
             buttonClicked: function(index, item) {
-                $scope.seleWarn = item.text;
+                $scope.data.seleWarn = item.text;
                 return true;
             }
         })
@@ -509,7 +507,7 @@ angular.module('workTask.controller', [])
                     };
                 });
 
-                $scope.seleWarn = common.getId(menus.taskWarn, _body.taskBasiInfo.remindtime, 'key').text;
+                $scope.data.seleWarn = common.getId(menus.taskWarn, _body.taskBasiInfo.remindtime, 'key').text;
             }
         });
     }

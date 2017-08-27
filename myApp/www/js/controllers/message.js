@@ -205,7 +205,7 @@ angular.module('message.controller', [])
 
 .controller('CommonDemoCtrl', function($scope, $state, $filter, ionicTimePicker, $cordovaLocalNotification,
 	$cordovaVibration, $cordovaToast, $cordovaDatePicker, $cordovaCamera, $cordovaPinDialog, $rootScope,
-	$cordovaImagePicker, $timeout, messagePush, ionicDatePicker, common, actionImgShow) {
+	$cordovaImagePicker, $cordovaDevice, $timeout, messagePush, ionicDatePicker, common, actionImgShow) {
 
     // cordova.plugins.notification.local.schedule({  
     //     // id: 1,  
@@ -284,7 +284,13 @@ angular.module('message.controller', [])
         })
 	};
 
+    $scope.getUUID = function() {
+        $scope.uuid = $cordovaDevice.getUUID();
+    }
+
     $scope.addNotification = function(tit, msg) {
+        
+
         if (window.plugins && window.plugins.jPushPlugin) {
             alert(1)
             window.plugins.jPushPlugin.addLocalNotification(0, 'content', 'title', 0, 1)
@@ -306,10 +312,15 @@ angular.module('message.controller', [])
     $scope.scheduleSingleNotification = function () {
         // $cordovaLocalNotification.add({ message: 'Great app!' });
 
+        var now             = new Date().getTime(),
+            _5_sec_from_now = new Date(now + 5*1000);
+
         cordova.plugins.notification.local.schedule({
             id: 1,
             title: '应用提醒',
-            text: '应用有新消息，快来查看吧'
+            text: '应用有新消息，快来查看吧',
+            every: 'minute'//second, minute, hour, day, week, month or year
+            // at: _5_sec_from_now
         });
     };
 

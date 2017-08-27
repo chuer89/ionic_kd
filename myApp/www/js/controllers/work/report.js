@@ -2,9 +2,7 @@ angular.module('workReport.controller', [])
 
 //日报申请
 .controller('WorkReportAddDailyCtrl', function($scope, common) {
-    $scope.data = {
-        hasCameraImg: false
-    };
+    $scope.data = {};
 
     //表单数据
     var formElement = document.querySelector("form");
@@ -17,14 +15,12 @@ angular.module('workReport.controller', [])
                 formData.append("fuJians", the_file, "images.jpg");
             },
             showImg: function(results) {
-                $scope.imgList = results;
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
             },
             cameraImg: function(imgData) {
-                $scope.data.hasCameraImg = true;
-                $timeout(function() {
-                    var image = document.getElementById('myImage');  
-                    image.src = imgData;
-                }, 500);
+                $scope.imgList.push(imgData);
             }
         });
     }
@@ -62,9 +58,7 @@ angular.module('workReport.controller', [])
 
 //周报申请
 .controller('WorkReportAddWeekCtrl', function($scope, common) {
-    $scope.data = {
-        hasCameraImg: false
-    };
+    $scope.data = {};
 
     //表单数据
     var formElement = document.querySelector("form");
@@ -77,14 +71,12 @@ angular.module('workReport.controller', [])
                 formData.append("fuJians", the_file, "images.jpg");
             },
             showImg: function(results) {
-                $scope.imgList = results;
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
             },
             cameraImg: function(imgData) {
-                $scope.data.hasCameraImg = true;
-                $timeout(function() {
-                    var image = document.getElementById('myImage');  
-                    image.src = imgData;
-                }, 500);
+                $scope.imgList.push(imgData);
             }
         });
     }
@@ -123,9 +115,7 @@ angular.module('workReport.controller', [])
 
 //月报申请
 .controller('WorkReportAddMonthCtrl', function($scope, common) {
-    $scope.data = {
-        hasCameraImg: false
-    };
+    $scope.data = {};
 
     //表单数据
     var formElement = document.querySelector("form");
@@ -138,14 +128,12 @@ angular.module('workReport.controller', [])
                 formData.append("fuJians", the_file, "images.jpg");
             },
             showImg: function(results) {
-                $scope.imgList = results;
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
             },
             cameraImg: function(imgData) {
-                $scope.data.hasCameraImg = true;
-                $timeout(function() {
-                    var image = document.getElementById('myImage');  
-                    image.src = imgData;
-                }, 500);
+                $scope.imgList.push(imgData);
             }
         });
     }

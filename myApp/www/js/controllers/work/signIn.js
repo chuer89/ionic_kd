@@ -61,30 +61,30 @@ angular.module('workSign.controller', [])
 	    });
 	}
 
-	$scope.seleType = '请选择';
-	$scope.showType = function() {
-		$ionicActionSheet.show({
-			buttons: qianDaoType,
-			cancelText: '取消',
-			buttonClicked: function(index, item) {
-				$scope.seleType = item.text;
-				$scope.shangBanType = item.key;
+	// $scope.seleType = '请选择';
+	// $scope.showType = function() {
+	// 	$ionicActionSheet.show({
+	// 		buttons: qianDaoType,
+	// 		cancelText: '取消',
+	// 		buttonClicked: function(index, item) {
+	// 			$scope.seleType = item.text;
+	// 			$scope.shangBanType = item.key;
 
-				var qiandaoTimes = JSON.parse( common.getLocalStorage('qiandaoTimes') );
+	// 			var qiandaoTimes = JSON.parse( common.getLocalStorage('qiandaoTimes') );
 
-				var _qiandaoObj = common.getId(qiandaoTimes, item.key, 'qianDaoType');
+	// 			var _qiandaoObj = common.getId(qiandaoTimes, item.key, 'qianDaoType');
 
-				if (!_qiandaoObj) {
-					$scope.hasSignIn = false;
-				} else {
-					$scope.qianDaoShangBan = _qiandaoObj.qianDaoShangBan;
-					$scope.hasSignIn = hasSignIn(item.key);
-				}
+	// 			if (!_qiandaoObj) {
+	// 				$scope.hasSignIn = false;
+	// 			} else {
+	// 				$scope.qianDaoShangBan = _qiandaoObj.qianDaoShangBan;
+	// 				$scope.hasSignIn = hasSignIn(item.key);
+	// 			}
 
-				return true;
-			}
-		})
-	}
+	// 			return true;
+	// 		}
+	// 	})
+	// }
 
 	$scope.showNav = function () {
 		$ionicActionSheet.show({
@@ -126,10 +126,26 @@ angular.module('workSign.controller', [])
 		        	weiDu: _coords.latitude + ''
 		        },
 		        success: function(data) {
+		        	var _time = [];
+
+		        	if (data.body.canQianDao && data.body.times && data.body.times.length) {
+		        		_time = data.body.times[0];
+		        	} else {
+		        		common.toast('当前位置或时间不支持签到');
+		        		return false;
+		        	}
+
+		        	data.body._times = [ _time ];
+
 		        	common.setLocalStorage('qiandaoBeforeTime', data.body.applyBeforeTime);
-		        	common.setLocalStorage('qiandaoTimes', JSON.stringify(data.body.times));
+		        	common.setLocalStorage('qiandaoTimes', JSON.stringify(data.body._times));
 		        	common.setLocalStorage('qiandaoApiDate', common.format(false, 'yyyy-MM-dd'));
 		        	qianDaoData.qiandaoCanQianDaoSite = data.body.canQianDao;
+
+		        	var _qiandaoObj = common.getId(qianDaoType, _time.qianDaoType, 'key');
+
+		        	$scope.seleType = _qiandaoObj.text;
+		        	$scope.shangBanType = _time.qianDaoType;
 
 		        	if (typeof cb == 'function') {
 		        		cb(data);

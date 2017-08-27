@@ -11,9 +11,10 @@
 
   	<ion-content>
       <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
-  		<div class="list_box padding_btm" ng-repeat="item in items">
-            <a href="#/work/cyclopedia/details/{{item.id}}" class="item_list_box">
-                <img src="{{item.coverPath}}" />{{item.title}}
+  		<div class="list_box margin_btm_small padding" ng-repeat="item in items">
+            <a href="#/work/cyclopedia/details/{{item.id}}" class="item_list_box" style="border-radius: 8px;">
+                <span class="title" style="font-weight: bold;display: inline-block;">{{item.title}}</span>
+                <img src="{{item.coverPath}}" />
             </a>
         </div>
         <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>

@@ -4,13 +4,21 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-        <a href="javascript:;" ng-click="showNav()" class="ion-more button button-clear button-dark"></a>
+        <a href="#/work/notify/add" class="ion-plus icon icon-accessory button button-clear"></a>
     </ion-nav-buttons>
 
 	<ion-content>
+        <div class="list padding_tb" style="margin: 0;padding-bottom: 0;">
+            <a href="#/work/notify/my" class="item item-icon-right">
+              我发送的通知
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
         <ion-list class="list_box">
+            <div class="list_type_title padding_around padding_small_tb">收到的通知</div>
             <ion-item class="item_list_box" ng-repeat="item in items">
                 <a href="#/work/notify/details/{{item.id}}" style="display: block;">
                     <div class="row">
