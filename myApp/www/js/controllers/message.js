@@ -18,22 +18,22 @@ angular.module('message.controller', [])
     };
 
     var iconMap = {
-        INFORM: {tips: '通知', icon: 'img/icon/message/notify.png', link: '#/work/notify/details/{id}'},
-        TASK: {tips: '任务', icon: 'img/icon/message/task.png',link:'#/work/task_list/{id}/details'},
-        APPLY: {tips:'申请', icon: 'img/icon/message/apply.png', link: '#/work/apply'},
-        PAIBAN: {tips: '值班', icon: 'img/icon/message/onDuty.png', link: '#/work/onDuty/query/details/{id}'},
+        INFORM: {tips: '通知', icon: 'img/icon/message/notify.png', state: 'work_notify_details'},
+        TASK: {tips: '任务', icon: 'img/icon/message/task.png',state: 'work_task_list_details'},
+        APPLY: {tips:'申请', icon: 'img/icon/message/apply.png',state:'work_apply'},
+        PAIBAN: {tips: '值班', icon: 'img/icon/message/onDuty.png',state:'work_onDuty_details'},
         // PERFORMANCE: {tips: '绩效'},
-        REPORT: {tips: '汇报', icon: 'img/icon/message/report.png', link: '#/work/report/detail/{id}'},
-        REMIND: {tips: '日程', icon: 'img/icon/message/schedule.png', link: '#/work/schedule/{id}'}
+        REPORT: {tips: '汇报', icon: 'img/icon/message/report.png',state:'work_report_detail'},
+        REMIND: {tips: '日程', icon: 'img/icon/message/schedule.png',state:'work_schedule_details'}
     }
 
+    //预点击-处理脏数据
     $scope.clickHandle = function(item) {
-        if (item.messageType == 'APPLY') {
-            common.getMessageDetails(item._id, 'APPLY', function(data) {
-
+        common.getMessageDetails(item._id, item.messageType, function(data) {
+            $state.go(item._infos.state, {
+                id: item._id
             });
-        }
-        // return false;
+        });
     }
 
     var getMessage = function() {
@@ -59,16 +59,11 @@ angular.module('message.controller', [])
 
                 for (var i = 0, ii = _body.message.length; i < ii; i++) {
                     _body.message[i]._notifyTime = common.format(_body.message[i].notifyTime, 'HH:mm');
-                    _body.message[i]._infos = angular.extend({}, iconMap[_body.message[i].messageType])
-                    if (_body.message[i]._infos.link) {
-                        id = _body.message[i].id + '_push_' + _body.message[i].realId;
-                        _body.message[i]._id = id;
-                        if (_body.message[i]._infos.link.indexOf('{id}')) {
-                            _body.message[i]._infos.link = _body.message[i]._infos.link.replace(/\{id\}/, id)
-                        }
-                    } else {
-                        _body.message[i]._infos.link = 'javascript:;';
-                    }
+                    _body.message[i]._infos = angular.extend({}, iconMap[_body.message[i].messageType]);
+
+                    id = _body.message[i].id + '_push_' + _body.message[i].realId;
+                    _body.message[i]._id = id;
+
                     _body.message[i]._subTitle = ( _body.message[i]._infos.tips ? '' + _body.message[i]._infos.tips + '：' : _body.message[i]._infos.tips ) + _body.message[i].subTitle;
                 }
 
@@ -120,9 +115,17 @@ angular.module('message.controller', [])
 
 
     //激光消息-start
+    var _userInfo = {};
 
+    try{
+        _userInfo = JSON.parse( common.getLocalStorage('userInfo') );
+    } catch(error) {
 
-    var _userInfo = JSON.parse( common.getLocalStorage('userInfo') );
+    }
+
+    if (!_userInfo.clientId) {
+        return;
+    }
 
     //tag_department_ID   (ID为部门ID)
     //alias_user_ID   (ID为用户ID)
@@ -318,8 +321,8 @@ angular.module('message.controller', [])
         cordova.plugins.notification.local.schedule({
             id: 1,
             title: '应用提醒',
-            text: '应用有新消息，快来查看吧',
-            every: 'minute'//second, minute, hour, day, week, month or year
+            text: '应用有新消息，快来查看吧'
+            // every: 'minute'//second, minute, hour, day, week, month or year
             // at: _5_sec_from_now
         });
     };

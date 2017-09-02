@@ -519,15 +519,13 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_notify', {
         url: '/work/notify',
         templateUrl: 'templates/work/notify/index.html',
-        controller: 'WorkNotifyCtrl',
-        cache: false
+        controller: 'WorkNotifyCtrl'
     })
     //申请-我的通知
     .state('work_notify_my', {
         url: '/work/notify/my',
         templateUrl: 'templates/work/notify/my.html',
-        controller: 'WorkNotifyMyCtrl',
-        cache: false
+        controller: 'WorkNotifyMyCtrl'
     })
     //申请－通知详情
     .state('work_notify_details', {
@@ -543,7 +541,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         controller: 'WorkNotifyAddCtrl',
         cache: false
     })
-    //申请－发布通知
+    //申请－编辑通知
     .state('work_notify_edit', {
         url: '/work/notify/edit/:id',
         templateUrl: 'templates/work/notify/edit.html',

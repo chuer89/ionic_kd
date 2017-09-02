@@ -157,7 +157,7 @@ angular.module('message.services', [])
         onlineHost: 'http://123.206.95.25:18080',
         // onlineHost: 'http://192.168.201.237:8080',
 
-        isChrome: true,
+        isChrome: false,
         debugUser: {
             // mobile: 18280092852,
             password: 123456
@@ -1189,7 +1189,7 @@ angular.module('message.services', [])
                 // minDate: new Date() - 10000,
                 allowOldDates: true,
                 allowFutureDates: true,
-                // is24Hour: false,
+                // is24Hour: true,
                 locale: "NL",
                 locale: "zh_cn",
                 doneButtonLabel: '确定',
