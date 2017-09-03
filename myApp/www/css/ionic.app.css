@@ -10259,7 +10259,8 @@ ion-tabs.tabs-color-active-light .tab-item {
   .list_box .colorPurple, .list .colorPurple {
     color: #7f6bac; }
   .list_box .list_type_title, .list .list_type_title {
-    color: #a4a4a4; }
+    color: #a4a4a4;
+    font-size: 14px; }
   .list_box .purple_bg_title, .list .purple_bg_title {
     background: #7f6bac;
     color: white;

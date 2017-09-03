@@ -7,6 +7,7 @@ angular.module('workClient.controller', [])
     $scope.data = {
         starId: '',//星级
         keyword: '',
+        userId: common.userInfo.clientId,
         totalConsumptionTimesFilterId: '',//消费次数
         totalConsumptionMoneyFilterId: '',//金额
         lastFollowUpTimeFilterId: '',//跟进时间
@@ -269,7 +270,8 @@ angular.module('workClient.controller', [])
         common.post({
             type: 'obtain_customer',
             data: {
-                id: $stateParams.id
+                id: $stateParams.id,
+                userId: common.userInfo.clientId
             },
             notPretreatment: true,
             success: function(data) {
