@@ -8,7 +8,7 @@
 angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 
     'route', 'ionic-datepicker', 'ionic-timepicker', 'ng-img', 'starter.imgservices'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $timeout, common) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -30,6 +30,62 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         });
     });
     //键盘-end
+
+
+    var onResume = function () {
+        // Handle the resume event
+        setTimeout(function() {
+            //切换前台运行
+            common._runApp = true;
+            // common.scheduleSingleNotification('切换前台运行中', '切换前台运行中')
+        }, 0);
+    }, onPause = function () {
+        // Handle the pause event
+        setTimeout(function() {
+            common._runApp = false;
+            // common.scheduleSingleNotification('后台运行中', '后台运行中')
+        }, 0)
+    }, onBackKeyDown = function() {
+        
+    }, onDeviceReady = function() {
+        //启动app
+        common._runApp = true;
+        // common.scheduleSingleNotification('启动app', '启动app')
+    }, onReceiveNotification = function (event) { // 接收到通知时的回调函数
+      try {
+        var alertContent;
+        if (device.platform == "Android") {
+          alertContent = window.plugins.jPushPlugin.receiveNotification.alert;
+        } else {
+          alertContent = event.aps.alert;
+        }
+        // alert("onReceiveNotification:" + alertContent);
+        if (common._runApp) {
+            common.scheduleSingleNotification('', alertContent + '本地');
+        }
+      } catch (exception) {
+        $scope.errorMsg += 'onReceiveNotification:' + exception;
+        console.log(exception)
+      }
+    };
+
+    //ionic 更多事件说明 http://www.dengzhr.com/others/mobile/676
+
+    //当app切换到后台运行时，如打开其他应用时
+    document.addEventListener("pause", onPause, false);
+
+    // //app从后台运行时重新获取监听的事件
+    document.addEventListener("resume", onResume, false);
+
+    //当设备API加载完成并准备访问时
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // //按下手机返回按钮时监听的事件
+    // document.addEventListener("backbutton", onBackKeyDown, false);
+
+    
+    //收到 极光 消息
+    document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
 
 
     if (window.cordova && window.cordova.plugins) {
@@ -232,6 +288,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     //消息
     .state('tab.message', {
         url: '/message',
+        // cache: false,
         views: {
             'tab-message': {
                 templateUrl: 'templates/message/index.html',

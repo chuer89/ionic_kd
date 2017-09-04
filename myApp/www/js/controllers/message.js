@@ -13,6 +13,8 @@ angular.module('message.controller', [])
         setTimeout(function() {
             $scope.$broadcast('scroll.refreshComplete');
             getMessage();
+
+            onDeviceReady();//极光消息初始化
         }, 1000)
         return true;
     };
@@ -129,10 +131,10 @@ angular.module('message.controller', [])
 
     //tag_department_ID   (ID为部门ID)
     //alias_user_ID   (ID为用户ID)
-
     var _tag_department_ID = 'tag_department_' + _userInfo.departmentId;
     var _alias_user_ID = 'alias_user_' + _userInfo.clientId;
 
+    //本地缓存是否配置消息推送
     if (!common.getLocalStorage('setPushTags')) {
         $timeout(function() {
             setTagsAndAlias([_tag_department_ID, _alias_user_ID]);
@@ -204,11 +206,13 @@ angular.module('message.controller', [])
     
     // 添加对回调函数的监听
     document.addEventListener("deviceready", onDeviceReady, false);
+    
 })
 
 .controller('CommonDemoCtrl', function($scope, $state, $filter, ionicTimePicker, $cordovaLocalNotification,
 	$cordovaVibration, $cordovaToast, $cordovaDatePicker, $cordovaCamera, $cordovaPinDialog, $rootScope,
-	$cordovaImagePicker, $cordovaDevice, $timeout, messagePush, ionicDatePicker, common, actionImgShow) {
+	$cordovaImagePicker, $cordovaDevice, $timeout, messagePush, ionicDatePicker, common, actionImgShow,
+    $cordovaFileOpener2 ) {
 
     // cordova.plugins.notification.local.schedule({  
     //     // id: 1,  
@@ -225,7 +229,7 @@ angular.module('message.controller', [])
         common.toast('消息成功');
     });
 
-    $scope.slideImg = 1;
+    $scope.slideImg = 0;
 
     // 现在定义一些图片数组
     var allimgs = [
@@ -271,6 +275,42 @@ angular.module('message.controller', [])
         });
     }
 
+    //pdf
+    $scope.pdf = function () {
+        // $cordovaFileOpener2.open(
+        //     'http://182.138.0.196/test.pdf'
+        // ).then(function() {
+        // // file opened successfully
+        // }, function(err) {
+        // // An error occurred. Show a message to the user
+        // });
+
+        // window.plugins.fileOpener2.open(
+        //     '//182.138.0.196/test.pdf',
+        //     { 
+        //         error : function(e) { 
+        //             console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+        //         },
+        //         success : function () {
+        //             console.log('file opened successfully');                
+        //         }
+        //     }
+        // );
+
+        cordova.plugins.seaPDFPreview.preview(
+            {
+                type : "online",
+                filePath : "http://182.138.0.196/test.pdf"
+            },
+            function(data){
+                myApp.alert(data.code+"---"+data.msg);
+            },
+            function(errorMsg){
+                myApp.alert(errorMsg);
+            }
+        );
+    }
+
 
 	$scope.startVib=function(){ 
         // 震动 1000ms 
@@ -295,9 +335,24 @@ angular.module('message.controller', [])
         
 
         if (window.plugins && window.plugins.jPushPlugin) {
-            alert(1)
-            window.plugins.jPushPlugin.addLocalNotification(0, 'content', 'title', 0, 1)
+            // alert(1)
+            // window.plugins.jPushPlugin.addLocalNotification(0, 'content', 'title', 0, 1);
+
+            if(window.plugins.jPushPlugin.isPlatformIOS()) {
+                window.plugins.jPushPlugin.addLocalNotificationForIOS(1, "本地推送内容", 1, "notiId", {"key":"value"});
+            } else {
+                window.plugins.jPushPlugin.addLocalNotification(0, 'content', 'title', 0, 1);
+            }
         }
+    }
+    var onStartLocalNotification = function(event) {
+        var alertContent = event.aps.alert;
+        alert("open Notificaiton:" + alertContent);
+    }
+    document.addEventListener("jpush.startLocalNotification", onStartLocalNotification, false);
+
+    $scope.scheduleSingleNotification = function () {
+        // $cordovaLocalNotification.add({ message: 'Great app!' });
 
         // $cordovaLocalNotification.schedule({
         //     id: 2,
@@ -310,10 +365,6 @@ angular.module('message.controller', [])
         //     $cordovaVibration.vibrate(1000); 
         //     common.toast('消息成功')
         //   });
-    }
-
-    $scope.scheduleSingleNotification = function () {
-        // $cordovaLocalNotification.add({ message: 'Great app!' });
 
         var now             = new Date().getTime(),
             _5_sec_from_now = new Date(now + 5*1000);
@@ -570,7 +621,10 @@ angular.module('message.controller', [])
     // 添加对回调函数的监听
     document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
     document.addEventListener("deviceready", onDeviceReady, false);
+    //点击消息
     document.addEventListener("jpush.openNotification", onOpenNotification, false);
+    //收到消息
     document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
+    //获取自定义消息
     document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
 })

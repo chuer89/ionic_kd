@@ -310,6 +310,8 @@ angular.module('message.services', [])
         //分页条数
         _pageSize: 40,
 
+        _runApp: false,
+
         //调起相册
         showSelePhoto: function(opt) {
             var _opt = {
@@ -988,39 +990,76 @@ angular.module('message.services', [])
         scheduleSingleNotification: function(title, text) {
             $ionicPlatform.ready(function () {
                 try {
-                    if (device.platform == "Android") {
-                        $cordovaLocalNotification.schedule({
-                            title: title,
-                            text: text
-                        }).then(function (result) {
-                            $cordovaVibration.vibrate(1000); 
-                        });
-                    } else {
-                        cordova.plugins.notification.local.schedule({
-                            title: title,
-                            text: text
-                        });
+                    // if (device.platform == "Android") {
+                    //     $cordovaLocalNotification.schedule({
+                    //         title: title,
+                    //         text: text
+                    //     }).then(function (result) {
+                    //         $cordovaVibration.vibrate(1000); 
+                    //     });
+                    // } else {
+                    //     cordova.plugins.notification.local.schedule({
+                    //         title: title,
+                    //         text: text
+                    //     });
+                    // }
+
+                    // $rootScope.$on('$cordovaLocalNotification:schedule',
+                    // function (event, notification, state) {
+                    //     common.toast('这里是事件：schedule')
+                    // });
+
+                    // $rootScope.$on('$cordovaLocalNotification:trigger',
+                    // function (event, notification, state) {
+                    //     common.toast('这里是事件：trigger')
+                    //   // ...
+                    // });
+                    // $rootScope.$on('$cordovaLocalNotification:click',
+                    // function (event, notification, state) {
+                    //     common.toast('这里是事件：click')
+                    //   // ...
+                    // });
+
+                    if (window.plugins && window.plugins.jPushPlugin) {
+                        if(window.plugins.jPushPlugin.isPlatformIOS()) {
+                            window.plugins.jPushPlugin.addLocalNotificationForIOS(1, text, 1, title, {"key":"value"});
+                        } else {
+                            window.plugins.jPushPlugin.addLocalNotification(0, text, title, 0, 1);
+                        }
                     }
-
-                    $rootScope.$on('$cordovaLocalNotification:schedule',
-                    function (event, notification, state) {
-                        common.toast('这里是事件：schedule')
-                    });
-
-                    $rootScope.$on('$cordovaLocalNotification:trigger',
-                    function (event, notification, state) {
-                        common.toast('这里是事件：trigger')
-                      // ...
-                    });
-                    $rootScope.$on('$cordovaLocalNotification:click',
-                    function (event, notification, state) {
-                        common.toast('这里是事件：click')
-                      // ...
-                    });
                 } catch (exception) {
 
                 }
             });
+        },
+
+        //pdf预览
+        pdf: function(pdfUrl) {
+            pdfUrl = 'http://182.138.0.196/test.pdf';
+
+            if (!pdfUrl) {
+                return;
+            }
+
+            $ionicPlatform.ready(function () {
+                try{
+                    cordova.plugins.seaPDFPreview.preview(
+                        {
+                            type : "online",
+                            filePath : pdfUrl
+                        },
+                        function(data){
+                            myApp.alert(data.code+"---"+data.msg);
+                        },
+                        function(errorMsg){
+                            myApp.alert(errorMsg);
+                        }
+                    );
+                } catch (error) {
+
+                }
+            })
+            
         },
 
         //气泡提醒
