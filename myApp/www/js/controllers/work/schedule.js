@@ -325,6 +325,12 @@ angular.module('workSchedule.controller', [])
         });
     }
 
+    $scope.seleDate = function() {
+        common.datePicker(function(date) {
+            $scope.data.beginTime = date;
+        }, true);
+    }
+
     if (common.setCheckedPerson._targetName != 'work_schedule_add') {
         common.setCheckedPerson = {};
     }

@@ -20,10 +20,11 @@
             </div>
         </div>
         <div class="list">
-            <label class="item item-input">
-                <span class="input-label">时间</span>
-                <input type="datetime" class="text_align_right" ng-model="data.beginTime" placeholder="请选择时间"/>
-            </label>
+            <div class="item item-icon-right" ng-click="seleDate()">
+                时间
+                <span class="item-note">{{data.beginTime}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
             <div class="item item-icon-right" ng-click="showSeleRepeat()">
                 重复
                 <span class="item-note">{{data.cycletimeSele.text}}</span>

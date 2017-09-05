@@ -357,8 +357,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_task', {
         url: '/work/task',
         templateUrl: 'templates/work/task/index.html',
-        controller: 'WorkTaskCtrl',
-        cache: false
+        controller: 'WorkTaskCtrl'
     })
     //任务查询
     .state('work_task_query', {
@@ -611,8 +610,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('work_report', {
         url: '/work/report',
         templateUrl: 'templates/work/report/index.html',
-        controller: 'WorkReportCtrl',
-        cache: false
+        controller: 'WorkReportCtrl'
     })
     //汇报-写日报
     .state('work_report_addDaily', {

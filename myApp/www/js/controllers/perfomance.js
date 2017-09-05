@@ -616,6 +616,7 @@ angular.module('perfomance.controller', [])
             cancelText: '取消',
             buttonClicked: function(index, item) {
                 $scope.data.type = item.key;
+                $scope.data.typeInfo = item.text;
                 return true;
             }
         })
