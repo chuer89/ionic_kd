@@ -375,7 +375,7 @@ angular.module('workReport.controller', [])
     }
 
     $scope.showNav = function() {
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [{
                 text: '写日报', link: 'work_report_addDaily'
             }, {

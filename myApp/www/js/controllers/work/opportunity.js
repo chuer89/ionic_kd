@@ -367,7 +367,7 @@ angular.module('workOpportunity.controller', [])
     }
 
     $scope.showNav = function() {
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [
                 { text: '编辑' },
                 { text: '删除' }

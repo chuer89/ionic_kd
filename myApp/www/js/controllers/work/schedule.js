@@ -127,7 +127,7 @@ angular.module('workSchedule.controller', [])
    	};
 
 	$scope.showNav = function () {
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [{
                 text: '编辑'
             }, {

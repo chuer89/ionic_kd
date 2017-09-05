@@ -20,13 +20,12 @@ angular.module('perfomance.controller', [])
     };
 
     $scope.showNav = function () {
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [{
                 text: '绩效查询'
             }, {
                 text: '绩效开单'
             }],
-            cancelText: '取消',
             buttonClicked: function (index) {
                 
                 var _go = 'perfomance_query';

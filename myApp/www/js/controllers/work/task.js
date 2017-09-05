@@ -119,7 +119,7 @@ angular.module('workTask.controller', [])
 	}
 
     $scope.showNav = function () {
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [{
                 text: '创建任务', link: 'work_task_add'
             }, {
@@ -856,7 +856,7 @@ angular.module('workTask.controller', [])
             return false;
         }
 
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: navMenus,
             cancelText: '取消',
             buttonClicked: function (index, item) {
@@ -925,7 +925,7 @@ angular.module('workTask.controller', [])
     }
 
     $scope.showNav = function() {
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [
                 {text: '合格', key: 'qualified'}, 
                 {text: '不合格', key: 'unqualified'}

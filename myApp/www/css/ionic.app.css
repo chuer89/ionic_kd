@@ -9817,7 +9817,7 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-.kd_nav_filter .kd_sele_box .kd_sele_content a {
+.kd_nav_filter .kd_sele_box .kd_sele_content a, .top_right_menus a {
   display: -webkit-box;
   -webkit-box-pack: center;
   -webkit-box-align: center; }
@@ -10210,6 +10210,35 @@ ion-tabs.tabs-color-active-light .tab-item {
     color: #ffffff; }
   .kd_nav_filter .kd_m {
     margin: 0 0.26667rem; }
+
+.top_right_menus {
+  position: absolute;
+  color: #333;
+  font-size: 20px;
+  z-index: 90;
+  right: 5px;
+  top: 3.73333rem; }
+  .top_right_menus .kd_sele_item {
+    border-radius: 0.2rem;
+    background: #7f6bac; }
+  .top_right_menus .kd_sele_arrow {
+    position: absolute;
+    top: -0.73333rem;
+    color: #7f6bac;
+    z-index: 3;
+    right: 6px; }
+  .top_right_menus a {
+    color: #ffffff;
+    padding: 0.53333rem;
+    text-decoration: none;
+    border-bottom: 1px solid #a4a4a4;
+    font-size: 12px; }
+    [data-dpr='2'] .top_right_menus a {
+      font-size: 24px; }
+    [data-dpr='3'] .top_right_menus a {
+      font-size: 42px; }
+    .top_right_menus a:last-child {
+      border-bottom: none; }
 
 /*输入框*/
 .import_box {

@@ -429,6 +429,38 @@ ion-tabs.tabs-color-active-light .tab-item{
 	}
 }
 
+.top_right_menus{
+    position: absolute;
+    color: #333;
+    font-size: 20px;
+    z-index: 90;
+    right: 5px;
+    top: pxRem(280);
+
+	.kd_sele_item{
+		border-radius: pxRem(15);
+		background: $colorPurple;
+	}
+	.kd_sele_arrow{
+		position: absolute;
+		top: pxRem(-55);
+		color: $colorPurple;
+		z-index: 3;
+		right: 6px;
+	}
+	a{
+		color: $colorWhite;
+		@extend %webkitBoxCenter;
+		padding: pxRem(40);
+		text-decoration: none;
+		border-bottom: 1px solid $colorGrey;
+		@include font-dpr(12);
+		&:last-child{
+			border-bottom: none;
+		}
+	}
+}
+
 /*输入框*/
 .import_box{
 	background: white;

@@ -157,7 +157,7 @@ angular.module('message.services', [])
         onlineHost: 'http://123.206.95.25:18080',
         // onlineHost: 'http://192.168.201.237:8080',
 
-        isChrome: false,
+        isChrome: true,
         debugUser: {
             // mobile: 18280092852,
             password: 123456
@@ -1209,6 +1209,55 @@ angular.module('message.services', [])
         },
 
         changeDate: function(date){},
+
+        //右上角菜单
+        addTopRightMenus: function(opt) {
+
+            if ($('#js_top_right_menus').length) {
+                $('#js_top_right_menus').remove();return;
+            }
+
+            var removeMeus = function() {
+                if ($('#js_top_right_menus').length) {
+                    $('#js_top_right_menus').remove();return;
+                }
+            }
+
+            if (!opt.buttons.length) {
+                return;
+            }
+
+            var html = '';
+
+            html += '<div id="js_top_right_menus">';
+                // html += '<div class="action-sheet-backdrop active"></div>'
+                html += '<div class="top_right_menus">';
+                    html += '<i class="ion-arrow-up-b kd_sele_arrow"></i>';
+                    html += '<div class="kd_sele_item">';
+                        for (var i = 0, ii = opt.buttons.length; i < ii; i++) {
+                            html += '<a href="javascript:;" data-index="'+i+'" class="js_top_right_menus_val">'+opt.buttons[i].text+'</a>';
+                        }
+                    html += '</div>';
+                html += '</div>';
+            html += '</div>';
+
+            $('body').append(html);
+
+            $('#js_top_right_menus').on('click', '.js_top_right_menus_val', function() {
+                var index = $(this).attr('data-index');
+                if (typeof opt.buttonClicked == 'function') {
+                    opt.buttonClicked(index, opt.buttons[index]);
+                }
+
+                removeMeus();
+            });
+
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest("#js_top_right_menus").length && !$(e.target).closest(".bar-header").length) {
+                    removeMeus();
+                }
+            })
+        },
 
         //本地日期选择
         datePicker: function(cb, isDateTime) {

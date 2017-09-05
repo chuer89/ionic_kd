@@ -65,7 +65,7 @@ angular.module('workApply.controller', [])
     //搜索--end
 
     $scope.showNav = function() {
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [{
                 text: '新增申请'
             }, {
@@ -500,7 +500,7 @@ angular.module('workApply.controller', [])
     }
 
     $scope.showNav = function() {
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [{
                 text: '同意'
             }, {
@@ -658,7 +658,7 @@ angular.module('workApply.controller', [])
     }
 
     $scope.showNav = function() {
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [{
                 text: '同意'
             }, {
@@ -818,7 +818,7 @@ angular.module('workApply.controller', [])
     }
 
     $scope.showNav = function() {
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [{
                 text: '同意'
             }, {
@@ -984,7 +984,7 @@ angular.module('workApply.controller', [])
     }
 
     $scope.showNav = function() {
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [{
                 text: '同意'
             }, {
@@ -1168,7 +1168,7 @@ angular.module('workApply.controller', [])
     }
 
     $scope.showNav = function() {
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [{
                 text: '同意'
             }, {
@@ -1532,7 +1532,7 @@ angular.module('workApply.controller', [])
     }
 
     $scope.showNav = function() {
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [{
                 text: '同意'
             }, {

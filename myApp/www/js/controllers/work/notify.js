@@ -122,13 +122,12 @@ angular.module('workNotify.controller', [])
             return;
         }
 
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: [{
                 text: '编辑'
             }, {
                 text: '删除'
             }],
-            cancelText: '取消',
             buttonClicked: function (index, item) {
                 if (index == 1) {
                     common.popup({

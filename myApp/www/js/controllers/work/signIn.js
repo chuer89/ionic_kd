@@ -87,7 +87,7 @@ angular.module('workSign.controller', [])
 	// }
 
 	$scope.showNav = function () {
-		$ionicActionSheet.show({
+		common.addTopRightMenus({
 			buttons: [
 				{ text: '查询' },
 				{ text: '申请' },
