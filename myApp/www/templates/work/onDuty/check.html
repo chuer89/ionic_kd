@@ -8,7 +8,7 @@
     </ion-nav-buttons>
 
 	<ion-content>
-		<div class="list_box">
+		<div class="list_box padding_tb">
             <div class="item_list_box" ng-repeat="item in items">
                 <div class="row">
                     <div class="col col-15">
@@ -19,8 +19,11 @@
                         <p class="info">负责人：{{item.userName}}</p>
                     </div>
                     <div class="col text_align_right col-20">
-                        <input ng-click="clickRadio(item, 1)" ng-checked="{{item.checked1}}" type="radio" name="radio_{{item.id}}" class="padding_around" />
-                        <input ng-click="clickRadio(item, 2)" ng-checked="{{item.checked2}}" type="radio" name="radio_{{item.id}}"/>
+                        <img src="img/icon/duty/disable_yes.png" ng-click="clickRadio(item, 1)" ng-if="!item.checked1" class="filtrate_check">
+                        <img src="img/icon/duty/yes.png" ng-if="item.checked1" class="filtrate_check">
+
+                        <img src="img/icon/duty/disable_no.png" ng-click="clickRadio(item, 2)" ng-if="!item.checked2" class="filtrate_check">
+                        <img src="img/icon/duty/no.png" ng-if="item.checked2" class="filtrate_check">
                     </div>
                 </div>
             </div>

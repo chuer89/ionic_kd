@@ -361,11 +361,20 @@ angular.module('workOnDuty.controller', [])
     });
 
     $scope.clickRadio = function (item, status) {
-        //checkStatus
+        //checkStatus:检查状态 0未检查 1检查通过 2检查未通过
         var _list = $scope.items;
         for (var i = 0, ii = _list.length; i < ii; i++) {
             if (item.id == _list[i].id) {
                 _list[i].checkStatus = status;
+
+                _list[i].checked1 = false;
+                _list[i].checked2 = false;
+
+                if (status == 1) {
+                    _list[i].checked1 = true;
+                } else if (status == 2) {
+                    _list[i].checked2 = true;
+                }
             }
         }
     }
@@ -382,7 +391,7 @@ angular.module('workOnDuty.controller', [])
 
                 common.toast(data.message, function() {
                     common.back();
-                })
+                });
             }
         });
     }

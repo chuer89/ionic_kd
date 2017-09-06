@@ -10482,6 +10482,9 @@ ion-tabs.tabs-color-active-light .tab-item {
     color: #7f6bac;
     border-color: #7f6bac; }
 
+.filtrate_check {
+  width: 1.33333rem; }
+
 .shift_list {
   display: block;
   background: white; }
