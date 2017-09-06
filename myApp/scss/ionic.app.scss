@@ -401,10 +401,11 @@ ion-tabs.tabs-color-active-light .tab-item{
 			a{
 				color: $colorWhite;
 				@extend %webkitBoxCenter;
-				padding: pxRem(40);
+				padding: pxRem(30) pxRem(40);
 				text-decoration: none;
 				border-bottom: 1px solid $colorGrey;
 				@include font-dpr(12);
+				min-width: 60px;
 				&:last-child{
 					border-bottom: none;
 				}
@@ -439,19 +440,20 @@ ion-tabs.tabs-color-active-light .tab-item{
 
 	.kd_sele_item{
 		border-radius: pxRem(15);
-		background: $colorPurple;
+		background: #6c647e;
 	}
 	.kd_sele_arrow{
 		position: absolute;
 		top: pxRem(-55);
-		color: $colorPurple;
+		color: #6c647e;
 		z-index: 3;
 		right: 6px;
 	}
 	a{
 		color: $colorWhite;
 		@extend %webkitBoxCenter;
-		padding: pxRem(40);
+		padding: pxRem(30) pxRem(40);
+		min-width: 70px;
 		text-decoration: none;
 		border-bottom: 1px solid $colorGrey;
 		@include font-dpr(12);

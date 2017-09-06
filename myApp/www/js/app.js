@@ -271,6 +271,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/perfomance/list.html',
         controller: 'ListPerfomance'
     })
+    //绩效列表
+    .state('perfomance_my_list', {
+        url: '/perfomance/my/',
+        templateUrl: 'templates/perfomance/my.html',
+        controller: 'MyPerfomance'
+    })
     //绩效详情
     .state('perfomance_details', {
         url: '/perfomance/details/:id',

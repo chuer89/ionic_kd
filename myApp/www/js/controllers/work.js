@@ -24,11 +24,49 @@ angular.module('work.controller', [])
 
 //公共选择审核人员 | 查询人
 //common_seleGuys /common/seleGuys/:id
-.controller('CommonSeleGuysCtrl', function($scope, $state, $stateParams, common) {
+.controller('CommonSeleGuysCtrl', function($scope, $state, $stateParams, $timeout, common) {
     $scope.items = [];
     $scope.pageTitle = '审核人';
 
+    $scope.data = {
+        name: ''
+    };
+
     var guysTypeId = $stateParams.id;
+
+    //搜索--start
+    $scope.isSearchVal = false;
+    $scope.isSearchTxt = true;
+    var showSearch = function() {
+        $scope.isSearchVal = true;
+        $scope.isSearchTxt = false;
+
+        $timeout(function() {
+            $('#js_search').focus().on('keypress', function(e) {
+                var _keyCode = e.keyCode;
+                if (_keyCode == 13) {
+                    //搜索
+                    handleSearch();
+                    return false;
+                }
+            })
+        }, 200)
+    }, cancelSearch = function() {
+        clearSearchData();
+    }, handleSearch = function() {
+        $scope.isSearchVal = false;
+        $scope.isSearchTxt = true;
+
+        initData();
+    }, clearSearchData = function() {
+        $scope.data.name = '';
+        handleSearch();
+    }
+    
+    $scope.showSearch = showSearch;
+    $scope.cancelSearch = cancelSearch;
+    $scope.handleSearch = handleSearch;
+    //搜索--end
 
     var isQuery = false;
     if (guysTypeId > 100) {
@@ -65,9 +103,13 @@ angular.module('work.controller', [])
         '5': 'perfomance_add'//绩效开单
     }
 
-    common.getAuditorUser(function(data) {
-        $scope.items = data;
-    }, isQuery);
+    var initData = function() {
+        common.getAuditorUser(function(data) {
+            $scope.items = data;
+        }, isQuery, $scope.data.name);
+    }
+
+    initData();
 
     $scope.nickname = function(name) {
         return common.nickname(name);
@@ -82,6 +124,14 @@ angular.module('work.controller', [])
         // $state.go(typeId[guysTypeId]);
         history.back(-1);
     }
+
+    $scope.doRefresh = function() {
+        setTimeout(function() {
+            $scope.$broadcast('scroll.refreshComplete');
+            initData();
+        }, 1000)
+        return true;
+    };
 })
 
 //公共选择通讯录 部门 | 人
@@ -129,14 +179,19 @@ angular.module('work.controller', [])
         $scope.seleBrank = data;
         companyList = data;
 
-        $scope.items = handleBrankList(1);
+        _seleBrankHandle(data[0]);
+
+        // $scope.items = handleBrankList(1);
     });
+
+    var _seleBrankHandle = function(item) {
+        $scope.seleBrankInfo = item.name;
+        $scope.items = handleBrankList(item.departmentId);
+    }
 
      //选择部门
     $scope.seleBrankHandle = function(item) {
-        $scope.seleBrankInfo = item.name;
-
-        $scope.items = handleBrankList(item.departmentId);
+        _seleBrankHandle(item);
 
         toggleSeleHandle('brank');
     }

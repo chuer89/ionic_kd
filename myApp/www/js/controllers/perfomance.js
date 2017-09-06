@@ -22,19 +22,18 @@ angular.module('perfomance.controller', [])
     $scope.showNav = function () {
         common.addTopRightMenus({
             buttons: [{
-                text: '绩效查询'
+                text: '绩效查询', link: 'perfomance_query'
             }, {
-                text: '绩效开单'
+                text: '绩效开单', link: 'perfomance_add'
+            }, {
+                text: '我的绩效', link: 'perfomance_my_list'
+            }, {
+                text: '绩效录入'
             }],
-            buttonClicked: function (index) {
-                
-                var _go = 'perfomance_query';
-
-                if (index == 1) {
-                    _go = 'perfomance_add';
+            buttonClicked: function (index, item) {
+                if (item.link) {
+                    $state.go(item.link);
                 }
-
-                $state.go(_go);
                 return true;
             }
         });
@@ -538,6 +537,152 @@ angular.module('perfomance.controller', [])
             }, 1500);
             return true;
         }
+    }
+})
+
+// 我的绩效列表
+.controller('MyPerfomance', function($scope, $timeout, common, seleMenuList) {
+    $scope.items = [];
+    $scope.titleName = '';
+
+    var menus = seleMenuList.menu();
+
+    common.clearSetData();
+
+    var _nowDate = {
+        month: common.format(false, 'MM'),
+        year: common.format(false, 'yyyy')
+    }
+
+    $scope.data = {
+        month: _nowDate.month,
+        year: _nowDate.year,
+        clientId: common.userInfo.clientId
+        // clientId: 2
+    };
+    var dataList = {
+        currentPage: 0,
+        items: []
+    };
+
+    var handleAjax = function (isNotLoading) {
+        if (isNotLoading) {
+            common.loadingShow();
+        }
+
+        var _param = angular.extend({}, $scope.data, {
+            currentPage: dataList.currentPage + 1
+        });
+
+        common.post({
+            type: 'jixiao_index_page',
+            data: _param,
+            notPretreatment: true,
+            success: function(data) {
+                common.loadingHide();
+                var _body = data.body;
+
+                if (!_body || (_body && !_body.items) || (_body && _body.items && !_body.items.length)) {
+                    $scope.notTaskListData = common.notTaskListDataTxt;
+                    return;
+                } else {
+                    $scope.notTaskListData = false;
+                }
+
+                dataList = _body;
+
+                var list = _body.items;
+                
+                for (var i = 0, ii = list.length; i < ii; i++) {
+                    list[i].nickname = common.nickname(list[i].name);
+                    $scope.items.push(list[i]);
+                }
+
+                $timeout(function() {
+                    $scope.vm.moredata = true;
+                }, 1000);
+            }
+        });
+    }, initData = function(isNotLoading) {
+        dataList = {
+            currentPage: 0,
+            items: []
+        };
+
+        $scope.items = [];
+
+        handleAjax(isNotLoading);
+    }
+
+    $scope.doRefresh = function() {
+        setTimeout(function() {
+            $scope.$broadcast('scroll.refreshComplete');
+            initData();
+        }, 1000)
+        return true;
+    }
+
+    initData(true);
+
+    $scope.vm = {
+        moredata: false,
+        loadMore: function() {
+            if (dataList.items.length < common._pageSize || dataList.currentPage == dataList.totalPage || dataList.totalPage <= 1) {
+                $scope.vm.moredata = false;
+                return;
+            }
+
+            $timeout(function () {
+                $scope.vm.moredata = false;
+                handleAjax(true);
+            }, 1500);
+            return true;
+        }
+    }
+
+
+    //选择部门-start
+    $scope.isShowDateSele = false;
+    $scope.seleDate = menus.seleMonth;
+    $scope.seleDateInfo = common.format(false, 'yyyy-MM');
+
+    //选择菜单处理
+    var toggleSeleHandle = function(type, isAjax) {
+        if (type == 'date') {
+            $scope.isShowBrankSele = false;
+            $scope.isShowDepartmentSele = false;
+            $scope.isShowTypeSele = false;
+
+            $scope.isShowDateSele = !$scope.isShowDateSele;
+        }
+
+        if (isAjax) {
+            initData(true);
+        }
+    }
+
+    $scope.seleDateHandle = function(item) {
+        var date = {};
+
+        if (item.key == 'prev') {
+            date = common.getPrevDate($scope.seleDateInfo)
+        } else if (item.key == 'next') {
+            date = common.getNextDate($scope.seleDateInfo)
+        } else {
+            date = common.getNowDate();
+        }
+
+        $scope.data.year = date.year;
+        $scope.data.month = date.month;
+
+        $scope.seleDateInfo = date.date;
+
+        toggleSeleHandle('date', true);
+    }
+
+    //筛选切换
+    $scope.toggleSele = function(type) {
+        toggleSeleHandle(type);
     }
 })
 

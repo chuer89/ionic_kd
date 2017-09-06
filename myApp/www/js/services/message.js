@@ -321,8 +321,8 @@ angular.module('message.services', [])
                 appendPhone: '',
                 showImg: '',
                 cameraImg: '',
-                width: 600,
-                height: 600,
+                width: 800,
+                height: 800,
                 maximumImagesCount: 10
             }
             angular.extend(_opt, opt);
@@ -730,19 +730,24 @@ angular.module('message.services', [])
 
         //审核人 & 可查询人（有权限控制）
         //templates /common/seleGuys/:id
-        getAuditorUser: function (cb, isQuery) {
+        getAuditorUser: function (cb, isQuery, name) {
             var _type = 'auditor_user';//上级或平级
 
             //有权限
             if (isQuery) {
                 _type = 'query_user_list';
             }
+            var _param = {
+                id: COMMON.userInfo.clientId
+            }
+            if (name) {
+                _param.name = name;
+            }
+
             COMMON.loadingShow();
             COMMON.post({
                 type: _type,
-                data: {
-                    "id": COMMON.userInfo.clientId,
-                },
+                data: _param,
                 success: function(data) {
                     COMMON.loadingHide();
                     var _userArray = data.body.userArray;
@@ -1059,7 +1064,6 @@ angular.module('message.services', [])
 
                 }
             })
-            
         },
 
         //气泡提醒
@@ -1253,7 +1257,7 @@ angular.module('message.services', [])
             });
 
             $(document).on('click', function(e) {
-                if (!$(e.target).closest("#js_top_right_menus").length && !$(e.target).closest(".bar-header").length) {
+                if (!$(e.target).closest("#js_top_right_menus").length && !$(e.target).closest(".buttons-right").length) {
                     removeMeus();
                 }
             })

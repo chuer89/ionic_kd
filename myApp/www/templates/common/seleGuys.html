@@ -1,9 +1,32 @@
-<ion-view view-title="{{pageTitle}}">
+<ion-view view-title="{{pageTitle}}" hide-nav-bar="isSearchVal">
     <ion-nav-buttons side="left">  
         <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
 
     <ion-content>
+
+    	<div ng-if="isSearchVal" class="padding_btm_small">
+            <form action="javascript:return true;">
+                <ion-header-bar class="item-input-inset">
+                    <label class="item-input-wrapper">
+                        <i class="icon ion-ios-search placeholder-icon"></i>
+                        <input type="search" id="js_search" ng-blur="handleSearch()" placeholder="搜索" ng-model="data.name"/>
+                    </label>
+                    <button class="button button-light" ng-click="cancelSearch()">取消</button>
+                </ion-header-bar>
+            </form>
+        </div>
+
+        <div class="bar item-input-inset" ng-if="isSearchTxt">
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <input ng-focus="showSearch()" ng-model="data.name" type="search" placeholder="搜索">
+            </label>
+        </div>
+
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
+        
 		<div>
 	        <div class="list_box">
 	            <a href="javascript:;" ng-click="seleGuyHanle(item)" class="item_list_box" ng-repeat="item in items">

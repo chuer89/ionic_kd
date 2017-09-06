@@ -730,7 +730,7 @@ angular.module('workTask.controller', [])
         }
 
         //申请延期：责任人可见，任务状态是WORKING
-        if (_clientId == _inspectorId && _status == 'WORKING') {
+        if (_clientId == _zerenren && _status == 'WORKING') {
             navMenus.push({text: '申请延期', link: 'work_task_list_details_postpone'})
         }
 

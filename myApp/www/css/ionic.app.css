@@ -10188,10 +10188,11 @@ ion-tabs.tabs-color-active-light .tab-item {
         z-index: 3; }
       .kd_nav_filter .kd_sele_box .kd_sele_content a {
         color: #ffffff;
-        padding: 0.53333rem;
+        padding: 0.4rem 0.53333rem;
         text-decoration: none;
         border-bottom: 1px solid #a4a4a4;
-        font-size: 12px; }
+        font-size: 12px;
+        min-width: 60px; }
         [data-dpr='2'] .kd_nav_filter .kd_sele_box .kd_sele_content a {
           font-size: 24px; }
         [data-dpr='3'] .kd_nav_filter .kd_sele_box .kd_sele_content a {
@@ -10220,16 +10221,17 @@ ion-tabs.tabs-color-active-light .tab-item {
   top: 3.73333rem; }
   .top_right_menus .kd_sele_item {
     border-radius: 0.2rem;
-    background: #7f6bac; }
+    background: #6c647e; }
   .top_right_menus .kd_sele_arrow {
     position: absolute;
     top: -0.73333rem;
-    color: #7f6bac;
+    color: #6c647e;
     z-index: 3;
     right: 6px; }
   .top_right_menus a {
     color: #ffffff;
-    padding: 0.53333rem;
+    padding: 0.4rem 0.53333rem;
+    min-width: 70px;
     text-decoration: none;
     border-bottom: 1px solid #a4a4a4;
     font-size: 12px; }

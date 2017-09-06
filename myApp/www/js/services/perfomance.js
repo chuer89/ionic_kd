@@ -111,11 +111,6 @@ angular.module('perfomance.services', [])
                 txt = '确认拒绝审核吗？';
             }
 
-            if (!reason) {
-                common.toast('请填写审核理由');
-                return;
-            }
-
             common.popup({
                 content: txt
             }, function() {
