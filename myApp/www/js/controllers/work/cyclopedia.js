@@ -1,8 +1,11 @@
 angular.module('workCyclopedia.controller', [])
 
 .controller('WorkCyclopediaCtrl', function ($scope, $state, common, workCyclopediaType) {
+    $scope.items = [];
+
     workCyclopediaType.all(function(list) {
         common.setLocalStorage('baike', JSON.stringify(list));
+        $scope.items = list;
     });
 })
 

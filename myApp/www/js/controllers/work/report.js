@@ -25,6 +25,12 @@ angular.module('workReport.controller', [])
         });
     }
 
+    $scope.seleDate = function() {
+        common.datePicker(function(date) {
+            $scope.data.date = date;
+        }, true);
+    }
+
     var ajaxhandle = function() {
         if (!$scope.data.content) {
             common.toast('请填写内容');
@@ -36,7 +42,8 @@ angular.module('workReport.controller', [])
             body: {
                 userId: common.userInfo.clientId,
                 content: $scope.data.content,
-                typeId: 1
+                typeId: 1,
+                date: $scope.data.date
             },
             setData: function(json) {
                 formData.append("json", json);

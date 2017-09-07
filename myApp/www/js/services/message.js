@@ -157,7 +157,7 @@ angular.module('message.services', [])
         onlineHost: 'http://123.206.95.25:18080',
         // onlineHost: 'http://192.168.201.237:8080',
 
-        isChrome: false,
+        isChrome: true,
         debugUser: {
             // mobile: 18280092852,
             password: 123456
@@ -1264,13 +1264,17 @@ angular.module('message.services', [])
         },
 
         //本地日期选择
-        datePicker: function(cb, isDateTime) {
+        datePicker: function(cb, isDateTime, _fmt) {
             var _mode = 'date',
                 fmt = 'yyyy-MM-dd';
 
             if (isDateTime) {
                 _mode = 'datetime';
                 fmt = 'yyyy-MM-dd HH:mm';
+            }
+
+            if (_fmt) {
+                fmt = _fmt;
             }
 
             //http://www.jianshu.com/p/e7b3e44e366d

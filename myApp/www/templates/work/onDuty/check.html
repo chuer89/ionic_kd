@@ -3,9 +3,9 @@
     	<a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>  
     </ion-nav-buttons>
 
-    <ion-nav-buttons side="right">
+    <!-- <ion-nav-buttons side="right">
         <a href="javascript:;" ng-click="sub()" class="button button-clear button-royal">保存</a>
-    </ion-nav-buttons>
+    </ion-nav-buttons> -->
 
 	<ion-content>
 		<div class="list_box padding_tb">
@@ -26,6 +26,10 @@
                         <img src="img/icon/duty/no.png" ng-if="item.checked2" class="filtrate_check">
                     </div>
                 </div>
+            </div>
+
+            <div class="item_list_box">
+                <button class="button button-full button-royal" ng-click="sub()">提交</button>
             </div>
         </div>
 	</ion-content>

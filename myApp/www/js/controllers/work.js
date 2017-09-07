@@ -106,6 +106,11 @@ angular.module('work.controller', [])
     var initData = function() {
         common.getAuditorUser(function(data) {
             $scope.items = data;
+            if (!data.length) {
+                $scope.notTaskListData = common.notTaskListDataTxt;
+            } else {
+                $scope.notTaskListData = false;
+            }
         }, isQuery, $scope.data.name);
     }
 

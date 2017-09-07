@@ -10,7 +10,14 @@
     </ion-nav-buttons>
 
   	<ion-content>
-        <div class="padding">
+        <div class="list padding_tb">
+            <a class="item item-icon-right" href="#/work/cyclopedia/list/{{item.id}}" ng-repeat="item in items">
+                {{item.name}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+
+        <div class="padding" ng-if="sb">
             <div class="block_baike_moke">
                 <div class="row">
                     <a class="col col-40 item_baike" href="#/work/cyclopedia/list/1" style="background: #f19149;">黄金</a>
@@ -43,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div class="padding">
+        <div class="padding" ng-if="sb">
             <div class="block_baike_moke">
                 <div class="row">
                     <a class="col item_baike_m" href="#/work/cyclopedia/list/12" style="background: #66a0d5;">蓝宝石</a>

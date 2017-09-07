@@ -1,4 +1,4 @@
-<ion-view view-title="{{pageName}}百科详情">
+<ion-view view-title="百科详情">
 
     <ion-nav-buttons side="left">  
         <a href="javascript:history.back(-1)" class="icon button button-icon ion-ios-arrow-back" nav-direction="back"></a>
@@ -7,7 +7,10 @@
 
   	<ion-content>
   		<div class="list_box">
-            <div class="item_list_box">{{item.content}}</div>    
+            <div class="item_list_box">
+              <h2 class="title text_align_center" style="margin-bottom: 5px;">{{item.title}}</h2>
+              <p>{{item.content}}</p>
+            </div>    
         </div>
 
         <div class="list_box">

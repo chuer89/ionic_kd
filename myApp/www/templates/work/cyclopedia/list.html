@@ -13,8 +13,10 @@
       <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
   		<div class="list_box margin_btm_small padding" ng-repeat="item in items">
             <a href="#/work/cyclopedia/details/{{item.id}}" class="item_list_box" style="border-radius: 8px;">
-                <span class="title" style="font-weight: bold;display: inline-block;">{{item.title}}</span>
+                <p class="title" style="font-weight: bold;display: inline-block;">{{item.title}}</p>
                 <img src="{{item.coverPath}}" />
+                <p class="info border_btm" style="padding-bottom: 5px;margin-bottom: 5px;">这里是简介，后端那个SB程序员，一直不提供这个接口字段。杀了祭bug</p>
+                <p class="info" style="color: #c6c6c6;">查看全文</p>
             </a>
         </div>
         <ion-infinite-scroll ng-if="vm.moredata" on-infinite="vm.loadMore()" distance="10%" ></ion-infinite-scroll>
