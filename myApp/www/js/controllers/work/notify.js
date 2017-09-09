@@ -4,8 +4,6 @@ angular.module('workNotify.controller', [])
 .controller('WorkNotifyCtrl', function ($scope, $state, $ionicActionSheet, $filter, common) {
     $scope.items = [];
 
-    common.clearSetData();
-
     //菜单权限
     var navMenus = [];
 
@@ -245,6 +243,8 @@ angular.module('workNotify.controller', [])
         });
     }
 
+    $scope.clearBack = common.clearBack;
+
     $scope.submit = function() {
         var _param = {
             departmentList: [],
@@ -253,8 +253,6 @@ angular.module('workNotify.controller', [])
             title: $scope.data.title,
             id: common.userInfo.clientId
         }
-
-        
 
         common.getCommonCheckedPerson(function(opt) {
             angular.extend(_param, opt);

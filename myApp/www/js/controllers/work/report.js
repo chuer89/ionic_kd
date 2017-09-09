@@ -2,7 +2,9 @@ angular.module('workReport.controller', [])
 
 //日报申请
 .controller('WorkReportAddDailyCtrl', function($scope, common) {
-    $scope.data = {};
+    $scope.data = {
+        date: common.format(false, 'yyyy-MM-dd', true)
+    };
 
     //表单数据
     var formElement = document.querySelector("form");
@@ -28,7 +30,7 @@ angular.module('workReport.controller', [])
     $scope.seleDate = function() {
         common.datePicker(function(date) {
             $scope.data.date = date;
-        }, true);
+        });
     }
 
     var ajaxhandle = function() {
@@ -65,7 +67,9 @@ angular.module('workReport.controller', [])
 
 //周报申请
 .controller('WorkReportAddWeekCtrl', function($scope, common) {
-    $scope.data = {};
+    $scope.data = {
+        date: common.format(false, 'yyyy-MM-dd', true)
+    };
 
     //表单数据
     var formElement = document.querySelector("form");
@@ -88,6 +92,12 @@ angular.module('workReport.controller', [])
         });
     }
 
+    $scope.seleDate = function() {
+        common.datePicker(function(date) {
+            $scope.data.date = date;
+        });
+    }
+
     var ajaxhandle = function() {
         if (!$scope.data.content) {
             common.toast('请填写内容');
@@ -99,7 +109,8 @@ angular.module('workReport.controller', [])
             body: {
                 userId: common.userInfo.clientId,
                 content: $scope.data.content,
-                typeId: 3
+                typeId: 3,
+                date: $scope.data.date
             },
             setData: function(json) {
                 formData.append("json", json);
@@ -122,7 +133,9 @@ angular.module('workReport.controller', [])
 
 //月报申请
 .controller('WorkReportAddMonthCtrl', function($scope, common) {
-    $scope.data = {};
+    $scope.data = {
+        date: common.format(false, 'yyyy-MM-dd', true)
+    };
 
     //表单数据
     var formElement = document.querySelector("form");
@@ -145,6 +158,12 @@ angular.module('workReport.controller', [])
         });
     }
 
+    $scope.seleDate = function() {
+        common.datePicker(function(date) {
+            $scope.data.date = date;
+        });
+    }
+
     var ajaxhandle = function() {
         if (!$scope.data.content) {
             common.toast('请填写内容');
@@ -156,7 +175,8 @@ angular.module('workReport.controller', [])
             body: {
                 userId: common.userInfo.clientId,
                 content: $scope.data.content,
-                typeId: 2
+                typeId: 2,
+                date: $scope.data.date
             },
             setData: function(json) {
                 formData.append("json", json);
@@ -190,6 +210,8 @@ angular.module('workReport.controller', [])
         userId: common.userInfo.clientId
     };
     $scope.items = [];
+
+    $scope.clearBack = common.clearBack;
 
     var ajaxhandle = function(isNotLoading) {
         if (isNotLoading) {
@@ -237,6 +259,14 @@ angular.module('workReport.controller', [])
         $scope.items = [];
 
         ajaxhandle(isNotLoading);
+    }
+
+    $scope.doRefresh = function() {
+        setTimeout(function() {
+            $scope.$broadcast('scroll.refreshComplete');
+            initData(true);
+        }, 1000)
+        return true;
     }
 
     $scope.vm = {
@@ -521,10 +551,11 @@ angular.module('workReport.controller', [])
 
     //添加评论
     $scope.sendReport = function() {
-        if ($scope.data.commentReport = '') {
+        if ($scope.data.commentReport == '') {
             common.toast('请填写评论');
             return;
         }
+        
         common.loadingShow();
         COMMON.post({
             type: 'report_comment',

@@ -9,13 +9,14 @@
   		<div class="list_box">
             <div class="item_list_box">
               <h2 class="title text_align_center" style="margin-bottom: 5px;">{{item.title}}</h2>
-              <p>{{item.content}}</p>
+              <p ng-bind-html="item._content"></p>
             </div>    
         </div>
 
         <div class="list_box">
             <div ng-repeat="item in item.fujian">
-                <img ng-click="previewImg($index)" src="{{item.fujianPath}}"/>
+                <img ng-click="previewImg($index)" ng-if="!item.isPdf" src="{{item.fujianPath}}"/>
+                <button class="button button-block button-positive" ng-click="showPdf(item)" ng-if="item.isPdf">查看pdf</button>
             </div>
         </div>
   	</ion-content>

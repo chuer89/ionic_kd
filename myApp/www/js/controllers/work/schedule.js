@@ -200,6 +200,8 @@ angular.module('workSchedule.controller', [])
         }, true);
     }
 
+    $scope.clearBack = common.clearBack;
+
     $scope.submit = function() {
 
         var _param = angular.extend({}, $scope.data);
@@ -210,7 +212,6 @@ angular.module('workSchedule.controller', [])
         }
 
         common.loadingShow();
-
         common.getCommonCheckedPerson(function(opt) {
             angular.extend(_param, opt);
         });
@@ -220,7 +221,7 @@ angular.module('workSchedule.controller', [])
             data: _param,
             success: function(data) {
                 common.loadingHide();
-               common.toast(data.message, function() {
+                common.toast(data.message, function() {
                     common.back();
                 });
             }

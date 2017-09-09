@@ -125,6 +125,9 @@ angular.module('message.controller', [])
 
     }
 
+    // common.toast(common.getLocalStorage('setPushTags') + '上门' + _userInfo.clientId)
+
+
     if (!_userInfo.clientId) {
         return;
     }
@@ -134,20 +137,13 @@ angular.module('message.controller', [])
     var _tag_department_ID = 'tag_department_' + _userInfo.departmentId;
     var _alias_user_ID = 'alias_user_' + _userInfo.clientId;
 
-    //本地缓存是否配置消息推送
-    if (!common.getLocalStorage('setPushTags')) {
-        $timeout(function() {
-            setTagsAndAlias([_tag_department_ID, _alias_user_ID]);
-            common.setLocalStorage('setPushTags', true);
-        }, 0);
-    }
 
     // 设置别名和标签
     var setTagsAndAlias = function (tags, alias) {
       try {
         $scope.message += "准备设置tag/alias...";
         
-        window.plugins.jPushPlugin.setTagsWithAlias(tags, alias);
+        window.plugins.jPushPlugin.setTagsWithAlias(tags);
 
         $scope.message += 'tag获取：' + tags;
         $scope.message += '设置tags和alias成功！ \r\n';
@@ -196,6 +192,16 @@ angular.module('message.controller', [])
       } catch (exception) {
         $scope.errorMsg += 'initiateUI:' + exception;
       }
+    }
+
+    //本地缓存是否配置消息推送
+    if (!common.getLocalStorage('setPushTags')) {
+        $timeout(function() {
+            setTagsAndAlias([_tag_department_ID, _alias_user_ID]);
+            // setTagsAndAlias(_alias_user_ID);
+            common.setLocalStorage('setPushTags', true);
+            // common.toast(_tag_department_ID + '和' +_alias_user_ID)
+        }, 0);
     }
 
     // 当设备就绪时

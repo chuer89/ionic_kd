@@ -53,15 +53,23 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         // common.scheduleSingleNotification('启动app', '启动app')
     }, onReceiveNotification = function (event) { // 接收到通知时的回调函数
       try {
-        var alertContent;
+        var alertContent, title = '';
+
         if (device.platform == "Android") {
           alertContent = window.plugins.jPushPlugin.receiveNotification.alert;
         } else {
           alertContent = event.aps.alert;
         }
-        // alert("onReceiveNotification:" + alertContent);
+
+        if (typeof alertContent == 'object') {
+            title = alertContent.title;
+            alertContent = alertContent.body;
+        }
+
+        // common.toast("onReceiveNotification:" + JSON.stringify(alertContent));
+
         if (common._runApp) {
-            common.scheduleSingleNotification('', alertContent + '本地');
+            common.scheduleSingleNotification(title, alertContent + '本地');
         }
       } catch (exception) {
         $scope.errorMsg += 'onReceiveNotification:' + exception;
@@ -72,20 +80,19 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     //ionic 更多事件说明 http://www.dengzhr.com/others/mobile/676
 
     //当app切换到后台运行时，如打开其他应用时
-    document.addEventListener("pause", onPause, false);
+    // document.addEventListener("pause", onPause, false);
 
     // //app从后台运行时重新获取监听的事件
-    document.addEventListener("resume", onResume, false);
+    // document.addEventListener("resume", onResume, false);
 
     //当设备API加载完成并准备访问时
-    document.addEventListener("deviceready", onDeviceReady, false);
+    // document.addEventListener("deviceready", onDeviceReady, false);
 
     // //按下手机返回按钮时监听的事件
     // document.addEventListener("backbutton", onBackKeyDown, false);
-
     
     //收到 极光 消息
-    document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
+    // document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
 
 
     if (window.cordova && window.cordova.plugins) {

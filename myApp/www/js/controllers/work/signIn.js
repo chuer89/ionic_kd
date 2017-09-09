@@ -693,21 +693,50 @@ angular.module('workSign.controller', [])
 		angular.extend($scope.data, _signIn);
 	}
 
-	$scope.set = function() {
-		common.toast('设置成功', function() {
-			common.setLocalStorage('signIn', JSON.stringify($scope.data));
-			common.handleLocationPush();
+	common.post({
+        type: 'remindsetting_info',
+        data: {
+        	id: common.userInfo.clientId
+        },
+        success: function(data) {
+        	var _qiandaoBeforeTime = data.body.qiandaoBeforeTime;
+        	$scope.data.seleWarnType = {
+        		text: _qiandaoBeforeTime + '分钟',
+        		key: _qiandaoBeforeTime
+        	}
+        }
+    });
 
-			common.back();
-		})
+	$scope.set = function() {
+		common.loadingShow();
+        common.post({
+            type: 'update_remindsetting',
+            data: {
+            	id: common.userInfo.clientId,
+            	qiandaoBeforeTime: $scope.data.seleWarnType.key
+            },
+            success: function(data) {
+            	common.loadingHide();
+                common.toast(data.message, function() {
+                    common.back();
+                });
+            }
+        });
+
+		// common.toast('设置成功', function() {
+		// 	common.setLocalStorage('signIn', JSON.stringify($scope.data));
+		// 	common.handleLocationPush();
+
+		// 	common.back();
+		// })
 	}
 
 	$scope.showWarnType = function() {
 		$ionicActionSheet.show({
 			buttons: [
-				{ text: '5分钟', key: 5 * 60},
-				{ text: '10分钟', key: 10 * 60 },
-				{ text: '15分钟', key: 15 * 60 }
+				{ text: '5分钟', key: 5},
+				{ text: '10分钟', key: 10},
+				{ text: '15分钟', key: 15}
 			],
 			cancelText: '取消',
 			buttonClicked: function(index, item) {

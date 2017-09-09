@@ -157,7 +157,7 @@ angular.module('message.services', [])
         onlineHost: 'http://123.206.95.25:18080',
         // onlineHost: 'http://192.168.201.237:8080',
 
-        isChrome: true,
+        isChrome: false,
         debugUser: {
             // mobile: 18280092852,
             password: 123456
@@ -975,6 +975,8 @@ angular.module('message.services', [])
 
         //本地推送消息处理集结
         handleLocationPush: function() {
+            return;
+
             var _signIn = COMMON.getLocalStorage('signIn') && JSON.parse( COMMON.getLocalStorage('signIn') );
 
             if (_signIn) {
@@ -1040,7 +1042,7 @@ angular.module('message.services', [])
 
         //pdf预览
         pdf: function(pdfUrl) {
-            pdfUrl = 'http://182.138.0.196/test.pdf';
+            // pdfUrl = 'http://182.138.0.196/test.pdf';
 
             if (!pdfUrl) {
                 return;
@@ -1132,6 +1134,12 @@ angular.module('message.services', [])
         //返回上级（历史记录）
         back: function() {
             history.back(-1);
+        },
+
+        //返回并清楚缓存数据
+        clearBack: function() {
+            COMMON.clearSetData();
+            COMMON.back();
         },
 
         //获取push消息详情数据-入参相同，返回值不同

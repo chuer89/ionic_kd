@@ -374,6 +374,8 @@ angular.module('workApply.controller', [])
 .controller('WorkApplyAddListCtrl', function($scope, $state, workApplyAddList, common) {
 	$scope.items = workApplyAddList.all();
     common.clearSetData();
+
+    $scope.clearBack = common.clearBack;
 })
 
 //申请其他

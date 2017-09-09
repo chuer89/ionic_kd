@@ -755,6 +755,8 @@ angular.module('perfomance.controller', [])
         }
     });
 
+    $scope.clearBack = common.clearBack;
+
     $scope.showSeleType = function() {
         $ionicActionSheet.show({
             buttons: perfomanceQuery.seleMenusType,

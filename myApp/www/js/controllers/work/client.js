@@ -520,6 +520,8 @@ angular.module('workClient.controller', [])
         }
     });
 
+    $scope.clearBack = common.clearBack;
+
     $scope.create = function() {
         if (!$scope.data.name || !$scope.data.telephone) {
             common.toast('请输入必填信息');

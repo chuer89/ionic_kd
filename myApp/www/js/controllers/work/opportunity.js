@@ -437,6 +437,8 @@ angular.module('workOpportunity.controller', [])
         }
     });
 
+    $scope.clearBack = common.clearBack;
+
     $scope.create = function() {
 
         if (!$scope.data.name) {

@@ -184,6 +184,19 @@ ion-tabs.tabs-color-active-light .tab-item{
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   font-weight: 300; */
 }
+.item-input-inset{
+	padding: 10px 5px;
+}
+input[type=search], input[type=text], input[type=password], 
+input[type=datetime], input[type=datetime-local], input[type=date], 
+input[type=month], input[type=time], input[type=week], 
+input[type=number], input[type=email], input[type=url], 
+input[type=tel], input[type=color], textarea{
+	font-size: 16px;
+}
+.item-note{
+	font-size: 16px;
+}
 
 
 .col-15{
@@ -372,13 +385,13 @@ ion-tabs.tabs-color-active-light .tab-item{
 			border: 1px solid $colorGrey;
 			@extend %textOverflow;
 			border-radius: pxRem(50);
-			padding: pxRem(10) pxRem(20);
+			padding: pxRem(10) pxRem(40);
 			position: absolute;
 			color: $colorBlack;
 			width: 100%;
-			@include font-dpr(12);
+			@include font-dpr(13);
 			.ion-arrow-down-b{
-				right: pxRem(20);
+				right: pxRem(10);
 				color: $colorBlack;
 				position: absolute;
 			}
@@ -404,7 +417,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 				padding: pxRem(30) pxRem(40);
 				text-decoration: none;
 				border-bottom: 1px solid $colorGrey;
-				@include font-dpr(12);
+				@include font-dpr(16);
 				min-width: 60px;
 				&:last-child{
 					border-bottom: none;
@@ -414,7 +427,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 	}
 
 	.kd_btn{
-		padding: pxRem(20) pxRem(40);
+		padding: pxRem(16) pxRem(30);
 		border: 1px solid $colorGrey;
 		color: $colorGrey;
 		background: $colorWhite;
@@ -430,6 +443,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 	}
 }
 
+/*顶部右侧菜单*/
 .top_right_menus{
     position: absolute;
     color: #333;
@@ -456,7 +470,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 		min-width: 70px;
 		text-decoration: none;
 		border-bottom: 1px solid $colorGrey;
-		@include font-dpr(12);
+		@include font-dpr(16);
 		&:last-child{
 			border-bottom: none;
 		}
@@ -580,6 +594,12 @@ ion-tabs.tabs-color-active-light .tab-item{
 		}
 		.f14{
 			@include font-dpr(14);
+			.title{
+				@include font-dpr(14);
+			}
+		}
+		.f16{
+			@include font-dpr(16);
 		}
 		.head_name{
 			@include height-dpr(30);
@@ -684,6 +704,7 @@ ion-tabs.tabs-color-active-light .tab-item{
 		@include font-dpr(14);
 	}
 	.info_f_14{
+		@include font-dpr(14);
 		.info{
 			@include font-dpr(14);
 		}

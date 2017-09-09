@@ -9988,6 +9988,19 @@ ion-tabs.tabs-color-active-light .tab-item {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   font-weight: 300; */ }
 
+.item-input-inset {
+  padding: 10px 5px; }
+
+input[type=search], input[type=text], input[type=password],
+input[type=datetime], input[type=datetime-local], input[type=date],
+input[type=month], input[type=time], input[type=week],
+input[type=number], input[type=email], input[type=url],
+input[type=tel], input[type=color], textarea {
+  font-size: 16px; }
+
+.item-note {
+  font-size: 16px; }
+
 .col-15 {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 15%;
@@ -10160,17 +10173,17 @@ ion-tabs.tabs-color-active-light .tab-item {
     .kd_nav_filter .kd_sele_box .kd_sele_val {
       border: 1px solid #a4a4a4;
       border-radius: 0.66667rem;
-      padding: 0.13333rem 0.26667rem;
+      padding: 0.13333rem 0.53333rem;
       position: absolute;
       color: #444444;
       width: 100%;
-      font-size: 12px; }
+      font-size: 13px; }
       [data-dpr='2'] .kd_nav_filter .kd_sele_box .kd_sele_val {
-        font-size: 24px; }
+        font-size: 26px; }
       [data-dpr='3'] .kd_nav_filter .kd_sele_box .kd_sele_val {
-        font-size: 42px; }
+        font-size: 45px; }
       .kd_nav_filter .kd_sele_box .kd_sele_val .ion-arrow-down-b {
-        right: 0.26667rem;
+        right: 0.13333rem;
         color: #444444;
         position: absolute; }
     .kd_nav_filter .kd_sele_box .kd_sele_content {
@@ -10191,16 +10204,16 @@ ion-tabs.tabs-color-active-light .tab-item {
         padding: 0.4rem 0.53333rem;
         text-decoration: none;
         border-bottom: 1px solid #a4a4a4;
-        font-size: 12px;
+        font-size: 16px;
         min-width: 60px; }
         [data-dpr='2'] .kd_nav_filter .kd_sele_box .kd_sele_content a {
-          font-size: 24px; }
+          font-size: 32px; }
         [data-dpr='3'] .kd_nav_filter .kd_sele_box .kd_sele_content a {
-          font-size: 42px; }
+          font-size: 54px; }
         .kd_nav_filter .kd_sele_box .kd_sele_content a:last-child {
           border-bottom: none; }
   .kd_nav_filter .kd_btn {
-    padding: 0.26667rem 0.53333rem;
+    padding: 0.21333rem 0.4rem;
     border: 1px solid #a4a4a4;
     color: #a4a4a4;
     background: #ffffff;
@@ -10212,6 +10225,7 @@ ion-tabs.tabs-color-active-light .tab-item {
   .kd_nav_filter .kd_m {
     margin: 0 0.26667rem; }
 
+/*顶部右侧菜单*/
 .top_right_menus {
   position: absolute;
   color: #333;
@@ -10234,11 +10248,11 @@ ion-tabs.tabs-color-active-light .tab-item {
     min-width: 70px;
     text-decoration: none;
     border-bottom: 1px solid #a4a4a4;
-    font-size: 12px; }
+    font-size: 16px; }
     [data-dpr='2'] .top_right_menus a {
-      font-size: 24px; }
+      font-size: 32px; }
     [data-dpr='3'] .top_right_menus a {
-      font-size: 42px; }
+      font-size: 54px; }
     .top_right_menus a:last-child {
       border-bottom: none; }
 
@@ -10343,6 +10357,18 @@ ion-tabs.tabs-color-active-light .tab-item {
         font-size: 28px; }
       [data-dpr='3'] .list_box .item_list_box .f14, [data-dpr='3'] .list .item_list_box .f14 {
         font-size: 48px; }
+      .list_box .item_list_box .f14 .title, .list .item_list_box .f14 .title {
+        font-size: 14px; }
+        [data-dpr='2'] .list_box .item_list_box .f14 .title, [data-dpr='2'] .list .item_list_box .f14 .title {
+          font-size: 28px; }
+        [data-dpr='3'] .list_box .item_list_box .f14 .title, [data-dpr='3'] .list .item_list_box .f14 .title {
+          font-size: 48px; }
+    .list_box .item_list_box .f16, .list_box .item_list_box *, .list_box .item_list_box .import_box input[type=search], .import_box .list_box .item_list_box input[type=search], .list_box .item_list_box .import_box input[type=text], .import_box .list_box .item_list_box input[type=text], .list_box .item_list_box .import_box input[type=password], .import_box .list_box .item_list_box input[type=password], .list_box .item_list_box .import_box input[type=number], .import_box .list_box .item_list_box input[type=number], .list_box .item_list_box .import_box input[type=tel], .import_box .list_box .item_list_box input[type=tel], .list .item_list_box .f16, .list .item_list_box *, .list .item_list_box .import_box input[type=search], .import_box .list .item_list_box input[type=search], .list .item_list_box .import_box input[type=text], .import_box .list .item_list_box input[type=text], .list .item_list_box .import_box input[type=password], .import_box .list .item_list_box input[type=password], .list .item_list_box .import_box input[type=number], .import_box .list .item_list_box input[type=number], .list .item_list_box .import_box input[type=tel], .import_box .list .item_list_box input[type=tel] {
+      font-size: 16px; }
+      [data-dpr='2'] .list_box .item_list_box .f16, [data-dpr='2'] .list_box .item_list_box *, [data-dpr='2'] .list_box .item_list_box .import_box input[type=search], .import_box [data-dpr='2'] .list_box .item_list_box input[type=search], [data-dpr='2'] .list_box .item_list_box .import_box input[type=text], .import_box [data-dpr='2'] .list_box .item_list_box input[type=text], [data-dpr='2'] .list_box .item_list_box .import_box input[type=password], .import_box [data-dpr='2'] .list_box .item_list_box input[type=password], [data-dpr='2'] .list_box .item_list_box .import_box input[type=number], .import_box [data-dpr='2'] .list_box .item_list_box input[type=number], [data-dpr='2'] .list_box .item_list_box .import_box input[type=tel], .import_box [data-dpr='2'] .list_box .item_list_box input[type=tel], [data-dpr='2'] .list .item_list_box .f16, [data-dpr='2'] .list .item_list_box *, [data-dpr='2'] .list .item_list_box .import_box input[type=search], .import_box [data-dpr='2'] .list .item_list_box input[type=search], [data-dpr='2'] .list .item_list_box .import_box input[type=text], .import_box [data-dpr='2'] .list .item_list_box input[type=text], [data-dpr='2'] .list .item_list_box .import_box input[type=password], .import_box [data-dpr='2'] .list .item_list_box input[type=password], [data-dpr='2'] .list .item_list_box .import_box input[type=number], .import_box [data-dpr='2'] .list .item_list_box input[type=number], [data-dpr='2'] .list .item_list_box .import_box input[type=tel], .import_box [data-dpr='2'] .list .item_list_box input[type=tel] {
+        font-size: 32px; }
+      [data-dpr='3'] .list_box .item_list_box .f16, [data-dpr='3'] .list_box .item_list_box *, [data-dpr='3'] .list_box .item_list_box .import_box input[type=search], .import_box [data-dpr='3'] .list_box .item_list_box input[type=search], [data-dpr='3'] .list_box .item_list_box .import_box input[type=text], .import_box [data-dpr='3'] .list_box .item_list_box input[type=text], [data-dpr='3'] .list_box .item_list_box .import_box input[type=password], .import_box [data-dpr='3'] .list_box .item_list_box input[type=password], [data-dpr='3'] .list_box .item_list_box .import_box input[type=number], .import_box [data-dpr='3'] .list_box .item_list_box input[type=number], [data-dpr='3'] .list_box .item_list_box .import_box input[type=tel], .import_box [data-dpr='3'] .list_box .item_list_box input[type=tel], [data-dpr='3'] .list .item_list_box .f16, [data-dpr='3'] .list .item_list_box *, [data-dpr='3'] .list .item_list_box .import_box input[type=search], .import_box [data-dpr='3'] .list .item_list_box input[type=search], [data-dpr='3'] .list .item_list_box .import_box input[type=text], .import_box [data-dpr='3'] .list .item_list_box input[type=text], [data-dpr='3'] .list .item_list_box .import_box input[type=password], .import_box [data-dpr='3'] .list .item_list_box input[type=password], [data-dpr='3'] .list .item_list_box .import_box input[type=number], .import_box [data-dpr='3'] .list .item_list_box input[type=number], [data-dpr='3'] .list .item_list_box .import_box input[type=tel], .import_box [data-dpr='3'] .list .item_list_box input[type=tel] {
+        font-size: 54px; }
     .list_box .item_list_box .head_name, .list .item_list_box .head_name {
       height: 30px;
       border-radius: 1.06667rem; }
@@ -10455,12 +10481,18 @@ ion-tabs.tabs-color-active-light .tab-item {
       font-size: 28px; }
     [data-dpr='3'] .list_box .info, [data-dpr='3'] .list .info {
       font-size: 48px; }
-  .list_box .info_f_14 .info, .list .info_f_14 .info {
+  .list_box .info_f_14, .list .info_f_14 {
     font-size: 14px; }
-    [data-dpr='2'] .list_box .info_f_14 .info, [data-dpr='2'] .list .info_f_14 .info {
+    [data-dpr='2'] .list_box .info_f_14, [data-dpr='2'] .list .info_f_14 {
       font-size: 28px; }
-    [data-dpr='3'] .list_box .info_f_14 .info, [data-dpr='3'] .list .info_f_14 .info {
+    [data-dpr='3'] .list_box .info_f_14, [data-dpr='3'] .list .info_f_14 {
       font-size: 48px; }
+    .list_box .info_f_14 .info, .list .info_f_14 .info {
+      font-size: 14px; }
+      [data-dpr='2'] .list_box .info_f_14 .info, [data-dpr='2'] .list .info_f_14 .info {
+        font-size: 28px; }
+      [data-dpr='3'] .list_box .info_f_14 .info, [data-dpr='3'] .list .info_f_14 .info {
+        font-size: 48px; }
   .list_box .task_status .WORKING, .list .task_status .WORKING {
     color: #007130; }
   .list_box .task_status .UNCONFIRMED, .list .task_status .UNCONFIRMED {

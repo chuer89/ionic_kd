@@ -350,6 +350,8 @@ angular.module('workTask.controller', [])
         });
     }
 
+    $scope.clearBack = common.clearBack;
+
     $scope.showSeleWarn = function() {
         $ionicActionSheet.show({
             buttons: menus.taskWarn,

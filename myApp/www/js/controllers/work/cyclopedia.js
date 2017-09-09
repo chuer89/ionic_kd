@@ -49,6 +49,7 @@ angular.module('workCyclopedia.controller', [])
 	        	dataList = _body;
 
 	        	for (var i = 0, ii = list.length; i < ii; i++) {
+                    list[i]._content = list[i].content.slice(0, 35);
 	        		$scope.items.push(list[i]);
 	        	}
 
@@ -173,9 +174,25 @@ angular.module('workCyclopedia.controller', [])
         },
         success: function(data) {
             common.loadingHide();
+
+            data.body._content = common.replaceNext(data.body.content);
+
+            var _item = data.body.fujian;
+            for (var i = 0, ii = _item.length; i < ii; i++) {
+                if (_item[i].fujianName.indexOf('.pdf') >= 0){
+                    _item[i].isPdf = true;
+                }
+            }
+
+            // console.log(data.body)
+
         	$scope.item = data.body;
         }
     });
+
+    $scope.showPdf = function(item) {
+        common.pdf(item.fujianPath);
+    }
 
     //图片预览
     $scope.previewImg = function($index) {
