@@ -19,6 +19,7 @@ ionic resources
 激光推送
 app key： c193739f8c1d34983bbe87a3
 Master Secret: 4da92a574b3089b5a7522578
+push.wav
 
 
 cordova-plugin-device
@@ -28,3 +29,4 @@ jpush-phonegap-plugin
 
 账号：
 18280092852
+
