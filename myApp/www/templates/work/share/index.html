@@ -52,7 +52,7 @@
         </div>
         <div class="kd_nav_filter">
             <div class="padding_around row">
-                <div class="kd_sele_box col col-25">
+                <div class="kd_sele_box col col-20">
                     <div ng-click="toggleSele('purpose')" class="kd_sele_val">{{selePurposeInfo}}<i class="ion-arrow-down-b"></i></div>
                     <div class="kd_sele_content" ng-show="isShowPurposeSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="kd_sele_box col kd_m col-25">
+                <div class="kd_sele_box col kd_m col-20">
                     <div ng-click="toggleSele('age')" class="kd_sele_val">{{seleAgeInfo}}<i class="ion-arrow-down-b"></i></div>
                     <div class="kd_sele_content" ng-show="isShowAgeSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
@@ -81,10 +81,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="col text_align_right">
+                    <button class="kd_btn kd_m" ng-click="reset()" style="color: #444;">重置</button>
+                </div>
             </div>
         </div>
 
         <div class="notData" ng-if="notTaskListData">{{notTaskListData}}</div>
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
 
         <div class="list_box padding_tb" ng-repeat="item in items">
             <a href="#/work/share/details/{{item.id}}" class="item_list_box">
@@ -112,7 +116,7 @@
                         <p class="info border_btm">{{item.peopleNumber}}</p>
                         <p class="info colorPurple">{{item.transactionAmount}}</p>
                     </div>
-                    <div class="col">
+                    <div class="col ellipsis_info">
                         <p class="info border_btm">{{item.peopleRelationship}}</p>
                     </div>
                 </div>

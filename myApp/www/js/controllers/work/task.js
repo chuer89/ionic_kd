@@ -341,7 +341,9 @@ angular.module('workTask.controller', [])
         endTime: '',
         remindtime: '',
         seleWarn: '请选择',
-        hasCameraImg: false
+        hasCameraImg: false,
+        name: '',
+        seleName: '请选择'
     };
 
     $scope.seleDate = function() {
@@ -362,6 +364,25 @@ angular.module('workTask.controller', [])
                 return true;
             }
         })
+    }
+
+    $scope.showSeleName = function() {
+        COMMON.post({
+            type: 'task_importance',
+            data: {},
+            success: function(data) {
+                var menus = common.setSeleRepeat(data.body.importants);
+                $ionicActionSheet.show({
+                    buttons: menus,
+                    cancelText: '取消',
+                    buttonClicked: function(index, item) {
+                        $scope.data.seleName = item.text;
+                        $scope.data.name = item.fenshu;
+                        return true;
+                    }
+                })
+            }
+        });
     }
 
     //表单数据
@@ -482,7 +503,8 @@ angular.module('workTask.controller', [])
         common.post({
             type: 'task_detail_info',
             data: {
-                taskId: taskId
+                taskId: taskId,
+                userId: common.userInfo.clientId
             },
             success: function(data) {
                 data.body.taskBasiInfo._status = common.getId(taskStatus, data.body.taskBasiInfo.status, 'key').name;
@@ -754,7 +776,8 @@ angular.module('workTask.controller', [])
         COMMON.post({
             type: 'task_detail_info',
             data: {
-                taskId: taskId
+                taskId: taskId,
+                userId: common.userInfo.clientId
             },
             success: function(data) {
                 common.loadingHide();

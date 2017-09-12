@@ -4,7 +4,7 @@
     </ion-nav-buttons>
 
 	<ion-content>
-        <div class="list_box padding_btm">
+        <div class="list_box padding_tb">
             <div class="item_list_box">
                 <div class="row">
                     <div class="col col-50">
@@ -30,7 +30,7 @@
                         <p class="info border_btm">{{item.peopleNumber}}</p>
                         <p class="info colorPurple">{{item.transactionAmount}}</p>
                     </div>
-                    <div class="col">
+                    <div class="col ellipsis_info">
                         <p class="info border_btm">{{item.peopleRelationship}}</p>
                     </div>
                 </div>
@@ -72,9 +72,17 @@
         </div>
     </ion-content>
 
-    <div class="bar bar-footer bar-stable">
+    <ion-footer-bar keyboardshow id="js_comment_box" class="bar item-input-inset">
+        <label class="item-input-wrapper" >
+            <i class="icon ion-edit placeholder-icon"></i>
+            <input type="text" ng-model="data.commentReport" placeholder="添加评论">
+        </label>
+        <button class="button button-light" ng-click="sendReport()">发送</button>   
+    </ion-footer-bar>
+
+    <div class="bar bar-footer bar-stable" ng-if="xx">
         <div class="row">
-            <input type="text" ng-model="data.commentReport" name="commentReport" class="col col-75" />
+            <input type="text" placeholder="添加评论" ng-model="data.commentReport" name="" class="col col-75" />
             <a href="javascript:;" class="col col-10 col-offset-10 box_align" ng-click="sendReport()">发送</a>
         </div>
     </div>

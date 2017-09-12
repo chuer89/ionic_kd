@@ -9961,6 +9961,12 @@ ion-tabs.tabs-color-active-light .tab-item {
 .bar .title {
   font-size: 20px; }
 
+/*.ion-ios-briefcase-outline:before{
+	content: url("../img/icon/footer/work.png");
+}
+.ion-ios-briefcase:before{
+	content: url("../img/icon/footer/work_active.png");
+}*/
 .tabs {
   height: 47px; }
 
@@ -10135,6 +10141,13 @@ input[type=tel], input[type=color], textarea {
   top: -50px;
   width: 100px;
   height: 40px; }
+
+.on_duty_btn {
+  color: #7f6bac;
+  border: 1px solid #7f6bac;
+  padding: 0.4rem 0.53333rem;
+  border-radius: 3px;
+  margin-top: 0.13333rem; }
 
 .box_center, .import_box .input_btn, .shift_list .shift_item_list .left_icon_box, .box_align {
   /* W3C */

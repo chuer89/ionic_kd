@@ -476,7 +476,8 @@ angular.module('workApply.controller', [])
         COMMON.post({
             type: 'obtain_application_info',
             data: {
-                applicationId: _applicationId
+                applicationId: _applicationId,
+                userId: common.userInfo.clientId
             },
             success: function(data) {
                 common.loadingHide();
@@ -636,7 +637,8 @@ angular.module('workApply.controller', [])
         COMMON.post({
             type: 'obtain_application_info',
             data: {
-                applicationId: _applicationId
+                applicationId: _applicationId,
+                userId: common.userInfo.clientId
             },
             success: function(data) {
                 common.loadingHide();
@@ -794,7 +796,8 @@ angular.module('workApply.controller', [])
         COMMON.post({
             type: 'obtain_application_info',
             data: {
-                applicationId: _applicationId
+                applicationId: _applicationId,
+                userId: common.userInfo.clientId
             },
             success: function(data) {
                 common.loadingHide();
@@ -965,7 +968,8 @@ angular.module('workApply.controller', [])
         COMMON.post({
             type: 'obtain_application_info',
             data: {
-                applicationId: _applicationId
+                applicationId: _applicationId,
+                userId: common.userInfo.clientId
             },
             success: function(data) {
                 common.loadingHide();
@@ -1134,7 +1138,8 @@ angular.module('workApply.controller', [])
         COMMON.post({
             type: 'obtain_application_info',
             data: {
-                applicationId: _applicationId
+                applicationId: _applicationId,
+                userId: common.userInfo.clientId
             },
             success: function(data) {
                 common.loadingHide();
@@ -1304,7 +1309,8 @@ angular.module('workApply.controller', [])
         COMMON.post({
             type: 'obtain_maintain_task_info',
             data: {
-                maintainTaskId: maintainTaskId
+                maintainTaskId: maintainTaskId,
+                userId: common.userInfo.clientId
             },
             success: function(data) {
                 common.loadingHide();
@@ -1509,7 +1515,8 @@ angular.module('workApply.controller', [])
         COMMON.post({
             type: 'obtain_application_info',
             data: {
-                applicationId: _applicationId
+                applicationId: _applicationId,
+                userId: common.userInfo.clientId
             },
             success: function(data) {
                 common.loadingHide();

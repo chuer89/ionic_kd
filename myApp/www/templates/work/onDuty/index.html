@@ -8,7 +8,20 @@
     </ion-nav-buttons>
 
 	<ion-content>
-        <div class="list padding_tb" style="margin: 0;padding-bottom: 0;">
+        <div class="list_box list padding_tb">
+            <div class="item_list_box">
+                <div class="row">
+                    <div class="col col-15">
+                        <div class="item-avatar" style="padding-left: 0;">
+                            <img src="{{myInfo.avatarPath}}" style="position: static;"  id="myImage" class="head_left_box" />
+                        </div>
+                    </div>
+                    <div class="col col-70">
+                        <h2 class="title">{{myInfo.name}}</h2>
+                        <p class="info">{{myInfo.position}}</p>
+                    </div>
+                </div>
+            </div>
             <div class="item item-icon-right" ng-click="seleDate()">
                 日期
                 <span class="item-note">{{data.date}}</span>
@@ -22,7 +35,7 @@
             <div class="item_list_box" ng-repeat="item in items">
                 <div class="row">
                     <div class="col col-15">
-                        <span class="list_icon_box">
+                        <span class="list_icon_box" style="padding-top: 0;">
                             <span class="name_box" style="background: #a4a4a4;padding: 10px 5px;">{{item.startTime}}</span>
                         </span>
                     </div>
@@ -33,19 +46,19 @@
                         </div>
                         <div ng-if="item.type == 2">
                             <div class="item-icon-right">
-                                <a href="#/work/onDuty/check/{{scheduleID}}_{{item.id}}" class="button button-royal">值班检查</a>
+                                <a href="#/work/onDuty/check/{{scheduleID}}_{{item.id}}" class="on_duty_btn">值班检查</a>
                                 <i class="icon ion-chevron-right icon-accessory"></i>
                             </div>
                         </div>
                         <div ng-if="item.type == 3">
                             <div class="item-icon-right">
-                                <a href="#/work/onDuty/setting/{{scheduleID}}" class="button button-royal">目标设定</a>
+                                <a href="#/work/onDuty/setting/{{scheduleID}}" class="on_duty_btn">目标设定</a>
                                 <i class="icon ion-chevron-right icon-accessory"></i>
                             </div>
                         </div>
                         <div ng-if="item.type == 4">
                             <div class="item-icon-right">
-                                <a href="#/work/onDuty/follow/{{scheduleID}}" class="button button-royal">目标跟进</a>
+                                <a href="#/work/onDuty/follow/{{scheduleID}}" class="on_duty_btn">目标跟进</a>
                                 <i class="icon ion-chevron-right icon-accessory"></i>
                             </div>
                         </div>

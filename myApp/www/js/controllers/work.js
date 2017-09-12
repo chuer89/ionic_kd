@@ -1,25 +1,35 @@
 angular.module('work.controller', [])
 
 //
-.controller('WorkCtrl', function($scope, $state, $http, workPlatform) {
+.controller('WorkCtrl', function($scope, $state, $http, workPlatform, common) {
     $scope.data = {};
 
-    $scope.items = workPlatform.all();
+    var workItems = workPlatform.all();
+
+    $scope.items = workItems;
     $scope.itemsCrm = workPlatform.crm();
     $scope.itemsLearn = workPlatform.learn();
 
-    // $http({
-    // 	method: 'POST',
-    // 	url: 'http://123.206.95.25:18080/kuaidao/client/resources.html',
-    // 	params: {
-    // 		json: '{"appType":"IOS","appVersion":"1.0.0","body":{},"businessType":"departmrnt_info"}'
-    //         // json: '{"appType":"IOS","appVersion":"1.0.0","body":{"id":7,"searchId":7},"businessType":"userinfo_detail"}'
-    // 	}
-    // }).success(function(data) {
-    // 	console.log(data)
-    // }).error(function(data) {
+    // showUnReadApplicationPrompt：显示未读申请提示
+    // showUnReadRiChengPrompt：显示日程未读提示
+    // showUnReadTaskPrompt：显示未读任务提示
+    // showUnReadInformPrompt：显示未读同时提示
 
-    // })
+
+    common.post({
+        type: 'message_unread_prompt',
+        data: {
+            userId: common.userInfo.clientId
+        },
+        success: function(data) {
+            var _warnObj = data.body;
+            for (var i = 0, ii = workItems.length; i < ii; i++) {
+                if (workItems[i].warnKey) {
+                    workItems[i].isView = _warnObj[workItems[i].warnKey];
+                }
+            }
+        }
+    });
 })
 
 //公共选择审核人员 | 查询人

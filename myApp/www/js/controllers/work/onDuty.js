@@ -22,6 +22,21 @@ angular.module('workOnDuty.controller', [])
         });
     }
 
+    $scope.myInfo = {};
+    COMMON.post({
+        type: 'userinfo_detail',
+        data: {
+            id: common.userInfo.clientId,
+            searchId: common.userInfo.clientId
+        },
+        success: function(data) {
+            var _data = data.body;
+            _data.nickname = common.nickname(_data.name);
+            _data.avatarPath = _data.avatarPath || 'img/logo.png';
+            $scope.myInfo = _data;
+        }
+    });
+
 	var getAjax = function() {
         common.loadingShow();
         COMMON.post({

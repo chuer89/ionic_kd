@@ -23,10 +23,9 @@ angular.module('workShare.controller', [])
         };
 
         $scope.items = [];
-    }
-    initData();
 
-    var ajaxhandle = function(isNotLoading) {
+        ajaxhandle();
+    }, ajaxhandle = function(isNotLoading) {
         common.loadingShow();
 
         var _param = angular.extend({}, $scope.data, {
@@ -62,7 +61,16 @@ angular.module('workShare.controller', [])
             }
         });
     };
-    ajaxhandle();
+
+    initData();
+
+    $scope.doRefresh = function() {
+        setTimeout(function() {
+            $scope.$broadcast('scroll.refreshComplete');
+            initData();
+        }, 1000)
+        return true;
+    }
 
     $scope.vm = {
         moredata: false,
@@ -78,6 +86,39 @@ angular.module('workShare.controller', [])
             }, 1500);
             return true;
         }
+    }
+
+    $scope.reset = function() {
+        $scope.data = {
+            departmentId: 1,
+            sharingName: '-1',//案例名称
+            customerCategoryId: '-1',//顾客类型
+            goodsCategoryId: '-1',//货品类型
+            peopleNumberId: '-1',//人数
+            peopleRelationshipId: '-1',//人物关系
+            purchasePurposeId: '-1',//购买用途
+            customerAgeId: '-1',//购买年龄
+            transactionAmountId: '-1'//成交金额
+        };
+
+        $scope.isShowCustomerSele = false;
+        $scope.isShowGoodsSele = false;
+        $scope.isShowNumberSele = false;
+        $scope.isShowRelationshipSele = false;
+        $scope.isShowPurposeSele = false;
+        $scope.isShowAgeSele = false;
+        $scope.isShowAmountSele = false;
+
+
+        $scope.seleCustomerInfo = '顾客类型';
+        $scope.seleGoodsInfo = '货品品类';
+        $scope.seleNumberInfo = '人数';
+        $scope.seleRelationshipInfo = '人物关系';
+        $scope.selePurposeInfo = '购买用途';
+        $scope.seleAgeInfo = '顾客年龄';
+        $scope.seleAmountInfo = '成绩金额';
+
+        initData();
     }
 
 
@@ -135,7 +176,6 @@ angular.module('workShare.controller', [])
     var toggleSeleHandle = function(type, isToggle) {
         if (!isToggle) {
             initData();
-            ajaxhandle();
         }
 
         if (type == 'customer') {
@@ -431,6 +471,12 @@ angular.module('workShare.controller', [])
 
     //添加评论
     $scope.sendReport = function() {
+        if ($scope.data.commentReport == '') {
+            common.toast('请填写评论');
+            return;
+        }
+
+        common.loadingShow();
         COMMON.post({
             type: 'case_sharing_comment',
             data: {
@@ -439,6 +485,7 @@ angular.module('workShare.controller', [])
                 comment: $scope.data.commentReport
             },
             success: function(data) {
+                common.loadingHide();
                 var _body = data.body;
 
                 $scope.data.commentReport = '';

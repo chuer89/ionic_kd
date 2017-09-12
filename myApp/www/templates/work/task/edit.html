@@ -9,7 +9,7 @@
 
 	<ion-content>
         <form enctype="multipart/form-data" method="post" name="fileinfo"></form>
-        <div class="list">
+        <div class="list padding_tb" style="padding-bottom: 0;">
             <div class="item item-icon-right" ng-click="seleDate()">
                 截至时间
               <span class="item-note">{{data.endTime}}</span>
@@ -31,27 +31,25 @@
                 </div>
             </div>
         </div>
+        
         <div class="list">
             <div class="item item-icon-right" ng-click="showSeleWarn()">
                 提醒
                 <span class="item-note">{{data.seleWarn}}</span>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </div>
-        </div>
-        <div class="list">
             <a href="#/common/seleGuys/4" class="item item-icon-right">
               检查人
               <span class="item-note">{{data.inspectorId.name}}</span>
               <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
-        </div>
-		<div class="list">
             <a href="#/common/seleGuys/2" class="item item-icon-right">
               关注人
               <span class="item-note">{{data.ATTENTION_PEOPLE.name}}</span>
               <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
         </div>
+
         <div class="list_box" ng-if="data.taskImageArray.length">
             <div class="item_list_box">
                 <div class="details_img_thumbnail clearfix">

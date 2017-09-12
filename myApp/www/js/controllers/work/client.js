@@ -432,7 +432,7 @@ angular.module('workClient.controller', [])
             common.toast(common.noAuthLimitsTxt);
             return;
         }
-        $ionicActionSheet.show({
+        common.addTopRightMenus({
             buttons: navMenus,
             cancelText: '取消',
             buttonClicked: function(index, item) {

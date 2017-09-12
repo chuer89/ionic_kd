@@ -6,13 +6,16 @@ angular.module('work.services', [])
         name: '通知',
         info: '一呼百应',
         link: '#/work/notify',
-        icon: 'img/icon/work/notify.png'
+        isView: true,
+        icon: 'img/icon/work/notify.png',
+        warnKey: 'showUnReadInformPrompt'
     }, {
         id: 1,
         name: '日程',
         info: '时间安排',
         link: '#/work/schedule',
-        icon: 'img/icon/work/schedule.png'
+        icon: 'img/icon/work/schedule.png',
+        warnKey: 'showUnReadRiChengPrompt'
     }, {
     	id: 2,
     	name: '签到',
@@ -24,13 +27,15 @@ angular.module('work.services', [])
     	name: '申请',
     	info: '请假、优惠、调换、维修等',
         link: '#/work/apply',
-        icon: 'img/icon/work/apply.png'
+        icon: 'img/icon/work/apply.png',
+        warnKey: 'showUnReadApplicationPrompt'
     }, {
     	id: 4,
     	name: '任务',
     	info: '分配任务，逐一跟踪',
         link: '#/work/task',
-        icon: 'img/icon/work/task.png'
+        icon: 'img/icon/work/task.png',
+        warnKey: 'showUnReadTaskPrompt'
     }, {
     	id: 5,
     	name: '值班',
