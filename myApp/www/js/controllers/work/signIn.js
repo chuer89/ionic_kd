@@ -128,11 +128,12 @@ angular.module('workSign.controller', [])
 		        success: function(data) {
 		        	var _time = [];
 
-		        	if (data.body.canQianDao && data.body.times && data.body.times.length) {
+		        	if (data.body.times && data.body.times.length) {
 		        		_time = data.body.times[0];
-		        	} else {
+		        	}
+
+		        	if (!data.body.canQianDao){
 		        		common.toast('当前位置或时间不支持签到');
-		        		return false;
 		        	}
 
 		        	data.body._times = [ _time ];
@@ -162,12 +163,16 @@ angular.module('workSign.controller', [])
 
 		var qiandaoTimes = common.getLocalStorage('qiandaoTimes') && JSON.parse( common.getLocalStorage('qiandaoTimes') );
 
-		if (!qiandaoTimes || !qiandaoTimes.length || !qianDaoData.qiandaoCanQianDaoSite) {
+		if (!qiandaoTimes || !qiandaoTimes.length) {
 			return false;
 		}
 
 		if (!$scope.qianDaoShangBan) {
 			$scope.qianDaoShangBan = qiandaoTimes[0].qianDaoShangBan;
+		}
+
+		if (!qianDaoData.qiandaoCanQianDaoSite) {
+			return false;
 		}
 
 		var _shangBanNum = 0,

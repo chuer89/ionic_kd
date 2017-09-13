@@ -1317,27 +1317,67 @@ angular.module('message.services', [])
             }, false);
         },
 
+        //高德定位
+        geolocation: function(cb) {
+            var map, geolocation;
+            //加载地图，调用浏览器定位服务
+            map = new AMap.Map('container', {
+                resizeEnable: true
+            });
+            map.plugin('AMap.Geolocation', function() {
+                geolocation = new AMap.Geolocation({
+                    enableHighAccuracy: true,//是否使用高精度定位，默认:true
+                    timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+                    buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                    zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                    buttonPosition:'RB'
+                });
+                console.log(2)
+                map.addControl(geolocation);
+                geolocation.getCurrentPosition();
+                AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+                AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+            });
+            //解析定位结果
+            function onComplete(data) {
+                var position = {
+                    coords: {
+                        longitude: data.position.getLng(),
+                        latitude: data.position.getLat()    
+                    }
+                }
+                if (typeof cb == 'function') {
+                    cb(position);
+                }
+            }
+            //解析定位错误信息
+            function onError(data) {
+                COMMON.toast('获取定位失败');
+            }
+        },
+
         //获取经纬度
         getLocation: function(cb) {
             //定位
-            // var posOptions = {timeout: 10000, enableHighAccuracy: false};
-            // $cordovaGeolocation
-            // .getCurrentPosition(posOptions)
-            // .then(function (position) {
-            //     if (typeof cb == 'function') {
-            //         cb(position);
-            //     }
-            // }, function(err) {
-            //     COMMON.toast('获取定位失败');
-            //     COMMON.loadingHide();
-            //     // error
-            // });
-            // return;
+            var posOptions = {timeout: 2000, enableHighAccuracy: false};
+            $cordovaGeolocation
+            .getCurrentPosition(posOptions)
+            .then(function (position) {
+                if (typeof cb == 'function') {
+                    cb(position);
+                }
+            }, function(err) {
+                // COMMON.toast('获取定位失败');
+                COMMON.geolocation(cb);
+                COMMON.loadingHide();
+                // error
+            });
+            return;
 
             // var data = {
             //     coords: {
-            //         longitude: 30.541253800000003,
-            //         latitude: 104.06534119999999    
+            //         longitude: 104.0666805,
+            //         latitude: 30.54231346999999 
             //     }
             // };
 
