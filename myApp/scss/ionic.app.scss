@@ -159,12 +159,16 @@ ion-tabs.tabs-color-active-light .tab-item{
 .bar .title{
 	font-size: 20px;
 }
-/*.ion-ios-briefcase-outline:before{
+.ion-ios-briefcase-outline:before{
 	content: url("../img/icon/footer/work.png");
 }
 .ion-ios-briefcase:before{
 	content: url("../img/icon/footer/work_active.png");
-}*/
+}
+
+.tabs-dark>.tabs, .tabs.tabs-dark{
+	background: #6c647e;
+}
 
 .tabs{
 	height: 47px;

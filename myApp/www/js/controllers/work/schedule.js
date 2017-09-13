@@ -29,7 +29,7 @@ angular.module('workSchedule.controller', [])
                 }
 
                 for (var i = 0, ii = _body.riChengList.length; i < ii; i++) {
-                    _body.riChengList[i]._beginTime = common.format(_body.riChengList[i].beginTime, 'yyyy-MM-dd HH:ss')
+                    _body.riChengList[i]._beginTime = common.format(_body.riChengList[i].beginTime)
                 }
 
                 $scope.items = _body.riChengList;
