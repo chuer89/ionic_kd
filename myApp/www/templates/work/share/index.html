@@ -52,7 +52,7 @@
         </div>
         <div class="kd_nav_filter">
             <div class="padding_around row">
-                <div class="kd_sele_box col col-20">
+                <div class="kd_sele_box col">
                     <div ng-click="toggleSele('purpose')" class="kd_sele_val">{{selePurposeInfo}}<i class="ion-arrow-down-b"></i></div>
                     <div class="kd_sele_content" ng-show="isShowPurposeSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="kd_sele_box col kd_m col-20">
+                <div class="kd_sele_box col kd_m">
                     <div ng-click="toggleSele('age')" class="kd_sele_val">{{seleAgeInfo}}<i class="ion-arrow-down-b"></i></div>
                     <div class="kd_sele_content" ng-show="isShowAgeSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="kd_sele_box col col-33">
+                <div class="kd_sele_box col">
                     <div ng-click="toggleSele('amount')" class="kd_sele_val">{{seleAmountInfo}}<i class="ion-arrow-down-b"></i></div>
                     <div class="kd_sele_content" ng-show="isShowAmountSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
@@ -81,8 +81,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col text_align_right">
-                    <button class="kd_btn kd_m" ng-click="reset()" style="color: #444;">重置</button>
+                <div class="kd_sele_item col kd_m">
+                    <div class="text_align_right">
+                        <button class="kd_btn kd_m" ng-click="reset()" style="color: #444;">重置</button>
+                    </div>
                 </div>
             </div>
         </div>

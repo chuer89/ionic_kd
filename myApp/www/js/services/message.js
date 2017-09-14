@@ -1332,7 +1332,6 @@ angular.module('message.services', [])
                     zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
                     buttonPosition:'RB'
                 });
-                console.log(2)
                 map.addControl(geolocation);
                 geolocation.getCurrentPosition();
                 AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
@@ -1374,15 +1373,15 @@ angular.module('message.services', [])
             });
             return;
 
-            // var data = {
-            //     coords: {
-            //         longitude: 104.0666805,
-            //         latitude: 30.54231346999999 
-            //     }
-            // };
+            var data = {
+                coords: {
+                    longitude: 104.0666805,
+                    latitude: 30.54231346999999 
+                }
+            };
 
-            // cb(data);
-            // return;
+            cb(data);
+            return;
 
 
             var showPosition = function (position) {

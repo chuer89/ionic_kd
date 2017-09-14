@@ -9961,12 +9961,12 @@ ion-tabs.tabs-color-active-light .tab-item {
 .bar .title {
   font-size: 20px; }
 
-.ion-ios-briefcase-outline:before {
-  content: url("../img/icon/footer/work.png"); }
-
-.ion-ios-briefcase:before {
-  content: url("../img/icon/footer/work_active.png"); }
-
+/*.ion-ios-briefcase-outline:before{
+	content: url("../img/icon/footer/work.png");
+}
+.ion-ios-briefcase:before{
+	content: url("../img/icon/footer/work_active.png");
+}*/
 .tabs-dark > .tabs, .tabs.tabs-dark {
   background: #6c647e; }
 
@@ -9986,6 +9986,13 @@ ion-tabs.tabs-color-active-light .tab-item {
 
 .input-label {
   max-width: 80px; }
+
+.platform-ios .item-input input {
+  padding-top: 6px;
+  /*vertical-align: bottom;*/ }
+
+.platform-ios .top_right_menus {
+  top: 3.73333rem; }
 
 .slider {
   height: 100%; }
@@ -10248,7 +10255,7 @@ input[type=tel], input[type=color], textarea {
   font-size: 20px;
   z-index: 90;
   right: 5px;
-  top: 3.73333rem; }
+  top: 2.4rem; }
   .top_right_menus .kd_sele_item {
     border-radius: 0.2rem;
     background: #6c647e; }

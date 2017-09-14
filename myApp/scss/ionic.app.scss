@@ -159,12 +159,12 @@ ion-tabs.tabs-color-active-light .tab-item{
 .bar .title{
 	font-size: 20px;
 }
-.ion-ios-briefcase-outline:before{
+/*.ion-ios-briefcase-outline:before{
 	content: url("../img/icon/footer/work.png");
 }
 .ion-ios-briefcase:before{
 	content: url("../img/icon/footer/work_active.png");
-}
+}*/
 
 .tabs-dark>.tabs, .tabs.tabs-dark{
 	background: #6c647e;
@@ -183,6 +183,17 @@ ion-tabs.tabs-color-active-light .tab-item{
 }
 .button.button-dark.button-clear{font-size: 24px;}
 .input-label{max-width: 80px;}
+
+.platform-ios {
+	.item-input input{
+		padding-top: 6px;
+		/*vertical-align: bottom;*/
+	}
+	.top_right_menus{
+		top: pxRem(280);
+	}
+}
+
 
 .slider {
   height: 100%;
@@ -467,7 +478,7 @@ input[type=tel], input[type=color], textarea{
     font-size: 20px;
     z-index: 90;
     right: 5px;
-    top: pxRem(280);
+    top: pxRem(180);
 
 	.kd_sele_item{
 		border-radius: pxRem(15);

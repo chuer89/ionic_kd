@@ -8,7 +8,7 @@
 angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 
     'route', 'ionic-datepicker', 'ionic-timepicker', 'ng-img', 'starter.imgservices'])
 
-.run(function($ionicPlatform, $timeout, common) {
+.run(function($ionicPlatform, $cordovaDevice, $timeout, common) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -30,7 +30,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         });
     });
     //键盘-end
-
 
     var onResume = function () {
         // Handle the resume event

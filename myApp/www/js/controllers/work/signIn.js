@@ -12,7 +12,6 @@ angular.module('workSign.controller', [])
 		qiandaoCanQianDaoSite: true,
 		place: {}
 	}
-	
 
 	var qianDaoRight = 1;//是否正常签到 1 正常； 0 迟到
 
@@ -61,37 +60,51 @@ angular.module('workSign.controller', [])
 	    });
 	}
 
-	// $scope.seleType = '请选择';
-	// $scope.showType = function() {
-	// 	$ionicActionSheet.show({
-	// 		buttons: qianDaoType,
-	// 		cancelText: '取消',
-	// 		buttonClicked: function(index, item) {
-	// 			$scope.seleType = item.text;
-	// 			$scope.shangBanType = item.key;
+	$scope.seleType = '请选择';
+	$scope.showType = function() {
+		if ($scope.hasHistory) {
+			return false;
+		}
 
-	// 			var qiandaoTimes = JSON.parse( common.getLocalStorage('qiandaoTimes') );
+		var qiandaoTimes = common.getLocalStorage('qiandaoTimes') && JSON.parse( common.getLocalStorage('qiandaoTimes') );
 
-	// 			var _qiandaoObj = common.getId(qiandaoTimes, item.key, 'qianDaoType');
+		if (!qiandaoTimes || !qiandaoTimes.length) {
+			common.toast(common.noAuthLimitsTxt);
+			return false;
+		}
 
-	// 			if (!_qiandaoObj) {
-	// 				$scope.hasSignIn = false;
-	// 			} else {
-	// 				$scope.qianDaoShangBan = _qiandaoObj.qianDaoShangBan;
-	// 				$scope.hasSignIn = hasSignIn(item.key);
-	// 			}
+		if (qiandaoTimes.length == 1) {
+			return;
+		}
 
-	// 			return true;
-	// 		}
-	// 	})
-	// }
+		$ionicActionSheet.show({
+			buttons: qiandaoTimes,
+			cancelText: '取消',
+			buttonClicked: function(index, item) {
+				$scope.seleType = item.text;
+				$scope.shangBanType = item.qianDaoType;
+
+				var qiandaoTimes = JSON.parse( common.getLocalStorage('qiandaoTimes') );
+
+				var _qiandaoObj = common.getId(qiandaoTimes, item.qianDaoType, 'qianDaoType');
+
+				if (!_qiandaoObj) {
+					$scope.hasSignIn = false;
+				} else {
+					$scope.qianDaoShangBan = _qiandaoObj.qianDaoShangBan;
+					$scope.hasSignIn = hasSignIn(item.qianDaoType);
+				}
+
+				return true;
+			}
+		})
+	}
 
 	$scope.showNav = function () {
 		common.addTopRightMenus({
 			buttons: [
 				{ text: '查询' },
-				{ text: '申请' },
-				{ text: '设置' }
+				{ text: '申请' }
 			],
 			cancelText: '取消',
 			buttonClicked: function(index, item) {
@@ -99,8 +112,6 @@ angular.module('workSign.controller', [])
 
                 if (index == 1) {
                     _go = 'work_sign_in_apply';
-                } else if (index == 2) {
-                	_go = 'work_sign_in_set';
                 }
 
                 $state.go(_go);
@@ -129,24 +140,37 @@ angular.module('workSign.controller', [])
 		        	var _time = [];
 
 		        	if (data.body.times && data.body.times.length) {
-		        		_time = data.body.times[0];
+		        		_time = data.body.times;
 		        	}
 
 		        	if (!data.body.canQianDao){
 		        		common.toast('当前位置或时间不支持签到');
+		        		return;
 		        	}
 
-		        	data.body._times = [ _time ];
+		        	data.body._times = _time;
+
+		        	for (var i = 0, ii = _time.length; i < ii; i++) {
+		        		if (_time[i].qianDaoType == 'ZAO_BAN') {
+		        			_time[i].text = '早班';
+		        		} else if (_time[i].qianDaoType == 'ZHONG_BAN') {
+		        			_time[i].text = '中班';
+		        		} else if (_time[i].qianDaoType == 'WAN_BAN') {
+		        			_time[i].text = '晚班';
+		        		}
+		        	}
 
 		        	common.setLocalStorage('qiandaoBeforeTime', data.body.applyBeforeTime);
 		        	common.setLocalStorage('qiandaoTimes', JSON.stringify(data.body._times));
 		        	common.setLocalStorage('qiandaoApiDate', common.format(false, 'yyyy-MM-dd'));
 		        	qianDaoData.qiandaoCanQianDaoSite = data.body.canQianDao;
 
-		        	var _qiandaoObj = common.getId(qianDaoType, _time.qianDaoType, 'key');
+		        	if (_time.length == 1) {
+		        		var _qiandaoObj = common.getId(qianDaoType, _time[0].qianDaoType, 'key');
 
-		        	$scope.seleType = _qiandaoObj.text;
-		        	$scope.shangBanType = _time.qianDaoType;
+			        	$scope.seleType = _qiandaoObj.text;
+			        	$scope.shangBanType = _time[0].qianDaoType;
+		        	}
 
 		        	if (typeof cb == 'function') {
 		        		cb(data);
