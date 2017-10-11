@@ -1055,14 +1055,12 @@ angular.module('workApply.controller', [])
                 formData.append("fuJians", the_file, "images.jpg");
             },
             showImg: function(results) {
-                $scope.imgList = results;
+                for (var i = 0, ii = results.length; i < ii; i++) {
+                    $scope.imgList.push(results[i]);
+                }
             },
             cameraImg: function(imgData) {
-                $scope.data.hasCameraImg = true;
-                $timeout(function() {
-                    var image = document.getElementById('myImage');  
-                    image.src = imgData;
-                }, 500);
+                $scope.imgList.push(imgData);
             }
         });
     }

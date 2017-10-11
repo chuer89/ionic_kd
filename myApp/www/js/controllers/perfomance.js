@@ -27,8 +27,6 @@ angular.module('perfomance.controller', [])
                 text: '绩效开单', link: 'perfomance_add'
             }, {
                 text: '我的绩效', link: 'perfomance_my_list'
-            }, {
-                text: '绩效录入'
             }],
             buttonClicked: function (index, item) {
                 if (item.link) {

@@ -16,7 +16,9 @@
         <div class="list_box">
             <div ng-repeat="item in item.fujian">
                 <img ng-click="previewImg($index)" ng-if="!item.isPdf" src="{{item.fujianPath}}"/>
-                <button class="button button-block button-positive" ng-click="showPdf(item)" ng-if="item.isPdf">查看pdf</button>
+                <div class="padding">
+                  <button class="button button-block button-positive" ng-click="showPdf(item)" ng-if="item.isPdf">点击查看全文</button>
+                </div>
             </div>
         </div>
   	</ion-content>
