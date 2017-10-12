@@ -109,7 +109,7 @@ angular.module('workReport.controller', [])
             body: {
                 userId: common.userInfo.clientId,
                 content: $scope.data.content,
-                typeId: 3,
+                typeId: 2,
                 date: $scope.data.date
             },
             setData: function(json) {
@@ -175,7 +175,7 @@ angular.module('workReport.controller', [])
             body: {
                 userId: common.userInfo.clientId,
                 content: $scope.data.content,
-                typeId: 2,
+                typeId: 3,
                 date: $scope.data.date
             },
             setData: function(json) {

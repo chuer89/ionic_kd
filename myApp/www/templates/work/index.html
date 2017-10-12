@@ -26,7 +26,7 @@
         		</div>
 			</a>
 		</div>
-		<div class="list_box">
+		<div class="list_box" ng-if="itemsCrm.length">
 			<div class="padding_around padding_small_tb list_type_title">CRM</div>
 			<a href="{{item.link || 'javascript:;'}}" class="item_list_box" ng-repeat="item in itemsCrm">
 				<div class="row">

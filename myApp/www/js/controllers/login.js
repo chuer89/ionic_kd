@@ -46,6 +46,10 @@ angular.module('login.controller', [])
                 var _body = data.body;
                 common.loadingHide();
 
+                // probation：0表示不是试用期，1表示是试用期
+                // viewReport：0表示不能查看工作汇报，1表示能查看工作汇报
+
+
                 if (_body.clientId != common.getLocalStorage('clientId')) {
                     common.clearLocalStorage();
                 }

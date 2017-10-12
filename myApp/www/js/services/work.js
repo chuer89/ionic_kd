@@ -1,6 +1,6 @@
 angular.module('work.services', [])
 
-.factory('workPlatform', function() {
+.factory('workPlatform', function(common) {
     var list = [{
         id: 0,
         name: '通知',
@@ -87,13 +87,37 @@ angular.module('work.services', [])
         info: '针对单一问题详细阐述',
         icon: 'img/icon/work/course.png',
         link: '#/work/course'
-    }]
+    }];
+
+    // probation：0表示不是试用期，1表示是试用期；试用期只能查看 签到、通知、学习资料
+    // viewReport：0表示不能查看工作汇报，1表示能查看工作汇报；
 
     return {
         all: function() {
-            return list;
+            var userInfo = JSON.parse(common.getLocalStorage('userInfo'));
+            var _arr = list;
+
+            if (userInfo.probation == 1) {
+                _arr = [];
+                for (var i = 0, ii = list.length; i < ii; i++) {
+                    if (list[i].id == 0 || list[i].id == 2) {
+                        _arr.push(list[i]);
+                    }
+                }
+            }
+
+            if (userInfo.viewReport == 0) {
+                _arr = _arr.slice(0, -1);
+            }
+
+            return _arr;
         },
         crm: function() {
+            var userInfo = JSON.parse(common.getLocalStorage('userInfo'));
+            if (userInfo.probation == 1) {
+                return [];
+            }
+
             return crm;
         },
         learn: function() {
