@@ -3,6 +3,8 @@ angular.module('workApply.controller', [])
 //applicationStatus：申请的状态，(等批准，批准，拒绝) 
 //值为（PENDING, APPROVE, REJECT）创建申请时默认为PENDING
 
+//同意，拒绝，转交都是审批人才能操作哈，approverId 和clientid相同时才出现
+
 //applicationType：申请的类型 （请假，采购，其他，任务延迟,优惠，报残, 维修工程）
 //值为（LEAVE，PURCHASE，OTHER，TASK_DELAY, DISCOUNT,DISABLED,MAINTAIN）
 
@@ -511,7 +513,6 @@ angular.module('workApply.controller', [])
             }, {
                 text: '转交'
             }],
-            cancelText: '取消',
             buttonClicked: function (index, item) {
                 if (index == 0) {
                     applyCommon.updateStatus(_applicationId, $scope.data.approvalReason, false);

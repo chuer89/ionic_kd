@@ -360,7 +360,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     //工作
     .state('tab.work', {
         url: '/work',
-        cache: false,
         views: {
             'tab-work': {
                 templateUrl: 'templates/work/index.html',

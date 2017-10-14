@@ -215,9 +215,21 @@ angular.module('workFab.controller', [])
         },
         success: function(data) {
             common.loadingHide();
+
+            var _item = data.body.fujian;
+            for (var i = 0, ii = _item.length; i < ii; i++) {
+                if (_item[i].fujianName.indexOf('.pdf') >= 0){
+                    _item[i].isPdf = true;
+                }
+            }
+
         	$scope.item = data.body;
         }
     });
+
+    $scope.showPdf = function(item) {
+        common.pdf(item.fujianPath);
+    }
 
     //图片预览
     $scope.previewImg = function($index) {

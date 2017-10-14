@@ -11,7 +11,11 @@
                 {{item.courseName}}
             </div>
             <div ng-repeat="item in item.fujian">
-                <img ng-click="previewImg($index)" src="{{item.fujianPath}}"/>
+                <img ng-click="previewImg($index)" ng-if="!item.isPdf" src="{{item.fujianPath}}"/>
+
+                <div class="padding">
+                  <button class="button button-block button-positive" ng-click="showPdf(item)" ng-if="item.isPdf">点击查看全文</button>
+                </div>
             </div>
         </div>
   	</ion-content>

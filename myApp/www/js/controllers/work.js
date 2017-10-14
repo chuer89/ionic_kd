@@ -10,26 +10,39 @@ angular.module('work.controller', [])
     $scope.itemsCrm = workPlatform.crm();
     $scope.itemsLearn = workPlatform.learn();
 
+    var initData = function() {
+        common.post({
+            type: 'message_unread_prompt',
+            data: {
+                userId: common.userInfo.clientId
+            },
+            success: function(data) {
+                var _warnObj = data.body;
+                for (var i = 0, ii = workItems.length; i < ii; i++) {
+                    if (workItems[i].warnKey) {
+                        workItems[i].isView = _warnObj[workItems[i].warnKey];
+                    }
+                }
+            }
+        });
+    }
+
+    initData();
+
     // showUnReadApplicationPrompt：显示未读申请提示
     // showUnReadRiChengPrompt：显示日程未读提示
     // showUnReadTaskPrompt：显示未读任务提示
     // showUnReadInformPrompt：显示未读同时提示
 
+    $scope.doRefresh = function() {
+        setTimeout(function() {
+            $scope.$broadcast('scroll.refreshComplete');
 
-    common.post({
-        type: 'message_unread_prompt',
-        data: {
-            userId: common.userInfo.clientId
-        },
-        success: function(data) {
-            var _warnObj = data.body;
-            for (var i = 0, ii = workItems.length; i < ii; i++) {
-                if (workItems[i].warnKey) {
-                    workItems[i].isView = _warnObj[workItems[i].warnKey];
-                }
-            }
-        }
-    });
+            initData();
+        }, 1000)
+        return true;
+    }
+    
 })
 
 //公共选择审核人员 | 查询人
