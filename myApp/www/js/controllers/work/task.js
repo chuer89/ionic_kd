@@ -354,6 +354,7 @@ angular.module('workTask.controller', [])
 
     $scope.clearBack = common.clearBack;
 
+    //提醒
     $scope.showSeleWarn = function() {
         $ionicActionSheet.show({
             buttons: menus.taskWarn,
@@ -417,7 +418,7 @@ angular.module('workTask.controller', [])
             period: "SUGGEST_DEADLLINE",//固定截止时间，建议截止时间，每日任务 'FIXED_DEADLLINE' or 'SUGGEST_DEADLLINE' or 'DAILY_TASK' 
             status: "DECLARATION",
             title: _data.title,
-            remindtime: _data.remindtime,
+            remindtime: _data.remindtime,//提醒
             inspectorId: _data.inspectorId.id + '',//检查人
             userlist: [
                 {"userId": common.userInfo.clientId + '', "userTypeForTask": "RESPONSIBLE_PEOPLE"},
@@ -427,6 +428,8 @@ angular.module('workTask.controller', [])
             zhibanTaskId: "0",
             dailyTaskId: '0'
         }
+
+        // alert(JSON.stringify(_param));
 
         if (!_param.endTime || !_param.title || !_param.description) {
             common.toast('请填写必填信息');
@@ -781,11 +784,6 @@ angular.module('workTask.controller', [])
             },
             success: function(data) {
                 common.loadingHide();
-
-                common.getUserinfo_simple(data.body.taskBasiInfo.inspectorId, function(data) {
-                    $scope.inspectorIdName = data.name;
-                })
-
 
                 // data.body.taskBasiInfo.taskDescription = common.replaceNext(data.body.taskBasiInfo.taskDescription);
                 

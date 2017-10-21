@@ -239,6 +239,8 @@ angular.module('message.services', [])
                 body: opt.body || ''
             }
 
+            //opt.notPretreatment 不预处理 默认false
+
             if (typeof opt.setData == 'function') {
                 //需要formData设置参数
                 opt.setData(JSON.stringify(_data));
@@ -253,6 +255,10 @@ angular.module('message.services', [])
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    if (opt.notPretreatment) {
+                        opt.success(data);return;
+                    }
+
                     if (data.status != '1000' && !opt.noFail) {
                         COMMON.loadingHide();
                         COMMON.toast(data.message || '数据有误');

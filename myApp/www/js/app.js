@@ -32,12 +32,31 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     });
     //键盘-end
 
+    var initJsPush = function() {
+        try {
+            window.plugins.jPushPlugin.init();
+            if (device.platform != "Android") {
+              window.plugins.jPushPlugin.setDebugModeFromIos();
+              window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
+            } else {
+              window.plugins.jPushPlugin.setDebugMode(true);
+              window.plugins.jPushPlugin.setStatisticsOpen(true);
+            }
+            $scope.message += '初始化成功! \r\n';
+        } catch (exception) {
+            $scope.errorMsg += 'initiateUI:' + exception;
+        }
+    }
+
     var onResume = function () {
         // Handle the resume event
         setTimeout(function() {
             //切换前台运行
             common._runApp = true;
-            // common.scheduleSingleNotification('切换前台运行中', '切换前台运行中')
+            // common.scheduleSingleNotification('切换前台运行中', '切换前台运行中');
+            // common.toast('切换前台运行中');
+
+            document.addEventListener("deviceready", initJsPush, false);
         }, 0);
     }, onPause = function () {
         // Handle the pause event
@@ -83,7 +102,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     // document.addEventListener("pause", onPause, false);
 
     // //app从后台运行时重新获取监听的事件
-    // document.addEventListener("resume", onResume, false);
+    document.addEventListener("resume", onResume, false);
 
     //当设备API加载完成并准备访问时
     // document.addEventListener("deviceready", onDeviceReady, false);
