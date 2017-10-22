@@ -182,6 +182,7 @@ angular.module('message.controller', [])
         window.plugins.jPushPlugin.init();
         getRegistrationID();
         if (device.platform != "Android") {
+            window.JPush.resetBadge();
           window.plugins.jPushPlugin.setDebugModeFromIos();
           window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
         } else {

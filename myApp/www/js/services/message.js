@@ -221,6 +221,7 @@ angular.module('message.services', [])
 
                 if (data.status != '1000' && !opt.noFail) {
                     fail(data.message || '数据有误');
+                    COMMON.loadingHide();
                 } else {
                     success(data);
                 }

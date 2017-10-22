@@ -880,6 +880,9 @@ angular.module('workApply.controller', [])
         },
         clientIdSele: {name: '请选择'},
 
+        setEndtime: '',
+        setBegintime: '',
+
         leaveTypeInfo : '请选择'
     }
 
@@ -896,17 +899,15 @@ angular.module('workApply.controller', [])
 	}
 
     //时间
-    $scope.setBegintime = '';
     $scope.clickBegintime = function() {
         common.datePicker(function(date) {
-            $scope.setBegintime = date;
+            $scope.data.setBegintime = date;
             $scope.data.leaveApplication.leaveBegintime = date;
         }, true)
     }
-    $scope.setEndtime = '';
     $scope.clickEndtime = function() {
         common.datePicker(function(date) {
-            $scope.setEndtime = date;
+            $scope.data.setEndtime = date;
             $scope.data.leaveApplication.leaveEndtime = date;
         }, true)
     }

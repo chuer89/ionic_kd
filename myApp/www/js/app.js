@@ -36,11 +36,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         try {
             window.plugins.jPushPlugin.init();
             if (device.platform != "Android") {
-              window.plugins.jPushPlugin.setDebugModeFromIos();
-              window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
+                window.JPush.resetBadge();
+                window.plugins.jPushPlugin.setDebugModeFromIos();
+                window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
             } else {
-              window.plugins.jPushPlugin.setDebugMode(true);
-              window.plugins.jPushPlugin.setStatisticsOpen(true);
+                window.plugins.jPushPlugin.setDebugMode(true);
+                window.plugins.jPushPlugin.setStatisticsOpen(true);
             }
             $scope.message += '初始化成功! \r\n';
         } catch (exception) {

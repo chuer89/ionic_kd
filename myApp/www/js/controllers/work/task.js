@@ -331,7 +331,7 @@ angular.module('workTask.controller', [])
 })
 
 //创建任务
-.controller('WorkTaskAddCtrl', function($scope, $ionicActionSheet, common, seleMenuList) {
+.controller('WorkTaskAddCtrl', function($scope, $state, $ionicActionSheet, common, seleMenuList) {
     var menus = seleMenuList.menu();
 
     $scope.data = {
@@ -443,12 +443,19 @@ angular.module('workTask.controller', [])
             setData: function(json) {
                 formData.append("json", json);
             },
+            notPretreatment: true,
             data: formData,
             success: function(data) {
                 common.loadingHide();
-                common.toast(data.message, function() {
-                    common.back();
-                });
+
+                if (data.status != '1000') {
+                    common.toast(data.message || '数据有误');
+                    $state.reload();
+                } else {
+                    common.toast(data.message, function() {
+                        common.back();
+                    });
+                }
             }
         });
     };
