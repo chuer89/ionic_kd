@@ -16,7 +16,8 @@ angular.module('perfomance.controller', [])
 
     var dataList = {
         currentPage: 0,
-        items: []
+        items: [],
+        userId: common.userInfo.clientI
     };
 
     $scope.showNav = function () {
@@ -41,8 +42,7 @@ angular.module('perfomance.controller', [])
         common.loadingShow();
 
         var _param = angular.extend({}, $scope.data, {
-            currentPage: dataList.currentPage + 1,
-            departmentId: seleDepartmentId
+            currentPage: dataList.currentPage + 1
         });
 
         common.post({

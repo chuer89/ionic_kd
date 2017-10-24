@@ -123,7 +123,7 @@ angular.module('work.controller', [])
         '4': 'work_task_add_inspector',//任务-责任人
 
 
-        '5': 'perfomance_add'//绩效开单
+        '500': 'perfomance_add'//绩效开单
     }
 
     var initData = function() {
@@ -335,7 +335,8 @@ angular.module('work.controller', [])
 
         var _param = {
             page: dataList.currentPage + 1,
-            keyword: ''
+            keyword: '',
+            userId: common.userInfo.clientId
         };
 
         common.post({

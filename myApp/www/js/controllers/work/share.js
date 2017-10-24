@@ -116,7 +116,7 @@ angular.module('workShare.controller', [])
         $scope.seleRelationshipInfo = '人物关系';
         $scope.selePurposeInfo = '购买用途';
         $scope.seleAgeInfo = '顾客年龄';
-        $scope.seleAmountInfo = '成绩金额';
+        $scope.seleAmountInfo = '成交金额';
 
         initData();
     }
@@ -169,7 +169,7 @@ angular.module('workShare.controller', [])
 	$scope.seleRelationshipInfo = '人物关系';
 	$scope.selePurposeInfo = '购买用途';
 	$scope.seleAgeInfo = '顾客年龄';
-	$scope.seleAmountInfo = '成绩金额';
+	$scope.seleAmountInfo = '成交金额';
 
 
 	//选择菜单处理
