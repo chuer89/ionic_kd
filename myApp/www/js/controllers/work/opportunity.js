@@ -416,10 +416,8 @@ angular.module('workOpportunity.controller', [])
 .controller('WorkOpportunityCreateCtrl', function($scope, $state, $ionicActionSheet, common, workCrmSele) {
     $scope.data = {
         createrId: common.userInfo.clientId,
-        customerId: '',
-        typePageName: 'WorkOpportunityCreateCtrl',
         seleMarket: '请选择',
-        clientIdSele: {name: '请选择'}
+        customerName: ''
     }
 
     workCrmSele.salesPhases(function(data) {
@@ -441,13 +439,12 @@ angular.module('workOpportunity.controller', [])
 
     $scope.create = function() {
 
-        if (!$scope.data.name) {
+        if (!$scope.data.name || !$scope.data.customerName) {
             common.toast('请输入必填信息');
             return;
         }
 
         common.loadingShow();
-        $scope.data.customerId = $scope.data.clientIdSele.id;
 
         common.post({
             type: 'create_business_opportunity',
@@ -460,12 +457,6 @@ angular.module('workOpportunity.controller', [])
                 });
             }
         });
-    }
-
-    if (common.setAuditorUserList.id) {
-        if (common.setAuditorUserList._targetName == 'work_opportunity_create') {
-            common._localstorage.clientIdSele = common.setAuditorUserList;
-        }
     }
 
     if (common._localstorage.typePageName == $scope.data.typePageName) {

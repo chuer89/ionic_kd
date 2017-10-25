@@ -17,7 +17,7 @@ angular.module('perfomance.controller', [])
     var dataList = {
         currentPage: 0,
         items: [],
-        userId: common.userInfo.clientI
+        userId: common.userInfo.clientId
     };
 
     $scope.showNav = function () {
@@ -42,7 +42,8 @@ angular.module('perfomance.controller', [])
         common.loadingShow();
 
         var _param = angular.extend({}, $scope.data, {
-            currentPage: dataList.currentPage + 1
+            currentPage: dataList.currentPage + 1,
+            departmentId: seleDepartmentId
         });
 
         common.post({
@@ -796,11 +797,6 @@ angular.module('perfomance.controller', [])
             creatorId: common.userInfo.clientId,
             clientId: _data.clientIdSele.id
         });
-
-        if (!_param.fenZhi) {
-            common.toast('请输入必填信息');
-            return;
-        }
 
         common.loadingShow();
 
