@@ -458,12 +458,6 @@ angular.module('workOpportunity.controller', [])
             }
         });
     }
-
-    if (common._localstorage.typePageName == $scope.data.typePageName) {
-        $scope.data = common._localstorage;
-    } else {
-        common._localstorage = $scope.data;
-    }
 })
 
 .controller('WorkOpportunityEditCtrl', function($scope, $ionicActionSheet, $stateParams, common, workCrmSele) {
