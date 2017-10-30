@@ -155,40 +155,35 @@ angular.module('workOpportunity.controller', [])
 
     $scope.doRefresh = function() {
         setTimeout(function() {
+            handleTabData();
             $scope.$broadcast('scroll.refreshComplete');
         }, 1000)
         return true;
     }
 
 
-    $scope.activeTab = '0';
+    $scope.activeTab = '1';
 
-    $scope.isShowTab0 = true;
-    $scope.isShowTab1 = false;
+    $scope.isShowTab1 = true;
     $scope.isShowTab2 = false;
 
-    $scope.checkTab = function(index) {
-        $scope.activeTab = index;
-        if (index == '0') {
-            $scope.isShowTab1 = false;
-            $scope.isShowTab2 = false;
-            $scope.isShowTab0 = true;
-            initData(true)
-        } else if (index == '1') {
-            $scope.isShowTab0 = false;
+    var handleTabData = function() {
+        if ($scope.activeTab == '1') {
             $scope.isShowTab2 = false;
             $scope.isShowTab1 = true;
-            initData(true, {
-                orderByLastConsumptionTimeAsc: true
-            })
+            initData(true)
         } else {
-            $scope.isShowTab0 = false;
             $scope.isShowTab1 = false;
             $scope.isShowTab2 = true;
             initData(true, {
                 orderByLastConsumptionTimeAsc: true
             })
         }
+    }
+
+    $scope.checkTab = function(index) {
+        $scope.activeTab = index;
+        handleTabData();
     }
 })
 
@@ -237,19 +232,19 @@ angular.module('workOpportunity.controller', [])
                     $scope.notTaskListData = false;
                 }
 
+                $scope.item = _body;
+
                 getFollowList();
                 getConsumptionList();
 
                 _body._lastConsumptionTime = common.format(_body.lastConsumptionTime, 'yyyy-MM-dd HH:ss', true);
-
-                $scope.item = _body;
             }
         });
     }, getFollowList = function() {
         common.post({
             type: 'obtain_follow_up_records',
             data: {
-                customerId: $stateParams.id,
+                customerId: $scope.item.customer.id,
                 userId: common.userInfo.clientId,
                 page: 1
             },
@@ -280,7 +275,7 @@ angular.module('workOpportunity.controller', [])
         common.post({
             type: 'obtain_consumption_records',
             data: {
-                customerId: $stateParams.id,
+                customerId: $scope.item.customer.id,
                 page: 1
             },
             notPretreatment: true,
@@ -309,16 +304,16 @@ angular.module('workOpportunity.controller', [])
     getDetails();
 
     //添加跟进记录
-    $scope.followData = {
-        createrId: common.userInfo.clientId,
-        customerId: $stateParams.id
-    };
+    $scope.followData = {createrId: common.userInfo.clientId};
+
     $scope.isHasAddFollow = false;
     $scope.showAddFollow = function() {
         $scope.isHasAddFollow = true;
         $scope.followData.content = '';
     }
     $scope.createFollow = function() {
+        $scope.followData.customerId = $scope.item.customer.id;
+
         common.loadingShow();
         common.post({
             type: 'create_follow_up_record',
@@ -354,7 +349,7 @@ angular.module('workOpportunity.controller', [])
             type: 'update_follow_up_record',
             data: {
                 createrId: common.userInfo.clientId,
-                customerId: $stateParams.id,
+                customerId: $scope.item.customer.id,
                 id: item.id,
                 content: item.content
             },
@@ -377,7 +372,7 @@ angular.module('workOpportunity.controller', [])
 
                 if (index == 0) {
                     common.post({
-                        type: 'obtain_customer_form',
+                        type: 'obtain_business_opportunity_form',
                         data: {
                             id: $stateParams.id,
                             userId: common.userInfo.clientId
@@ -466,10 +461,9 @@ angular.module('workOpportunity.controller', [])
         customerTypeId: '',
         starId: '',
         customerId: '',
-        clientIdSele: {name: '请选择'},
         seleMarket: '请选择',
         salesPhaseId: '',
-        typePageName: 'WorkOpportunityEditCtrl',
+        customerName: '',
         name: '',
         content: ''
     }
@@ -487,20 +481,16 @@ angular.module('workOpportunity.controller', [])
 
                 var _body = data.body;
 
-                angular.extend($scope.data, {
-                    seleMarket: _body.salesPhaseName,
-                    clientIdSele: {
-                        name: _body.customerName,
-                        id: _body.customerId
-                    },
-                    name: _body.name,
-                    content: _body.content
+                angular.extend($scope.data, _body, {
+                    seleMarket: _body.salesPhaseName
                 });
 
                 $scope.seleType = data.body.customerTypeName;
             }
         });
     }
+
+    getDetails();
 
     workCrmSele.salesPhases(function(data) {
         $scope.showSeleMarket = function () {
@@ -519,7 +509,6 @@ angular.module('workOpportunity.controller', [])
 
     $scope.submit = function() {
         common.loadingShow();
-        $scope.data.customerId = $scope.data.clientIdSele.id;
 
         common.post({
             type: 'update_business_opportunity',
@@ -533,19 +522,6 @@ angular.module('workOpportunity.controller', [])
                 });
             }
         });
-    }
-
-    if (common.setAuditorUserList.id) {
-        if (common.setAuditorUserList._targetName == 'work_opportunity_edit') {
-            common._localstorage.clientIdSele = common.setAuditorUserList;
-        }
-    }
-
-    if (common._localstorage.typePageName == $scope.data.typePageName) {
-        $scope.data = common._localstorage;
-    } else {
-        common._localstorage = $scope.data;
-        getDetails();
     }
 })
 
