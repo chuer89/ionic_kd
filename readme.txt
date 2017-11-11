@@ -5,6 +5,9 @@ source ~/.bash_profile 启动环境变量(打包目录)
 ionic emulate ios --list
 ionic  emulate ios --target="iPhone-6s, 9.2"
 
+打包
+ionic build ios/android
+
 command 1/2/3 模拟器调整
 
 更新依赖包

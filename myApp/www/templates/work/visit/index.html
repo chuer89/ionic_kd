@@ -13,7 +13,7 @@
   		<div class="kd_nav_filter">
             <div class="padding_around row">
       			<div class="kd_sele_box col col-25">
-      				<div ng-click="toggleSele('star')" class="kd_sele_val">星级<i class="ion-arrow-down-b"></i></div>
+      				<div ng-click="toggleSele('star')" class="kd_sele_val">{{seleStarInfo}}<i class="ion-arrow-down-b"></i></div>
       				<div class="kd_sele_content" ng-show="isShowStarSele">
       					<i class="ion-arrow-up-b kd_sele_arrow"></i>
       					<div class="kd_sele_item">
@@ -22,7 +22,7 @@
       				</div>
       			</div>
                 <div class="kd_sele_box col col-20 kd_m">
-                    <div ng-click="toggleSele('time')" class="kd_sele_val">时间段<i class="ion-arrow-down-b"></i></div>
+                    <div ng-click="toggleSele('time')" class="kd_sele_val">{{seleTimeInfo}}<i class="ion-arrow-down-b"></i></div>
                     <div class="kd_sele_content" ng-show="isShowTimeSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="kd_sele_box col col-20 ">
-                    <div ng-click="toggleSele('types')" class="kd_sele_val">特殊日<i class="ion-arrow-down-b"></i></div>
+                    <div ng-click="toggleSele('types')" class="kd_sele_val">{{seleTypesInfo}}<i class="ion-arrow-down-b"></i></div>
                     <div class="kd_sele_content" ng-show="isShowTypesSele">
                         <i class="ion-arrow-up-b kd_sele_arrow"></i>
                         <div class="kd_sele_item">

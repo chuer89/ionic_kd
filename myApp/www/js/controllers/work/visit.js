@@ -141,6 +141,10 @@ angular.module('workVisit.controller', [])
         }
     }
 
+    $scope.seleStarInfo = '星级';
+    $scope.seleTimeInfo = '时间段';
+    $scope.seleTypesInfo = '特殊日';
+
     $scope.seleStarHandle = function(item) {
         $scope.seleStarInfo = item.name;
         $scope.data.starId = item.value;
